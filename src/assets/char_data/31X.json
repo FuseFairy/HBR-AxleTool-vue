@@ -1,0 +1,144 @@
+{
+    "卡羅爾 利帕":{
+        "icon":"https://iili.io/dxgN7Tb.webp",
+        "style":{
+            "星之繼承者":"https://iili.io/Jry2kLG.webp",
+            "心之風景":"https://iili.io/JryKBeI.webp",
+            "泛紫之城":"https://iili.io/JZLMQaV.webp",
+            "摩天樓的暗黑英雄":"https://iili.io/JryKSEJ.webp"
+        },
+        "skill":{
+            "common":{
+                "爆破斬":4,
+                "制裁者":10,
+                "閃電怒吼":8,
+                "雷霆風暴":14,
+                "漩渦中的紫羅蘭":10
+            }
+        },
+		"passive skill":[]
+    },
+    "李 映夏":{
+        "icon":"https://iili.io/dxggPEb.webp",
+        "style":{
+            "臥龍的代言人":"https://iili.io/JryTccF.webp",
+            "武成在天":"https://iili.io/JryRKnR.webp",
+            "吾不勇，與無將同":"https://iili.io/JrylZRS.webp",
+            "引路一襲露草色":"https://iili.io/Jry0BzF.webp",
+            "春宵我愛你":"https://iili.io/Jry011f.webp"
+        },
+        "skill":{
+            "common":{
+                "增強":6,
+                "臥龍演舞斬":6,
+                "臥龍天命":7,
+                "第七計 無中生有":11, 
+                "春雷":8,
+                "螳螂之斧":10
+            },
+            "引路一襲露草色":{
+                "霓裳羽衣舞‧霹靂":11
+            },
+            "春宵我愛你":{
+                "恰似春宵塵土":0
+            }
+        },
+		"passive skill":[]
+    },
+    "艾琳 雷德梅因":{
+        "icon":"https://iili.io/dxg4KKb.webp",
+        "style":{
+            "難解事件的探求者":"https://iili.io/JryEfMg.webp",
+            "貝克街的軌跡":"https://iili.io/JryEutt.webp",
+            "藍色石榴石探案":"https://iili.io/JryEPfa.webp",
+            "月下的捉迷藏":"https://iili.io/JZLia2V.webp"
+        },
+        "skill":{
+            "common":{
+                "基礎子彈":4,
+                "排除可能":5,
+                "堅忍意志":8,
+                "真相洞悉者":15,
+                "真相洞悉者+":15,
+                "沒有解不開的謎題":8
+            },
+            "月下的捉迷藏":{
+                "華麗的幻影怪盜":15
+            }
+        },
+		"passive skill":[]
+    },
+    "芙里提卡 巴拉克里希南":{
+        "icon":"https://iili.io/dxg6EkQ.webp",
+        "style":{
+            "華麗的飛天女神":"https://iili.io/JryGk1s.webp",
+            "前途未卜的吠陀支":"https://iili.io/JryGiQ9.webp",
+            "華麗的日常":"https://iili.io/JryMf3J.webp",
+            "凜然的杜爾迦":"https://iili.io/JryMMGe.webp",
+            "美麗的聖虎":"https://iili.io/JZQdJsV.webp"
+        },
+        "skill":{
+            "common":{
+                "整體減法":6,
+                "原理為韻律學":10,
+                "生存食糧":8,
+                "燦然光輝":10,
+                "瘋狂亂舞的迦梨":14,
+                "紅蓮舞蹈":8
+            },
+            "美麗的聖虎":{
+                "艷麗辯才天":11
+            }
+        },
+		"passive skill":[]
+    },
+    "瑪麗亞 黛 安傑利斯":{
+        "icon":"https://iili.io/dxgP8Ku.webp",
+        "style":{
+            "真紅色的修女":"https://iili.io/J4z4zKu.webp",
+            "罪惡與榮耀":"https://iili.io/J4z4iW7.webp",
+            "血色浮雕":"https://iili.io/J4z67dG.webp",
+            "剎那的邂逅":"https://iili.io/J4z6hdb.webp"
+        },
+        "skill":{
+            "common":{
+                "嚴懲":6,
+                "飽和回復":8,
+                "獻祭":5,
+                "零之斷罪":14,
+                "幸福":8
+        },
+            "剎那的邂逅":{
+                "救贖的送葬曲":14
+            }
+        },
+		"passive skill":[]
+    },
+    "夏洛特 斯可波夫斯加":{
+        "icon":"https://iili.io/dxgsBB1.webp",
+        "style":{
+            "北風使者":"https://iili.io/J4zPNFn.webp",
+            "雪花的鄉愁":"https://iili.io/J4zPiFe.webp",
+            "逆境盛放之花":"https://iili.io/J4ziAHG.webp",
+            "永久的思念":"https://iili.io/J4ziiWN.webp",
+            "聖潔新娘":"https://iili.io/d9F8pa9.webp"
+        },
+        "skill":{
+            "common":{
+                "災厄":5,
+                "貓型坦克":"ALL",
+                "驚慌失措的子彈":9,
+                "為你炸開的手榴彈":13,
+                "依存":5,
+                "宣誓":9
+            },
+            "永久的思念":{
+                "純潔之吻":15
+            },
+            "聖潔新娘":{
+                "如癡如醉的幸福走道":10
+            }
+        },
+		"passive skill":[]
+    }
+}

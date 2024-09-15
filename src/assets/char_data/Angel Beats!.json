@@ -1,0 +1,74 @@
+{
+    "立華 奏":{
+        "icon":"https://iili.io/dxrzM0P.png",
+        "style":{
+            "Earth Angel":"https://iili.io/J4zDnV4.webp",
+            "翱穹之劍":"https://iili.io/J4zb3qQ.webp"
+        },
+        "skill":{
+            "common":{
+                "洞察力":5,
+                "幸運斬":7,
+                "天使光線":15,
+                "冰凍瞬間":8,
+                "天之心跳":4
+            },
+            "翱穹之劍":{
+                "垂直力":15
+            }
+        },
+		"passive skill":[]
+    },
+    "仲村 百合":{
+        "icon":"https://iili.io/dxrxAAJ.webp",
+        "style":{
+            "Rain Fire":"https://iili.io/J4zpE0l.webp",
+            "平凡的非日常":"https://iili.io/J4zyVEv.webp"
+        },
+        "skill":{
+            "common":{
+                "爆裂火焰":10,
+                "突襲":6,
+                "大災難":15,
+                "冷冽子彈":10,
+                "冰霜棘刺":10
+            },
+            "平凡的非日常":{
+                "真實冰錐":16
+            }
+        },
+		"passive skill":[]
+    },
+    "入江 美雪":{
+        "icon":"https://iili.io/dxrIa2t.webp",
+        "style":{
+            "Pure Cosmos":"https://iili.io/J4I9x8N.webp",
+            "Faraway Eden":"https://iili.io/J4I9OcQ.webp"
+        },
+        "skill":{
+            "common":{
+                "休止消泛音":9,
+                "正拍":8,
+                "冷冽打擊":9,
+                "切分音":3
+            },
+            "Faraway Eden":{
+                "佯動光輝波斯菊":11
+            }
+        },
+		"passive skill":[]
+    },
+    "渕田 久子":{
+        "icon":"https://iili.io/dxrIs8F.webp",
+        "style":{
+            "Finally found our silver lining":"https://iili.io/J4IHpkB.webp"
+        },
+        "skill":{
+            "common":{
+                "冷冽碎擊":9,
+                "大肆破壞":7
+            }
+        },
+		"passive skill":[]
+    }
+}

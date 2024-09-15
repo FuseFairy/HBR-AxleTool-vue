@@ -1,0 +1,134 @@
+{
+    "二階堂 三鄉":{
+        "icon":"https://iili.io/dxU8G9t.webp",
+        "style":{
+            "最年少名人":"https://iili.io/JrtVwhu.webp",
+            "今昔之感，思緒萬千":"https://iili.io/JrtgWzv.webp",
+            "甜蜜的悠閒時光":"https://iili.io/JPcjjBR.webp",
+            "至高無上的終局":"https://iili.io/JrtZrhX.webp",
+            "Holiday Ring a Bell":"https://iili.io/JrDnEiJ.webp"
+        },
+        "skill":{
+            "common":{
+                "扳殺":5,
+                "冷卻":5,
+                "究極的一手":8,
+                "石塔的手筋":11,
+                "石塔的手筋+":11,
+                "北風的昴星":4,
+                "補充甜點！":5
+            },
+            "Holiday Ring a Bell":{
+                "冰凍圓舞曲":14
+            }
+        },
+		"passive skill":[]
+    },
+    "石井 色葉":{
+        "icon":"https://iili.io/dxUU2Lb.webp",
+        "style":{
+            "輕鬆多彩":"https://iili.io/JrDlXwb.webp",
+            "色彩繽紛的靈感":"https://iili.io/JrD10v9.webp",
+            "純粹情感":"https://iili.io/JrDX7Eb.webp",
+            "破壞無彩色之牆":"https://iili.io/JrDeSwl.webp"
+        },
+        "skill":{
+            "common":{
+                "增強":6,
+                "極彩射擊":5,
+                "戰鬥熱情":7,
+                "飽和增強":9,
+                "無色子彈":12
+            }
+        },
+		"passive skill":[]
+    },
+    "命 吹雪":{
+        "icon":"https://iili.io/dxUgaPj.webp",
+        "style":{
+            "Metal Crazy":"https://iili.io/JrDkFHJ.webp",
+            "Silent Reverberations":"https://iili.io/JrDkzKX.webp",
+            "末日要幹嘛？":"https://iili.io/JrDk5N4.webp"
+        },
+        "skill":{
+            "common":{
+                "狂怒嘶吼":5,
+                "R.I.P.":7,
+                "可別先掛點了啊":6,
+                "以破滅道晚安":131
+            }
+        },
+		"passive skill":[]
+    },
+    "室伏 理沙":{
+        "icon":"https://iili.io/dxUr81j.webp",
+        "style":{
+            "母愛的接球手":"https://iili.io/JrDk4bR.webp",
+            "痛痛飛走～♪":"https://iili.io/JrDkm5G.webp",
+            "蔚藍之花":"https://iili.io/JrDvxzQ.webp",
+            "趕快回家吧":"https://iili.io/JrDvY7a.webp",
+            "潛入，面帶笑容參加技術交流會":"https://iili.io/JrDvUE7.webp"
+        },
+        "skill":{
+            "common":{
+                "回復":5,
+                "重生彈":5,
+                "淒美覺醒":7,
+                "飽和回復":8,
+                "暖心轟炸機":14, 
+                "療癒微笑":5,
+                "活力綻放":8
+            },
+            "潛入，面帶笑容參加技術交流會":{
+                "智慧的恩賜":14
+            }
+        },
+		"passive skill":[]
+    },
+    "伊達 朱里":{
+        "icon":"https://iili.io/dxU63AB.webp",
+        "style":{
+            "悲觀王牌":"https://iili.io/JrD83jR.webp",
+            "完美接招":"https://iili.io/JrD8uj4.webp",
+            "網球場惡魔":"https://iili.io/JrD8Mwx.webp",
+            "Holiday Star Night":"https://iili.io/JrD8j6P.webp"
+        },
+        "skill":{
+            "common":{
+                "發球得分":5,
+                "切削球":8,
+                "被害妄想":4,
+                "漆黑迷幻發球":14,
+                "雪崩":8
+            },
+            "Holiday Star Night":{
+                "哀傷的雪花蓮":14
+            }
+        },
+		"passive skill":[]
+    },
+    "瑞原 藍娜":{
+        "icon":"https://iili.io/dxUPT0b.webp",
+        "style":{
+            "深海的學習者":"https://iili.io/JrDSdl9.webp",
+            "來自深淵的邀請":"https://iili.io/JrDSCoQ.webp",
+            "品嘗深奧滋味":"https://iili.io/JrDS7Dv.webp",
+            "禁錮虎鯨":"https://iili.io/JrDSGUX.webp",
+            "衝鋒！擊刺！鮪魚！":"https://iili.io/JPcw9Cx.webp"
+        },
+        "skill":{
+            "common":{
+                "皺鰓鯊硬刃":6,
+                "深層吐息":5,
+                "出刃菜刀登場":8,
+                "浩瀚大海":8,
+                "大海不良分子":15,
+                "神經痛":12
+            },
+            "衝鋒！擊刺！鮪魚！":{
+                "豪邁！海盜加農炮":7
+            }
+        },
+		"passive skill":[]
+    }
+}

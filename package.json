@@ -1,0 +1,23 @@
+{
+  "name": "hbr-axletool-vue",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vueform/multiselect": "^2.6.9",
+    "axios": "^1.7.7",
+    "hbr-axletool-vue": "file:",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.29"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "vite": "^5.3.1",
+    "vite-plugin-vue-devtools": "^7.3.1"
+  }
+}

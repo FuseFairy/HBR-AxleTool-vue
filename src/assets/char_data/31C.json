@@ -1,0 +1,181 @@
+{
+    "山脇 波昂 伊瓦爾":{
+        "icon":"https://iili.io/dxUI0Yu.webp",
+        "style":{
+            "走自己的路":"https://iili.io/JrOtpl2.webp",
+            "魔王歸來":"https://iili.io/JrODAxa.webp",
+            "山脇大人心慌意亂":"https://iili.io/JrODtmF.webp",
+            "Ebon Knight":"https://iili.io/JrObJgp.webp",
+            "Holy Knight":"https://iili.io/JrObx14.webp",
+            "Daydream Believer":"https://iili.io/JrObVkP.webp"
+        },
+        "skill":{
+            "common":{
+                "殺手之鐮":5,
+                "殺戮之刃":9,
+                "一擊必殺微笑":5,
+                "寒冰斬":8,
+                "絕對零度":14,
+                "絕對零度+":14,
+                "奉獻禮物":5,
+                "夢的邊際":6
+            },
+            "Holy Knight":{
+                "狂怒馴鹿":11
+            },
+            "Daydream Believer":{
+                "覺醒的思維":15
+            }
+        },
+		"passive skill":[]
+    },
+    "櫻庭 星羅":{
+        "icon":"https://iili.io/dxUu1zx.webp",
+        "style":{
+            "水晶的指引":"https://iili.io/JrOmIna.webp",
+            "雨過天晴，心曠神怡":"https://iili.io/JrOyoBa.webp",
+            "妳今天的運勢是？":"https://iili.io/JrOyeEb.webp",
+            "在星海中浮沉的占星師":"https://iili.io/JrkF8CB.webp",
+            "對決！！空氣舞台":"https://iili.io/JrkKXMN.webp",
+            "Sanctuary Veil":"https://iili.io/d9F8xLl.webp"
+        },
+        "skill":{
+            "common":{
+                "回復":5,
+                "挑釁":7,
+                "光輝震駭":8,
+                "北極星的光輝":8,
+                "星塵的航路":13,
+                "星塵的航路+":13,
+                "冰冷波動":9,
+                "聖女的守護":6
+            },
+            "對決！！空氣舞台":{
+                "冰凍奇景":9
+            },
+            "Sanctuary Veil":{
+                "漫天飛舞的動人火花":14
+            }
+        },
+		"passive skill":[]
+    },
+    "天音 巫呼":{
+        "icon":"https://iili.io/dxU76G4.webp",
+        "style":{
+            "渴望悠久的魔術師":"https://iili.io/JrkoWoG.webp",
+            "望紅危渡夢浮橋":"https://iili.io/JrkxuJS.webp",
+            "神秘莫測的妳":"https://iili.io/JrkxwXa.webp",
+            "山脇大人的手下：魔法喵喵":"https://iili.io/JrkTwXe.webp",
+            "最美妙的片刻":"https://iili.io/Jrk7pWP.webp"
+        },
+        "skill":{
+            "common":{
+                "巫師彈":4,
+                "魔莢":10,
+                "盧恩爆裂彈":9,
+                "毀滅":14,
+                "衝擊零度":9,
+                "奇蹟療法":5
+            },
+            "山脇大人的手下：魔法喵喵":{
+                "貓咪大魔法":14
+            },
+            "最美妙的片刻":{
+                "胭紅魔女":10
+            }
+        },
+		"passive skill":[]
+    },
+    "豐後 彌生":{
+        "icon":"https://iili.io/dxUcJkP.webp",
+        "style":{
+            "蟹手使魔":"https://iili.io/JrkY11e.webp",
+            "掌心上的美好":"https://iili.io/JrkaqYb.webp",
+            "夜空中的Shining Star":"https://iili.io/Jrkaycg.webp",
+            "Happy Legion":"https://iili.io/JrkEWkg.webp",
+            "賞花怪人糰子串":"https://iili.io/JrkVWv9.webp"
+        },
+        "skill":{
+            "common":{
+                "小鹹餅":5,
+                "蝴蝶餅":7,
+                "義式脆餅":9,
+                "不給糖就搗蛋":11,
+                "連發煙火":9,
+                "ー◯◯◯":8,
+                "泡泡炸裂者":12
+            },
+            "Happy Legion":{
+                "聖樂合唱團":13
+            },
+            "賞花怪人糰子串":{
+                "三色糰子亂射":15
+            }
+        },
+		"passive skill":[]
+    },
+    "神崎 阿黛爾海德":{
+        "icon":"https://iili.io/dxU062R.webp",
+        "style":{
+            "碧落的忍者":"https://iili.io/JrkOjS4.webp",
+            "微光的預兆":"https://iili.io/JrkkAYv.webp",
+            "東拼西湊忍法大亂鬥":"https://iili.io/Jrk81dG.webp",
+            "雪花的Hexerei":"https://iili.io/Jrk6iEN.webp",
+            "少女的休息時間":"https://iili.io/JrkPSFS.webp",
+            "向日葵":"https://iili.io/dKwtxyl.webp"
+        },
+        "skill":{
+            "common":{
+                "旋風":6,
+                "心意活性":5,
+                "一片冰心":8,
+                "滅殺影分身":14,
+                "淡雪":4,
+                "日日夜夜":9,
+                "盛夏的熱情":8
+            },
+            "雪花的Hexerei":{
+                "神崎流忍術‧冰塵":14
+            },
+            "少女的休息時間":{
+                "神崎流忍術‧散華":15
+            },
+            "向日葵":{
+                "紅球迴旋幻象":14
+            }
+        },
+		"passive skill":[]
+    },
+    "佐月 麻里":{
+        "icon":"https://iili.io/dxUEixt.webp",
+        "style":{
+            "生意和微笑":"https://iili.io/Jrkmct1.webp",
+            "嬌滴滴，聚人心":"https://iili.io/Jrkmblj.webp",
+            "甜美的Muzzle":"https://iili.io/JrkpzbI.webp",
+            "暗殺者忍法絡繹不絕":"https://iili.io/Jrkp8zP.webp",
+            "Crying Tears":"https://iili.io/JrkynEu.webp",
+            "高如豔陽":"https://iili.io/dKwgPmg.webp"
+        },
+        "skill":{
+            "common":{
+                "增強":6,
+                "飽和增強":9,
+                "增幅加農炮":8,
+                "鑽石塵":12,
+                "撒播":10,
+                "離別的早晨":9,
+                "海市蜃樓":8
+            },
+            "暗殺者忍法絡繹不絕":{
+                "廢墟‧幻想":10
+            },
+            "Crying Tears":{
+                "下一個主角就是你":14
+            },
+            "高如豔陽":{
+                "興高采烈陽光轟炸機":15
+            }
+        },
+		"passive skill":[]
+    }
+}

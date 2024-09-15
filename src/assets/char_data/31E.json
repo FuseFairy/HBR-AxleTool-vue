@@ -1,0 +1,134 @@
+{
+    "大島 一千子":{
+        "icon":"https://iili.io/dxUtqej.webp",
+        "style":{
+            "一千子的擁抱":"https://iili.io/JrDUWrP.webp",
+            "同床異夢消解時":"https://iili.io/JrDUNpa.webp",
+            "無窮慈愛的守護者":"https://iili.io/JrDULTG.webp",
+            "Sweet Phantasy":"https://iili.io/JrDgqGV.webp"
+        },
+        "skill":{
+            "common":{
+                "無畏之心":3,
+                "我不能輸":8,
+                "激昂壯志":10,
+                "慈愛的波動":9,
+                "下定決心的夜晚":3
+            },
+            "Sweet Phantasy":{
+                "送上誓言的證明吧！":16
+            }
+        },
+		"passive skill":[]
+    },
+    "大島 二以奈":{
+        "icon":"https://iili.io/dxUb3Ab.webp",
+        "style":{
+            "二以奈的氣質":"https://iili.io/JrDgVtf.webp",
+            "戰線伸展台":"https://iili.io/JrDgSwb.webp",
+            "迷茫的海邊":"https://iili.io/JrDgtAg.webp",
+            "Brand New Mind":"https://iili.io/JrDrCxf.webp",
+            "心緒昂揚溫泉鄉":"https://iili.io/JrDrRRe.webp"
+        },
+        "skill":{
+            "common":{
+                "碎華":5,
+                "櫻華":8,
+                "初戀":6,
+                "革命":10,
+                "純愛野心":14,
+                "純愛野心+":14,
+                "誘掖之途":9
+            },
+            "心緒昂揚溫泉鄉":{
+                "仁慈曼舞金風中":14
+            }
+        },
+		"passive skill":[]
+    },
+    "大島 三野里":{
+        "icon":"https://iili.io/dxg9S4V.webp",
+        "style":{
+            "三野里的疾馳":"https://iili.io/JrD4Hzb.webp",
+            "飛毛腿送貨員":"https://iili.io/JrD4h2S.webp",
+            "Realize Your Mind":"https://iili.io/JrD4ZZJ.webp"
+        },
+        "skill":{
+            "common":{
+                "衝刺硬刃":4,
+                "旋風硬刃":9,
+                "威力衝撞":10,
+                "飄然亢奮":14
+            }
+        },
+		"passive skill":[]
+    },
+    "大島 四葉草":{
+        "icon":"https://iili.io/dxgJWbe.webp",
+        "style":{
+            "四葉草的倦怠":"https://iili.io/JrD6Mwg.webp",
+            "Lollipop Break":"https://iili.io/JrDPFHP.webp",
+            "慵懶破滅":"https://iili.io/JrDPRRt.webp",
+            "慵懶睡衣之夜":"https://iili.io/JrDP8gV.webp"
+        },
+        "skill":{
+            "common":{
+                "增強":6,
+                "糖果爆裂彈":7,
+                "決戰前夕":7,
+                "夢寐以求的幻想覺醒":12,
+                "晚安":5
+            },
+            "慵懶睡衣之夜":{
+                "爆裂泡泡":13
+            }
+        },
+		"passive skill":[]
+    },
+    "大島 五十鈴":{
+        "icon":"https://iili.io/dxgd4vS.webp",
+        "style":{
+            "五十鈴的秘密":"https://iili.io/JrDinp9.webp",
+            "平穩的風情":"https://iili.io/JrDivQs.webp",
+            "通往勝利的鑰匙":"https://iili.io/JrDZhVn.webp",
+            "出浴夢想鄉":"https://iili.io/JrDZx8Q.webp"
+        },
+        "skill":{
+            "common":{
+                "麻煩製造機":6,
+                "勝利者留心的事":6,
+                "怒裂昂":8,
+                "魔炎閃獄門":14,
+                "鋒芒盡現":10
+            },
+            "出浴夢想鄉":{
+                "發燙的肉體":10
+            }
+        },
+		"passive skill":[]
+    },
+    "大島 六宇亞":{
+        "icon":"https://iili.io/dxg36Xe.webp",
+        "style":{
+            "六宇亞的陶醉":"https://iili.io/JrDDBYx.webp",
+            "狂喜奔馳":"https://iili.io/JrDD73J.webp",
+            "絕妙的工作":"https://iili.io/JrbJd9s.webp",
+            "危機太讚了":"https://iili.io/JrbqaIe.webp",
+            "初春迎風":"https://iili.io/JrbCVb1.webp"
+        },
+        "skill":{
+            "common":{
+                "回復":5,
+                "忘我沉醉":7,
+                "生存之業":9,
+                "迷幻痛楚":8,
+                "快感短跑！":11,
+                "陽光":6
+            },
+            "初春迎風":{
+                "迎來嶄新的早晨！":10
+            }
+        },
+		"passive skill":["又痛又爽~!"]
+    }
+}
