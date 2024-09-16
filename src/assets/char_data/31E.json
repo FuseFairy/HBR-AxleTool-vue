@@ -1,11 +1,11 @@
 {
     "大島 一千子":{
-        "icon":"https://iili.io/dxUtqej.webp",
+        "english name":"Ichiko_Ohshima",
         "style":{
-            "一千子的擁抱":"https://iili.io/JrDUWrP.webp",
-            "同床異夢消解時":"https://iili.io/JrDUNpa.webp",
-            "無窮慈愛的守護者":"https://iili.io/JrDULTG.webp",
-            "Sweet Phantasy":"https://iili.io/JrDgqGV.webp"
+            "一千子的擁抱":"001",
+            "同床異夢消解時":"002",
+            "無窮慈愛的守護者":"003",
+            "Sweet Phantasy":"004"
         },
         "skill":{
             "common":{
@@ -22,13 +22,13 @@
 		"passive skill":[]
     },
     "大島 二以奈":{
-        "icon":"https://iili.io/dxUb3Ab.webp",
+        "english name":"Niina_Ohshima",
         "style":{
-            "二以奈的氣質":"https://iili.io/JrDgVtf.webp",
-            "戰線伸展台":"https://iili.io/JrDgSwb.webp",
-            "迷茫的海邊":"https://iili.io/JrDgtAg.webp",
-            "Brand New Mind":"https://iili.io/JrDrCxf.webp",
-            "心緒昂揚溫泉鄉":"https://iili.io/JrDrRRe.webp"
+            "二以奈的氣質":"001",
+            "戰線伸展台":"002",
+            "迷茫的海邊":"003",
+            "Brand New Mind":"004",
+            "心緒昂揚溫泉鄉":"005"
         },
         "skill":{
             "common":{
@@ -47,11 +47,11 @@
 		"passive skill":[]
     },
     "大島 三野里":{
-        "icon":"https://iili.io/dxg9S4V.webp",
+        "english name":"Minori_Ohshima",
         "style":{
-            "三野里的疾馳":"https://iili.io/JrD4Hzb.webp",
-            "飛毛腿送貨員":"https://iili.io/JrD4h2S.webp",
-            "Realize Your Mind":"https://iili.io/JrD4ZZJ.webp"
+            "三野里的疾馳":"001",
+            "飛毛腿送貨員":"002",
+            "Realize Your Mind":"003"
         },
         "skill":{
             "common":{
@@ -64,12 +64,12 @@
 		"passive skill":[]
     },
     "大島 四葉草":{
-        "icon":"https://iili.io/dxgJWbe.webp",
+        "english name":"Yotsuha_Ohshima",
         "style":{
-            "四葉草的倦怠":"https://iili.io/JrD6Mwg.webp",
-            "Lollipop Break":"https://iili.io/JrDPFHP.webp",
-            "慵懶破滅":"https://iili.io/JrDPRRt.webp",
-            "慵懶睡衣之夜":"https://iili.io/JrDP8gV.webp"
+            "四葉草的倦怠":"001",
+            "Lollipop Break":"002",
+            "慵懶破滅":"003",
+            "慵懶睡衣之夜":"004"
         },
         "skill":{
             "common":{
@@ -86,12 +86,12 @@
 		"passive skill":[]
     },
     "大島 五十鈴":{
-        "icon":"https://iili.io/dxgd4vS.webp",
+        "english name":"Isuzu_Ohshima",
         "style":{
-            "五十鈴的秘密":"https://iili.io/JrDinp9.webp",
-            "平穩的風情":"https://iili.io/JrDivQs.webp",
-            "通往勝利的鑰匙":"https://iili.io/JrDZhVn.webp",
-            "出浴夢想鄉":"https://iili.io/JrDZx8Q.webp"
+            "五十鈴的秘密":"001",
+            "平穩的風情":"002",
+            "通往勝利的鑰匙":"004",
+            "出浴夢想鄉":"003"
         },
         "skill":{
             "common":{
@@ -108,13 +108,13 @@
 		"passive skill":[]
     },
     "大島 六宇亞":{
-        "icon":"https://iili.io/dxg36Xe.webp",
+        "english name":"Muua_Ohshima",
         "style":{
-            "六宇亞的陶醉":"https://iili.io/JrDDBYx.webp",
-            "狂喜奔馳":"https://iili.io/JrDD73J.webp",
-            "絕妙的工作":"https://iili.io/JrbJd9s.webp",
-            "危機太讚了":"https://iili.io/JrbqaIe.webp",
-            "初春迎風":"https://iili.io/JrbCVb1.webp"
+            "六宇亞的陶醉":"001",
+            "狂喜奔馳":"002",
+            "絕妙的工作":"003",
+            "危機太讚了":"004",
+            "初春迎風":"005"
         },
         "skill":{
             "common":{

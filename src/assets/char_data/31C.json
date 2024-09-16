@@ -1,13 +1,13 @@
 {
     "山脇 波昂 伊瓦爾":{
-        "icon":"https://iili.io/dxUI0Yu.webp",
+        "english name":"Ivar_Bon_Yamawaki",
         "style":{
-            "走自己的路":"https://iili.io/JrOtpl2.webp",
-            "魔王歸來":"https://iili.io/JrODAxa.webp",
-            "山脇大人心慌意亂":"https://iili.io/JrODtmF.webp",
-            "Ebon Knight":"https://iili.io/JrObJgp.webp",
-            "Holy Knight":"https://iili.io/JrObx14.webp",
-            "Daydream Believer":"https://iili.io/JrObVkP.webp"
+            "走自己的路":"001",
+            "魔王歸來":"002",
+            "山脇大人心慌意亂":"003",
+            "Ebon Knight":"004",
+            "Holy Knight":"005",
+            "Daydream Believer":"006"
         },
         "skill":{
             "common":{
@@ -30,14 +30,14 @@
 		"passive skill":[]
     },
     "櫻庭 星羅":{
-        "icon":"https://iili.io/dxUu1zx.webp",
+        "english name":"Seira_Sakuraba",
         "style":{
-            "水晶的指引":"https://iili.io/JrOmIna.webp",
-            "雨過天晴，心曠神怡":"https://iili.io/JrOyoBa.webp",
-            "妳今天的運勢是？":"https://iili.io/JrOyeEb.webp",
-            "在星海中浮沉的占星師":"https://iili.io/JrkF8CB.webp",
-            "對決！！空氣舞台":"https://iili.io/JrkKXMN.webp",
-            "Sanctuary Veil":"https://iili.io/d9F8xLl.webp"
+            "水晶的指引":"001",
+            "雨過天晴，心曠神怡":"002",
+            "妳今天的運勢是？":"003",
+            "在星海中浮沉的占星師":"004",
+            "對決！！空氣舞台":"005",
+            "Sanctuary Veil":"006"
         },
         "skill":{
             "common":{
@@ -60,13 +60,13 @@
 		"passive skill":[]
     },
     "天音 巫呼":{
-        "icon":"https://iili.io/dxU76G4.webp",
+        "english name":"Miko_Tenne",
         "style":{
-            "渴望悠久的魔術師":"https://iili.io/JrkoWoG.webp",
-            "望紅危渡夢浮橋":"https://iili.io/JrkxuJS.webp",
-            "神秘莫測的妳":"https://iili.io/JrkxwXa.webp",
-            "山脇大人的手下：魔法喵喵":"https://iili.io/JrkTwXe.webp",
-            "最美妙的片刻":"https://iili.io/Jrk7pWP.webp"
+            "渴望悠久的魔術師":"001",
+            "望紅危渡夢浮橋":"002",
+            "神秘莫測的妳":"003",
+            "山脇大人的手下：魔法喵喵":"004",
+            "最美妙的片刻":"005"
         },
         "skill":{
             "common":{
@@ -87,13 +87,13 @@
 		"passive skill":[]
     },
     "豐後 彌生":{
-        "icon":"https://iili.io/dxUcJkP.webp",
+        "english name":"Yayoi_Bungo",
         "style":{
-            "蟹手使魔":"https://iili.io/JrkY11e.webp",
-            "掌心上的美好":"https://iili.io/JrkaqYb.webp",
-            "夜空中的Shining Star":"https://iili.io/Jrkaycg.webp",
-            "Happy Legion":"https://iili.io/JrkEWkg.webp",
-            "賞花怪人糰子串":"https://iili.io/JrkVWv9.webp"
+            "蟹手使魔":"001",
+            "掌心上的美好":"002",
+            "夜空中的Shining Star":"003",
+            "Happy Legion":"004",
+            "賞花怪人糰子串":"005"
         },
         "skill":{
             "common":{
@@ -115,14 +115,14 @@
 		"passive skill":[]
     },
     "神崎 阿黛爾海德":{
-        "icon":"https://iili.io/dxU062R.webp",
+        "english name":"Adelheid_Kanzaki",
         "style":{
-            "碧落的忍者":"https://iili.io/JrkOjS4.webp",
-            "微光的預兆":"https://iili.io/JrkkAYv.webp",
-            "東拼西湊忍法大亂鬥":"https://iili.io/Jrk81dG.webp",
-            "雪花的Hexerei":"https://iili.io/Jrk6iEN.webp",
-            "少女的休息時間":"https://iili.io/JrkPSFS.webp",
-            "向日葵":"https://iili.io/dKwtxyl.webp"
+            "碧落的忍者":"001",
+            "微光的預兆":"002",
+            "東拼西湊忍法大亂鬥":"003",
+            "雪花的Hexerei":"004",
+            "少女的休息時間":"005",
+            "向日葵":"006"
         },
         "skill":{
             "common":{
@@ -147,14 +147,14 @@
 		"passive skill":[]
     },
     "佐月 麻里":{
-        "icon":"https://iili.io/dxUEixt.webp",
+        "english name":"Mari_Satsuki",
         "style":{
-            "生意和微笑":"https://iili.io/Jrkmct1.webp",
-            "嬌滴滴，聚人心":"https://iili.io/Jrkmblj.webp",
-            "甜美的Muzzle":"https://iili.io/JrkpzbI.webp",
-            "暗殺者忍法絡繹不絕":"https://iili.io/Jrkp8zP.webp",
-            "Crying Tears":"https://iili.io/JrkynEu.webp",
-            "高如豔陽":"https://iili.io/dKwgPmg.webp"
+            "生意和微笑":"001",
+            "嬌滴滴，聚人心":"002",
+            "甜美的Muzzle":"003",
+            "暗殺者忍法絡繹不絕":"004",
+            "Crying Tears":"005",
+            "高如豔陽":"006"
         },
         "skill":{
             "common":{

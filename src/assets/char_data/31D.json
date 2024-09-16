@@ -1,12 +1,12 @@
 {
     "二階堂 三鄉":{
-        "icon":"https://iili.io/dxU8G9t.webp",
+        "english name":"Misato_Nikaido",
         "style":{
-            "最年少名人":"https://iili.io/JrtVwhu.webp",
-            "今昔之感，思緒萬千":"https://iili.io/JrtgWzv.webp",
-            "甜蜜的悠閒時光":"https://iili.io/JPcjjBR.webp",
-            "至高無上的終局":"https://iili.io/JrtZrhX.webp",
-            "Holiday Ring a Bell":"https://iili.io/JrDnEiJ.webp"
+            "最年少名人":"001",
+            "今昔之感，思緒萬千":"002",
+            "甜蜜的悠閒時光":"004",
+            "至高無上的終局":"003",
+            "Holiday Ring a Bell":"005"
         },
         "skill":{
             "common":{
@@ -25,12 +25,12 @@
 		"passive skill":[]
     },
     "石井 色葉":{
-        "icon":"https://iili.io/dxUU2Lb.webp",
+        "english name":"Iroha_Ishii",
         "style":{
-            "輕鬆多彩":"https://iili.io/JrDlXwb.webp",
-            "色彩繽紛的靈感":"https://iili.io/JrD10v9.webp",
-            "純粹情感":"https://iili.io/JrDX7Eb.webp",
-            "破壞無彩色之牆":"https://iili.io/JrDeSwl.webp"
+            "輕鬆多彩":"001",
+            "色彩繽紛的靈感":"002",
+            "純粹情感":"003",
+            "破壞無彩色之牆":"004"
         },
         "skill":{
             "common":{
@@ -44,11 +44,11 @@
 		"passive skill":[]
     },
     "命 吹雪":{
-        "icon":"https://iili.io/dxUgaPj.webp",
+        "english name":"Fubuki_Mikoto",
         "style":{
-            "Metal Crazy":"https://iili.io/JrDkFHJ.webp",
-            "Silent Reverberations":"https://iili.io/JrDkzKX.webp",
-            "末日要幹嘛？":"https://iili.io/JrDk5N4.webp"
+            "Metal Crazy":"001",
+            "Silent Reverberations":"002",
+            "末日要幹嘛？":"003"
         },
         "skill":{
             "common":{
@@ -61,13 +61,13 @@
 		"passive skill":[]
     },
     "室伏 理沙":{
-        "icon":"https://iili.io/dxUr81j.webp",
+        "english name":"Risa_Murofushi",
         "style":{
-            "母愛的接球手":"https://iili.io/JrDk4bR.webp",
-            "痛痛飛走～♪":"https://iili.io/JrDkm5G.webp",
-            "蔚藍之花":"https://iili.io/JrDvxzQ.webp",
-            "趕快回家吧":"https://iili.io/JrDvY7a.webp",
-            "潛入，面帶笑容參加技術交流會":"https://iili.io/JrDvUE7.webp"
+            "母愛的接球手":"001",
+            "痛痛飛走～♪":"002",
+            "蔚藍之花":"003",
+            "趕快回家吧":"004",
+            "潛入，面帶笑容參加技術交流會":"005"
         },
         "skill":{
             "common":{
@@ -86,12 +86,12 @@
 		"passive skill":[]
     },
     "伊達 朱里":{
-        "icon":"https://iili.io/dxU63AB.webp",
+        "english name":"Akari_Date",
         "style":{
-            "悲觀王牌":"https://iili.io/JrD83jR.webp",
-            "完美接招":"https://iili.io/JrD8uj4.webp",
-            "網球場惡魔":"https://iili.io/JrD8Mwx.webp",
-            "Holiday Star Night":"https://iili.io/JrD8j6P.webp"
+            "悲觀王牌":"001",
+            "完美接招":"002",
+            "網球場惡魔":"003",
+            "Holiday Star Night":"004"
         },
         "skill":{
             "common":{
@@ -108,13 +108,13 @@
 		"passive skill":[]
     },
     "瑞原 藍娜":{
-        "icon":"https://iili.io/dxUPT0b.webp",
+        "english name":"Aina_Mizuhara",
         "style":{
-            "深海的學習者":"https://iili.io/JrDSdl9.webp",
-            "來自深淵的邀請":"https://iili.io/JrDSCoQ.webp",
-            "品嘗深奧滋味":"https://iili.io/JrDS7Dv.webp",
-            "禁錮虎鯨":"https://iili.io/JrDSGUX.webp",
-            "衝鋒！擊刺！鮪魚！":"https://iili.io/JPcw9Cx.webp"
+            "深海的學習者":"001",
+            "來自深淵的邀請":"002",
+            "品嘗深奧滋味":"003",
+            "禁錮虎鯨":"004",
+            "衝鋒！擊刺！鮪魚！":"005"
         },
         "skill":{
             "common":{

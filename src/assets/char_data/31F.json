@@ -1,12 +1,12 @@
 {
     "柳 美音":{
-        "icon":"https://iili.io/dxgRWpn.webp",
+        "english name":"Mion_Yanagi",
         "style":{
-            "皇室級管家":"https://iili.io/JrbMSzF.webp",
-            "管家的素養":"https://iili.io/dWBAKRs.webp",
-            "滅私奉公的誠信":"https://iili.io/Jrbjmla.webp",
-            "Wild Rose":"https://iili.io/JrbU1ov.webp",
-            "夜風中的Chill Time":"https://iili.io/JrbPE3Q.webp"
+            "皇室級管家":"001",
+            "管家的素養":"003",
+            "滅私奉公的誠信":"002",
+            "Wild Rose":"004",
+            "夜風中的Chill Time":"005"
         },
         "skill":{
             "common":{
@@ -25,13 +25,13 @@
 		"passive skill":[]
     },
     "丸山 奏多":{
-        "icon":"https://iili.io/dxg5ZoG.webp",
+        "english name":"Kanata_Maruyama",
         "style":{
-            "小巧高尚":"https://iili.io/JrmdK9n.webp",
-            "端麗的大小姐":"https://iili.io/JrmqsWu.webp",
-            "林間隙光的庭院":"https://iili.io/JrmBBJp.webp",
-            "持續進化的感知能力":"https://iili.io/Jrmow74.webp",
-            "微笑綻放":"https://iili.io/JP0qBSe.webp"
+            "小巧高尚":"001",
+            "端麗的大小姐":"002",
+            "林間隙光的庭院":"003",
+            "持續進化的感知能力":"004",
+            "微笑綻放":"005"
         },
         "skill":{
             "common":{
@@ -50,11 +50,11 @@
 		"passive skill":[]
     },
     "華村 詩紀":{
-        "icon":"https://iili.io/dxg1dOB.webp",
+        "english name":"Shiki_Hanamura",
         "style":{
-            "危險戀愛指揮家":"https://iili.io/Jrmap71.webp",
-            "林間隙光的奏鳴曲":"https://iili.io/Jrmc2Lv.webp",
-            "妳的Unisono":"https://iili.io/Jrmcopn.webp"
+            "危險戀愛指揮家":"001",
+            "林間隙光的奏鳴曲":"002",
+            "妳的Unisono":"003"
         },
         "skill":{
             "common":{
@@ -68,12 +68,12 @@
 		"passive skill":[]
     },
     "松岡 綺羅路":{
-        "icon":"https://iili.io/dxgEsn9.webp",
+        "english name":"Chiroru_Matsuoka",
         "style":{
-            "天才炮灰":"https://iili.io/Jrmh8Jf.webp",
-            "暗地裡的努力":"https://iili.io/JrmOOhl.webp",
-            "追風逐電，滅亡的狼煙":"https://iili.io/JrmUeQj.webp",
-            "秘密的咖啡小憩":"https://iili.io/dWBYK42.webp"
+            "天才炮灰":"001",
+            "暗地裡的努力":"002",
+            "追風逐電，滅亡的狼煙":"003",
+            "秘密的咖啡小憩":"004"
         },
         "skill":{
             "common":{
@@ -91,13 +91,13 @@
 		"passive skill":[]
     },
     "夏目 祈":{
-        "icon":"https://iili.io/dxgMFxS.webp",
+        "english name":"Inori_Natsume",
         "style":{
-            "天誅斬影":"https://iili.io/Jrmywlt.webp",
-            "彼岸的劊子手":"https://iili.io/Jrp3JR9.webp",
-            "寒光劍影":"https://iili.io/JrpCAxt.webp",
-            "衣香夢蝶":"https://iili.io/JrpogKg.webp",
-            "芳華青金石":"https://iili.io/dkUebzx.webp"
+            "天誅斬影":"001",
+            "彼岸的劊子手":"002",
+            "寒光劍影":"003",
+            "衣香夢蝶":"004",
+            "芳華青金石":"005"
         },
         "skill":{
             "common":{
@@ -118,12 +118,12 @@
 		"passive skill":[]
     },
     "黑澤 真希":{
-        "icon":"https://iili.io/dxgVFkv.webp",
+        "english name":"Maki_Kurosawa",
         "style":{
-            "Highway of Angels":"https://iili.io/JrplKXa.webp",
-            "唯我獨尊":"https://iili.io/JrpGtKG.webp",
-            "紀念日的風馳電掣":"https://iili.io/JrphgjV.webp",
-            "青翠疾風走死走愛":"https://iili.io/dWBlYa2.webp"
+            "Highway of Angels":"001",
+            "唯我獨尊":"002",
+            "紀念日的風馳電掣":"003",
+            "青翠疾風走死走愛":"004"
         },
         "skill":{
             "common":{

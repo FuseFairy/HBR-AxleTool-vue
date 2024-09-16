@@ -1,9 +1,9 @@
 {
     "立華 奏":{
-        "icon":"https://iili.io/dxrzM0P.png",
+        "english name":"Kanade_Tachibana",
         "style":{
-            "Earth Angel":"https://iili.io/J4zDnV4.webp",
-            "翱穹之劍":"https://iili.io/J4zb3qQ.webp"
+            "Earth Angel":"001",
+            "翱穹之劍":"002"
         },
         "skill":{
             "common":{
@@ -20,10 +20,10 @@
 		"passive skill":[]
     },
     "仲村 百合":{
-        "icon":"https://iili.io/dxrxAAJ.webp",
+        "english name":"Yuri_Nakamura",
         "style":{
-            "Rain Fire":"https://iili.io/J4zpE0l.webp",
-            "平凡的非日常":"https://iili.io/J4zyVEv.webp"
+            "Rain Fire":"001",
+            "平凡的非日常":"002"
         },
         "skill":{
             "common":{
@@ -40,10 +40,10 @@
 		"passive skill":[]
     },
     "入江 美雪":{
-        "icon":"https://iili.io/dxrIa2t.webp",
+        "english name":"Miyuki_Irie",
         "style":{
-            "Pure Cosmos":"https://iili.io/J4I9x8N.webp",
-            "Faraway Eden":"https://iili.io/J4I9OcQ.webp"
+            "Pure Cosmos":"001",
+            "Faraway Eden":"002"
         },
         "skill":{
             "common":{
@@ -59,9 +59,9 @@
 		"passive skill":[]
     },
     "渕田 久子":{
-        "icon":"https://iili.io/dxrIs8F.webp",
+        "english name":"Hisako_Fuchida",
         "style":{
-            "Finally found our silver lining":"https://iili.io/J4IHpkB.webp"
+            "Finally found our silver lining":"001"
         },
         "skill":{
             "common":{

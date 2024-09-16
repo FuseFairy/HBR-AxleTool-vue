@@ -1,11 +1,11 @@
 {
     "卡羅爾 利帕":{
-        "icon":"https://iili.io/dxgN7Tb.webp",
+        "english name":"Carole_Reaper",
         "style":{
-            "星之繼承者":"https://iili.io/Jry2kLG.webp",
-            "心之風景":"https://iili.io/JryKBeI.webp",
-            "泛紫之城":"https://iili.io/JZLMQaV.webp",
-            "摩天樓的暗黑英雄":"https://iili.io/JryKSEJ.webp"
+            "星之繼承者":"001",
+            "心之風景":"002",
+            "泛紫之城":"004",
+            "摩天樓的暗黑英雄":"003"
         },
         "skill":{
             "common":{
@@ -19,13 +19,13 @@
 		"passive skill":[]
     },
     "李 映夏":{
-        "icon":"https://iili.io/dxggPEb.webp",
+        "english name":"Yingxia_Li",
         "style":{
-            "臥龍的代言人":"https://iili.io/JryTccF.webp",
-            "武成在天":"https://iili.io/JryRKnR.webp",
-            "吾不勇，與無將同":"https://iili.io/JrylZRS.webp",
-            "引路一襲露草色":"https://iili.io/Jry0BzF.webp",
-            "春宵我愛你":"https://iili.io/Jry011f.webp"
+            "臥龍的代言人":"001",
+            "武成在天":"002",
+            "吾不勇，與無將同":"003",
+            "引路一襲露草色":"004",
+            "春宵我愛你":"005"
         },
         "skill":{
             "common":{
@@ -46,12 +46,12 @@
 		"passive skill":[]
     },
     "艾琳 雷德梅因":{
-        "icon":"https://iili.io/dxg4KKb.webp",
+        "english name":"Irene_Redmayne",
         "style":{
-            "難解事件的探求者":"https://iili.io/JryEfMg.webp",
-            "貝克街的軌跡":"https://iili.io/JryEutt.webp",
-            "藍色石榴石探案":"https://iili.io/JryEPfa.webp",
-            "月下的捉迷藏":"https://iili.io/JZLia2V.webp"
+            "難解事件的探求者":"001",
+            "貝克街的軌跡":"002",
+            "藍色石榴石探案":"003",
+            "月下的捉迷藏":"004"
         },
         "skill":{
             "common":{
@@ -69,13 +69,13 @@
 		"passive skill":[]
     },
     "芙里提卡 巴拉克里希南":{
-        "icon":"https://iili.io/dxg6EkQ.webp",
+        "english name":"Vritika_Balakrishnan",
         "style":{
-            "華麗的飛天女神":"https://iili.io/JryGk1s.webp",
-            "前途未卜的吠陀支":"https://iili.io/JryGiQ9.webp",
-            "華麗的日常":"https://iili.io/JryMf3J.webp",
-            "凜然的杜爾迦":"https://iili.io/JryMMGe.webp",
-            "美麗的聖虎":"https://iili.io/JZQdJsV.webp"
+            "華麗的飛天女神":"001",
+            "前途未卜的吠陀支":"002",
+            "華麗的日常":"003",
+            "凜然的杜爾迦":"004",
+            "美麗的聖虎":"005"
         },
         "skill":{
             "common":{
@@ -93,12 +93,12 @@
 		"passive skill":[]
     },
     "瑪麗亞 黛 安傑利斯":{
-        "icon":"https://iili.io/dxgP8Ku.webp",
+        "english name":"Maria_de_Angelis",
         "style":{
-            "真紅色的修女":"https://iili.io/J4z4zKu.webp",
-            "罪惡與榮耀":"https://iili.io/J4z4iW7.webp",
-            "血色浮雕":"https://iili.io/J4z67dG.webp",
-            "剎那的邂逅":"https://iili.io/J4z6hdb.webp"
+            "真紅色的修女":"001",
+            "罪惡與榮耀":"002",
+            "血色浮雕":"003",
+            "剎那的邂逅":"004"
         },
         "skill":{
             "common":{
@@ -115,13 +115,13 @@
 		"passive skill":[]
     },
     "夏洛特 斯可波夫斯加":{
-        "icon":"https://iili.io/dxgsBB1.webp",
+        "english name":"Charlotta_Skopovskaya",
         "style":{
-            "北風使者":"https://iili.io/J4zPNFn.webp",
-            "雪花的鄉愁":"https://iili.io/J4zPiFe.webp",
-            "逆境盛放之花":"https://iili.io/J4ziAHG.webp",
-            "永久的思念":"https://iili.io/J4ziiWN.webp",
-            "聖潔新娘":"https://iili.io/d9F8pa9.webp"
+            "北風使者":"001",
+            "雪花的鄉愁":"002",
+            "逆境盛放之花":"003",
+            "永久的思念":"004",
+            "聖潔新娘":"005"
         },
         "skill":{
             "common":{
