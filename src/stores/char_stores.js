@@ -2,13 +2,22 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useCharStore = defineStore('character_select', () => {
-  const selectedTeam = ref(null)
-  const selectedCharacter = ref(null)
-  const selectedStyle = ref(null)
+  const selections = ref({})
+
+  const setSelection = (buttonKey, type, value) => {
+    if (!selections.value[buttonKey]) {
+      selections.value[buttonKey] = {}
+    }
+    selections.value[buttonKey][type] = value
+  }
+
+  const getSelection = (buttonKey, type) => {
+    return selections.value[buttonKey]?.[type] || null
+  }
 
   return {
-    selectedTeam,
-    selectedCharacter,
-    selectedStyle
+    selections,
+    setSelection,
+    getSelection
   }
 })

@@ -7,6 +7,13 @@ import { fetchStyleOptions } from '@/api/styleData';
 
 const charStore = useCharStore()
 
+const props = defineProps({
+  buttonKey: {
+    type: Number,
+    required: true,
+  },
+});
+
 const team_options = [
   {value: '30G', name: '30G', icon: '/src/assets/team_icon/30G.webp'},
   {value: '31A', name: '31A', icon: '/src/assets/team_icon/31A.webp'},
@@ -24,31 +31,42 @@ const style_options = ref([]);
 const disabled_char = ref(true)
 const disabled_style = ref(true)
 
-watch(() => charStore.selectedTeam, async (newTeam) => {
+const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'))
+const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'))
+const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'))
+
+watch(selectedTeam, async (newTeam) => {
+  charStore.setSelection(props.buttonKey, 'team', newTeam)
   if (newTeam) {
     character_options.value = await fetchCharacterOptions(newTeam);
-    charStore.selectedCharacter = null
-    charStore.selectedStyle = null
+    selectedCharacter.value = null
+    selectedStyle.value = null
     disabled_char.value = false
   } else {
     character_options.value = [];
-    charStore.selectedCharacter = null
-    charStore.selectedStyle = null
+    selectedCharacter.value = null
+    selectedStyle.value = null
     disabled_char.value = true
     disabled_style.value = true
   }
 });
-watch(() => charStore.selectedCharacter, async (newChar) => {
+
+watch(selectedCharacter, async (newChar) => {
+  charStore.setSelection(props.buttonKey, 'character', newChar)
   if (newChar) {
-    style_options.value = await fetchStyleOptions(charStore.selectedCharacter, charStore.selectedTeam);
-    charStore.selectedStyle = null
+    style_options.value = await fetchStyleOptions(newChar, selectedTeam.value);
+    selectedStyle.value = null
     disabled_style.value = false
-  }
-  else{
+  } else {
     style_options.value = []
-    charStore.selectedStyle = null
+    selectedStyle.value = null
     disabled_style.value = true
   }
+});
+
+watch(selectedStyle, (newStyle) => {
+  charStore.setSelection(props.buttonKey, 'style', newStyle)
+  console.log(charStore.selections)
 });
 </script>
 
@@ -57,7 +75,7 @@ watch(() => charStore.selectedCharacter, async (newChar) => {
     <div class="section">
       <label>Team</label>
       <Multiselect
-        v-model="charStore.selectedTeam"
+        v-model="selectedTeam"
         placeholder="Select team"
         label="name"
         :options="team_options">
@@ -78,7 +96,7 @@ watch(() => charStore.selectedCharacter, async (newChar) => {
     <div class="section">
       <label>Character</label>
       <Multiselect
-        v-model="charStore.selectedCharacter"
+        v-model="selectedCharacter"
         placeholder="Select character"
         label="name"
         :disabled="disabled_char"
@@ -100,7 +118,7 @@ watch(() => charStore.selectedCharacter, async (newChar) => {
     <div class="section">
       <label>Style</label>
       <Multiselect
-        v-model="charStore.selectedStyle"
+        v-model="selectedStyle"
         placeholder="Select style"
         label="name"
         :disabled="disabled_style"

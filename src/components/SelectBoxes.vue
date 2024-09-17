@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
+import SidebarSelect from '@/components/SelectChar.vue';
 
-// 定義 6 個按鈕，並給每個按鈕一個唯一的 key
 const buttons = ref([
   { key: 1, label: 'Button 1' },
   { key: 2, label: 'Button 2' },
@@ -11,8 +11,9 @@ const buttons = ref([
   { key: 6, label: 'Button 6' },
 ]);
 
-const handleClick = (key) => {
-  console.log('Button clicked:', key);
+const activeComponent = ref(null);
+const handleBoxClick = (key) => {
+  activeComponent.value = key;
 };
 </script>
 
@@ -21,11 +22,12 @@ const handleClick = (key) => {
     <button
       v-for="button in buttons"
       :key="button.key"
-      @click="handleClick(button.key)"
+      @click="handleBoxClick(button.key)"
       class="circle-button">
 			<img class="add_icon" src="@/assets/custom_icon/add.svg" alt="Add"> 
     </button>
   </div>
+  <SidebarSelect v-if="activeComponent !== null" :buttonKey="activeComponent" />
 </template>
 
 <style scoped>

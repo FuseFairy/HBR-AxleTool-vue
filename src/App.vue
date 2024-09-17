@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import './assets/main.css';
-import SidebarSelect from '@/components/SidebarSelect.vue';
-import SelectBoxes from '@/components/select_boxes.vue'
+import SidebarChar from '@/components/SelectChar.vue';
+import SelectBoxes from '@/components/SelectBoxes.vue'
 import menuIcon from '@/assets/custom_icon/menu.svg';
 import closeIcon from '@/assets/custom_icon/close.svg';
 
@@ -28,7 +28,6 @@ const getIconSrc = () => {
       </button>
     </nav>
     <aside :class="{ show: isSidebarVisible }">
-      <SidebarSelect />
     </aside>
   <main class="scrollbar-style-1">
     <div class="box_container"><SelectBoxes /></div>
