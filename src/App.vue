@@ -2,10 +2,11 @@
 import { ref } from 'vue';
 import './assets/main.css';
 import SidebarSelect from '@/components/SidebarSelect.vue';
+import SelectBoxes from '@/components/select_boxes.vue'
 import menuIcon from '@/assets/custom_icon/menu.svg';
 import closeIcon from '@/assets/custom_icon/close.svg';
 
-const isSidebarVisible = ref(true);
+const isSidebarVisible = ref(false);
 const toggleSidebar = () => {
   isSidebarVisible.value = !isSidebarVisible.value;
 };
@@ -30,7 +31,8 @@ const getIconSrc = () => {
       <SidebarSelect />
     </aside>
   <main class="scrollbar-style-1">
-    <p>Main</p>
+    <div class="box_container"><SelectBoxes /></div>
+    <div class="axle">axle</div>
   </main>
   </div>
 </template>
@@ -105,7 +107,7 @@ aside {
   grid-area: sidebar;
   background-color: rgb(37, 33, 33);
   color: white;
-  display: block;
+  display: none;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
 }
@@ -126,7 +128,23 @@ main {
   color: white;
   margin-top: 3rem;
   overflow-y: scroll;
+  box-sizing: border-box;
+  padding: 1rem;
   height: calc(100vh - 3rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 
+    "box_container"
+    "axle";
+}
+.box_container{
+  grid-area: box_container;
+  height: 20vh;
+}
+.axle{
+  padding-top: 0.5rem;
+  grid-area: axle;;
 }
 .scrollbar-style-1::-webkit-scrollbar {
     width: 5px;
