@@ -4,8 +4,6 @@ export async function fetchStyleOptions(characterName, team) {
   try {
     const response = await axios.get(`/src/assets/char_data/${team}.json`);
     const data = response.data;
-    console.log(data)
-
     const characterData = data[characterName];
 
     if (!characterData || !characterData.style) {
