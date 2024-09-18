@@ -100,6 +100,9 @@ const closeContainer = () => {
   height: 50px;
 }
 @media (max-width: 800px) {
+  .button-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
   .circle-button {
     width: 100px;
     height: 100px;
