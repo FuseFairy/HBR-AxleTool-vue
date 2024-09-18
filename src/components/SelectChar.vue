@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch} from 'vue'
+import { ref, watch, computed} from 'vue'
 import Multiselect from '@vueform/multiselect'
 import { useCharStore } from '@/stores/char_stores'
 import { fetchCharacterOptions } from '@/api/charData';
@@ -14,7 +14,7 @@ const props = defineProps({
   },
 });
 
-const team_options = [
+const teamOptions = [
   {value: '30G', name: '30G', icon: '/src/assets/team_icon/30G.webp'},
   {value: '31A', name: '31A', icon: '/src/assets/team_icon/31A.webp'},
   {value: '31B', name: '31B', icon: '/src/assets/team_icon/31B.webp'},
@@ -26,115 +26,112 @@ const team_options = [
   {value: 'Angel beats!', name: 'Angel Beats!', icon: '/src/assets/team_icon/Angel Beats!.webp'}
 ];
 
-const character_options = ref([]);
-const style_options = ref([]);
-const disabled_char = ref(true)
-const disabled_style = ref(true)
+const characterOptions = ref([]);
+const styleOptions = ref([]);
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'))
 const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'))
 const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'))
 
+const isCharDisabled = computed(() => !selectedTeam.value);
+const isStyleDisabled = computed(() => !selectedCharacter.value);
+
 watch(selectedTeam, async (newTeam) => {
-  charStore.setSelection(props.buttonKey, 'team', newTeam)
+  charStore.setSelection(props.buttonKey, 'team', newTeam);
   if (newTeam) {
-    character_options.value = await fetchCharacterOptions(newTeam);
-    selectedCharacter.value = null
-    selectedStyle.value = null
-    disabled_char.value = false
+    characterOptions.value = await fetchCharacterOptions(newTeam);
+    selectedCharacter.value = null;
+    selectedStyle.value = null;
   } else {
-    character_options.value = [];
-    selectedCharacter.value = null
-    selectedStyle.value = null
-    disabled_char.value = true
-    disabled_style.value = true
+    characterOptions.value = [];
+    selectedCharacter.value = null;
+    selectedStyle.value = null;
   }
 });
 
 watch(selectedCharacter, async (newChar) => {
-  charStore.setSelection(props.buttonKey, 'character', newChar)
+  charStore.setSelection(props.buttonKey, 'character', newChar);
   if (newChar) {
-    style_options.value = await fetchStyleOptions(newChar, selectedTeam.value);
-    selectedStyle.value = null
-    disabled_style.value = false
+    styleOptions.value = await fetchStyleOptions(newChar, selectedTeam.value);
+    selectedStyle.value = null;
   } else {
-    style_options.value = []
-    selectedStyle.value = null
-    disabled_style.value = true
+    styleOptions.value = [];
+    selectedStyle.value = null;
   }
 });
 
 watch(selectedStyle, (newStyle) => {
-  charStore.setSelection(props.buttonKey, 'style', newStyle)
-  console.log(charStore.selections)
+  charStore.setSelection(props.buttonKey, 'style', newStyle);
 });
 </script>
 
 <template>
-  <div class="container">
-    <div class="section">
-      <label>Team</label>
-      <Multiselect
-        v-model="selectedTeam"
-        placeholder="Select team"
-        label="name"
-        :options="team_options">
-        <template v-slot:singlelabel="{ value }">
-          <div class="multiselect-single-label">
-            <img class="label-icon" :src="value.icon">
-            <span :title="value.name">{{ value.name }}</span>
-          </div>
-        </template>
+  <div class="overlay">
+    <div class="container">
+      <div class="section">
+        <label>Team</label>
+        <Multiselect
+          v-model="selectedTeam"
+          placeholder="Select team"
+          label="name"
+          :options="teamOptions">
+          <template v-slot:singlelabel="{ value }">
+            <div class="multiselect-single-label">
+              <img class="label-icon" :src="value.icon">
+              <span :title="value.name">{{ value.name }}</span>
+            </div>
+          </template>
 
-        <template v-slot:option="{ option }">
-          <img class="option-icon" :src="option.icon">
-          <span :title="option.name">{{ option.name }}</span>
-        </template>
-      </Multiselect>
-    </div>
+          <template v-slot:option="{ option }">
+            <img class="option-icon" :src="option.icon">
+            <span :title="option.name">{{ option.name }}</span>
+          </template>
+        </Multiselect>
+      </div>
 
-    <div class="section">
-      <label>Character</label>
-      <Multiselect
-        v-model="selectedCharacter"
-        placeholder="Select character"
-        label="name"
-        :disabled="disabled_char"
-        :options="character_options">
-        <template v-slot:singlelabel="{ value }">
-          <div class="multiselect-single-label">
-            <img class="label-icon" :src="value.icon"> 
-            <span :title="value.name">{{ value.name }}</span>
-          </div>
-        </template>
+      <div class="section">
+        <label>Character</label>
+        <Multiselect
+          v-model="selectedCharacter"
+          placeholder="Select character"
+          label="name"
+          :disabled="isCharDisabled"
+          :options="characterOptions">
+          <template v-slot:singlelabel="{ value }">
+            <div class="multiselect-single-label">
+              <img class="label-icon" :src="value.icon"> 
+              <span :title="value.name">{{ value.name }}</span>
+            </div>
+          </template>
 
-        <template v-slot:option="{ option }">
-          <img class="option-icon" :src="option.icon"> 
-          <span :title="option.name">{{ option.name }}</span>
-        </template>
-      </Multiselect>
-    </div>
+          <template v-slot:option="{ option }">
+            <img class="option-icon" :src="option.icon"> 
+            <span :title="option.name">{{ option.name }}</span>
+          </template>
+        </Multiselect>
+      </div>
 
-    <div class="section">
-      <label>Style</label>
-      <Multiselect
-        v-model="selectedStyle"
-        placeholder="Select style"
-        label="name"
-        :disabled="disabled_style"
-        :options="style_options">
-        <template v-slot:singlelabel="{ value }">
-          <div class="multiselect-single-label">
-            <img class="label-icon" :src="value.icon">
-            <span :title="value.name">{{ value.name }}</span>
-          </div>
-        </template>
+      <div class="section">
+        <label>Style</label>
+        <Multiselect
+          v-model="selectedStyle"
+          placeholder="Select style"
+          label="name"
+          :disabled="isStyleDisabled"
+          :options="styleOptions">
+          <template v-slot:singlelabel="{ value }">
+            <div class="multiselect-single-label">
+              <img class="label-icon" :src="value.icon">
+              <span :title="value.name">{{ value.name }}</span>
+            </div>
+          </template>
 
-        <template v-slot:option="{ option }">
-          <img class="option-icon" :src="option.icon">
-          <span :title="option.name">{{ option.name }}</span>
-        </template>
-      </Multiselect>
+          <template v-slot:option="{ option }">
+            <img class="option-icon" :src="option.icon">
+            <span :title="option.name">{{ option.name }}</span>
+          </template>
+        </Multiselect>
+      </div>
     </div>
   </div>
 </template>
@@ -147,10 +144,32 @@ span{
   text-overflow: ellipsis;
   display: inline-block;
 }
+.section{
+  padding-top: 1rem;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 800;
+  backdrop-filter: blur(5px);
+}
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(19, 18, 18);
+  height: 50vh;
+  width: 31%;
+  box-sizing: border-box;
+  padding: 1rem;
+  z-index: 900;
 }
 .option-icon,
 .label-icon{
@@ -202,5 +221,9 @@ span{
 :deep(.multiselect-clear-icon:focus) {
     background-color: #999;
 }
-
+@media(max-width: 800px) {
+  .container{
+    width: 90%;
+  }
+}
 </style>
