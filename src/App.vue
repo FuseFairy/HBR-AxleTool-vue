@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import './assets/main.css';
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import menuIcon from '@/assets/custom_icon/menu.svg';
@@ -138,6 +138,7 @@ main {
 }
 .box_container{
   grid-area: box_container;
+  margin: 10px;
   height: 20vh;
 }
 .axle{
@@ -161,6 +162,11 @@ main {
   }
   aside {
     width: 100%;
+  }
+}
+@media(max-width: 450px) {
+  .box_container {
+    height: 30vh;
   }
 }
 </style>

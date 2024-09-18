@@ -1,6 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useCharStore } from '@/stores/char_stores';
 import SidebarSelect from '@/components/SelectChar.vue';
+
+const charStore = useCharStore();
 
 const buttons = ref([
   { key: 1, label: 'Button 1' },
@@ -15,19 +18,33 @@ const activeComponent = ref(null);
 const handleBoxClick = (key) => {
   activeComponent.value = key;
 };
+
+const closeContainer = () => {
+  activeComponent.value = null;
+};
 </script>
 
 <template>
-  <div class="button-container">
-    <button
-      v-for="button in buttons"
-      :key="button.key"
-      @click="handleBoxClick(button.key)"
-      class="circle-button">
-			<img class="add_icon" src="@/assets/custom_icon/add.svg" alt="Add"> 
-    </button>
-  </div>
-  <SidebarSelect v-if="activeComponent !== null" :buttonKey="activeComponent" />
+<div class="button-container">
+  <button
+    v-for="button in buttons"
+    :key="button.key"
+    @click="handleBoxClick(button.key)"
+    :class="{
+      'circle-button selected-button': charStore.selections[button.key].img !== null,
+      'circle-button add-button': charStore.selections[button.key].img === null
+    }">
+    <img v-if="charStore.selections[button.key].img !== null" 
+         class="char-img" 
+         :src="charStore.selections[button.key].img" 
+         :alt="charStore.selections[button.key].style">
+    <img v-else 
+         class="icon-img" 
+         src="@/assets/custom_icon/add.svg" 
+         alt="Add">
+  </button>
+</div>
+  <SidebarSelect v-if="activeComponent !== null" :buttonKey="activeComponent" @close="closeContainer" />
 </template>
 
 <style scoped>
@@ -40,36 +57,59 @@ const handleBoxClick = (key) => {
   height: 100%;
 }
 .circle-button {
-  width: 100px;
-  height: 100px;
   border-radius: 50%;
-  border: none;
-  background-color: rgba(79, 74, 74, 0.5);
+  width: 120px;
+  height: 120px;
+  aspect-ratio: 1 / 1;
   font-size: 16px;
+  overflow: hidden;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(79, 74, 74, 0.5);
+}
+.selected-button {
+  border: none;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(188, 115, 194, 0.8);
+}
+.selected-button:hover{
+  box-shadow: 0 0 15px rgba(188, 115, 194, 0.8);
+}
+.selected-button:hover .char-img {
+  transform: scale(1.1);
+}
+.char-img{
+  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+.add-button {
+  border: none;
   transition: background-color 0.3s ease;
 }
-.circle-button:hover {
+.add-button:hover {
   background-color: rgba(204, 201, 201, 0.5);
 }
-.circle-button:hover .add_icon{
+.add-button:hover .icon-img {
 	filter: invert(1);
+}
+.icon-img {
+  width: 50px;
+  height: 50px;
 }
 @media (max-width: 800px) {
   .circle-button {
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
     font-size: 14px;
   }
 }
-
-@media (max-width: 400px) {
+@media (max-width: 390px) {
   .circle-button {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     font-size: 12px;
   }
 }

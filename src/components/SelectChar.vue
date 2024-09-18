@@ -1,11 +1,11 @@
 <script setup>
-import { ref, watch, computed} from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import Multiselect from '@vueform/multiselect'
 import { useCharStore } from '@/stores/char_stores'
 import { fetchCharacterOptions } from '@/api/charData';
 import { fetchStyleOptions } from '@/api/styleData';
 
-const charStore = useCharStore()
+const charStore = useCharStore();
 
 const props = defineProps({
   buttonKey: {
@@ -15,26 +15,36 @@ const props = defineProps({
 });
 
 const teamOptions = [
-  {value: '30G', name: '30G', icon: '/src/assets/team_icon/30G.webp'},
-  {value: '31A', name: '31A', icon: '/src/assets/team_icon/31A.webp'},
-  {value: '31B', name: '31B', icon: '/src/assets/team_icon/31B.webp'},
-  {value: '31C', name: '31C', icon: '/src/assets/team_icon/31C.webp'},
-  {value: '31D', name: '31D', icon: '/src/assets/team_icon/31D.webp'},
-  {value: '31E', name: '31E', icon: '/src/assets/team_icon/31E.webp'},
-  {value: '31F', name: '31F', icon: '/src/assets/team_icon/31F.webp'},
-  {value: '31X', name: '31X', icon: '/src/assets/team_icon/31X.webp'},
-  {value: 'Angel beats!', name: 'Angel Beats!', icon: '/src/assets/team_icon/Angel Beats!.webp'}
+  { value: '30G', name: '30G', icon: '/src/assets/team_icon/30G.webp' },
+  { value: '31A', name: '31A', icon: '/src/assets/team_icon/31A.webp' },
+  { value: '31B', name: '31B', icon: '/src/assets/team_icon/31B.webp' },
+  { value: '31C', name: '31C', icon: '/src/assets/team_icon/31C.webp' },
+  { value: '31D', name: '31D', icon: '/src/assets/team_icon/31D.webp' },
+  { value: '31E', name: '31E', icon: '/src/assets/team_icon/31E.webp' },
+  { value: '31F', name: '31F', icon: '/src/assets/team_icon/31F.webp' },
+  { value: '31X', name: '31X', icon: '/src/assets/team_icon/31X.webp' },
+  { value: 'Angel beats!', name: 'Angel Beats!', icon: '/src/assets/team_icon/Angel Beats!.webp' }
 ];
-
 const characterOptions = ref([]);
 const styleOptions = ref([]);
 
-const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'))
-const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'))
-const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'))
+const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'));
+const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'));
+const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'));
 
 const isCharDisabled = computed(() => !selectedTeam.value);
 const isStyleDisabled = computed(() => !selectedCharacter.value);
+
+const initializeOptions = async () => {
+  if (selectedTeam.value) {
+    characterOptions.value = await fetchCharacterOptions(selectedTeam.value);
+  }
+  if (selectedCharacter.value) {
+    styleOptions.value = await fetchStyleOptions(selectedCharacter.value, selectedTeam.value);
+  }
+};
+
+onMounted(initializeOptions);
 
 watch(selectedTeam, async (newTeam) => {
   charStore.setSelection(props.buttonKey, 'team', newTeam);
@@ -61,13 +71,30 @@ watch(selectedCharacter, async (newChar) => {
 });
 
 watch(selectedStyle, (newStyle) => {
-  charStore.setSelection(props.buttonKey, 'style', newStyle);
+  if (newStyle) {
+    const selectedOption = styleOptions.value.find(option => option.name === newStyle);
+    if (selectedOption) {
+      charStore.setSelection(props.buttonKey, 'style', newStyle);
+      charStore.setSelection(props.buttonKey, 'img', selectedOption.icon);
+    }
+  } else {
+      charStore.setSelection(props.buttonKey, 'style', null);
+      charStore.setSelection(props.buttonKey, 'img', null);
+    }
 });
+
+const emit = defineEmits(['close']);
+const closeContainer = () => {
+  emit('close');
+};
 </script>
 
 <template>
-  <div class="overlay">
-    <div class="container">
+  <div @click="closeContainer" class="overlay">
+    <div @click.stop class="container">
+      <button @click="closeContainer" class="close"> 
+        <img src="@/assets/custom_icon/close.svg" alt="Setting">
+      </button>
       <div class="section">
         <label>Team</label>
         <Multiselect
@@ -138,14 +165,35 @@ watch(selectedStyle, (newStyle) => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+.close{
+  background-color: transparent;
+  padding: 1px;
+  border: none;
+  box-sizing: border-box;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.close img{
+  height: 100%;
+  width: 100%;
+}
 span{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
+  justify-content: center;
+  align-items: center;
 }
 .section{
-  padding-top: 1rem;
+  padding-top: 1.5rem;
 }
 .overlay {
   position: fixed;
@@ -156,7 +204,7 @@ span{
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
-  z-index: 800;
+  z-index: 1100;
   backdrop-filter: blur(5px);
 }
 .container {
@@ -169,7 +217,7 @@ span{
   width: 31%;
   box-sizing: border-box;
   padding: 1rem;
-  z-index: 900;
+  border-radius: 20px;
 }
 .option-icon,
 .label-icon{
