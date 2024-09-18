@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import './assets/main.css';
-import SidebarChar from '@/components/SelectChar.vue';
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import menuIcon from '@/assets/custom_icon/menu.svg';
 import closeIcon from '@/assets/custom_icon/close.svg';
@@ -29,10 +28,10 @@ const getIconSrc = () => {
     </nav>
     <aside :class="{ show: isSidebarVisible }">
     </aside>
-  <main class="scrollbar-style-1">
-    <div class="box_container"><SelectBoxes /></div>
-    <div class="axle">axle</div>
-  </main>
+    <main class="scrollbar-style-1">
+      <div class="box_container"><SelectBoxes /></div>
+      <div class="axle">axle</div>
+    </main>
   </div>
 </template>
 
@@ -161,7 +160,6 @@ main {
     grid-template-columns: 0 1fr;
   }
   aside {
-    position: fixed;
     width: 100%;
   }
 }
