@@ -139,7 +139,7 @@ main {
 .box_container{
   grid-area: box_container;
   margin: 10px;
-  height: 20vh;
+  height: auto;
 }
 .axle{
   padding-top: 0.5rem;
