@@ -16,30 +16,40 @@
     :contained="true"
     :lazy="true"
     :drag-on-click="true"
-    :marks="[0, 50]">
+    :marks="[0, 50]"
+    @change="updateSkillsRows">
   </vue-slider>
 </div>
 </template>
 
 <script setup>
 import { useSliderStore } from '@/stores/slider_stores';
+import { useSkillStore } from '@/stores/skill_stores';
 import VueSlider from 'vue-slider-component'
 import '/styles/themes/slider.css'
 
 const title = 'Number Of Rows';
 const sliderStore = useSliderStore();
+const skillStores = useSkillStore()
 
 const increaseValue = () => {
   if (sliderStore.rows < 50) {
     sliderStore.rows++;
+    updateSkillsRows(sliderStore.rows)
   }
 };
 
 const decreaseValue = () => {
   if (sliderStore.rows > 0) {
     sliderStore.rows--;
+    updateSkillsRows(sliderStore.rows)
   }
 };
+
+const updateSkillsRows = (value) => {
+	skillStores.adjustSkills(value);
+  console.log(skillStores.skills)
+}
 </script>
 
 <style scoped>
