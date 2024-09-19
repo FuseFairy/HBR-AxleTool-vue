@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import './assets/main.css';
 import SelectBoxes from '@/components/SelectBoxes.vue'
+import SelectRows from '@/components/SelectRows.vue'
 import menuIcon from '@/assets/custom_icon/menu.svg';
 import closeIcon from '@/assets/custom_icon/close.svg';
 
@@ -30,7 +31,10 @@ const getIconSrc = () => {
     </aside>
     <main class="scrollbar-style-1">
       <div class="box_container"><SelectBoxes /></div>
-      <div class="axle">axle</div>
+      <div class="axle">
+        <SelectRows />
+        axle
+      </div>
     </main>
   </div>
 </template>
