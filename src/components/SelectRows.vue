@@ -48,7 +48,6 @@ const decreaseValue = () => {
 
 const updateSkillsRows = (value) => {
 	skillStores.adjustSkills(value);
-  console.log(skillStores.skills)
 }
 </script>
 
