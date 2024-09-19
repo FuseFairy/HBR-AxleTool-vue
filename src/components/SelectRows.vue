@@ -4,8 +4,24 @@
       <h2>{{ title }}</h2>
     <div class="input-container">
       <input v-model="sliderStore.rows" disabled="disabled" />
-      <button @click="decreaseValue">-</button>
-      <button @click="increaseValue">+</button>
+      <button 
+          @click="decreaseValue" 
+          :class="{ 'disabled-button': sliderStore.rows === 0 }"
+          :disabled="sliderStore.rows === 0"
+        >
+          <img
+            :class="['icon', { 'disabled-icon': sliderStore.rows === 0 }]"
+            src="/src/assets/custom_icon/remove_w7g2.svg" alt="button - remove a row" />
+        </button>
+        <button 
+          @click="increaseValue" 
+          :class="{ 'disabled-button': sliderStore.rows === 50 }"
+          :disabled="sliderStore.rows === 50"
+        >
+          <img
+            :class="['icon', { 'disabled-icon': sliderStore.rows === 50 }]"
+            src="/src/assets/custom_icon/add_w7g2.svg" alt="button - add a row" />
+        </button>
     </div>
   </div>
   <vue-slider 
@@ -84,6 +100,14 @@ const updateSkillsRows = (value) => {
   box-sizing: border-box;
 }
 
+.icon {
+  height: 12px;
+}
+
+.disabled-icon {
+  opacity: 0.5;
+}
+
 h2 {
   margin-bottom: 1vh;
   color: #ffffff;
@@ -94,7 +118,7 @@ input {
   color: #ffffff;
   text-align: center;
   height: 100%;
-  width: 71px;
+  width: 70px;
   margin: none;
   border: none;
 }
@@ -102,7 +126,7 @@ input {
 button {
   background-color: #262730;
   height: 100%;
-  width: 31px;
+  width: 32px;
   color: white;
   border: none;
   cursor: pointer;
@@ -110,5 +134,13 @@ button {
 
 button:hover {
   background-color: #f44949;
+}
+
+.disabled-button {
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  background-color: #262730;
 }
 </style>
