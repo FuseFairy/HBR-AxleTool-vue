@@ -94,7 +94,7 @@ input {
   color: #ffffff;
   text-align: center;
   height: 100%;
-  width: 8vh;
+  width: 71px;
   margin: none;
   border: none;
 }
@@ -102,10 +102,9 @@ input {
 button {
   background-color: #262730;
   height: 100%;
-  width: 3.5vh;
+  width: 31px;
   color: white;
   border: none;
-  padding: 5px 10px;
   cursor: pointer;
 }
 
