@@ -1,14 +1,17 @@
 <template>
 <div class="slider-container">
-    <h2>{{ title }}</h2>
-    <vue-slider v-model="silderStore.value" :min="0" :max="50" :interval="1"
-        :contained="true"
-        :lazy="true"
-        :drag-on-click="true"
-        :marks="[0, 50]"
-        @change="silderStore.setValue"
-    >
-    </vue-slider>
+	<h2>{{ title }}</h2>
+	<vue-slider 
+		v-model="sliderStore.rows"
+		:min="0"
+		:max="50"
+		:interval="1"
+		:contained="true"
+		:lazy="true"
+		:drag-on-click="true"
+		:marks="[0, 50]"
+		@change="sliderStore.setValue">
+	</vue-slider>
 </div>
 </template>
 
@@ -18,7 +21,7 @@ import VueSlider from 'vue-slider-component'
 import '/styles/themes/slider.css'
 
 const title = 'Number Of Rows';
-const silderStore = useSliderStore();
+const sliderStore = useSliderStore();
 </script>
 
 <style scoped>
