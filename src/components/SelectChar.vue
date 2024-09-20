@@ -93,7 +93,7 @@ const closeContainer = () => {
   <div @click="closeContainer" class="overlay">
     <div @click.stop class="container">
       <button @click="closeContainer" class="close"> 
-        <img src="@/assets/custom_icon/close.svg" alt="Setting">
+        <img src="@/assets/custom_icon/close.svg" alt="Close">
       </button>
       <div class="section">
         <label>Team</label>

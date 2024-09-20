@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import './assets/main.css';
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
+import SelectSkill from './components/SelectSkill.vue';
 import menuIcon from '@/assets/custom_icon/menu.svg';
 import closeIcon from '@/assets/custom_icon/close.svg';
 
@@ -33,7 +34,7 @@ const getIconSrc = () => {
       <div class="box_container"><SelectBoxes /></div>
       <div class="axle">
         <SelectRows />
-        axle
+        <SelectSkill />
       </div>
     </main>
   </div>

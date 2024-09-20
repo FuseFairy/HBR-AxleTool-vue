@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useCharStore } from '@/stores/char_stores';
-import SidebarSelect from '@/components/SelectChar.vue';
+import SelectChar from '@/components/SelectChar.vue';
 
 const charStore = useCharStore();
 
@@ -44,7 +44,7 @@ const closeContainer = () => {
          alt="Add">
   </button>
 </div>
-  <SidebarSelect v-if="activeComponent !== null" :buttonKey="activeComponent" @close="closeContainer" />
+  <SelectChar v-if="activeComponent !== null" :buttonKey="activeComponent" @close="closeContainer" />
 </template>
 
 <style scoped>
