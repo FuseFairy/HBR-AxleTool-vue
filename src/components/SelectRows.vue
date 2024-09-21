@@ -46,7 +46,7 @@ import '/styles/themes/slider.css'
 
 const title = 'Number Of Rows';
 const sliderStore = useSliderStore();
-const skillStores = useSkillStore()
+const skillStore = useSkillStore()
 
 const increaseValue = () => {
   if (sliderStore.rows < 50) {
@@ -63,7 +63,7 @@ const decreaseValue = () => {
 };
 
 const updateSkillsRows = (value) => {
-	skillStores.adjustSkills(value);
+	skillStore.adjustSkills(value);
 }
 </script>
 

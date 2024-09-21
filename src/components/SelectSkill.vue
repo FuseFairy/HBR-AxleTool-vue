@@ -6,14 +6,14 @@ import Multiselect from '@vueform/multiselect';
 import SelectAxleChar from './SelectAxleChar.vue';
 
 const sliderStore = useSliderStore();
-const skillStores = useSkillStore();
+const skillStore = useSkillStore();
 const odOptions = ["OD1", "OD2", "OD3"];
 
 const turnOptions = computed(() => {
   const options = Array.from({ length: sliderStore.rows }, (_, i) => `T${i + 1}`);
   const allOptions = ['追加回合', ...options];
 
-  skillStores.turns.forEach(turn => {
+  skillStore.turns.forEach(turn => {
     if (!allOptions.includes(turn.turn)) {
       turn.turn = null;
       turn.od = null;
@@ -38,18 +38,32 @@ const closeContainer = () => {
     <div class="column">
       <div class="empty"></div>
       <Multiselect
-        v-model="skillStores.turns[i-1].turn"
+        v-model="skillStore.turns[i-1].turn"
         placeholder="Select turn"
         :options="turnOptions">
       </Multiselect>
       <Multiselect
-        v-model="skillStores.turns[i-1].od"
+        v-model="skillStore.turns[i-1].od"
         placeholder="Select OD"
         :options="odOptions">
       </Multiselect>
     </div>
     <div class="column" v-for="n in 3" :key="n">
-      <button @click="handleBoxClick(i-1, n-1)">Button {{ n-1 }}</button>
+      <button
+        @click="handleBoxClick(i-1, n-1)"
+        :class="{
+          'circle-button selected-button': skillStore.skills[i-1][n-1].style_img !== null,
+          'circle-button add-button': skillStore.skills[i-1][n-1].style_img === null
+        }">
+        <img v-if="skillStore.skills[i-1][n-1].style_img !== null" 
+            class="char-img" 
+            :src="skillStore.skills[i-1][n-1].style_img" 
+            :alt="skillStore.skills[i-1][n-1].style">
+        <img v-else 
+            class="icon-img" 
+            src="@/assets/custom_icon/add.svg" 
+            alt="Add">
+      </button>
       <select></select>
       <select></select>
     </div>
@@ -65,12 +79,15 @@ const closeContainer = () => {
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
 .container {
-  display: flex;
+  display: grid; 
   gap: 10px;
   padding: 20px;
   border-radius: 20px;
   background: rgba(68, 65, 65, 0.3);
   margin: 20px 20px 0 20px;
+  grid-template-columns: 150px repeat(3, 1fr);
+  align-items: center;
+  width: 70%;
 }
 .column {
   flex: 1;
@@ -80,21 +97,50 @@ const closeContainer = () => {
   gap: 10px;
 }
 .empty {
-  height: 30px;
+  height: 40px;
 }
-button, select {
-  width: 100px;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-button {
-  background-color: #3498db;
-  color: white;
+.circle-button {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  aspect-ratio: 1 / 1;
+  font-size: 16px;
+  overflow: hidden;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(79, 74, 74, 0.5);
 }
-button:hover {
-  background-color: #2980b9;
+.selected-button {
+  border: none;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(126, 204, 200, 0.8);
+}
+.selected-button:hover{
+  box-shadow: 0 0 15px rgba(126, 204, 200, 0.8);
+}
+.selected-button:hover .char-img {
+  transform: scale(1.1);
+}
+.char-img{
+  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+.add-button {
+  border: none;
+  transition: background-color 0.3s ease;
+}
+.add-button:hover {
+  background-color: rgba(204, 201, 201, 0.5);
+}
+.add-button:hover .icon-img {
+	filter: invert(1);
+}
+.icon-img {
+  width: 50px;
+  height: 50px;
 }
 :deep(.multiselect-option){
   display: flex;
@@ -139,5 +185,15 @@ button:hover {
 :deep(.multiselect-clear-icon:active),
 :deep(.multiselect-clear-icon:focus) {
     background-color: #999;
+}
+@media (max-width: 800px) {
+  .container {
+    width: auto;
+  }
+  .circle-button {
+    width: 60px;
+    height: 60px;
+    font-size: 14px;
+  }
 }
 </style>
