@@ -28,15 +28,23 @@ const teamOptions = [
   { value: '31X', name: '31X', icon: '/src/assets/team_icon/31X.webp' },
   { value: 'Angel beats!', name: 'Angel Beats!', icon: '/src/assets/team_icon/Angel Beats!.webp' }
 ];
+const earringOptions = [
+  {value: "BREAK耳環", name: "BREAK耳環", icon: '/src/assets/earring_icon/break.webp'},
+  {value: "進攻耳環", name: "進攻耳環", icon: '/src/assets/earring_icon/attach.webp'},
+  {value: "DRIVE耳環", name: "DRIVE耳環", icon: '/src/assets/earring_icon/drive.webp'},
+  {value: "爆破耳環", name: "爆破耳環", icon: '/src/assets/earring_icon/explosion.webp'}
+];
 const characterOptions = ref([]);
 const styleOptions = ref([]);
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'));
 const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'));
 const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'));
+const selectedEarring = ref(charStore.getSelection(props.buttonKey, 'earring'))
 
 const isCharDisabled = computed(() => !selectedTeam.value);
 const isStyleDisabled = computed(() => !selectedCharacter.value);
+const isEarringDisable = computed(() => !selectedStyle.value);
 
 const initializeOptions = async () => {
   if (selectedTeam.value) {
@@ -79,12 +87,14 @@ watch(selectedStyle, async (newStyle) => {
     if (selectedOption) {
       charStore.setSelection(props.buttonKey, 'style', newStyle);
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon);
-      charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value));
+      charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, newStyle));
     }
   } else {
       charStore.setSelection(props.buttonKey, 'style', null);
       charStore.setSelection(props.buttonKey, 'img', null);
-      charStore.setSelection(props.buttonKey, 'skill', null)
+      charStore.setSelection(props.buttonKey, 'skill', null);
+      charStore.setSelection(props.buttonKey, 'earring', null);
+      selectedEarring.value = null; // 確保同步更新
     }
 });
 
@@ -152,6 +162,29 @@ const closeContainer = () => {
           label="name"
           :disabled="isStyleDisabled || sliderStore.rows > 0"
           :options="styleOptions">
+          <template v-slot:singlelabel="{ value }">
+            <div class="multiselect-single-label">
+              <img class="label-icon" :src="value.icon">
+              <span :title="value.name">{{ value.name }}</span>
+            </div>
+          </template>
+
+          <template v-slot:option="{ option }">
+            <img class="option-icon" :src="option.icon">
+            <span :title="option.name">{{ option.name }}</span>
+          </template>
+        </Multiselect>
+      </div>
+
+      <div class="section">
+        <label>Earring</label>
+        <Multiselect
+          v-model="selectedEarring"
+          placeholder="Select earring"
+          label="name"
+          :disabled="isEarringDisable"
+          :options="earringOptions"
+          @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value)">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
               <img class="label-icon" :src="value.icon">
