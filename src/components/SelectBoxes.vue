@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useCharStore } from '@/stores/char_stores';
+import { useSliderStore } from '@/stores/slider_stores';
 import SelectChar from '@/components/SelectChar.vue';
 
 const charStore = useCharStore();
+const sliderStore = useSliderStore();
 
 const buttons = ref([
   { key: 1, label: 'Button 1' },
@@ -30,9 +32,11 @@ const closeContainer = () => {
     v-for="button in buttons"
     :key="button.key"
     @click="handleBoxClick(button.key)"
+    :disabled="sliderStore.rows > 0"
     :class="{
       'circle-button selected-button': charStore.selections[button.key].img !== null,
-      'circle-button add-button': charStore.selections[button.key].img === null
+      'circle-button add-button': charStore.selections[button.key].img === null,
+      'disabled-button': sliderStore.rows > 0
     }">
     <img v-if="charStore.selections[button.key].img !== null" 
          class="char-img" 
@@ -55,6 +59,10 @@ const closeContainer = () => {
   justify-items: center;
   align-items: center;
   height: 100%;
+}
+.disabled-button {
+  cursor: not-allowed; /* 禁用指针样式 */
+  pointer-events: none; /* 禁用所有鼠标事件 */
 }
 .circle-button {
   border-radius: 50%;
