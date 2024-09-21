@@ -61,8 +61,8 @@ const closeContainer = () => {
   height: 100%;
 }
 .disabled-button {
-  cursor: not-allowed; /* 禁用指针样式 */
-  pointer-events: none; /* 禁用所有鼠标事件 */
+  cursor: not-allowed;
+  pointer-events: none;
 }
 .circle-button {
   border-radius: 50%;
