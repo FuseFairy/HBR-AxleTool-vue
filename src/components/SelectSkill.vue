@@ -59,8 +59,8 @@ const getFilteredSkills = (row, key) => {
 
 const targetOptions = computed(() => {
   return Object.values(charStore.selections)
-    .map(selection => selection.character)
-    .filter(character => character !== null);
+    .filter(selection => selection.character !== null && selection.style !== null)
+    .map(selection => selection.character);
 });
 </script>
 
