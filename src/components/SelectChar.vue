@@ -34,6 +34,7 @@ const earringOptions = [
   {value: "DRIVE耳環", name: "DRIVE耳環", icon: '/src/assets/earring_icon/drive.webp'},
   {value: "爆破耳環", name: "爆破耳環", icon: '/src/assets/earring_icon/explosion.webp'}
 ];
+const rankOptions = Array.from({ length: 11 }, (_, i) => i);
 const characterOptions = ref([]);
 const styleOptions = ref([]);
 
@@ -41,10 +42,12 @@ const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'));
 const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'));
 const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'));
 const selectedEarring = ref(charStore.getSelection(props.buttonKey, 'earring'))
+const selectedRank = ref(charStore.getSelection(props.buttonKey, 'rank'))
+const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower'))
 
 const isCharDisabled = computed(() => !selectedTeam.value);
 const isStyleDisabled = computed(() => !selectedCharacter.value);
-const isEarringDisable = computed(() => !selectedStyle.value);
+const isOtherDisable = computed(() => !selectedStyle.value);
 
 const initializeOptions = async () => {
   if (selectedTeam.value) {
@@ -93,8 +96,13 @@ watch(selectedStyle, async (newStyle) => {
       charStore.setSelection(props.buttonKey, 'style', null);
       charStore.setSelection(props.buttonKey, 'img', null);
       charStore.setSelection(props.buttonKey, 'skill', null);
+      charStore.setSelection(props.buttonKey, 'rank', null);
+      charStore.setSelection(props.buttonKey, 'flower', null);
       charStore.setSelection(props.buttonKey, 'earring', null);
-      selectedEarring.value = null; // 確保同步更新
+      // 確保同步更新
+      selectedRank.value = null;
+      selectedFlower.value = false;
+      selectedEarring.value = null;
     }
 });
 
@@ -177,12 +185,33 @@ const closeContainer = () => {
       </div>
 
       <div class="section">
-        <label>Earring</label>
+        <label>Rank (optional)</label>
+        <Multiselect
+          v-model="selectedRank"
+          placeholder="Select Rank"
+          :disabled="isOtherDisable"
+          :options="rankOptions"
+          @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value)" 
+        />
+        <div class="flower-container">
+          <input
+            type="checkbox"
+            v-model="selectedFlower"
+            :disabled="isOtherDisable"
+            @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower)" />
+          <img 
+            src="/src/assets/flower.webp"
+            alt="Is Flower"
+            class="flower-icon"/>
+        </div>
+      </div>
+      <div class="section">
+        <label>Earring (optional)</label>
         <Multiselect
           v-model="selectedEarring"
           placeholder="Select earring"
           label="name"
-          :disabled="isEarringDisable"
+          :disabled="isOtherDisable"
           :options="earringOptions"
           @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value)">
           <template v-slot:singlelabel="{ value }">
@@ -222,6 +251,15 @@ const closeContainer = () => {
 .close img{
   height: 100%;
   width: 100%;
+}
+.flower-container {
+  display: flex;
+  align-items: center;
+}
+.flower-icon {
+  margin-left: 10px;
+  width: 50px;
+  height: 50px;
 }
 span{
   white-space: nowrap;
