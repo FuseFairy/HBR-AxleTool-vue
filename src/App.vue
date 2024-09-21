@@ -113,6 +113,7 @@ aside {
   display: none;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
+  z-index: 1500;
 }
 .show {
   display: block;
