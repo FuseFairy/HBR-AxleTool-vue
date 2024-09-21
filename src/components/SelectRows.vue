@@ -6,26 +6,27 @@
       <input v-model="sliderStore.rows" disabled="disabled" />
       <button 
           @click="decreaseValue" 
-          :class="{ 'disabled-button': sliderStore.rows === 0 }"
-          :disabled="sliderStore.rows === 0"
+          :class="{ 'disabled-button': sliderStore.rows === 0 || !hasChar}"
+          :disabled="sliderStore.rows === 0 || !hasChar"
         >
           <img
-            :class="['icon', { 'disabled-icon': sliderStore.rows === 0 }]"
+            :class="['icon', { 'disabled-icon': sliderStore.rows === 0}]"
             src="/src/assets/custom_icon/remove_w7g2.svg" alt="button - remove a row" />
         </button>
         <button 
           @click="increaseValue" 
-          :class="{ 'disabled-button': sliderStore.rows === 50 }"
-          :disabled="sliderStore.rows === 50"
+          :class="{ 'disabled-button': sliderStore.rows === 50}"
+          :disabled="sliderStore.rows === 50 || !hasChar"
         >
           <img
-            :class="['icon', { 'disabled-icon': sliderStore.rows === 50 }]"
+            :class="['icon', { 'disabled-icon': sliderStore.rows === 50 || !hasChar}]"
             src="/src/assets/custom_icon/add_w7g2.svg" alt="button - add a row" />
         </button>
     </div>
   </div>
   <vue-slider 
     v-model="sliderStore.rows"
+    :disabled="!hasChar"
     :min="0"
     :max="50"
     :interval="1"
@@ -39,14 +40,17 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useSliderStore } from '@/stores/slider_stores';
 import { useSkillStore } from '@/stores/skill_stores';
+import { useCharStore } from '@/stores/char_stores';
 import VueSlider from 'vue-slider-component'
 import '/styles/themes/slider.css'
 
 const title = 'Number Of Rows';
 const sliderStore = useSliderStore();
 const skillStore = useSkillStore()
+const charStore = useCharStore();
 
 const increaseValue = () => {
   if (sliderStore.rows < 50) {
@@ -65,6 +69,12 @@ const decreaseValue = () => {
 const updateSkillsRows = (value) => {
 	skillStore.adjustSkills(value);
 }
+
+const hasChar = computed(() => {
+  return Object.values(charStore.selections).some(selection => 
+    selection.character !== null && selection.style !== null
+  );
+});
 </script>
 
 <style scoped>
