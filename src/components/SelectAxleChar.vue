@@ -4,7 +4,7 @@ import { useCharStore } from '@/stores/char_stores';
 import { useSkillStore } from '@/stores/skill_stores';
 
 const charStore = useCharStore();
-const skillStores = useSkillStore();
+const skillStore = useSkillStore();
 
 const props = defineProps({
   row: {
@@ -27,16 +27,16 @@ const filteredSelections = computed(() => {
 });
 
 const isSelected = (key) => {
-  return skillStores.skills[props.row][props.buttonKey].style === filteredSelections.value[key].style;
+  return skillStore.skills[props.row][props.buttonKey].style === filteredSelections.value[key].style;
 };
 
 const handleImageClick = (key) => {
   if (isSelected(key)) {
-    skillStores.skills[props.row][props.buttonKey].style = null;
-    skillStores.skills[props.row][props.buttonKey].style_img = null;
+    skillStore.skills[props.row][props.buttonKey].style = null;
+    skillStore.skills[props.row][props.buttonKey].style_img = null;
   } else {
-    skillStores.skills[props.row][props.buttonKey].style = filteredSelections.value[key].style;
-    skillStores.skills[props.row][props.buttonKey].style_img = filteredSelections.value[key].img;
+    skillStore.skills[props.row][props.buttonKey].style = filteredSelections.value[key].style;
+    skillStore.skills[props.row][props.buttonKey].style_img = filteredSelections.value[key].img;
     closeContainer();
   }
 };

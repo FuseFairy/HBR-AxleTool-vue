@@ -2,11 +2,13 @@
 import { ref, computed } from 'vue';
 import { useSliderStore } from '@/stores/slider_stores';
 import { useSkillStore } from '@/stores/skill_stores';
+import { useCharStore } from '@/stores/char_stores';
 import Multiselect from '@vueform/multiselect';
 import SelectAxleChar from './SelectAxleChar.vue';
 
 const sliderStore = useSliderStore();
 const skillStore = useSkillStore();
+const charStore = useCharStore();
 const odOptions = ["OD1", "OD2", "OD3"];
 
 const turnOptions = computed(() => {
@@ -31,6 +33,35 @@ const handleBoxClick = (row, key) => {
 const closeContainer = () => {
   activeComponent.value = { row: null, buttonKey: null };
 };
+
+const getFilteredSkills = (row, key) => {
+  const currentSkill = skillStore.skills[row][key];
+  if (currentSkill && currentSkill.style != null) {
+    const currentStyle = currentSkill.style;
+    const selections = Object.values(charStore.selections);
+
+    const currentSelection = selections.find(selection => selection.style === currentStyle);
+    const formattedSkills = currentSelection.skill.map(skill => ({
+      name: skill.name,
+      value: skill.name,
+      sp: skill.sp
+    }));
+
+    const foundSkill = formattedSkills.some(option => option.name === skillStore.skills[row][key].skill);
+    if (!foundSkill) {
+      skillStore.skills[row][key].skill = null;
+    }
+
+    return formattedSkills;
+  }
+  return [];
+};
+
+const targetOptions = computed(() => {
+  return Object.values(charStore.selections)
+    .map(selection => selection.character)
+    .filter(character => character !== null);
+});
 </script>
 
 <template>
@@ -64,8 +95,27 @@ const closeContainer = () => {
             src="@/assets/custom_icon/add.svg" 
             alt="Add">
       </button>
-      <select></select>
-      <select></select>
+      <Multiselect
+        v-model="skillStore.skills[i-1][n-1].skill"
+        placeholder="Select skill"
+        label="name"
+        :options="getFilteredSkills(i-1, n-1)">
+        
+        <template v-slot:singlelabel="{ value }">
+          <div class="multiselect-single-label">
+            <span :title="value.name">{{ value.name }}/{{ value.sp }}SP</span>
+          </div>
+        </template>
+
+        <template v-slot:option="{ option }">
+          <span :title="option.name">{{ option.name }}/{{ option.sp }}SP</span>
+        </template>
+      </Multiselect>
+      <Multiselect
+        v-model="skillStore.skills[i-1][n-1].target"
+        placeholder="Select target"
+        :options="targetOptions">
+      </Multiselect>
     </div>
   </div>
   <SelectAxleChar
@@ -78,6 +128,12 @@ const closeContainer = () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
 .container {
   display: grid; 
   gap: 10px;
@@ -87,7 +143,6 @@ const closeContainer = () => {
   margin: 20px 20px 0 20px;
   grid-template-columns: 150px repeat(3, 1fr);
   align-items: center;
-  width: 70%;
 }
 .column {
   flex: 1;
@@ -115,10 +170,10 @@ const closeContainer = () => {
 .selected-button {
   border: none;
   transition: transform 0.3s ease;
-  box-shadow: 0 0 10px rgba(126, 204, 200, 0.8);
+  box-shadow: 0 0 10px rgba(126, 156, 204, 0.8);
 }
 .selected-button:hover{
-  box-shadow: 0 0 15px rgba(126, 204, 200, 0.8);
+  box-shadow: 0 0 15px rgba(126, 156, 204, 0.8);
 }
 .selected-button:hover .char-img {
   transform: scale(1.1);

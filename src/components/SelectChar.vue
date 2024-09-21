@@ -2,10 +2,13 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import Multiselect from '@vueform/multiselect'
 import { useCharStore } from '@/stores/char_stores'
+import { useSliderStore } from '@/stores/slider_stores';
 import { fetchCharacterOptions } from '@/api/charData';
 import { fetchStyleOptions } from '@/api/styleData';
+import { fetchSkillOptions } from '@/api/skillOptions';
 
 const charStore = useCharStore();
+const sliderStore = useSliderStore();
 
 const props = defineProps({
   buttonKey: {
@@ -70,16 +73,18 @@ watch(selectedCharacter, async (newChar) => {
   }
 });
 
-watch(selectedStyle, (newStyle) => {
+watch(selectedStyle, async (newStyle) => {
   if (newStyle) {
     const selectedOption = styleOptions.value.find(option => option.name === newStyle);
     if (selectedOption) {
       charStore.setSelection(props.buttonKey, 'style', newStyle);
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon);
+      charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value));
     }
   } else {
       charStore.setSelection(props.buttonKey, 'style', null);
       charStore.setSelection(props.buttonKey, 'img', null);
+      charStore.setSelection(props.buttonKey, 'skill', null)
     }
 });
 
@@ -101,6 +106,7 @@ const closeContainer = () => {
           v-model="selectedTeam"
           placeholder="Select team"
           label="name"
+          :disabled="sliderStore.rows > 0"
           :options="teamOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
@@ -122,7 +128,7 @@ const closeContainer = () => {
           v-model="selectedCharacter"
           placeholder="Select character"
           label="name"
-          :disabled="isCharDisabled"
+          :disabled="isCharDisabled || sliderStore.rows > 0"
           :options="characterOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
@@ -144,7 +150,7 @@ const closeContainer = () => {
           v-model="selectedStyle"
           placeholder="Select style"
           label="name"
-          :disabled="isStyleDisabled"
+          :disabled="isStyleDisabled || sliderStore.rows > 0"
           :options="styleOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
@@ -189,8 +195,6 @@ span{
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
-  justify-content: center;
-  align-items: center;
 }
 .section{
   padding-top: 1.5rem;
