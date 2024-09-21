@@ -6,6 +6,7 @@ import { useSliderStore } from '@/stores/slider_stores';
 import { fetchCharacterOptions } from '@/api/charData';
 import { fetchStyleOptions } from '@/api/styleData';
 import { fetchSkillOptions } from '@/api/skillOptions';
+import { fetchPassiveSkillOptions } from '@/api/passiveSkillOption';
 
 const charStore = useCharStore();
 const sliderStore = useSliderStore();
@@ -37,6 +38,7 @@ const earringOptions = [
 const rankOptions = Array.from({ length: 11 }, (_, i) => i);
 const characterOptions = ref([]);
 const styleOptions = ref([]);
+const passiveSkillOption = ref([])
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'));
 const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'));
@@ -44,6 +46,7 @@ const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'));
 const selectedEarring = ref(charStore.getSelection(props.buttonKey, 'earring'))
 const selectedRank = ref(charStore.getSelection(props.buttonKey, 'rank'))
 const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower'))
+const selectedPassiveSkill = ref(charStore.getSelection(props.buttonKey, 'passiveSkill'))
 
 const isCharDisabled = computed(() => !selectedTeam.value);
 const isStyleDisabled = computed(() => !selectedCharacter.value);
@@ -55,6 +58,9 @@ const initializeOptions = async () => {
   }
   if (selectedCharacter.value) {
     styleOptions.value = await fetchStyleOptions(selectedCharacter.value, selectedTeam.value);
+  }
+  if (selectedPassiveSkill.value) {
+    passiveSkillOption.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
   }
 };
 
@@ -88,6 +94,7 @@ watch(selectedStyle, async (newStyle) => {
   if (newStyle) {
     const selectedOption = styleOptions.value.find(option => option.name === newStyle);
     if (selectedOption) {
+      passiveSkillOption.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
       charStore.setSelection(props.buttonKey, 'style', newStyle);
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon);
       charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, newStyle));
@@ -99,8 +106,10 @@ watch(selectedStyle, async (newStyle) => {
       charStore.setSelection(props.buttonKey, 'rank', null);
       charStore.setSelection(props.buttonKey, 'flower', null);
       charStore.setSelection(props.buttonKey, 'earring', null);
+      charStore.setSelection(props.buttonKey, 'passiveSkill', null);
       // 確保同步更新
       selectedRank.value = null;
+      selectedPassiveSkill.value = null;
       selectedFlower.value = false;
       selectedEarring.value = null;
     }
@@ -226,6 +235,18 @@ const closeContainer = () => {
             <span :title="option.name">{{ option.name }}</span>
           </template>
         </Multiselect>
+      </div>
+
+      <div class="section">
+        <label>Passive Skill (optional)</label>
+        <Multiselect
+          v-model="selectedPassiveSkill"
+          mode="tags"
+          placeholder="Select passive skill"
+          :close-on-select="false"
+          :disabled="isOtherDisable"
+          :options="passiveSkillOption"
+          @change="(value) => charStore.setSelection(props.buttonKey, 'passiveSkill', value)"/>
       </div>
     </div>
   </div>
