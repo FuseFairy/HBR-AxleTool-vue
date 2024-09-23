@@ -4,14 +4,21 @@ import './assets/main.css';
 import AddRows from './components/AddRows.vue';
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
+import ShowTable from './components/ShowTable.vue';
 import SelectSkill from './components/SelectSkill.vue';
 import menuIcon from '@/assets/custom_icon/menu.svg';
 import closeIcon from '@/assets/custom_icon/close.svg';
 
 const isSidebarVisible = ref(false);
+const isTableVisible = ref(false);
+
 const toggleSidebar = () => {
   isSidebarVisible.value = !isSidebarVisible.value;
 };
+
+const toggleTable = () => {
+  isTableVisible.value = !isTableVisible.value;
+}
 
 const getIconSrc = () => {
   return isSidebarVisible.value ? closeIcon : menuIcon;
@@ -19,27 +26,28 @@ const getIconSrc = () => {
 </script>
 
 <template>
-  <div class="page-layout" :class="{ 'sidebar-hidden': !isSidebarVisible }">
-    <nav>
-      <button @click="toggleSidebar"> 
-        <img :src="getIconSrc()" alt="Menu"> 
-      </button>
-      <h1 class="nav-title">HBR Axle Tool</h1>
-      <button class="setting"> 
-        <img src="@/assets/custom_icon/setting.svg" alt="Setting"> 
-      </button>
-    </nav>
-    <aside :class="{ show: isSidebarVisible }">
-    </aside>
-    <main class="scrollbar-style-1">
-      <div class="box_container"><SelectBoxes /></div>
-      <div class="axle">
-        <SelectRows />
-        <SelectSkill />
-        <AddRows />
-      </div>
-    </main>
-  </div>
+<div class="page-layout" :class="{ 'sidebar-hidden': !isSidebarVisible }">
+  <nav>
+    <button @click="toggleSidebar"> 
+      <img :src="getIconSrc()" alt="Menu"> 
+    </button>
+    <h1 class="nav-title">HBR Axle Tool</h1>
+    <button @click="toggleTable"> 
+      <img src="@/assets/custom_icon/table.svg" alt="table"> 
+    </button>
+    <ShowTable v-if="isTableVisible" @close="toggleTable"/>
+  </nav>
+  <aside :class="{ show: isSidebarVisible }">
+  </aside>
+  <main class="scrollbar-style-1">
+    <div class="box_container"><SelectBoxes /></div>
+    <div class="axle">
+      <SelectRows />
+      <SelectSkill />
+      <AddRows />
+    </div>
+  </main>
+</div>
 </template>
 
 <style scoped>
