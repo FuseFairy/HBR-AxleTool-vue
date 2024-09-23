@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import './assets/main.css';
+import AddRows from './components/AddRows.vue';
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
 import SelectSkill from './components/SelectSkill.vue';
@@ -35,6 +36,7 @@ const getIconSrc = () => {
       <div class="axle">
         <SelectRows />
         <SelectSkill />
+        <AddRows />
       </div>
     </main>
   </div>
