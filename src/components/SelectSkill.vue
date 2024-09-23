@@ -162,7 +162,12 @@ span {
   gap: 10px;
 }
 .empty {
-  height: 40px;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .circle-button {
   border-radius: 50%;

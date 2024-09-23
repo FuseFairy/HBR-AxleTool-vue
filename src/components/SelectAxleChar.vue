@@ -79,7 +79,8 @@ const closeContainer = () => {
   height: auto;
   width: auto;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 1.5rem;
+  padding-right: 3rem;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -126,7 +127,7 @@ const closeContainer = () => {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 }
 
 .circle-button {
