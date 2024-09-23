@@ -13,6 +13,7 @@
     "axios": "^1.7.7",
     "hbr-axletool-vue": "file:",
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^4.0.2",
     "vue": "^3.4.29",
     "vue-slider-component": "^4.1.0-beta.7"
   },

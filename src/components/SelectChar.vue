@@ -6,7 +6,7 @@ import { useSliderStore } from '@/stores/slider_stores';
 import { fetchCharacterOptions } from '@/api/charData';
 import { fetchStyleOptions } from '@/api/styleData';
 import { fetchSkillOptions } from '@/api/skillOptions';
-import { fetchPassiveSkillOptions } from '@/api/passiveSkillOption';
+import { fetchPassiveSkillOptions } from '@/api/passiveSkillOptions';
 
 const charStore = useCharStore();
 const sliderStore = useSliderStore();
@@ -38,7 +38,7 @@ const earringOptions = [
 const rankOptions = Array.from({ length: 11 }, (_, i) => i);
 const characterOptions = ref([]);
 const styleOptions = ref([]);
-const passiveSkillOption = ref([])
+const passiveSkillOptions = ref([])
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'));
 const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'));
@@ -60,7 +60,7 @@ const initializeOptions = async () => {
     styleOptions.value = await fetchStyleOptions(selectedCharacter.value, selectedTeam.value);
   }
   if (selectedPassiveSkill.value) {
-    passiveSkillOption.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
+    passiveSkillOptions.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
   }
 };
 
@@ -94,7 +94,7 @@ watch(selectedStyle, async (newStyle) => {
   if (newStyle) {
     const selectedOption = styleOptions.value.find(option => option.name === newStyle);
     if (selectedOption) {
-      passiveSkillOption.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
+      passiveSkillOptions.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
       charStore.setSelection(props.buttonKey, 'style', newStyle);
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon);
       charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, newStyle));
@@ -245,7 +245,7 @@ const closeContainer = () => {
           placeholder="Select passive skill"
           :close-on-select="false"
           :disabled="isOtherDisable"
-          :options="passiveSkillOption"
+          :options="passiveSkillOptions"
           @change="(value) => charStore.setSelection(props.buttonKey, 'passiveSkill', value)"/>
       </div>
     </div>

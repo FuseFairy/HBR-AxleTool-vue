@@ -31,5 +31,7 @@ export const useSkillStore = defineStore('skill', () => {
 		skills,
 		turns,
 		adjustSkills
-	};
-});
+	}}, {
+	  persist: true,
+	}
+);
