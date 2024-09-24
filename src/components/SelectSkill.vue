@@ -54,7 +54,11 @@ const getFilteredSkills = (row, key) => {
 
     return formattedSkills;
   }
-  return [];
+  else {
+    skillStore.skills[row][key].skill = null;
+
+    return [];
+  }
 };
 
 const targetOptions = computed(() => {
