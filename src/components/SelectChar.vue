@@ -35,7 +35,7 @@ const earringOptions = [
   {value: "DRIVE耳環", name: "DRIVE耳環", icon: '/src/assets/earring_icon/drive.webp'},
   {value: "爆破耳環", name: "爆破耳環", icon: '/src/assets/earring_icon/explosion.webp'}
 ];
-const rankOptions = Array.from({ length: 11 }, (_, i) => i);
+const rankOptions = Array.from({ length: 10 }, (_, i) => i+1);
 const characterOptions = ref([]);
 const styleOptions = ref([]);
 const passiveSkillOptions = ref([])
@@ -371,6 +371,14 @@ span{
 :deep(.multiselect-clear-icon:active),
 :deep(.multiselect-clear-icon:focus) {
     background-color: #999;
+}
+:deep(.multiselect-clear-icon) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+  font-size: 0;
 }
 @media(max-width: 800px) {
   .container{
