@@ -75,11 +75,9 @@ const closeTable = () => {
         </div>
         <!-- Skill row -->
         <div v-if="sliderStore.rows > 0" class="table-container" style="margin-top: 20px;">
-          <div class="axle-column">
-            <div class="label" style="font-size: 24px;">Axle</div>
-          </div>
+          <div class="axle-column"></div>
         </div>
-        <div v-if="sliderStore.rows > 0" v-for="row in sliderStore.rows" class="table-container" :style="{ 'margin-top': '20px', 'border-top': row > 1 ? '5px solid #463488' : 'none' }">
+        <div v-if="sliderStore.rows > 0" v-for="row in sliderStore.rows" class="table-container" :style="{ 'margin-top': '20px', 'border-top': row > 1 ? '2px dashed gray' : 'none', 'padding-top': row > 1 ? '20px' : 'none' }">
           <div v-for="col in 4" :class="['axle-table-column', { 'first-axle-column': col === 1 }]">
             <div v-if="col === 1" class="label">
               <span v-if="skillStore.turns[row-1].turn !== null && skillStore.turns[row-1].od !== null">
@@ -130,7 +128,6 @@ const closeTable = () => {
   text-align: center;
   justify-content: center;
   align-items: center;
-  padding-top: 15px;
 }
 .axle-img {
   margin-right: 5px;
@@ -147,7 +144,6 @@ const closeTable = () => {
   flex-direction: column; 
   align-items: center;
   border-top: 2px solid #d64040;
-  height: 70px;
 }
 .label {
   font-size: 18px;
