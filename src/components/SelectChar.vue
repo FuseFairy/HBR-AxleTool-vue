@@ -276,6 +276,7 @@ const closeContainer = () => {
 .flower-container {
   display: flex;
   align-items: center;
+  margin-top: 2px;
 }
 .flower-icon {
   margin-left: 10px;
@@ -290,6 +291,11 @@ span{
 }
 .section{
   padding-top: 1.5rem;
+}
+.section .multiselect.is-disabled,
+.section .multiselect.is-disabled * {
+  opacity: 0.85;
+  cursor: not-allowed !important;
 }
 .overlay {
   position: fixed;
@@ -328,6 +334,7 @@ span{
 :deep(.multiselect){
   background-color: black;
   border: 1px solid rgb(64, 68, 141);
+  margin-top: 2px;
 }
 :deep(.multiselect.is-active){
   box-shadow: none;

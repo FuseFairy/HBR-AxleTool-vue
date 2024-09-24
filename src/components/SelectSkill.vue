@@ -151,7 +151,7 @@ span {
   border-radius: 20px;
   background: rgba(68, 65, 65, 0.3);
   margin: 20px 20px 0 20px;
-  grid-template-columns: 150px repeat(3, 1fr);
+  grid-template-columns: 160px repeat(3, 1fr);
   align-items: center;
 }
 .column {
@@ -276,11 +276,16 @@ span {
 @media (max-width: 800px) {
   .container {
     width: auto;
+    grid-template-columns: repeat(4, 1fr);
   }
   .circle-button {
     width: 60px;
     height: 60px;
     font-size: 14px;
+  }
+  .empty {
+    width: 60px;
+    height: 60px;
   }
 }
 </style>
