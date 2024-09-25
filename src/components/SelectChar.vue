@@ -217,6 +217,7 @@ const closeContainer = () => {
             src="/src/assets/flower.webp"
             alt="Is Flower"
             class="flower-icon"
+            draggable="false"
             @click="toggleCheckbox" />
         </div>
       </div>
@@ -291,6 +292,7 @@ const closeContainer = () => {
   margin-left: 10px;
   width: 50px;
   height: 50px;
+  pointer-events: auto;
 }
 span{
   white-space: nowrap;
