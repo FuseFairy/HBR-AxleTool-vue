@@ -7,3 +7,9 @@
 body {
     font-family: 'Noto Sans TC', sans-serif;
 }
+
+img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+  

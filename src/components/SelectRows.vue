@@ -1,27 +1,27 @@
 <template>
 <div class="slider-container">
   <div class="top-container">
-      <h2>{{ title }}</h2>
+    <h3>{{ title }}</h3>
     <div class="input-container">
-      <input v-model="sliderStore.rows" disabled="disabled" />
+      <!-- <input v-model="sliderStore.rows" disabled="disabled" />
       <button 
-          @click="decreaseValue" 
-          :class="{ 'disabled-button': sliderStore.rows === 0 || !hasChar}"
-          :disabled="sliderStore.rows === 0 || !hasChar"
-        >
-          <img
-            :class="['icon', { 'disabled-icon': sliderStore.rows === 0}]"
-            src="/src/assets/custom_icon/remove_w7g2.svg" alt="button - remove a row" />
-        </button>
-        <button 
-          @click="increaseValue" 
-          :class="{ 'disabled-button': sliderStore.rows === 50}"
-          :disabled="sliderStore.rows === 50 || !hasChar"
-        >
-          <img
-            :class="['icon', { 'disabled-icon': sliderStore.rows === 50 || !hasChar}]"
-            src="/src/assets/custom_icon/add_w7g2.svg" alt="button - add a row" />
-        </button>
+        @click="decreaseValue" 
+        :class="{ 'disabled-button': sliderStore.rows === 0 || !hasChar}"
+        :disabled="sliderStore.rows === 0 || !hasChar"
+      >
+        <img
+          :class="['icon', { 'disabled-icon': sliderStore.rows === 0}]"
+          src="/src/assets/custom_icon/remove_w7g2.svg" alt="button - remove a row" />
+      </button>
+      <button 
+        @click="increaseValue" 
+        :class="{ 'disabled-button': sliderStore.rows === 50}"
+        :disabled="sliderStore.rows === 50 || !hasChar"
+      >
+        <img
+          :class="['icon', { 'disabled-icon': sliderStore.rows === 50 || !hasChar}]"
+          src="/src/assets/custom_icon/add_w7g2.svg" alt="button - add a row" />
+      </button> -->
     </div>
   </div>
   <vue-slider 
@@ -118,9 +118,9 @@ const hasChar = computed(() => {
   opacity: 0.5;
 }
 
-h2 {
+h3 {
   margin-bottom: 1vh;
-  color: #ffffff;
+  color: #e8eaed;
 }
 
 input {
