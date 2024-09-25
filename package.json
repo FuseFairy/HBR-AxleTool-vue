@@ -16,9 +16,9 @@
     "piexifjs": "^1.0.4",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^4.0.2",
+    "rollup": ">=4.22.4",
     "vue": "^3.4.29",
-    "vue-slider-component": "^4.1.0-beta.7",
-    "rollup": ">=4.22.4"
+    "vue-slider-component": "^4.1.0-beta.7"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
