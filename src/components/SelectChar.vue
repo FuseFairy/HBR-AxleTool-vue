@@ -28,7 +28,7 @@ const teamOptions = [
   { value: '31E', name: '31E', icon: 'team_icon/31E.webp' },
   { value: '31F', name: '31F', icon: 'team_icon/31F.webp' },
   { value: '31X', name: '31X', icon: 'team_icon/31X.webp' },
-  { value: 'Angel beats!', name: 'Angel Beats!', icon: 'team_icon/Angel Beats!.webp' }
+  { value: '31AB', name: 'Angel Beats!', icon: 'team_icon/Angel Beats.webp' }
 ];
 const earringOptions = [
   {value: "BREAK耳環", name: "BREAK耳環", icon: 'earring_icon/break.webp'},
@@ -56,7 +56,6 @@ const isOtherDisable = computed(() => !selectedStyle.value);
 const initializeOptions = async () => {
   if (selectedTeam.value) {
     characterOptions.value = await fetchCharacterOptions(selectedTeam.value);
-    console.log(characterOptions);
   }
   if (selectedCharacter.value) {
     styleOptions.value = await fetchStyleOptions(selectedCharacter.value, selectedTeam.value);
@@ -72,7 +71,6 @@ watch(selectedTeam, async (newTeam) => {
   charStore.setSelection(props.buttonKey, 'team', newTeam);
   if (newTeam) {
     characterOptions.value = await fetchCharacterOptions(newTeam);
-    console.log(characterOptions);
     selectedCharacter.value = null;
     selectedStyle.value = null;
   } else {
