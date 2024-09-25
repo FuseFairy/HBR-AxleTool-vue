@@ -27,13 +27,20 @@ const toggleTable = () => {
   </nav>
   <main class="scrollbar-style-1">
     <div class="box_container"><SelectBoxes /></div>
-    <div class="axle">
-      <SelectRows />
-      <SelectSkill />
-      <AddRows />
-    </div>
-    </main>
-  </div>
+      <div class="axle">
+        <SelectRows />
+        <SelectSkill />
+        <AddRows />
+      </div>
+      <div class="footer">
+        <div class="footer-content">
+          Developed by 
+          <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a> & 
+          <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
+        </div>
+      </div>
+  </main>
+</div>
 </template>
 
 <style scoped>
@@ -117,10 +124,29 @@ main {
   height: calc(100vh - 3rem);
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas: 
     "box_container"
-    "axle";
+    "axle"
+    "footer";
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.footer-content {
+  padding: 10px;
+  font-size: 0.8rem;
+  color: #808080;
+}
+.footer-content a {
+  color: #808080;
+  text-decoration: none;
+}
+.footer-content a:hover {
+  text-decoration: underline;
+  color: #606060;
 }
 .box_container{
   grid-area: box_container;
