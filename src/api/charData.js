@@ -5,7 +5,6 @@ export async function fetchCharacterOptions(team) {
   try {
     const response = await axios.get(getAssetsFile(`char_data/${team}.json`));
     const data = response.data;
-    console.log(team);
     return Object.entries(data).map(([name, info]) => ({
       value: name,
       name: name,

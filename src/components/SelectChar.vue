@@ -117,8 +117,10 @@ watch(selectedStyle, async (newStyle) => {
 });
 
 const toggleCheckbox = () => {
-  selectedFlower.value = !selectedFlower.value;
-  charStore.setSelection(props.buttonKey, 'flower', selectedFlower);
+  if (!isOtherDisable.value) {
+    selectedFlower.value = !selectedFlower.value;
+    charStore.setSelection(props.buttonKey, 'flower', selectedFlower);
+  }
 };
 
 const emit = defineEmits(['close']);
@@ -217,7 +219,7 @@ const closeContainer = () => {
           <img 
             src="/src/assets/flower.webp"
             alt="Is Flower"
-            class="flower-icon"
+            :class="['flower-icon', {'flower-icon-disabled': isOtherDisable }]"
             draggable="false"
             @click="toggleCheckbox" />
         </div>
@@ -286,14 +288,21 @@ const closeContainer = () => {
   align-items: center;
   margin-top: 2px;
 }
-.flower-container > input, img {
+.flower-container > input,
+.flower-container > img {
   cursor: pointer;
+}
+.flower-container > input:disabled {
+  cursor: not-allowed;
 }
 .flower-icon {
   margin-left: 10px;
   width: 50px;
   height: 50px;
   pointer-events: auto;
+}
+.flower-icon-disabled {
+  cursor: not-allowed !important;
 }
 span{
   white-space: nowrap;
