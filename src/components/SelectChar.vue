@@ -284,6 +284,9 @@ const closeContainer = () => {
   align-items: center;
   margin-top: 2px;
 }
+.flower-container > input, img {
+  cursor: pointer;
+}
 .flower-icon {
   margin-left: 10px;
   width: 50px;
