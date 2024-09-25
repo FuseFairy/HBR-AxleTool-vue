@@ -46,8 +46,8 @@ const getIconSrc = () => {
       <SelectSkill />
       <AddRows />
     </div>
-  </main>
-</div>
+    </main>
+  </div>
 </template>
 
 <style scoped>
@@ -142,6 +142,7 @@ main {
   color: white;
   margin-top: 3rem;
   overflow-y: scroll;
+  overflow-x: hidden;
   box-sizing: border-box;
   padding: 1rem;
   height: calc(100vh - 3rem);
@@ -161,8 +162,12 @@ main {
   padding-top: 0.5rem;
   grid-area: axle;;
 }
+.scrollbar-style-1 {
+  overflow-x: auto;
+}
 .scrollbar-style-1::-webkit-scrollbar {
     width: 5px;
+    height: 0;
 }
 .scrollbar-style-1::-webkit-scrollbar-track,
 .scrollbar-style-1::-webkit-scrollbar-thumb {

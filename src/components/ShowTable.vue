@@ -1,8 +1,9 @@
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useCharStore } from '@/stores/char_stores';
 import { useSkillStore } from '@/stores/skill_stores';
 import { useSliderStore } from '@/stores/slider_stores';
+import { convertElementToPng } from '@/api/domToImage';
 
 const charStore = useCharStore();
 const skillStore = useSkillStore();
@@ -16,8 +17,12 @@ const hasEarring = computed(() => {
 });
 
 const hasPassiveSkill = computed(() => {
-  return Object.values(charStore.selections).some(selection => selection?.passiveSkill !== null);
+  return Object.values(charStore.selections).some(selection => selection?.passiveSkill !== null && selection?.passiveSkill.length > 0);
 });
+
+const downloadTable = async () => {
+  await convertElementToPng('show-axle');
+};
 
 const emit = defineEmits(['close']);
 const closeTable = () => {
@@ -28,10 +33,15 @@ const closeTable = () => {
 <template>
 <div @click="closeTable" class="overlay">
   <div @click.stop class="container">
-    <button @click="closeTable" class="close"> 
-      <img src="@/assets/custom_icon/close.svg" alt="Close">
-    </button>
-    <div class="table scrollbar-style-1">
+    <div class="button-group">
+      <button @click="downloadTable" class="download"> 
+        <img src="@/assets/custom_icon/download.svg" alt="Download">
+      </button>
+      <button @click="closeTable" class="close"> 
+        <img src="@/assets/custom_icon/close.svg" alt="Close">
+      </button>
+    </div>
+    <div id="show-axle" class="table scrollbar-style-1">
       <div class="table-wrapper">
         <!-- Image row -->
         <div class="table-container">
@@ -64,7 +74,7 @@ const closeTable = () => {
             <div v-else-if="charStore.selections[i-1].earring !== null" class="text">{{ charStore.selections[i-1].earring }}</div>
           </div>
         </div>
-        <!-- Earring row -->
+        <!-- Passive Skill row -->
         <div v-if="hasPassiveSkill" class="table-container" style="margin-top: 20px;">
           <div v-for="i in 7" class="table-column">
             <div v-if="i === 1" class="label">Passive<br>Skill</div>
@@ -191,13 +201,25 @@ const closeTable = () => {
   box-sizing: border-box;
   height: 32px;
   width: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
+}
+.download {
+  background-color: transparent;
+  padding: 1px;
+  border: none;
+  box-sizing: border-box;
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  border-radius: 30%;
+}
+.download:hover {
+  background-color: rgba(78, 69, 69, 0.3)
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .close img{
   height: 100%;
@@ -224,20 +246,26 @@ const closeTable = () => {
   height: 90%;
   width: 90%;
   box-sizing: border-box;
-  padding: 1rem 0 1rem 1rem;
+  padding: 1rem;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
 }
 .table {
   display: flex;
   height: 100%;
   width: 100%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
-  padding-right: 2rem;
-  padding-top: 1.5rem;
+  padding: 1rem 1rem 0 0;
+}
+.scrollbar-style-1 {
+  overflow-x: auto;
 }
 .scrollbar-style-1::-webkit-scrollbar {
   width: 5px;
+  height: 0;
 }
 .scrollbar-style-1::-webkit-scrollbar-track,
 .scrollbar-style-1::-webkit-scrollbar-thumb {
