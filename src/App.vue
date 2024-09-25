@@ -8,7 +8,6 @@ import ShowTable from './components/ShowTable.vue';
 import uploadButton from './components/uploadButton.vue';
 import SelectSkill from './components/SelectSkill.vue';
 
-const isSidebarVisible = ref(false);
 const isTableVisible = ref(false);
 
 const toggleTable = () => {
@@ -17,7 +16,7 @@ const toggleTable = () => {
 </script>
 
 <template>
-<div class="page-layout" :class="{ 'sidebar-hidden': !isSidebarVisible }">
+<div class="page-layout">
   <nav>
     <uploadButton />
     <h1 class="nav-title">HBR Axle Tool</h1>
@@ -26,8 +25,6 @@ const toggleTable = () => {
     </button>
     <ShowTable v-if="isTableVisible" @close="toggleTable"/>
   </nav>
-  <aside :class="{ show: isSidebarVisible }">
-  </aside>
   <main class="scrollbar-style-1">
     <div class="box_container"><SelectBoxes /></div>
     <div class="axle">
@@ -43,11 +40,11 @@ const toggleTable = () => {
 .page-layout {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas: 
-    "navbar navbar"
-    "sidebar main";
+    "navbar"
+    "main";
   background-color: black;
   background-image: url(@/assets/bg.webp);
   background-position: center;
@@ -104,33 +101,10 @@ button:hover {
     transform: translateX(-100%);
   }
 }
-aside {
-  height: calc(100vh - 3rem);
-  top: 3rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  position: fixed;
-  align-self: start;
-  width: 250px;
-  grid-area: sidebar;
-  background-color: rgb(37, 33, 33);
-  color: white;
-  display: none;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  z-index: 1500;
-}
 .show {
   display: block;
   transform: translateX(0);
   animation: slideIn 0.3s ease forwards;
-}
-.sidebar-hidden {
-  grid-template-columns: 0 1fr;
-}
-.page-layout.sidebar-hidden aside {
-  transform: translateX(-100%);
-  animation: slideOut 0.3s ease forwards;
 }
 main {
   grid-area: main;
@@ -171,14 +145,6 @@ main {
 }
 .scrollbar-style-1::-webkit-scrollbar-thumb {
     background-color: #555;
-}
-@media(max-width: 800px) {
-  .page-layout {
-    grid-template-columns: 0 1fr;
-  }
-  aside {
-    width: 100%;
-  }
 }
 @media(max-width: 450px) {
   .box_container {
