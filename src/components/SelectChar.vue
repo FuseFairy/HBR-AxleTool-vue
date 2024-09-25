@@ -392,6 +392,9 @@ span{
   max-width: 100%;
   font-size: 0;
 }
+:deep(.multiselect-tag) {
+  background-color: #663fba;
+}
 @media(max-width: 800px) {
   .container{
     width: 90%;
