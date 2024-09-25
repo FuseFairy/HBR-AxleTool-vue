@@ -5,32 +5,21 @@ import AddRows from './components/AddRows.vue';
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
 import ShowTable from './components/ShowTable.vue';
+import uploadButton from './components/uploadButton.vue';
 import SelectSkill from './components/SelectSkill.vue';
-import menuIcon from '@/assets/custom_icon/menu.svg';
-import closeIcon from '@/assets/custom_icon/close.svg';
 
 const isSidebarVisible = ref(false);
 const isTableVisible = ref(false);
 
-const toggleSidebar = () => {
-  isSidebarVisible.value = !isSidebarVisible.value;
-};
-
 const toggleTable = () => {
   isTableVisible.value = !isTableVisible.value;
 }
-
-const getIconSrc = () => {
-  return isSidebarVisible.value ? closeIcon : menuIcon;
-};
 </script>
 
 <template>
 <div class="page-layout" :class="{ 'sidebar-hidden': !isSidebarVisible }">
   <nav>
-    <button @click="toggleSidebar"> 
-      <img :src="getIconSrc()" alt="Menu"> 
-    </button>
+    <uploadButton />
     <h1 class="nav-title">HBR Axle Tool</h1>
     <button @click="toggleTable"> 
       <img src="@/assets/custom_icon/table.svg" alt="table"> 
@@ -80,10 +69,16 @@ nav {
 }
 button {
   background-color: transparent;
+  padding: 1px;
   border: none;
-  font-size: 1rem;
-  height: 24px;
+  box-sizing: border-box;
+  height: 32px;
+  width: 32px;
   cursor: pointer;
+  border-radius: 30%;
+}
+button:hover {
+  background-color: rgba(78, 69, 69, 0.3)
 }
 .nav-title {
   flex-grow: 1;
