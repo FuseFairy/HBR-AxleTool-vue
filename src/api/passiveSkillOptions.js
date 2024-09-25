@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { getAssetsFile } from './util';
 
 export async function fetchPassiveSkillOptions(characterName, team) {
   try {
-    const response = await axios.get(`/src/assets/char_data/${team}.json`);
+    const response = await axios.get(getAssetsFile(`char_data/${team}.json`));
     const data = response.data;
     const characterData = data[characterName];
 
