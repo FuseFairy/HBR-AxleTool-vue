@@ -76,6 +76,9 @@ button {
   width: 32px;
   cursor: pointer;
   border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 button:hover {
   background-color: rgba(78, 69, 69, 0.3)
@@ -84,9 +87,6 @@ button:hover {
   flex-grow: 1;
   text-align: center;
   font-size: 1.5rem;
-}
-.settings {
-  margin-left: auto;
 }
 @keyframes slideIn {
   from {

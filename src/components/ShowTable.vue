@@ -212,6 +212,9 @@ const closeTable = () => {
   width: 32px;
   cursor: pointer;
   border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .download:hover {
   background-color: rgba(78, 69, 69, 0.3)
