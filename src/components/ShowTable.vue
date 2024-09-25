@@ -74,11 +74,11 @@ const closeTable = () => {
           </div>
         </div>
         <!-- Skill row -->
-        <div v-if="sliderStore.rows > 0" class="table-container" style="margin-top: 20px;">
+        <div v-if="sliderStore.rows > 0" class="axle-line-container" style="margin-top: 20px;">
           <div class="axle-column"></div>
         </div>
-        <div v-if="sliderStore.rows > 0" v-for="row in sliderStore.rows" class="table-container" :style="{ 'margin-top': '20px', 'border-top': row > 1 ? '2px dashed gray' : 'none', 'padding-top': row > 1 ? '20px' : 'none' }">
-          <div v-for="col in 4" :class="['axle-table-column', { 'first-axle-column': col === 1 }]">
+        <div v-if="sliderStore.rows > 0" v-for="row in sliderStore.rows" class="table-container-2" :style="{ 'margin-top': '20px', 'border-top': row > 1 ? '2px dashed gray' : 'none', 'padding-top': row > 1 ? '20px' : 'none' }">
+          <div v-for="col in 4" class="axle-table-column">
             <div v-if="col === 1" class="label">
               <span v-if="skillStore.turns[row-1].turn !== null && skillStore.turns[row-1].od !== null">
                 {{ skillStore.turns[row-1].turn }} / {{ skillStore.turns[row-1].od }}
@@ -105,24 +105,33 @@ const closeTable = () => {
 .table-wrapper {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .table-container {
-  display: flex;
-  flex: 0 0 1fr;
-  flex-wrap: nowrap;
-  margin-right: 10px;
-  width: calc(7 * 125px + 7 * 10px);
+  display: grid;
+  grid-template-columns: 10dvw repeat(6, 1fr);
+  margin: 0 10px;
+  width: inherit;
+}
+.table-container-2 {
+  display: grid;
+  grid-template-columns: 10dvw repeat(3, 1fr);
+  margin: 0 10px;
+  width: inherit;
+}
+.axle-line-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 10px;
+  width: inherit;
 }
 .table-column {
-  flex: 0 0 125px;
   margin-right: 10px;
   display: flex;
   flex-direction: column; 
   align-items: center;
 }
 .axle-table-column {
-  flex: 0 0 250px;
-  width: calc(7 * 125px + 7 * 10px);
   display: flex;
   flex-direction: column; 
   text-align: center;
@@ -135,11 +144,7 @@ const closeTable = () => {
   width: 40px;
   vertical-align: middle;
 }
-.first-axle-column {
-  flex: 0 0 150px;
-}
 .axle-column {
-  flex: 0 0 945px;
   display: flex;
   flex-direction: column; 
   align-items: center;
@@ -232,14 +237,14 @@ const closeTable = () => {
   padding-top: 1.5rem;
 }
 .scrollbar-style-1::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 .scrollbar-style-1::-webkit-scrollbar-track,
 .scrollbar-style-1::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 .scrollbar-style-1::-webkit-scrollbar-thumb {
-    background-color: #555;
+  background-color: #555;
 }
 </style>
