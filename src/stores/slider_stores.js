@@ -12,6 +12,8 @@ export const useSliderStore = defineStore('slider', () => {
     rows,
     setValue
   }}, {
-    persist: true,
+    persist: {
+      storage: sessionStorage
+    }
   }
 );

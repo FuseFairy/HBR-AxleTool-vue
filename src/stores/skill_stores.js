@@ -32,6 +32,8 @@ export const useSkillStore = defineStore('skill', () => {
 		turns,
 		adjustSkills
 	}}, {
-	  persist: true,
+	  persist: {
+		storage: sessionStorage
+	  }
 	}
 );

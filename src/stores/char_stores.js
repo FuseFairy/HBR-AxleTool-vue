@@ -22,6 +22,8 @@ export const useCharStore = defineStore('character_select', () => {
     setSelection,
     getSelection
   }}, {
-    persist: true,
+    persist: {
+      storage: sessionStorage
+    }
   }
 )
