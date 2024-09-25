@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useCharStore } from '@/stores/char_stores';
 import SelectChar from '@/components/SelectChar.vue';
+import { getAssetsFile } from '@/api/util';
 
 const charStore = useCharStore();
 
@@ -36,7 +37,7 @@ const closeContainer = () => {
     }">
     <img v-if="charStore.selections[button.key].img !== null" 
          class="char-img" 
-         :src="charStore.selections[button.key].img" 
+         :src="getAssetsFile(charStore.selections[button.key].img)" 
          :alt="charStore.selections[button.key].style">
     <img v-else 
          class="icon-img" 

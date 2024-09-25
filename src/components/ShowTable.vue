@@ -4,6 +4,7 @@ import { useCharStore } from '@/stores/char_stores';
 import { useSkillStore } from '@/stores/skill_stores';
 import { useSliderStore } from '@/stores/slider_stores';
 import { convertElementToPng } from '@/api/domToImage';
+import { getAssetsFile } from '@/api/util';
 
 const charStore = useCharStore();
 const skillStore = useSkillStore();
@@ -48,7 +49,7 @@ const closeTable = () => {
           <div v-for="i in 7" class="table-column">
             <div v-if="i === 1"></div>
             <img v-else-if="charStore.selections[i-1].img" 
-                :src="charStore.selections[i-1].img" 
+                :src="getAssetsFile(charStore.selections[i-1].img)" 
                 :alt="charStore.selections[i-1].style" 
                 class="character-image">
           </div>
@@ -98,7 +99,7 @@ const closeTable = () => {
             </div>
             <div v-else>
               <span v-if="skillStore.skills[row-1][col-2].skill !== null">
-                <img :src="skillStore.skills[row-1][col-2].style_img" :alt="skillStore.skills[row-1][col-2].style" class="axle-img"/>
+                <img :src="getAssetsFile(skillStore.skills[row-1][col-2].style_img)" :alt="skillStore.skills[row-1][col-2].style" class="axle-img"/>
                 <span class="axle-text">{{ skillStore.skills[row-1][col-2].skill }}</span>
                 <span v-if="skillStore.skills[row-1][col-2].target !== null" class="axle-text"><br>（{{ skillStore.skills[row-1][col-2].target }}）</span>
               </span>

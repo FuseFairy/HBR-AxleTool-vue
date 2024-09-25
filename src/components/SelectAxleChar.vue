@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import { useCharStore } from '@/stores/char_stores';
 import { useSkillStore } from '@/stores/skill_stores';
+import { getAssetsFile } from '@/api/util';
 
 const charStore = useCharStore();
 const skillStore = useSkillStore();
@@ -59,7 +60,7 @@ const closeContainer = () => {
           :key="key"
           class="circle-button selected-button"
           @click="handleImageClick(key)">
-          <img class="char-img" :src="item.img" :alt="item.style" />
+          <img class="char-img" :src="getAssetsFile(item.img)" :alt="item.style" />
           <div v-if="isSelected(key)" class="overlay-text">
             Selected
           </div>

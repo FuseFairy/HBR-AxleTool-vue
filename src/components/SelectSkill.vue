@@ -5,6 +5,7 @@ import { useSkillStore } from '@/stores/skill_stores';
 import { useCharStore } from '@/stores/char_stores';
 import Multiselect from '@vueform/multiselect';
 import SelectAxleChar from './SelectAxleChar.vue';
+import { getAssetsFile } from '@/api/util';
 
 const sliderStore = useSliderStore();
 const skillStore = useSkillStore();
@@ -101,7 +102,7 @@ const deleteRow = (index) => {
         }">
         <img v-if="skillStore.skills[i-1][n-1].style_img !== null" 
             class="char-img" 
-            :src="skillStore.skills[i-1][n-1].style_img" 
+            :src="getAssetsFile(skillStore.skills[i-1][n-1].style_img)" 
             :alt="skillStore.skills[i-1][n-1].style">
         <img v-else 
             class="icon-img" 

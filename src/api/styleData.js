@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { getAssetsFile } from './util';
 
 export async function fetchStyleOptions(characterName, team) {
   try {
-    const response = await axios.get(`/src/assets/char_data/${team}.json`);
+    const response = await axios.get(getAssetsFile(`char_data/${team}.json`));
     const data = response.data;
     const characterData = data[characterName];
 
@@ -16,7 +17,7 @@ export async function fetchStyleOptions(characterName, team) {
     return Object.entries(styles).map(([name, icon]) => ({
       value: name,
       name: name,
-      icon: `/src/assets/char_images/${team}/${englishName}/${icon}.webp`,
+      icon: `char_images/${team}/${englishName}/${icon}.webp`,
     }));
   } catch (error) {
     console.error('Error fetching style options:', error);

@@ -7,6 +7,7 @@ import { fetchCharacterOptions } from '@/api/charData';
 import { fetchStyleOptions } from '@/api/styleData';
 import { fetchSkillOptions } from '@/api/skillOptions';
 import { fetchPassiveSkillOptions } from '@/api/passiveSkillOptions';
+import { getAssetsFile } from '@/api/util';
 
 const charStore = useCharStore();
 const sliderStore = useSliderStore();
@@ -19,21 +20,21 @@ const props = defineProps({
 });
 
 const teamOptions = [
-  { value: '30G', name: '30G', icon: '/src/assets/team_icon/30G.webp' },
-  { value: '31A', name: '31A', icon: '/src/assets/team_icon/31A.webp' },
-  { value: '31B', name: '31B', icon: '/src/assets/team_icon/31B.webp' },
-  { value: '31C', name: '31C', icon: '/src/assets/team_icon/31C.webp' },
-  { value: '31D', name: '31D', icon: '/src/assets/team_icon/31D.webp' },
-  { value: '31E', name: '31E', icon: '/src/assets/team_icon/31E.webp' },
-  { value: '31F', name: '31F', icon: '/src/assets/team_icon/31F.webp' },
-  { value: '31X', name: '31X', icon: '/src/assets/team_icon/31X.webp' },
-  { value: 'Angel beats!', name: 'Angel Beats!', icon: '/src/assets/team_icon/Angel Beats!.webp' }
+  { value: '30G', name: '30G', icon: 'team_icon/30G.webp' },
+  { value: '31A', name: '31A', icon: 'team_icon/31A.webp' },
+  { value: '31B', name: '31B', icon: 'team_icon/31B.webp' },
+  { value: '31C', name: '31C', icon: 'team_icon/31C.webp' },
+  { value: '31D', name: '31D', icon: 'team_icon/31D.webp' },
+  { value: '31E', name: '31E', icon: 'team_icon/31E.webp' },
+  { value: '31F', name: '31F', icon: 'team_icon/31F.webp' },
+  { value: '31X', name: '31X', icon: 'team_icon/31X.webp' },
+  { value: 'Angel beats!', name: 'Angel Beats!', icon: 'team_icon/Angel Beats!.webp' }
 ];
 const earringOptions = [
-  {value: "BREAK耳環", name: "BREAK耳環", icon: '/src/assets/earring_icon/break.webp'},
-  {value: "進攻耳環", name: "進攻耳環", icon: '/src/assets/earring_icon/attach.webp'},
-  {value: "DRIVE耳環", name: "DRIVE耳環", icon: '/src/assets/earring_icon/drive.webp'},
-  {value: "爆破耳環", name: "爆破耳環", icon: '/src/assets/earring_icon/explosion.webp'}
+  {value: "BREAK耳環", name: "BREAK耳環", icon: 'earring_icon/break.webp'},
+  {value: "進攻耳環", name: "進攻耳環", icon: 'earring_icon/attach.webp'},
+  {value: "DRIVE耳環", name: "DRIVE耳環", icon: 'earring_icon/drive.webp'},
+  {value: "爆破耳環", name: "爆破耳環", icon: 'earring_icon/explosion.webp'}
 ];
 const rankOptions = Array.from({ length: 10 }, (_, i) => i+1);
 const characterOptions = ref([]);
@@ -55,6 +56,7 @@ const isOtherDisable = computed(() => !selectedStyle.value);
 const initializeOptions = async () => {
   if (selectedTeam.value) {
     characterOptions.value = await fetchCharacterOptions(selectedTeam.value);
+    console.log(characterOptions);
   }
   if (selectedCharacter.value) {
     styleOptions.value = await fetchStyleOptions(selectedCharacter.value, selectedTeam.value);
@@ -70,6 +72,7 @@ watch(selectedTeam, async (newTeam) => {
   charStore.setSelection(props.buttonKey, 'team', newTeam);
   if (newTeam) {
     characterOptions.value = await fetchCharacterOptions(newTeam);
+    console.log(characterOptions);
     selectedCharacter.value = null;
     selectedStyle.value = null;
   } else {
@@ -142,13 +145,13 @@ const closeContainer = () => {
           :options="teamOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
-              <img class="label-icon" :src="value.icon">
+              <img class="label-icon" :src="getAssetsFile(value.icon)">
               <span :title="value.name">{{ value.name }}</span>
             </div>
           </template>
 
           <template v-slot:option="{ option }">
-            <img class="option-icon" :src="option.icon">
+            <img class="option-icon" :src="getAssetsFile(option.icon)">
             <span :title="option.name">{{ option.name }}</span>
           </template>
         </Multiselect>
@@ -164,13 +167,13 @@ const closeContainer = () => {
           :options="characterOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
-              <img class="label-icon" :src="value.icon"> 
+              <img class="label-icon" :src="getAssetsFile(value.icon)"> 
               <span :title="value.name">{{ value.name }}</span>
             </div>
           </template>
 
           <template v-slot:option="{ option }">
-            <img class="option-icon" :src="option.icon"> 
+            <img class="option-icon" :src="getAssetsFile(option.icon)"> 
             <span :title="option.name">{{ option.name }}</span>
           </template>
         </Multiselect>
@@ -186,13 +189,13 @@ const closeContainer = () => {
           :options="styleOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
-              <img class="label-icon" :src="value.icon">
+              <img class="label-icon" :src="getAssetsFile(value.icon)">
               <span :title="value.name">{{ value.name }}</span>
             </div>
           </template>
 
           <template v-slot:option="{ option }">
-            <img class="option-icon" :src="option.icon">
+            <img class="option-icon" :src="getAssetsFile(option.icon)">
             <span :title="option.name">{{ option.name }}</span>
           </template>
         </Multiselect>
@@ -232,13 +235,13 @@ const closeContainer = () => {
           @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value)">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
-              <img class="label-icon" :src="value.icon">
+              <img class="label-icon" :src="getAssetsFile(value.icon)">
               <span :title="value.name">{{ value.name }}</span>
             </div>
           </template>
 
           <template v-slot:option="{ option }">
-            <img class="option-icon" :src="option.icon">
+            <img class="option-icon" :src="getAssetsFile(option.icon)">
             <span :title="option.name">{{ option.name }}</span>
           </template>
         </Multiselect>
