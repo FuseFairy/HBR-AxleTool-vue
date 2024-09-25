@@ -34,6 +34,9 @@ const toggleTable = () => {
       </div>
       <div class="footer">
         <div class="footer-content">
+          <a href="https://github.com/FuseFairy/HBR-AxleTool-vue" target="_blank">
+            <img src="@/assets/custom_icon/github.svg" alt="GitHub" class="github-icon"/>
+          </a>
           Developed by 
           <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a> & 
           <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
@@ -139,14 +142,25 @@ main {
   padding: 10px;
   font-size: 0.8rem;
   color: #808080;
+  display: flex;
+  align-items: center;
 }
 .footer-content a {
   color: #808080;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  height: 24px;
 }
 .footer-content a:hover {
   text-decoration: underline;
   color: #606060;
+}
+.github-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  filter: invert(1);
 }
 .box_container{
   grid-area: box_container;
