@@ -115,6 +115,11 @@ watch(selectedStyle, async (newStyle) => {
     }
 });
 
+const toggleCheckbox = () => {
+  selectedFlower.value = !selectedFlower.value;
+  charStore.setSelection(props.buttonKey, 'flower', selectedFlower);
+};
+
 const emit = defineEmits(['close']);
 const closeContainer = () => {
   emit('close');
@@ -211,7 +216,8 @@ const closeContainer = () => {
           <img 
             src="/src/assets/flower.webp"
             alt="Is Flower"
-            class="flower-icon"/>
+            class="flower-icon"
+            @click="toggleCheckbox" />
         </div>
       </div>
       <div class="section">
