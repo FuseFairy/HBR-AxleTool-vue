@@ -294,6 +294,7 @@ const closeContainer = () => {
 }
 .flower-container > input:disabled {
   cursor: not-allowed;
+  opacity: 0.8;
 }
 .flower-icon {
   margin-left: 10px;
@@ -303,6 +304,7 @@ const closeContainer = () => {
 }
 .flower-icon-disabled {
   cursor: not-allowed !important;
+  opacity: 0.8;
 }
 span{
   white-space: nowrap;
@@ -315,7 +317,7 @@ span{
 }
 .section .multiselect.is-disabled,
 .section .multiselect.is-disabled * {
-  opacity: 0.85;
+  opacity: 0.8;
   cursor: not-allowed !important;
 }
 .overlay {
