@@ -2,10 +2,14 @@
 import { ref, watch, computed, onMounted } from 'vue'
 import Multiselect from '@vueform/multiselect'
 import { useCharStore } from '@/stores/char_stores'
+import { useSliderStore } from '@/stores/slider_stores';
 import { fetchCharacterOptions } from '@/api/charData';
 import { fetchStyleOptions } from '@/api/styleData';
+import { fetchSkillOptions } from '@/api/skillOptions';
+import { fetchPassiveSkillOptions } from '@/api/passiveSkillOptions';
 
 const charStore = useCharStore();
+const sliderStore = useSliderStore();
 
 const props = defineProps({
   buttonKey: {
@@ -25,15 +29,28 @@ const teamOptions = [
   { value: '31X', name: '31X', icon: '/src/assets/team_icon/31X.webp' },
   { value: 'Angel beats!', name: 'Angel Beats!', icon: '/src/assets/team_icon/Angel Beats!.webp' }
 ];
+const earringOptions = [
+  {value: "BREAK耳環", name: "BREAK耳環", icon: '/src/assets/earring_icon/break.webp'},
+  {value: "進攻耳環", name: "進攻耳環", icon: '/src/assets/earring_icon/attach.webp'},
+  {value: "DRIVE耳環", name: "DRIVE耳環", icon: '/src/assets/earring_icon/drive.webp'},
+  {value: "爆破耳環", name: "爆破耳環", icon: '/src/assets/earring_icon/explosion.webp'}
+];
+const rankOptions = Array.from({ length: 10 }, (_, i) => i+1);
 const characterOptions = ref([]);
 const styleOptions = ref([]);
+const passiveSkillOptions = ref([])
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'));
 const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'));
 const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'));
+const selectedEarring = ref(charStore.getSelection(props.buttonKey, 'earring'))
+const selectedRank = ref(charStore.getSelection(props.buttonKey, 'rank'))
+const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower'))
+const selectedPassiveSkill = ref(charStore.getSelection(props.buttonKey, 'passiveSkill'))
 
 const isCharDisabled = computed(() => !selectedTeam.value);
 const isStyleDisabled = computed(() => !selectedCharacter.value);
+const isOtherDisable = computed(() => !selectedStyle.value);
 
 const initializeOptions = async () => {
   if (selectedTeam.value) {
@@ -41,6 +58,9 @@ const initializeOptions = async () => {
   }
   if (selectedCharacter.value) {
     styleOptions.value = await fetchStyleOptions(selectedCharacter.value, selectedTeam.value);
+  }
+  if (selectedPassiveSkill.value) {
+    passiveSkillOptions.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
   }
 };
 
@@ -70,18 +90,35 @@ watch(selectedCharacter, async (newChar) => {
   }
 });
 
-watch(selectedStyle, (newStyle) => {
+watch(selectedStyle, async (newStyle) => {
   if (newStyle) {
     const selectedOption = styleOptions.value.find(option => option.name === newStyle);
     if (selectedOption) {
+      passiveSkillOptions.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
       charStore.setSelection(props.buttonKey, 'style', newStyle);
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon);
+      charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, newStyle));
     }
   } else {
       charStore.setSelection(props.buttonKey, 'style', null);
       charStore.setSelection(props.buttonKey, 'img', null);
+      charStore.setSelection(props.buttonKey, 'skill', null);
+      charStore.setSelection(props.buttonKey, 'rank', null);
+      charStore.setSelection(props.buttonKey, 'flower', null);
+      charStore.setSelection(props.buttonKey, 'earring', null);
+      charStore.setSelection(props.buttonKey, 'passiveSkill', null);
+      // 確保同步更新
+      selectedRank.value = null;
+      selectedPassiveSkill.value = null;
+      selectedFlower.value = false;
+      selectedEarring.value = null;
     }
 });
+
+const toggleCheckbox = () => {
+  selectedFlower.value = !selectedFlower.value;
+  charStore.setSelection(props.buttonKey, 'flower', selectedFlower);
+};
 
 const emit = defineEmits(['close']);
 const closeContainer = () => {
@@ -93,7 +130,7 @@ const closeContainer = () => {
   <div @click="closeContainer" class="overlay">
     <div @click.stop class="container">
       <button @click="closeContainer" class="close"> 
-        <img src="@/assets/custom_icon/close.svg" alt="Setting">
+        <img src="@/assets/custom_icon/close.svg" alt="Close">
       </button>
       <div class="section">
         <label>Team</label>
@@ -101,6 +138,7 @@ const closeContainer = () => {
           v-model="selectedTeam"
           placeholder="Select team"
           label="name"
+          :disabled="sliderStore.rows > 0"
           :options="teamOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
@@ -122,7 +160,7 @@ const closeContainer = () => {
           v-model="selectedCharacter"
           placeholder="Select character"
           label="name"
-          :disabled="isCharDisabled"
+          :disabled="isCharDisabled || sliderStore.rows > 0"
           :options="characterOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
@@ -144,7 +182,7 @@ const closeContainer = () => {
           v-model="selectedStyle"
           placeholder="Select style"
           label="name"
-          :disabled="isStyleDisabled"
+          :disabled="isStyleDisabled || sliderStore.rows > 0"
           :options="styleOptions">
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
@@ -158,6 +196,64 @@ const closeContainer = () => {
             <span :title="option.name">{{ option.name }}</span>
           </template>
         </Multiselect>
+      </div>
+
+      <div class="section">
+        <label>Rank (optional)</label>
+        <Multiselect
+          v-model="selectedRank"
+          placeholder="Select Rank"
+          :disabled="isOtherDisable"
+          :options="rankOptions"
+          @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value)" 
+        />
+        <div class="flower-container">
+          <input
+            type="checkbox"
+            v-model="selectedFlower"
+            :disabled="isOtherDisable"
+            @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower)" />
+          <img 
+            src="/src/assets/flower.webp"
+            alt="Is Flower"
+            class="flower-icon"
+            draggable="false"
+            @click="toggleCheckbox" />
+        </div>
+      </div>
+      <div class="section">
+        <label>Earring (optional)</label>
+        <Multiselect
+          v-model="selectedEarring"
+          placeholder="Select earring"
+          label="name"
+          :disabled="isOtherDisable"
+          :options="earringOptions"
+          @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value)">
+          <template v-slot:singlelabel="{ value }">
+            <div class="multiselect-single-label">
+              <img class="label-icon" :src="value.icon">
+              <span :title="value.name">{{ value.name }}</span>
+            </div>
+          </template>
+
+          <template v-slot:option="{ option }">
+            <img class="option-icon" :src="option.icon">
+            <span :title="option.name">{{ option.name }}</span>
+          </template>
+        </Multiselect>
+      </div>
+
+      <div class="section">
+        <label>Passive Skill (optional)</label>
+        <Multiselect
+          v-model="selectedPassiveSkill"
+          mode="tags"
+          placeholder="Select passive skill"
+          :close-on-select="false"
+          :disabled="isOtherDisable"
+          :options="passiveSkillOptions"
+          @change="(value) => charStore.setSelection(props.buttonKey, 'passiveSkill', value)"/>
       </div>
     </div>
   </div>
@@ -184,16 +280,33 @@ const closeContainer = () => {
   height: 100%;
   width: 100%;
 }
+.flower-container {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+.flower-container > input, img {
+  cursor: pointer;
+}
+.flower-icon {
+  margin-left: 10px;
+  width: 50px;
+  height: 50px;
+  pointer-events: auto;
+}
 span{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
-  justify-content: center;
-  align-items: center;
 }
 .section{
   padding-top: 1.5rem;
+}
+.section .multiselect.is-disabled,
+.section .multiselect.is-disabled * {
+  opacity: 0.85;
+  cursor: not-allowed !important;
 }
 .overlay {
   position: fixed;
@@ -213,7 +326,7 @@ span{
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgb(19, 18, 18);
-  height: 50vh;
+  height: auto;
   width: 31%;
   box-sizing: border-box;
   padding: 1rem;
@@ -232,6 +345,7 @@ span{
 :deep(.multiselect){
   background-color: black;
   border: 1px solid rgb(64, 68, 141);
+  margin-top: 2px;
 }
 :deep(.multiselect.is-active){
   box-shadow: none;
@@ -268,6 +382,14 @@ span{
 :deep(.multiselect-clear-icon:active),
 :deep(.multiselect-clear-icon:focus) {
     background-color: #999;
+}
+:deep(.multiselect-clear-icon) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+  font-size: 0;
 }
 @media(max-width: 800px) {
   .container{

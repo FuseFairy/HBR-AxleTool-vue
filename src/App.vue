@@ -1,53 +1,63 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import './assets/main.css';
+import AddRows from './components/AddRows.vue';
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
-import menuIcon from '@/assets/custom_icon/menu.svg';
-import closeIcon from '@/assets/custom_icon/close.svg';
+import ShowTable from './components/ShowTable.vue';
+import uploadButton from './components/uploadButton.vue';
+import SelectSkill from './components/SelectSkill.vue';
 
-const isSidebarVisible = ref(false);
-const toggleSidebar = () => {
-  isSidebarVisible.value = !isSidebarVisible.value;
-};
+const isTableVisible = ref(false);
 
-const getIconSrc = () => {
-  return isSidebarVisible.value ? closeIcon : menuIcon;
-};
+const toggleTable = () => {
+  isTableVisible.value = !isTableVisible.value;
+}
 </script>
 
 <template>
-  <div class="page-layout" :class="{ 'sidebar-hidden': !isSidebarVisible }">
-    <nav>
-      <button @click="toggleSidebar"> 
-        <img :src="getIconSrc()" alt="Menu"> 
-      </button>
-      <h1 class="nav-title">HBR Axle Tool</h1>
-      <button class="setting"> 
-        <img src="@/assets/custom_icon/setting.svg" alt="Setting"> 
-      </button>
-    </nav>
-    <aside :class="{ show: isSidebarVisible }">
-    </aside>
-    <main class="scrollbar-style-1">
-      <div class="box_container"><SelectBoxes /></div>
+<div class="page-layout">
+  <nav>
+    <uploadButton />
+    <h1 class="nav-title">HBR Axle Tool</h1>
+    <button @click="toggleTable"> 
+      <img src="@/assets/custom_icon/table.svg" alt="table"> 
+    </button>
+    <ShowTable v-if="isTableVisible" @close="toggleTable"/>
+  </nav>
+  <main class="scrollbar-style-1">
+    <div class="box_container"><SelectBoxes /></div>
       <div class="axle">
         <SelectRows />
-        axle
+        <SelectSkill />
+        <AddRows />
       </div>
-    </main>
-  </div>
+      <div class="footer">
+        <div class="footer-content">
+          <a href="https://github.com/FuseFairy/HBR-AxleTool-vue" target="_blank">
+            <img src="@/assets/custom_icon/github.svg" alt="GitHub" class="github-icon"/>
+          </a>
+          <div class="footer-text">
+            <p>Developed by </p> 
+            <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a>
+            <p> & </p> 
+            <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
+          </div>
+        </div>
+      </div>
+  </main>
+</div>
 </template>
 
 <style scoped>
 .page-layout {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas: 
-    "navbar navbar"
-    "sidebar main";
+    "navbar"
+    "main";
   background-color: black;
   background-image: url(@/assets/bg.webp);
   background-position: center;
@@ -69,18 +79,24 @@ nav {
 }
 button {
   background-color: transparent;
+  padding: 1px;
   border: none;
-  font-size: 1rem;
-  height: 24px;
+  box-sizing: border-box;
+  height: 32px;
+  width: 32px;
   cursor: pointer;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button:hover {
+  background-color: rgba(78, 69, 69, 0.3)
 }
 .nav-title {
   flex-grow: 1;
   text-align: center;
   font-size: 1.5rem;
-}
-.settings {
-  margin-left: auto;
 }
 @keyframes slideIn {
   from {
@@ -98,47 +114,60 @@ button {
     transform: translateX(-100%);
   }
 }
-aside {
-  height: calc(100vh - 3rem);
-  top: 3rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  position: fixed;
-  align-self: start;
-  width: 250px;
-  grid-area: sidebar;
-  background-color: rgb(37, 33, 33);
-  color: white;
-  display: none;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
 .show {
   display: block;
   transform: translateX(0);
   animation: slideIn 0.3s ease forwards;
-}
-.sidebar-hidden {
-  grid-template-columns: 0 1fr;
-}
-.page-layout.sidebar-hidden aside {
-  transform: translateX(-100%);
-  animation: slideOut 0.3s ease forwards;
 }
 main {
   grid-area: main;
   color: white;
   margin-top: 3rem;
   overflow-y: scroll;
+  overflow-x: hidden;
   box-sizing: border-box;
   padding: 1rem;
   height: calc(100vh - 3rem);
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-areas: 
     "box_container"
-    "axle";
+    "axle"
+    "footer";
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;;
+}
+.footer-content {
+  padding: 10px;
+  font-size: 0.8rem;
+  color: #808080;
+  display: flex;
+  align-items: center;
+}
+.footer-content a {
+  color: #808080;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+.footer-content a:hover {
+  text-decoration: underline;
+  color: #606060;
+}
+.footer-text > p,
+.footer-text > a {
+  display: inline;
+}
+.github-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  filter: invert(1) brightness(0.5);
 }
 .box_container{
   grid-area: box_container;
@@ -149,8 +178,12 @@ main {
   padding-top: 0.5rem;
   grid-area: axle;;
 }
+.scrollbar-style-1 {
+  overflow-x: auto;
+}
 .scrollbar-style-1::-webkit-scrollbar {
     width: 5px;
+    height: 0;
 }
 .scrollbar-style-1::-webkit-scrollbar-track,
 .scrollbar-style-1::-webkit-scrollbar-thumb {
@@ -159,14 +192,6 @@ main {
 }
 .scrollbar-style-1::-webkit-scrollbar-thumb {
     background-color: #555;
-}
-@media(max-width: 800px) {
-  .page-layout {
-    grid-template-columns: 0 1fr;
-  }
-  aside {
-    width: 100%;
-  }
 }
 @media(max-width: 450px) {
   .box_container {

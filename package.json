@@ -11,10 +11,14 @@
   "dependencies": {
     "@vueform/multiselect": "^2.6.9",
     "axios": "^1.7.7",
+    "dom-to-image-more": "^3.4.5",
     "hbr-axletool-vue": "file:",
+    "piexifjs": "^1.0.4",
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^4.0.2",
     "vue": "^3.4.29",
-    "vue-slider-component": "^4.1.0-beta.7"
+    "vue-slider-component": "^4.1.0-beta.7",
+    "rollup": ">=4.22.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
