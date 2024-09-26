@@ -1,10 +1,5 @@
 # HBR-AxleTool-vue
-
-This template should help get you started developing with Vue 3 in Vite.
-
-> **⚠️ Work in Progress**  
-> This project is still under development. Features and functionality may change, and bugs may be present. Check back later for updates!
-
+![HBR-AxleTool-vue](https://socialify.git.ci/FuseFairy/HBR-AxleTool-vue/image?font=Raleway&language=1&name=1&owner=1&pattern=Overlapping%20Hexagons&theme=Dark)
 
 ## Recommended IDE Setup
 
