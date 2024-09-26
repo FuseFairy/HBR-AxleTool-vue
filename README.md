@@ -1,4 +1,3 @@
-# HBR-AxleTool-vue
 ![HBR-AxleTool-vue](https://socialify.git.ci/FuseFairy/HBR-AxleTool-vue/image?font=Raleway&language=1&name=1&owner=1&pattern=Overlapping%20Hexagons&theme=Dark)
 
 ## Recommended IDE Setup
