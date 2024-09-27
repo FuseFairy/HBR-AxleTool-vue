@@ -13,7 +13,7 @@ const charStore = useCharStore();
 const odOptions = ["OD1", "OD2", "OD3"];
 
 const turnOptions = computed(() => {
-  const options = Array.from({ length: sliderStore.rows }, (_, i) => `T${i + 1}`);
+  const options = Array.from({ length: sliderStore.rows }, (_, i) => `T${sliderStore.rows - i}`);
   const allOptions = ['追加回合', ...options];
 
   skillStore.turns.forEach(turn => {
