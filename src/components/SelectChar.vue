@@ -158,7 +158,7 @@ const setSkill = (skills) => {
 
 const emit = defineEmits(['close']);
 const closeContainer = async () => {
-  if (selectedSkill.value.length <= 0) {
+  if (selectedSkill.value.length <= 0 && selectedStyle.value) {
     charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value));
   }
   emit('close');
