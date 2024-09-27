@@ -32,7 +32,6 @@ export async function fetchSkillOptions(characterName, team, styleName) {
     };
 
     const allSkills = [
-      { name: "普攻", sp: 0 },
       ...Object.entries(specificSkills).map(([name, sp]) => ({ name, sp })),
       ...Object.entries(commonSkills).map(([name, sp]) => ({ name, sp })),
       ...Object.entries(universalSkills).map(([name, sp]) => ({ name, sp }))

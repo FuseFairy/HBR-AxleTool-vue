@@ -40,6 +40,7 @@ const rankOptions = Array.from({ length: 10 }, (_, i) => i+1);
 const characterOptions = ref([]);
 const styleOptions = ref([]);
 const passiveSkillOptions = ref([])
+const skillOptions = ref([])
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'));
 const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'));
@@ -48,6 +49,10 @@ const selectedEarring = ref(charStore.getSelection(props.buttonKey, 'earring'))
 const selectedRank = ref(charStore.getSelection(props.buttonKey, 'rank'))
 const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower'))
 const selectedPassiveSkill = ref(charStore.getSelection(props.buttonKey, 'passiveSkill'))
+const selectedSkill = ref(charStore.getSelection(props.buttonKey, 'skill'))
+if (selectedSkill.value.length > 0) {
+    selectedSkill.value = selectedSkill.value.map(skill => skill.name);
+}
 
 const isCharDisabled = computed(() => !selectedTeam.value);
 const isStyleDisabled = computed(() => !selectedCharacter.value);
@@ -60,12 +65,20 @@ const initializeOptions = async () => {
   if (selectedCharacter.value) {
     styleOptions.value = await fetchStyleOptions(selectedCharacter.value, selectedTeam.value);
   }
-  if (selectedPassiveSkill.value) {
+  if (selectedStyle.value) {
     passiveSkillOptions.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
+    const fetchedSkills = await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value);
+    skillOptions.value = fetchedSkills.map(skill => ({
+          name: skill.name,
+          sp: skill.sp,
+          value: skill.name
+      }));
   }
 };
 
-onMounted(initializeOptions);
+onMounted(async () => {
+  await initializeOptions();
+});
 
 watch(selectedTeam, async (newTeam) => {
   charStore.setSelection(props.buttonKey, 'team', newTeam);
@@ -95,10 +108,15 @@ watch(selectedStyle, async (newStyle) => {
   if (newStyle) {
     const selectedOption = styleOptions.value.find(option => option.name === newStyle);
     if (selectedOption) {
+      const fetchedSkills = await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, newStyle);
+      skillOptions.value = fetchedSkills.map(skill => ({
+          name: skill.name,
+          sp: skill.sp,
+          value: skill.name
+      }));
       passiveSkillOptions.value = await fetchPassiveSkillOptions(selectedCharacter.value, selectedTeam.value);
       charStore.setSelection(props.buttonKey, 'style', newStyle);
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon);
-      charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, newStyle));
     }
   } else {
       charStore.setSelection(props.buttonKey, 'style', null);
@@ -107,12 +125,14 @@ watch(selectedStyle, async (newStyle) => {
       charStore.setSelection(props.buttonKey, 'rank', null);
       charStore.setSelection(props.buttonKey, 'flower', null);
       charStore.setSelection(props.buttonKey, 'earring', null);
-      charStore.setSelection(props.buttonKey, 'passiveSkill', null);
+      charStore.setSelection(props.buttonKey, 'passiveSkill', []);
+      charStore.setSelection(props.buttonKey, 'skill', []);
       // 確保同步更新
       selectedRank.value = null;
-      selectedPassiveSkill.value = null;
+      selectedPassiveSkill.value = [];
       selectedFlower.value = false;
       selectedEarring.value = null;
+      selectedSkill.value = [];
     }
 });
 
@@ -123,8 +143,24 @@ const toggleCheckbox = () => {
   }
 };
 
+const setSkill = (skills) => {
+  selectedSkill.value = skills;
+  const temp = [];
+  skills.forEach((skillName) => {
+    const skill = skillOptions.value.find(option => option.value === skillName);
+    if (skill) {
+      temp.push({ name: skill.name, sp: skill.sp});
+    }
+  });
+
+  charStore.setSelection(props.buttonKey, "skill", temp);
+}
+
 const emit = defineEmits(['close']);
-const closeContainer = () => {
+const closeContainer = async () => {
+  if (selectedSkill.value.length <= 0) {
+    charStore.setSelection(props.buttonKey, 'skill', await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value));
+  }
   emit('close');
 };
 </script>
@@ -132,131 +168,149 @@ const closeContainer = () => {
 <template>
   <div @click="closeContainer" class="overlay">
     <div @click.stop class="container">
-      <button @click="closeContainer" class="close"> 
-        <img src="@/assets/custom_icon/close.svg" alt="Close">
-      </button>
-      <div class="section">
-        <label>Team</label>
-        <Multiselect
-          v-model="selectedTeam"
-          placeholder="Select team"
-          label="name"
-          :disabled="sliderStore.rows > 0"
-          :options="teamOptions">
-          <template v-slot:singlelabel="{ value }">
-            <div class="multiselect-single-label">
-              <img class="label-icon" :src="getAssetsFile(value.icon)">
-              <span :title="value.name">{{ value.name }}</span>
-            </div>
-          </template>
-
-          <template v-slot:option="{ option }">
-            <img class="option-icon" :src="getAssetsFile(option.icon)">
-            <span :title="option.name">{{ option.name }}</span>
-          </template>
-        </Multiselect>
+      <div class="button-group">
+        <button @click="closeContainer" class="close"> 
+          <img src="@/assets/custom_icon/close.svg" alt="Close">
+        </button>
       </div>
+      <div class="selectboxes scrollbar-style-1">
+        <div class="section" style="padding: 0;">
+          <label>Team</label>
+          <Multiselect
+            v-model="selectedTeam"
+            placeholder="Select team"
+            label="name"
+            :disabled="sliderStore.rows > 0"
+            :options="teamOptions">
+            <template v-slot:singlelabel="{ value }">
+              <div class="multiselect-single-label">
+                <img class="label-icon" :src="getAssetsFile(value.icon)">
+                <span :title="value.name">{{ value.name }}</span>
+              </div>
+            </template>
 
-      <div class="section">
-        <label>Character</label>
-        <Multiselect
-          v-model="selectedCharacter"
-          placeholder="Select character"
-          label="name"
-          :disabled="isCharDisabled || sliderStore.rows > 0"
-          :options="characterOptions">
-          <template v-slot:singlelabel="{ value }">
-            <div class="multiselect-single-label">
-              <img class="label-icon" :src="getAssetsFile(value.icon)"> 
-              <span :title="value.name">{{ value.name }}</span>
-            </div>
-          </template>
-
-          <template v-slot:option="{ option }">
-            <img class="option-icon" :src="getAssetsFile(option.icon)"> 
-            <span :title="option.name">{{ option.name }}</span>
-          </template>
-        </Multiselect>
-      </div>
-
-      <div class="section">
-        <label>Style</label>
-        <Multiselect
-          v-model="selectedStyle"
-          placeholder="Select style"
-          label="name"
-          :disabled="isStyleDisabled || sliderStore.rows > 0"
-          :options="styleOptions">
-          <template v-slot:singlelabel="{ value }">
-            <div class="multiselect-single-label">
-              <img class="label-icon" :src="getAssetsFile(value.icon)">
-              <span :title="value.name">{{ value.name }}</span>
-            </div>
-          </template>
-
-          <template v-slot:option="{ option }">
-            <img class="option-icon" :src="getAssetsFile(option.icon)">
-            <span :title="option.name">{{ option.name }}</span>
-          </template>
-        </Multiselect>
-      </div>
-
-      <div class="section">
-        <label>Rank (optional)</label>
-        <Multiselect
-          v-model="selectedRank"
-          placeholder="Select Rank"
-          :disabled="isOtherDisable"
-          :options="rankOptions"
-          @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value)" 
-        />
-        <div class="flower-container">
-          <input
-            type="checkbox"
-            v-model="selectedFlower"
-            :disabled="isOtherDisable"
-            @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower)" />
-          <img 
-            src="/src/assets/flower.webp"
-            alt="Is Flower"
-            :class="['flower-icon', {'flower-icon-disabled': isOtherDisable }]"
-            draggable="false"
-            @click="toggleCheckbox" />
+            <template v-slot:option="{ option }">
+              <img class="option-icon" :src="getAssetsFile(option.icon)">
+              <span :title="option.name">{{ option.name }}</span>
+            </template>
+          </Multiselect>
         </div>
-      </div>
-      <div class="section">
-        <label>Earring (optional)</label>
-        <Multiselect
-          v-model="selectedEarring"
-          placeholder="Select earring"
-          label="name"
-          :disabled="isOtherDisable"
-          :options="earringOptions"
-          @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value)">
-          <template v-slot:singlelabel="{ value }">
-            <div class="multiselect-single-label">
-              <img class="label-icon" :src="getAssetsFile(value.icon)">
-              <span :title="value.name">{{ value.name }}</span>
-            </div>
-          </template>
 
-          <template v-slot:option="{ option }">
-            <img class="option-icon" :src="getAssetsFile(option.icon)">
-            <span :title="option.name">{{ option.name }}</span>
-          </template>
-        </Multiselect>
-      </div>
+        <div class="section">
+          <label>Character</label>
+          <Multiselect
+            v-model="selectedCharacter"
+            placeholder="Select character"
+            label="name"
+            :disabled="isCharDisabled || sliderStore.rows > 0"
+            :options="characterOptions">
+            <template v-slot:singlelabel="{ value }">
+              <div class="multiselect-single-label">
+                <img class="label-icon" :src="getAssetsFile(value.icon)"> 
+                <span :title="value.name">{{ value.name }}</span>
+              </div>
+            </template>
 
-      <div class="section">
-        <label>Passive Skill (optional)</label>
-        <Multiselect
-          v-model="selectedPassiveSkill"
-          mode="tags"
-          placeholder="Select passive skill"
-          :close-on-select="false"
-          :disabled="isOtherDisable"
-          :options="passiveSkillOptions"
-          @change="(value) => charStore.setSelection(props.buttonKey, 'passiveSkill', value)"/>
+            <template v-slot:option="{ option }">
+              <img class="option-icon" :src="getAssetsFile(option.icon)"> 
+              <span :title="option.name">{{ option.name }}</span>
+            </template>
+          </Multiselect>
+        </div>
+
+        <div class="section">
+          <label>Style</label>
+          <Multiselect
+            v-model="selectedStyle"
+            placeholder="Select style"
+            label="name"
+            :disabled="isStyleDisabled || sliderStore.rows > 0"
+            :options="styleOptions">
+            <template v-slot:singlelabel="{ value }">
+              <div class="multiselect-single-label">
+                <img class="label-icon" :src="getAssetsFile(value.icon)">
+                <span :title="value.name">{{ value.name }}</span>
+              </div>
+            </template>
+
+            <template v-slot:option="{ option }">
+              <img class="option-icon" :src="getAssetsFile(option.icon)">
+              <span :title="option.name">{{ option.name }}</span>
+            </template>
+          </Multiselect>
+        </div>
+
+        <div class="section">
+          <label>Rank (optional)</label>
+          <Multiselect
+            v-model="selectedRank"
+            placeholder="Select Rank"
+            :disabled="isOtherDisable"
+            :options="rankOptions"
+            @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value)" 
+          />
+          <div class="flower-container">
+            <input
+              type="checkbox"
+              v-model="selectedFlower"
+              :disabled="isOtherDisable"
+              @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower)" />
+            <img 
+              src="/src/assets/flower.webp"
+              alt="Is Flower"
+              :class="['flower-icon', {'flower-icon-disabled': isOtherDisable }]"
+              draggable="false"
+              @click="toggleCheckbox" />
+          </div>
+        </div>
+
+        <div class="section">
+          <label>Earring (optional)</label>
+          <Multiselect
+            v-model="selectedEarring"
+            placeholder="Select earring"
+            label="name"
+            :disabled="isOtherDisable"
+            :options="earringOptions"
+            @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value)">
+            <template v-slot:singlelabel="{ value }">
+              <div class="multiselect-single-label">
+                <img class="label-icon" :src="getAssetsFile(value.icon)">
+                <span :title="value.name">{{ value.name }}</span>
+              </div>
+            </template>
+
+            <template v-slot:option="{ option }">
+              <img class="option-icon" :src="getAssetsFile(option.icon)">
+              <span :title="option.name">{{ option.name }}</span>
+            </template>
+          </Multiselect>
+        </div>
+        
+        <div class="section">
+          <label>Skill (optional)</label>
+          <Multiselect
+            v-model="selectedSkill"
+            mode="tags"
+            placeholder="Select skill"
+            label="name"
+            :close-on-select="false"
+            :disabled="isOtherDisable || sliderStore.rows > 0"
+            :options="skillOptions"
+            @change="(value) => setSkill(value)"/>
+        </div>
+
+        <div class="section">
+          <label>Passive Skill (optional)</label>
+          <Multiselect
+            v-model="selectedPassiveSkill"
+            mode="tags"
+            placeholder="Select passive skill"
+            :close-on-select="false"
+            :disabled="isOtherDisable"
+            :options="passiveSkillOptions"
+            @change="(value) => charStore.setSelection(props.buttonKey, 'passiveSkill', value)"/>
+        </div>
       </div>
     </div>
   </div>
@@ -272,12 +326,8 @@ const closeContainer = () => {
   height: 32px;
   width: 32px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
 }
 .close img{
   height: 100%;
@@ -333,16 +383,39 @@ span{
   backdrop-filter: blur(5px);
 }
 .container {
-  position: fixed;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgb(19, 18, 18);
-  height: auto;
+  height: 70%;
   width: 31%;
-  box-sizing: border-box;
-  padding: 1rem;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1rem 0 1rem; 
+}
+.selectboxes {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 81%;
+}
+.scrollbar-style-1::-webkit-scrollbar {
+  width: 5px;
+}
+.scrollbar-style-1::-webkit-scrollbar-track,
+.scrollbar-style-1::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.scrollbar-style-1::-webkit-scrollbar-thumb {
+  background-color: #555;
 }
 .option-icon,
 .label-icon{
