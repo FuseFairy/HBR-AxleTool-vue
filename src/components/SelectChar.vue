@@ -50,6 +50,9 @@ const selectedRank = ref(charStore.getSelection(props.buttonKey, 'rank'))
 const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower'))
 const selectedPassiveSkill = ref(charStore.getSelection(props.buttonKey, 'passiveSkill'))
 const selectedSkill = ref(charStore.getSelection(props.buttonKey, 'skill'))
+if (selectedSkill.value.length > 0) {
+    selectedSkill.value = selectedSkill.value.map(skill => skill.name);
+}
 
 const isCharDisabled = computed(() => !selectedTeam.value);
 const isStyleDisabled = computed(() => !selectedCharacter.value);
@@ -75,10 +78,6 @@ const initializeOptions = async () => {
 
 onMounted(async () => {
   await initializeOptions();
-
-  if (selectedSkill.value.length > 0) {
-    selectedSkill.value = selectedSkill.value.map(skill => skill.name);
-  }
 });
 
 watch(selectedTeam, async (newTeam) => {
