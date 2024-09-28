@@ -10,7 +10,7 @@ export const useCharStore = defineStore('character_select', () => {
     if (!selections.value[buttonKey]) {
       selections.value[buttonKey] = { character: null, style: null, rank: null, flower: false, passiveSkill: [], earring: null, skill: [], img: null }
     }
-    selections.value[buttonKey][type] = value
+    selections.value[buttonKey][type] = value === undefined ? null : value
   }
 
   const getSelection = (buttonKey, type) => {
