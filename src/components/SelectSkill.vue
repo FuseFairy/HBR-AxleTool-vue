@@ -47,7 +47,11 @@ const getFilteredSkills = (row, key) => {
       value: skill.name,
       sp: skill.sp
     }));
-    formattedSkills.unshift({ name: '普攻', value: '普攻', sp: 0 });
+
+    const basicAttackExists = formattedSkills.find(skill => skill.name === '普攻' && skill.value === '普攻' && skill.sp === 0);
+    if (!basicAttackExists) {
+      formattedSkills.unshift({ name: '普攻', value: '普攻', sp: 0 });
+    }
 
     const foundSkill = formattedSkills.some(option => option.name === skillStore.skills[row][key].skill);
     if (!foundSkill) {
