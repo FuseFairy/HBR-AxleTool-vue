@@ -88,7 +88,7 @@ const closeTable = () => {
         <div v-if="sliderStore.rows > 0" class="axle-line-container" style="margin-top: 20px;">
           <div class="axle-column"></div>
         </div>
-        <div v-if="sliderStore.rows > 0" v-for="row in sliderStore.rows" class="table-container-2" :style="{ 'margin-top': '20px', 'border-top': row > 1 ? '2px dashed gray' : 'none', 'padding-top': row > 1 ? '20px' : 'none' }">
+        <div v-if="sliderStore.rows > 0" v-for="row in sliderStore.rows" class="table-container-2" :style="{'border-top': row > 1 ? '2px dashed gray' : 'none'}">
           <div v-for="col in 4" class="axle-table-column">
             <div v-if="col === 1" class="label">
               <span v-if="skillStore.turns[row-1].turn !== null && skillStore.turns[row-1].od !== null">
@@ -128,6 +128,7 @@ const closeTable = () => {
   display: grid;
   grid-template-columns: 10dvw repeat(3, 1fr);
   margin: 0 10px;
+  padding: 10px 0;
   width: inherit;
 }
 .axle-line-container {
@@ -248,7 +249,7 @@ const closeTable = () => {
   transform: translate(-50%, -50%);
   background-color: rgb(19, 18, 18);
   height: 90%;
-  width: 90%;
+  width: 70%;
   box-sizing: border-box;
   padding: 1rem;
   border-radius: 20px;
