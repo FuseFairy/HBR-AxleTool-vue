@@ -1,125 +1,140 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { useSliderStore } from '@/stores/slider_stores';
-import { useSkillStore } from '@/stores/skill_stores';
-import { useCharStore } from '@/stores/char_stores';
-import Multiselect from '@vueform/multiselect';
-import SelectAxleChar from './SelectAxleChar.vue';
-import { getAssetsFile } from '@/api/util';
+import { ref, computed } from 'vue'
+import { useSliderStore } from '@/stores/slider_stores'
+import { useSkillStore } from '@/stores/skill_stores'
+import { useCharStore } from '@/stores/char_stores'
+import Multiselect from '@vueform/multiselect'
+import SelectAxleChar from './SelectAxleChar.vue'
+import { getAssetsFile } from '@/api/util'
 
-const sliderStore = useSliderStore();
-const skillStore = useSkillStore();
-const charStore = useCharStore();
-const odOptions = ["OD1", "OD2", "OD3"];
+const sliderStore = useSliderStore()
+const skillStore = useSkillStore()
+const charStore = useCharStore()
+const odOptions = ['OD1', 'OD2', 'OD3']
 
 const turnOptions = computed(() => {
-  const options = Array.from({ length: sliderStore.rows }, (_, i) => `T${sliderStore.rows - i}`);
-  const allOptions = ['追加回合', ...options];
+  const options = Array.from({ length: sliderStore.rows }, (_, i) => `T${sliderStore.rows - i}`)
+  const allOptions = ['追加回合', ...options]
 
-  skillStore.turns.forEach(turn => {
+  skillStore.turns.forEach((turn) => {
     if (!allOptions.includes(turn.turn)) {
-      turn.turn = null;
-      turn.od = null;
+      turn.turn = null
+      turn.od = null
     }
-  });
+  })
 
-  return allOptions;
-});
+  return allOptions
+})
 
-const activeComponent = ref({ row: null, buttonKey: null });
+const activeComponent = ref({ row: null, buttonKey: null })
 const handleBoxClick = (row, key) => {
-  activeComponent.value = { row, buttonKey: key };
-};
+  activeComponent.value = { row, buttonKey: key }
+}
 
 const closeContainer = () => {
-  activeComponent.value = { row: null, buttonKey: null };
-};
+  activeComponent.value = { row: null, buttonKey: null }
+}
 
 const getFilteredSkills = (row, key) => {
-  const currentSkill = skillStore.skills[row][key];
+  const currentSkill = skillStore.skills[row][key]
   if (currentSkill && currentSkill.style != null) {
-    const currentStyle = currentSkill.style;
-    const selections = Object.values(charStore.selections);
+    const currentStyle = currentSkill.style
+    const selections = Object.values(charStore.selections)
 
-    const currentSelection = selections.find(selection => selection.style === currentStyle);
-    const formattedSkills = currentSelection.skill.map(skill => ({
+    const currentSelection = selections.find((selection) => selection.style === currentStyle)
+    const formattedSkills = currentSelection.skill.map((skill) => ({
       name: skill.name,
       value: skill.name,
       sp: skill.sp
-    }));
+    }))
 
-    const basicAttackExists = formattedSkills.find(skill => skill.name === '普攻' && skill.value === '普攻' && skill.sp === 0);
+    const basicAttackExists = formattedSkills.find(
+      (skill) => skill.name === '普攻' && skill.value === '普攻' && skill.sp === 0
+    )
     if (!basicAttackExists) {
-      formattedSkills.unshift({ name: '普攻', value: '普攻', sp: 0 });
+      formattedSkills.unshift({ name: '普攻', value: '普攻', sp: 0 })
     }
 
-    const foundSkill = formattedSkills.some(option => option.name === skillStore.skills[row][key].skill);
+    const foundSkill = formattedSkills.some(
+      (option) => option.name === skillStore.skills[row][key].skill
+    )
     if (!foundSkill) {
-      skillStore.skills[row][key].skill = null;
+      skillStore.skills[row][key].skill = null
     }
 
-    return formattedSkills;
-  }
-  else {
-    skillStore.skills[row][key].skill = null;
+    return formattedSkills
+  } else {
+    skillStore.skills[row][key].skill = null
 
-    return [];
+    return []
   }
-};
+}
 
 const targetOptions = computed(() => {
   return Object.values(charStore.selections)
-    .filter(selection => selection.character !== null && selection.style !== null)
-    .map(selection => selection.character);
-});
+    .filter((selection) => selection.character !== null && selection.style !== null)
+    .map((selection) => selection.character)
+})
 
 const deleteRow = (index) => {
-  sliderStore.rows -= 1;
-  skillStore.turns.splice(index, 1);
-  skillStore.skills.splice(index, 1);
-};
+  sliderStore.rows -= 1
+  skillStore.turns.splice(index, 1)
+  skillStore.skills.splice(index, 1)
+}
 </script>
 
 <template>
   <div v-for="i in sliderStore.rows" :key="i" class="container">
-    <button class="fixed-button" @click="deleteRow(i-1)">
-      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"/></svg>
+    <button class="fixed-button" @click="deleteRow(i - 1)">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        fill="#e8eaed"
+      >
+        <path
+          d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"
+        />
+      </svg>
     </button>
     <div class="column">
       <div class="empty"></div>
       <Multiselect
-        v-model="skillStore.turns[i-1].turn"
+        v-model="skillStore.turns[i - 1].turn"
         placeholder="Select turn"
-        :options="turnOptions">
+        :options="turnOptions"
+      >
       </Multiselect>
       <Multiselect
-        v-model="skillStore.turns[i-1].od"
+        v-model="skillStore.turns[i - 1].od"
         placeholder="Select OD"
-        :options="odOptions">
+        :options="odOptions"
+      >
       </Multiselect>
     </div>
     <div class="column" v-for="n in 3" :key="n">
       <button
-        @click="handleBoxClick(i-1, n-1)"
+        @click="handleBoxClick(i - 1, n - 1)"
         :class="{
-          'circle-button selected-button': skillStore.skills[i-1][n-1].style_img !== null,
-          'circle-button add-button': skillStore.skills[i-1][n-1].style_img === null
-        }">
-        <img v-if="skillStore.skills[i-1][n-1].style_img !== null" 
-            class="char-img" 
-            :src="getAssetsFile(skillStore.skills[i-1][n-1].style_img)" 
-            :alt="skillStore.skills[i-1][n-1].style">
-        <img v-else 
-            class="icon-img" 
-            src="@/assets/custom_icon/add.svg" 
-            alt="Add">
+          'circle-button selected-button': skillStore.skills[i - 1][n - 1].style_img !== null,
+          'circle-button add-button': skillStore.skills[i - 1][n - 1].style_img === null
+        }"
+      >
+        <img
+          v-if="skillStore.skills[i - 1][n - 1].style_img !== null"
+          class="char-img"
+          :src="getAssetsFile(skillStore.skills[i - 1][n - 1].style_img)"
+          :alt="skillStore.skills[i - 1][n - 1].style"
+        />
+        <img v-else class="icon-img" src="@/assets/custom_icon/add.svg" alt="Add" />
       </button>
       <Multiselect
-        v-model="skillStore.skills[i-1][n-1].skill"
+        v-model="skillStore.skills[i - 1][n - 1].skill"
         placeholder="Select skill"
         label="name"
-        :options="getFilteredSkills(i-1, n-1)">
-        
+        :options="getFilteredSkills(i - 1, n - 1)"
+      >
         <template v-slot:singlelabel="{ value }">
           <div class="multiselect-single-label">
             <span :title="value.name">{{ value.name }}/{{ value.sp }}SP</span>
@@ -131,9 +146,10 @@ const deleteRow = (index) => {
         </template>
       </Multiselect>
       <Multiselect
-        v-model="skillStore.skills[i-1][n-1].target"
+        v-model="skillStore.skills[i - 1][n - 1].target"
         placeholder="Select target"
-        :options="targetOptions">
+        :options="targetOptions"
+      >
       </Multiselect>
     </div>
   </div>
@@ -154,7 +170,7 @@ span {
   display: inline-block;
 }
 .container {
-  display: grid; 
+  display: grid;
   position: relative;
   gap: 10px;
   padding: 20px;
@@ -197,7 +213,7 @@ span {
   transition: transform 0.3s ease;
   box-shadow: 0 0 10px rgba(126, 156, 204, 0.8);
 }
-.selected-button:hover{
+.selected-button:hover {
   box-shadow: 0 0 15px rgba(126, 156, 204, 0.8);
 }
 .selected-button:hover .char-img {
@@ -218,9 +234,9 @@ span {
   transition: fill 0.3s ease;
 }
 .fixed-button:hover svg {
-  fill: #EA3323;
+  fill: #ea3323;
 }
-.char-img{
+.char-img {
   transition: transform 0.3s ease;
   width: 100%;
   height: 100%;
@@ -233,55 +249,55 @@ span {
   background-color: rgba(204, 201, 201, 0.5);
 }
 .add-button:hover .icon-img {
-	filter: invert(1);
+  filter: invert(1);
 }
 .icon-img {
   width: 50px;
   height: 50px;
 }
-:deep(.multiselect-option){
+:deep(.multiselect-option) {
   display: flex;
   gap: 0.5rem;
 }
-:deep(.multiselect){
+:deep(.multiselect) {
   background-color: black;
   border: 1px solid rgb(64, 68, 141);
 }
-:deep(.multiselect.is-active){
+:deep(.multiselect.is-active) {
   box-shadow: none;
 }
-:deep(.multiselect-dropdown){
+:deep(.multiselect-dropdown) {
   background-color: black;
   border: 1px solid rgb(64, 68, 141);
 }
-:deep(.multiselect-dropdown::-webkit-scrollbar){
+:deep(.multiselect-dropdown::-webkit-scrollbar) {
   width: 5px;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar-track),
 :deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
-    background-color: #555;
+  background-color: #555;
 }
-:deep(.multiselect-option.is-selected){
+:deep(.multiselect-option.is-selected) {
   background-color: rgb(60, 57, 57);
 }
-:deep(.multiselect-option.is-pointed){
+:deep(.multiselect-option.is-pointed) {
   background-color: rgb(160, 160, 167);
   color: rgb(0, 0, 0);
 }
-:deep(.multiselect-caret){
+:deep(.multiselect-caret) {
   margin-left: 14px;
 }
-:deep(.multiselect-clear){
+:deep(.multiselect-clear) {
   padding: 0;
 }
 :deep(.multiselect-clear-icon:hover),
 :deep(.multiselect-clear-icon:active),
 :deep(.multiselect-clear-icon:focus) {
-    background-color: #999;
+  background-color: #999;
 }
 @media (max-width: 800px) {
   .container {

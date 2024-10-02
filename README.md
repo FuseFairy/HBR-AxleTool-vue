@@ -25,3 +25,9 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Format Code with Prettier
+
+```sh
+npm run format
+```
