@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write src/"
   },
   "dependencies": {
     "@vueform/multiselect": "^2.6.9",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "prettier": "^3.3.3",
     "vite": "^5.3.1",
     "vite-plugin-vue-devtools": "^7.3.1"
   }

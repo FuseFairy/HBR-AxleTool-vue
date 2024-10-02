@@ -1,9 +1,9 @@
 <template>
-<div class="slider-container">
-  <div class="top-container">
-    <h3>{{ title }}</h3>
-    <div class="input-container">
-      <!-- <input v-model="sliderStore.rows" disabled="disabled" />
+  <div class="slider-container">
+    <div class="top-container">
+      <h3>{{ title }}</h3>
+      <div class="input-container">
+        <!-- <input v-model="sliderStore.rows" disabled="disabled" />
       <button 
         @click="decreaseValue" 
         :class="{ 'disabled-button': sliderStore.rows === 0 || !hasChar}"
@@ -22,59 +22,60 @@
           :class="['icon', { 'disabled-icon': sliderStore.rows === 50 || !hasChar}]"
           src="/src/assets/custom_icon/add_w7g2.svg" alt="button - add a row" />
       </button> -->
+      </div>
     </div>
+    <vue-slider
+      v-model="sliderStore.rows"
+      :disabled="!hasChar"
+      :min="0"
+      :max="50"
+      :interval="1"
+      :contained="true"
+      :lazy="true"
+      :drag-on-click="true"
+      :marks="[0, 50]"
+      @change="updateSkillsRows"
+    >
+    </vue-slider>
   </div>
-  <vue-slider 
-    v-model="sliderStore.rows"
-    :disabled="!hasChar"
-    :min="0"
-    :max="50"
-    :interval="1"
-    :contained="true"
-    :lazy="true"
-    :drag-on-click="true"
-    :marks="[0, 50]"
-    @change="updateSkillsRows">
-  </vue-slider>
-</div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useSliderStore } from '@/stores/slider_stores';
-import { useSkillStore } from '@/stores/skill_stores';
-import { useCharStore } from '@/stores/char_stores';
+import { computed } from 'vue'
+import { useSliderStore } from '@/stores/slider_stores'
+import { useSkillStore } from '@/stores/skill_stores'
+import { useCharStore } from '@/stores/char_stores'
 import VueSlider from 'vue-slider-component'
 import '/styles/themes/slider.css'
 
-const title = 'Number Of Rows';
-const sliderStore = useSliderStore();
+const title = 'Number Of Rows'
+const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
-const charStore = useCharStore();
+const charStore = useCharStore()
 
 const increaseValue = () => {
   if (sliderStore.rows < 50) {
-    sliderStore.rows++;
+    sliderStore.rows++
     updateSkillsRows(sliderStore.rows)
   }
-};
+}
 
 const decreaseValue = () => {
   if (sliderStore.rows > 0) {
-    sliderStore.rows--;
+    sliderStore.rows--
     updateSkillsRows(sliderStore.rows)
   }
-};
+}
 
 const updateSkillsRows = (value) => {
-	skillStore.adjustSkills(value);
+  skillStore.adjustSkills(value)
 }
 
 const hasChar = computed(() => {
-  return Object.values(charStore.selections).some(selection => 
-    selection.character !== null && selection.style !== null
-  );
-});
+  return Object.values(charStore.selections).some(
+    (selection) => selection.character !== null && selection.style !== null
+  )
+})
 </script>
 
 <style scoped>

@@ -1,74 +1,74 @@
 {
-    "立華 奏":{
-        "english name":"Kanade_Tachibana",
-        "style":{
-            "Earth Angel":"001",
-            "翱穹之劍":"002"
-        },
-        "skill":{
-            "common":{
-                "洞察力":5,
-                "幸運斬":7,
-                "天使光線":15,
-                "冰凍瞬間":8,
-                "天之心跳":4
-            },
-            "翱穹之劍":{
-                "垂直力":15
-            }
-        },
-		"passive skill":[]
+  "立華 奏": {
+    "english name": "Kanade_Tachibana",
+    "style": {
+      "Earth Angel": "001",
+      "翱穹之劍": "002"
     },
-    "仲村 百合":{
-        "english name":"Yuri_Nakamura",
-        "style":{
-            "Rain Fire":"001",
-            "平凡的非日常":"002"
-        },
-        "skill":{
-            "common":{
-                "爆裂火焰":10,
-                "突襲":6,
-                "大災難":15,
-                "冷冽子彈":10,
-                "冰霜棘刺":10
-            },
-            "平凡的非日常":{
-                "真實冰錐":16
-            }
-        },
-		"passive skill":[]
+    "skill": {
+      "common": {
+        "洞察力": 5,
+        "幸運斬": 7,
+        "天使光線": 15,
+        "冰凍瞬間": 8,
+        "天之心跳": 4
+      },
+      "翱穹之劍": {
+        "垂直力": 15
+      }
     },
-    "入江 美雪":{
-        "english name":"Miyuki_Irie",
-        "style":{
-            "Pure Cosmos":"001",
-            "Faraway Eden":"002"
-        },
-        "skill":{
-            "common":{
-                "休止消泛音":9,
-                "正拍":8,
-                "冷冽打擊":9,
-                "切分音":3
-            },
-            "Faraway Eden":{
-                "佯動光輝波斯菊":11
-            }
-        },
-		"passive skill":[]
+    "passive skill": []
+  },
+  "仲村 百合": {
+    "english name": "Yuri_Nakamura",
+    "style": {
+      "Rain Fire": "001",
+      "平凡的非日常": "002"
     },
-    "渕田 久子":{
-        "english name":"Hisako_Fuchida",
-        "style":{
-            "Finally found our silver lining":"001"
-        },
-        "skill":{
-            "common":{
-                "冷冽碎擊":9,
-                "大肆破壞":7
-            }
-        },
-		"passive skill":[]
-    }
+    "skill": {
+      "common": {
+        "爆裂火焰": 10,
+        "突襲": 6,
+        "大災難": 15,
+        "冷冽子彈": 10,
+        "冰霜棘刺": 10
+      },
+      "平凡的非日常": {
+        "真實冰錐": 16
+      }
+    },
+    "passive skill": []
+  },
+  "入江 美雪": {
+    "english name": "Miyuki_Irie",
+    "style": {
+      "Pure Cosmos": "001",
+      "Faraway Eden": "002"
+    },
+    "skill": {
+      "common": {
+        "休止消泛音": 9,
+        "正拍": 8,
+        "冷冽打擊": 9,
+        "切分音": 3
+      },
+      "Faraway Eden": {
+        "佯動光輝波斯菊": 11
+      }
+    },
+    "passive skill": []
+  },
+  "渕田 久子": {
+    "english name": "Hisako_Fuchida",
+    "style": {
+      "Finally found our silver lining": "001"
+    },
+    "skill": {
+      "common": {
+        "冷冽碎擊": 9,
+        "大肆破壞": 7
+      }
+    },
+    "passive skill": []
+  }
 }

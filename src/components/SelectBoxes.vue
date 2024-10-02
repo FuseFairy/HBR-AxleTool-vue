@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue';
-import { useCharStore } from '@/stores/char_stores';
-import SelectChar from '@/components/SelectChar.vue';
-import { getAssetsFile } from '@/api/util';
+import { ref } from 'vue'
+import { useCharStore } from '@/stores/char_stores'
+import SelectChar from '@/components/SelectChar.vue'
+import { getAssetsFile } from '@/api/util'
 
-const charStore = useCharStore();
+const charStore = useCharStore()
 
 const buttons = ref([
   { key: 1, label: 'Button 1' },
@@ -12,40 +12,44 @@ const buttons = ref([
   { key: 3, label: 'Button 3' },
   { key: 4, label: 'Button 4' },
   { key: 5, label: 'Button 5' },
-  { key: 6, label: 'Button 6' },
-]);
+  { key: 6, label: 'Button 6' }
+])
 
-const activeComponent = ref(null);
+const activeComponent = ref(null)
 const handleBoxClick = (key) => {
-  activeComponent.value = key;
-};
+  activeComponent.value = key
+}
 
 const closeContainer = () => {
-  activeComponent.value = null;
-};
+  activeComponent.value = null
+}
 </script>
 
 <template>
-<div class="button-container">
-  <button
-    v-for="button in buttons"
-    :key="button.key"
-    @click="handleBoxClick(button.key)"
-    :class="{
-      'circle-button selected-button': charStore.selections[button.key].img !== null,
-      'circle-button add-button': charStore.selections[button.key].img === null
-    }">
-    <img v-if="charStore.selections[button.key].img !== null" 
-         class="char-img" 
-         :src="getAssetsFile(charStore.selections[button.key].img)" 
-         :alt="charStore.selections[button.key].style">
-    <img v-else 
-         class="icon-img" 
-         src="@/assets/custom_icon/add.svg" 
-         alt="Add">
-  </button>
-</div>
-  <SelectChar v-if="activeComponent !== null" :buttonKey="activeComponent" @close="closeContainer" />
+  <div class="button-container">
+    <button
+      v-for="button in buttons"
+      :key="button.key"
+      @click="handleBoxClick(button.key)"
+      :class="{
+        'circle-button selected-button': charStore.selections[button.key].img !== null,
+        'circle-button add-button': charStore.selections[button.key].img === null
+      }"
+    >
+      <img
+        v-if="charStore.selections[button.key].img !== null"
+        class="char-img"
+        :src="getAssetsFile(charStore.selections[button.key].img)"
+        :alt="charStore.selections[button.key].style"
+      />
+      <img v-else class="icon-img" src="@/assets/custom_icon/add.svg" alt="Add" />
+    </button>
+  </div>
+  <SelectChar
+    v-if="activeComponent !== null"
+    :buttonKey="activeComponent"
+    @close="closeContainer"
+  />
 </template>
 
 <style scoped>
@@ -75,13 +79,13 @@ const closeContainer = () => {
   transition: transform 0.3s ease;
   box-shadow: 0 0 10px rgba(188, 115, 194, 0.8);
 }
-.selected-button:hover{
+.selected-button:hover {
   box-shadow: 0 0 15px rgba(188, 115, 194, 0.8);
 }
 .selected-button:hover .char-img {
   transform: scale(1.1);
 }
-.char-img{
+.char-img {
   transition: transform 0.3s ease;
   width: 100%;
   height: 100%;
@@ -94,7 +98,7 @@ const closeContainer = () => {
   background-color: rgba(204, 201, 201, 0.5);
 }
 .add-button:hover .icon-img {
-	filter: invert(1);
+  filter: invert(1);
 }
 .icon-img {
   width: 50px;

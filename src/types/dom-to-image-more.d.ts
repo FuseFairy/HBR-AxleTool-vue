@@ -1,1 +1,1 @@
-declare module 'dom-to-image-more';
+declare module 'dom-to-image-more'

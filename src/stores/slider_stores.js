@@ -1,19 +1,23 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-export const useSliderStore = defineStore('slider', () => {
-  const rows = ref(0);
+export const useSliderStore = defineStore(
+  'slider',
+  () => {
+    const rows = ref(0)
 
-  function setValue(newValue) {
-    rows.value = newValue;
-  }
+    function setValue(newValue) {
+      rows.value = newValue
+    }
 
-  return {
-    rows,
-    setValue
-  }}, {
+    return {
+      rows,
+      setValue
+    }
+  },
+  {
     persist: {
       storage: sessionStorage
     }
   }
-);
+)

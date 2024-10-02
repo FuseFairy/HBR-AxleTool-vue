@@ -1,69 +1,66 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { useCharStore } from '@/stores/char_stores';
-import { useSkillStore } from '@/stores/skill_stores';
-import { getAssetsFile } from '@/api/util';
+import { ref, computed } from 'vue'
+import { useCharStore } from '@/stores/char_stores'
+import { useSkillStore } from '@/stores/skill_stores'
+import { getAssetsFile } from '@/api/util'
 
-const charStore = useCharStore();
-const skillStore = useSkillStore();
+const charStore = useCharStore()
+const skillStore = useSkillStore()
 
 const props = defineProps({
   row: {
     type: Number,
-    required: true,
+    required: true
   },
   buttonKey: {
     type: Number,
-    required: true,
-  },
-});
+    required: true
+  }
+})
 
 const filteredSelections = computed(() => {
   const filtered = Object.fromEntries(
-    Object.entries(charStore.selections).filter(
-      ([key, value]) => value.img !== null
-    )
-  );
-  return filtered;
-});
+    Object.entries(charStore.selections).filter(([key, value]) => value.img !== null)
+  )
+  return filtered
+})
 
 const isSelected = (key) => {
-  return skillStore.skills[props.row][props.buttonKey].style === filteredSelections.value[key].style;
-};
+  return skillStore.skills[props.row][props.buttonKey].style === filteredSelections.value[key].style
+}
 
 const handleImageClick = (key) => {
   if (isSelected(key)) {
-    skillStore.skills[props.row][props.buttonKey].style = null;
-    skillStore.skills[props.row][props.buttonKey].style_img = null;
+    skillStore.skills[props.row][props.buttonKey].style = null
+    skillStore.skills[props.row][props.buttonKey].style_img = null
   } else {
-    skillStore.skills[props.row][props.buttonKey].style = filteredSelections.value[key].style;
-    skillStore.skills[props.row][props.buttonKey].style_img = filteredSelections.value[key].img;
-    closeContainer();
+    skillStore.skills[props.row][props.buttonKey].style = filteredSelections.value[key].style
+    skillStore.skills[props.row][props.buttonKey].style_img = filteredSelections.value[key].img
+    closeContainer()
   }
-};
+}
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close'])
 const closeContainer = () => {
-  emit('close');
-};
+  emit('close')
+}
 </script>
 
 <template>
   <div @click="closeContainer" class="overlay">
     <div @click.stop class="container">
-      <button @click="closeContainer" class="close"> 
-        <img src="@/assets/custom_icon/close.svg" alt="Close">
+      <button @click="closeContainer" class="close">
+        <img src="@/assets/custom_icon/close.svg" alt="Close" />
       </button>
       <div class="button-container">
         <button
           v-for="(item, key) in filteredSelections"
           :key="key"
           class="circle-button selected-button"
-          @click="handleImageClick(key)">
+          @click="handleImageClick(key)"
+        >
           <img class="char-img" :src="getAssetsFile(item.img)" :alt="item.style" />
-          <div v-if="isSelected(key)" class="overlay-text">
-            Selected
-          </div>
+          <div v-if="isSelected(key)" class="overlay-text">Selected</div>
         </button>
       </div>
     </div>

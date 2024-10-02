@@ -1,32 +1,32 @@
 <script setup>
-import { ref } from 'vue';
-import './assets/main.css';
-import AddRows from './components/AddRows.vue';
+import { ref } from 'vue'
+import './assets/main.css'
+import AddRows from './components/AddRows.vue'
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
-import ShowTable from './components/ShowTable.vue';
-import uploadButton from './components/uploadButton.vue';
-import SelectSkill from './components/SelectSkill.vue';
+import ShowTable from './components/ShowTable.vue'
+import uploadButton from './components/uploadButton.vue'
+import SelectSkill from './components/SelectSkill.vue'
 
-const isTableVisible = ref(false);
+const isTableVisible = ref(false)
 
 const toggleTable = () => {
-  isTableVisible.value = !isTableVisible.value;
+  isTableVisible.value = !isTableVisible.value
 }
 </script>
 
 <template>
-<div class="page-layout">
-  <nav>
-    <uploadButton />
-    <h1 class="nav-title">HBR Axle Tool</h1>
-    <button @click="toggleTable"> 
-      <img src="@/assets/custom_icon/table.svg" alt="table"> 
-    </button>
-    <ShowTable v-if="isTableVisible" @close="toggleTable"/>
-  </nav>
-  <main class="scrollbar-style-1">
-    <div class="box_container"><SelectBoxes /></div>
+  <div class="page-layout">
+    <nav>
+      <uploadButton />
+      <h1 class="nav-title">HBR Axle Tool</h1>
+      <button @click="toggleTable">
+        <img src="@/assets/custom_icon/table.svg" alt="table" />
+      </button>
+      <ShowTable v-if="isTableVisible" @close="toggleTable" />
+    </nav>
+    <main class="scrollbar-style-1">
+      <div class="box_container"><SelectBoxes /></div>
       <div class="axle">
         <SelectRows />
         <SelectSkill />
@@ -35,18 +35,18 @@ const toggleTable = () => {
       <div class="footer">
         <div class="footer-content">
           <a href="https://github.com/FuseFairy/HBR-AxleTool-vue" target="_blank">
-            <img src="@/assets/custom_icon/github.svg" alt="GitHub" class="github-icon"/>
+            <img src="@/assets/custom_icon/github.svg" alt="GitHub" class="github-icon" />
           </a>
           <div class="footer-text">
-            <p>Developed by </p> 
+            <p>Developed by</p>
             <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a>
-            <p> & </p> 
+            <p>&</p>
             <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
           </div>
         </div>
       </div>
-  </main>
-</div>
+    </main>
+  </div>
 </template>
 
 <style scoped>
@@ -55,9 +55,9 @@ const toggleTable = () => {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
-  grid-template-areas: 
-    "navbar"
-    "main";
+  grid-template-areas:
+    'navbar'
+    'main';
   background-color: black;
   background-image: url(@/assets/bg.webp);
   background-position: center;
@@ -91,7 +91,7 @@ button {
   align-items: center;
 }
 button:hover {
-  background-color: rgba(78, 69, 69, 0.3)
+  background-color: rgba(78, 69, 69, 0.3);
 }
 .nav-title {
   flex-grow: 1;
@@ -131,15 +131,15 @@ main {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto 1fr;
-  grid-template-areas: 
-    "box_container"
-    "axle"
-    "footer";
+  grid-template-areas:
+    'box_container'
+    'axle'
+    'footer';
 }
 .footer {
   display: flex;
   justify-content: center;
-  align-items: flex-end;;
+  align-items: flex-end;
 }
 .footer-content {
   padding: 10px;
@@ -169,31 +169,31 @@ main {
   margin-right: 4px;
   filter: invert(1) brightness(0.5);
 }
-.box_container{
+.box_container {
   grid-area: box_container;
   margin: 10px;
   height: auto;
 }
-.axle{
+.axle {
   padding-top: 0.5rem;
-  grid-area: axle;;
+  grid-area: axle;
 }
 .scrollbar-style-1 {
   overflow-x: auto;
 }
 .scrollbar-style-1::-webkit-scrollbar {
-    width: 5px;
-    height: 0;
+  width: 5px;
+  height: 0;
 }
 .scrollbar-style-1::-webkit-scrollbar-track,
 .scrollbar-style-1::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 .scrollbar-style-1::-webkit-scrollbar-thumb {
-    background-color: #555;
+  background-color: #555;
 }
-@media(max-width: 450px) {
+@media (max-width: 450px) {
   .box_container {
     height: 30vh;
   }
