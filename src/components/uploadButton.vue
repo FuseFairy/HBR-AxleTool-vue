@@ -70,7 +70,7 @@ const onFileChange = async (event) => {
 }
 </script>
 
-<style>
+<style scoped>
 .upload-button {
   background-color: transparent;
   padding: 1px;
