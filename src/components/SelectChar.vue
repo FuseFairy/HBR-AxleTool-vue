@@ -131,6 +131,7 @@ watch(selectedStyle, async (newStyle) => {
       )
       charStore.setSelection(props.buttonKey, 'style', newStyle)
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon)
+      selectedSkill.value = []
     }
   } else {
     charStore.setSelection(props.buttonKey, 'style', null)
