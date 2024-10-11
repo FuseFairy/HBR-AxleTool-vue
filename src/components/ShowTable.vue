@@ -295,7 +295,8 @@ const closeTable = () => {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgb(19, 18, 18);
-  height: 90%;
+  height: auto;
+  max-height: 90%;
   width: 70%;
   box-sizing: border-box;
   padding: 1rem;
