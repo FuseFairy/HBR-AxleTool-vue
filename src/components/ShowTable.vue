@@ -210,14 +210,13 @@ image {
 }
 .table-container {
   display: grid;
-  grid-template-columns: 10dvw repeat(6, 1fr);
+  grid-template-columns: 100px repeat(6, 1fr);
   margin: 0 10px;
   width: inherit;
-  min-width: 50vw;
 }
 .table-container-2 {
   display: grid;
-  grid-template-columns: 10dvw repeat(3, 1fr);
+  grid-template-columns: 100px repeat(3, 1fr);
   margin: 0 10px;
   padding: 10px 0;
   width: inherit;
@@ -340,7 +339,7 @@ image {
   height: auto;
   max-height: 90%;
   width: 70%;
-  max-width: 65vw;
+  max-width: 1024px;
   box-sizing: border-box;
   padding: 1rem;
   border-radius: 20px;
