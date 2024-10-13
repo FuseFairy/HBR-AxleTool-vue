@@ -1,10 +1,14 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { convertElementToPng } from '@/api/domToImage'
 import { getAssetsFile } from '@/api/util'
+import loading from 'vue-loading-overlay'
+
+const isLoading = ref(false);
+const fullPage = ref(true);
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -26,8 +30,16 @@ const hasPassiveSkill = computed(() => {
 })
 
 const downloadTable = async () => {
-  await convertElementToPng('show-axle')
-}
+  isLoading.value = true;
+  try {
+    await convertElementToPng('show-axle');
+  } catch (error) {
+    console.error('Error during download:', error);
+    alert('Error during download:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
 
 const emit = defineEmits(['close'])
 const closeTable = () => {
@@ -36,6 +48,11 @@ const closeTable = () => {
 </script>
 
 <template>
+  <loading v-model:active="isLoading"
+                 :can-cancel="false"
+                 :is-full-page="fullPage"
+                 :lock-scroll="true"
+                 background-color="grey"/>
   <div @click="closeTable" class="overlay">
     <div @click.stop class="container">
       <div class="button-group">

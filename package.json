@@ -19,6 +19,7 @@
     "pinia-plugin-persistedstate": "^4.0.2",
     "rollup": ">=4.22.4",
     "vue": "^3.4.29",
+    "vue-loading-overlay": "6.0",
     "vue-slider-component": "^4.1.0-beta.7"
   },
   "devDependencies": {
