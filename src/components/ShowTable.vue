@@ -298,6 +298,7 @@ const closeTable = () => {
   height: auto;
   max-height: 90%;
   width: 70%;
+  max-width: 65vw;
   box-sizing: border-box;
   padding: 1rem;
   border-radius: 20px;
