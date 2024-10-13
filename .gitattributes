@@ -1,0 +1,7 @@
+* text=auto
+
+*.jpg binary
+*.png binary
+*.exe binary
+
+*.md text
