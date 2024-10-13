@@ -7,8 +7,8 @@ import { convertElementToPng } from '@/api/domToImage'
 import { getAssetsFile } from '@/api/util'
 import loading from 'vue-loading-overlay'
 
-const isLoading = ref(false);
-const fullPage = ref(true);
+const isLoading = ref(false)
+const fullPage = ref(true)
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -30,16 +30,16 @@ const hasPassiveSkill = computed(() => {
 })
 
 const downloadTable = async () => {
-  isLoading.value = true;
+  isLoading.value = true
   try {
-    await convertElementToPng('show-axle');
+    await convertElementToPng('show-axle')
   } catch (error) {
-    console.error('Error during download:', error);
-    alert('Error during download:', error);
+    console.error('Error during download:', error)
+    alert('Error during download:', error)
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
-};
+}
 
 const emit = defineEmits(['close'])
 const closeTable = () => {
@@ -48,15 +48,17 @@ const closeTable = () => {
 </script>
 
 <template>
-  <loading v-model:active="isLoading"
-                 :can-cancel="false"
-                 :is-full-page="fullPage"
-                 :lock-scroll="true"
-                 background-color="grey"/>
+  <loading
+    v-model:active="isLoading"
+    :can-cancel="false"
+    :is-full-page="fullPage"
+    :lock-scroll="true"
+    background-color="grey"
+  />
   <div @click="closeTable" class="overlay">
     <div @click.stop class="container">
       <div class="button-group">
-        <span style="display: flex; align-items: center;">
+        <span style="display: flex; align-items: center">
           <button @click="downloadTable" class="download">
             <img src="@/assets/custom_icon/download.svg" alt="Download" />
           </button>
@@ -169,7 +171,9 @@ const closeTable = () => {
                   </div>
                   <div class="txt">
                     <span class="axle-text">{{ skillStore.skills[row - 1][col - 2].skill }}</span>
-                    <span v-if="skillStore.skills[row - 1][col - 2].target !== null" class="axle-text"
+                    <span
+                      v-if="skillStore.skills[row - 1][col - 2].target !== null"
+                      class="axle-text"
                       ><br />（{{ skillStore.skills[row - 1][col - 2].target }}）</span
                     >
                   </div>
