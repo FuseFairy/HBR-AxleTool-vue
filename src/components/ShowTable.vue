@@ -56,9 +56,12 @@ const closeTable = () => {
   <div @click="closeTable" class="overlay">
     <div @click.stop class="container">
       <div class="button-group">
-        <button @click="downloadTable" class="download">
-          <img src="@/assets/custom_icon/download.svg" alt="Download" />
-        </button>
+        <span style="display: flex; align-items: center;">
+          <button @click="downloadTable" class="download">
+            <img src="@/assets/custom_icon/download.svg" alt="Download" />
+          </button>
+          <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
+        </span>
         <button @click="closeTable" class="close">
           <img src="@/assets/custom_icon/close.svg" alt="Close" />
         </button>
@@ -156,16 +159,20 @@ const closeTable = () => {
                 <span v-else></span>
               </div>
               <div v-else>
-                <span v-if="skillStore.skills[row - 1][col - 2].skill !== null">
-                  <img
-                    :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
-                    :alt="skillStore.skills[row - 1][col - 2].style"
-                    class="axle-img"
-                  />
-                  <span class="axle-text">{{ skillStore.skills[row - 1][col - 2].skill }}</span>
-                  <span v-if="skillStore.skills[row - 1][col - 2].target !== null" class="axle-text"
-                    ><br />（{{ skillStore.skills[row - 1][col - 2].target }}）</span
-                  >
+                <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
+                  <div class="image">
+                    <img
+                      :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
+                      :alt="skillStore.skills[row - 1][col - 2].style"
+                      class="axle-img"
+                    />
+                  </div>
+                  <div class="txt">
+                    <span class="axle-text">{{ skillStore.skills[row - 1][col - 2].skill }}</span>
+                    <span v-if="skillStore.skills[row - 1][col - 2].target !== null" class="axle-text"
+                      ><br />（{{ skillStore.skills[row - 1][col - 2].target }}）</span
+                    >
+                  </div>
                 </span>
               </div>
             </div>
@@ -177,6 +184,20 @@ const closeTable = () => {
 </template>
 
 <style scoped>
+.axle-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'img txt';
+  align-items: center;
+  padding: 0 20px;
+}
+image {
+  grid-area: img;
+}
+.txt {
+  grid-area: txt;
+  text-align: center;
+}
 .table-wrapper {
   display: flex;
   flex-direction: column;
@@ -187,6 +208,7 @@ const closeTable = () => {
   grid-template-columns: 10dvw repeat(6, 1fr);
   margin: 0 10px;
   width: inherit;
+  min-width: 50vw;
 }
 .table-container-2 {
   display: grid;
@@ -210,9 +232,7 @@ const closeTable = () => {
 .axle-table-column {
   display: flex;
   flex-direction: column;
-  text-align: center;
   justify-content: center;
-  align-items: center;
 }
 .axle-img {
   margin-right: 5px;
@@ -345,5 +365,19 @@ const closeTable = () => {
 }
 .scrollbar-style-1::-webkit-scrollbar-thumb {
   background-color: #555;
+}
+.mobile-warning {
+  display: none; /* 默认隐藏 */
+  color: rgb(162, 87, 87); /* 您可以根据需要调整文本颜色 */
+  margin-left: 10px; /* 与按钮之间的间距 */
+}
+@media (max-width: 950px) {
+  .container {
+    width: 100%;
+    max-width: none;
+  }
+  .mobile-warning {
+    display: block;
+  }
 }
 </style>
