@@ -53,7 +53,8 @@ const closeTable = () => {
     :can-cancel="false"
     :is-full-page="fullPage"
     :lock-scroll="true"
-    background-color="grey"
+    background-color="#54504b"
+    color="#79d1cb"
   />
   <div @click="closeTable" class="overlay">
     <div @click.stop class="container">
