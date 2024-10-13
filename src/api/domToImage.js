@@ -13,19 +13,15 @@ export async function convertElementToPng(elementId) {
   if (element) {
     const width = element.scrollWidth
     const height = element.scrollHeight
-    const extraMargin = 20
-    const adjustedHeight = height + extraMargin * 2
-
+    
     try {
       const pngDataUrl = await domtoimage.toPng(element, {
         width: width,
-        height: adjustedHeight,
+        height: height,
         style: {
           fontFamily: 'Noto Sans TC, sans-serif',
           backgroundColor: 'black',
-          color: 'white',
-          paddingTop: `${extraMargin}px`,
-          paddingBottom: `${extraMargin}px`
+          color: 'white'
         }
       })
 
