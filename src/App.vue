@@ -7,11 +7,17 @@ import SelectRows from '@/components/SelectRows.vue'
 import ShowTable from './components/ShowTable.vue'
 import uploadButton from './components/uploadButton.vue'
 import SelectSkill from './components/SelectSkill.vue'
+import ShowSetting from './components/ShowSetting.vue'
 
 const isTableVisible = ref(false)
+const isSettingVisible = ref(false)
 
 const toggleTable = () => {
   isTableVisible.value = !isTableVisible.value
+}
+
+const toggleSetting = () => {
+  isSettingVisible.value = !isSettingVisible.value
 }
 </script>
 
@@ -24,6 +30,10 @@ const toggleTable = () => {
         <img src="@/assets/custom_icon/table.svg" alt="table" />
       </button>
       <ShowTable v-if="isTableVisible" @close="toggleTable" />
+      <button @click="toggleSetting">
+        <img src="@/assets/custom_icon/setting.svg" alt="setting" />
+      </button>
+      <ShowSetting v-if="isSettingVisible" @close="toggleSetting" />
     </nav>
     <main class="scrollbar-style-1">
       <div class="box_container"><SelectBoxes /></div>
