@@ -1,11 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeUnmount } from 'vue'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useCharStore } from '@/stores/char_stores'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from './SelectAxleChar.vue'
 import { getAssetsFile } from '@/api/util'
+import { useIntersectionObserver } from '@vueuse/core'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
@@ -81,10 +82,25 @@ const deleteRow = (index) => {
   skillStore.turns.splice(index, 1)
   skillStore.skills.splice(index, 1)
 }
+
+const target = ref(null)
+const targetIsVisible = ref(false)
+
+const { stop } = useIntersectionObserver(
+  target,
+  ([{ isIntersecting }], observerElement) => {
+    console.log('Is intersecting:', isIntersecting)
+    targetIsVisible.value = isIntersecting
+  },
+)
+
+onBeforeUnmount(() => {
+  stop()
+})
 </script>
 
 <template>
-  <div v-for="i in sliderStore.rows" :key="i" class="container">
+  <div v-for="i in sliderStore.rows" :key="i" class="container" ref="target">
     <button class="fixed-button" @click="deleteRow(i - 1)">
       <svg
         xmlns="http://www.w3.org/2000/svg"
