@@ -83,13 +83,13 @@ const deleteRow = (index) => {
   skillStore.skills.splice(index, 1)
 }
 
+// Render target when the visibility of the component
 const target = ref(null)
 const targetIsVisible = ref(false)
 
 const { stop } = useIntersectionObserver(
   target,
   ([{ isIntersecting }], observerElement) => {
-    console.log('Is intersecting:', isIntersecting)
     targetIsVisible.value = isIntersecting
   },
 )
