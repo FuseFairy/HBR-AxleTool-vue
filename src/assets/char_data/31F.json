@@ -47,7 +47,7 @@
         "轉呀轉！咚咚花吹雪": 18
       }
     },
-    "passive skill": []
+    "passive skill": ["出發吧! 丸山部隊!"]
   },
   "華村 詩紀": {
     "english name": "Shiki_Hanamura",
@@ -115,7 +115,7 @@
         "疾如風": "ALL"
       }
     },
-    "passive skill": []
+    "passive skill": ["慈悲之劍"]
   },
   "黑澤 真希": {
     "english name": "Maki_Kurosawa",

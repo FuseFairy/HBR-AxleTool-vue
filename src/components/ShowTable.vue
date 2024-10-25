@@ -133,7 +133,7 @@ const closeTable = () => {
                 "
                 class="text"
               >
-                {{ charStore.selections[i - 1].passiveSkill.join(', ') }}
+                {{ charStore.selections[i - 1].passiveSkill.join('/ ') }}
               </div>
             </div>
           </div>
