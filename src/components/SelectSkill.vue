@@ -13,19 +13,9 @@ const skillStore = useSkillStore()
 const charStore = useCharStore()
 const odOptions = ['OD1', 'OD2', 'OD3']
 
-const turnOptions = computed(() => {
-  const options = Array.from({ length: sliderStore.rows }, (_, i) => `T${sliderStore.rows - i}`)
-  const allOptions = ['追加回合', ...options]
 
-  skillStore.turns.forEach((turn) => {
-    if (!allOptions.includes(turn.turn)) {
-      turn.turn = null
-      turn.od = null
-    }
-  })
-
-  return allOptions
-})
+const options = Array.from({ length: 50 }, (_, i) => `T${i + 1}`);
+const turnOptions = ['追加回合', ...options]
 
 const activeComponent = ref({ row: null, buttonKey: null })
 const handleBoxClick = (row, key) => {
