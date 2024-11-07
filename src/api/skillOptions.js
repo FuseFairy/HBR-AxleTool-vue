@@ -12,7 +12,11 @@ export async function fetchSkillOptions(characterName, team, styleName) {
     }
 
     const commonSkills = characterData.skill.common || {}
-    const specificSkills = characterData.skill[styleName] || {}
+    const specificSkills = Object.fromEntries(
+      Object.entries(characterData.skill[styleName] || {}).filter(
+        ([key]) => key !== "command action" && key !== "passive skill"
+      )
+    );
     const universalSkills = {
       批判性思考: 5,
       修復之光: 11,
