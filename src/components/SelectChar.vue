@@ -8,6 +8,7 @@ import { fetchStyleOptions } from '@/api/styleData'
 import { fetchSkillOptions } from '@/api/skillOptions'
 import { fetchPassiveSkillOptions } from '@/api/passiveSkillOptions'
 import { getAssetsFile } from '@/api/util'
+import { fetchCommandSkill } from '@/api/commandSkill'
 
 const charStore = useCharStore()
 const sliderStore = useSliderStore()
@@ -68,7 +69,8 @@ const initializeOptions = async () => {
   if (selectedStyle.value) {
     passiveSkillOptions.value = await fetchPassiveSkillOptions(
       selectedCharacter.value,
-      selectedTeam.value
+      selectedTeam.value,
+      selectedStyle.value
     )
     const fetchedSkills = await fetchSkillOptions(
       selectedCharacter.value,
@@ -127,11 +129,20 @@ watch(selectedStyle, async (newStyle) => {
       }))
       passiveSkillOptions.value = await fetchPassiveSkillOptions(
         selectedCharacter.value,
-        selectedTeam.value
+        selectedTeam.value,
+        newStyle
       )
+      const commandSkill = await fetchCommandSkill(
+        selectedCharacter.value,
+        selectedTeam.value,
+        newStyle
+      )
+      charStore.setSelection(props.buttonKey, 'commandSkill', commandSkill)
       charStore.setSelection(props.buttonKey, 'style', newStyle)
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon)
+      charStore.setSelection(props.buttonKey, 'passiveSkill', [])
       selectedSkill.value = []
+      selectedPassiveSkill.value = []
     }
   } else {
     charStore.setSelection(props.buttonKey, 'style', null)
@@ -140,6 +151,7 @@ watch(selectedStyle, async (newStyle) => {
     charStore.setSelection(props.buttonKey, 'rank', null)
     charStore.setSelection(props.buttonKey, 'flower', null)
     charStore.setSelection(props.buttonKey, 'earring', null)
+    charStore.setSelection(props.buttonKey, 'commandSkill', null)
     charStore.setSelection(props.buttonKey, 'passiveSkill', [])
     charStore.setSelection(props.buttonKey, 'skill', [])
     // 確保同步更新

@@ -14,6 +14,7 @@ export const useCharStore = defineStore(
             rank: null,
             flower: false,
             passiveSkill: [],
+            commandSkill: null,
             earring: null,
             skill: [],
             img: null
@@ -30,6 +31,7 @@ export const useCharStore = defineStore(
           rank: null,
           flower: false,
           passiveSkill: [],
+          commandSkill: null,
           earring: null,
           skill: [],
           img: null
