@@ -5,6 +5,7 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { convertElementToPng } from '@/api/domToImage'
 import { getAssetsFile } from '@/api/util'
+import { getUsedSkills } from '@/api/getUsedSkills'
 import loading from 'vue-loading-overlay'
 
 const isLoading = ref(false)
@@ -13,6 +14,8 @@ const fullPage = ref(true)
 const charStore = useCharStore()
 const skillStore = useSkillStore()
 const sliderStore = useSliderStore()
+const usedSkills = getUsedSkills()
+
 const hasRank = computed(() => {
   return Object.values(charStore.selections).some(
     (selection) => selection?.rank !== null || selection?.flower
@@ -132,8 +135,23 @@ const closeTable = () => {
                   charStore.selections[i - 1].passiveSkill.length > 0
                 "
                 class="text"
+                style="white-space: pre-line;"
               >
                 {{ charStore.selections[i - 1].passiveSkill.join('/ ') }}
+              </div>
+            </div>
+          </div>
+          <!-- Used skill row -->
+          <div v-if="Object.keys(usedSkills).length > 0" class="table-container" style="margin-top: 20px">
+            <div v-for="i in 7" class="table-column">
+              <div v-if="i === 1" class="label">Skill</div>
+              <div
+                v-else-if="
+                  charStore.selections[i - 1].style !== null
+                "
+                class="text"
+              >
+                {{ Array.from(usedSkills[charStore.selections[i - 1].style]).join('\n') }}
               </div>
             </div>
           </div>
@@ -272,6 +290,7 @@ image {
   justify-content: center;
   align-items: center;
   height: 100%;
+  white-space: pre-line;
 }
 .axle-text {
   font-size: 18px;
