@@ -6,7 +6,6 @@ import { useCharStore } from '@/stores/char_stores'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from './SelectAxleChar.vue'
 import { getAssetsFile } from '@/api/util'
-import { useIntersectionObserver } from '@vueuse/core'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
@@ -68,25 +67,10 @@ const deleteRow = (index) => {
   skillStore.turns.splice(index, 1)
   skillStore.skills.splice(index, 1)
 }
-
-// Render target when the visibility of the component
-const target = ref(null)
-const targetIsVisible = ref(false)
-
-const { stop } = useIntersectionObserver(
-  target,
-  ([{ isIntersecting }], observerElement) => {
-    targetIsVisible.value = isIntersecting
-  },
-)
-
-onBeforeUnmount(() => {
-  stop()
-})
 </script>
 
 <template>
-  <div v-for="i in sliderStore.rows" :key="i" class="container" ref="target">
+  <div v-for="i in sliderStore.rows" :key="i" class="container">
     <button class="fixed-button" @click="deleteRow(i - 1)">
       <svg
         xmlns="http://www.w3.org/2000/svg"
