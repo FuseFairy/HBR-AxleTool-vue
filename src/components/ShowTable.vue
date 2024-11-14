@@ -490,7 +490,8 @@ image {
   background-color: #cb832c;
 }
 :deep(.multiselect-wrapper) {
-  min-width: 450px;
+  min-width: 300px;
+  max-width: 450px;
 }
 @media (max-width: 950px) {
   .container {
