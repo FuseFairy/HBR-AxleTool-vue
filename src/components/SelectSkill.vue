@@ -179,6 +179,10 @@ span {
   margin: 20px 20px 0 20px;
   grid-template-columns: 160px repeat(3, 1fr);
   align-items: center;
+  transition: box-shadow 0.3s ease; /* 添加過渡效果 */
+}
+.container:hover {
+  box-shadow: 0 0 0 0.5px #c12277, 0 0 20px rgba(240, 152, 199, 0.5);
 }
 .column {
   flex: 1;
