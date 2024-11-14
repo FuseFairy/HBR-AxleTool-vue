@@ -8,7 +8,8 @@ const sliderStore = useSliderStore()
 
 const langOptions = [
   {value: 'zh-TW', name: '繁體中文'},
-  {value: 'en', name: 'English'}
+  {value: 'en', name: 'English'},
+  {value: 'jp', name: '日本語'}
 ]
 
 const emit = defineEmits(['close'])
