@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@vueform/multiselect": "^2.6.9",
-    "@vueuse/core": "^11.1.0",
     "axios": "^1.7.7",
     "dom-to-image-more": "^3.4.5",
     "hbr-axletool-vue": "file:",
