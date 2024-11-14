@@ -75,15 +75,15 @@ const closeTable = () => {
 </script>
 
 <template>
-  <loading
-    v-model:active="isLoading"
-    :can-cancel="false"
-    :is-full-page="fullPage"
-    :lock-scroll="true"
-    background-color="#54504b"
-    color="#79d1cb"
-  />
   <div @click="closeTable" class="overlay">
+    <loading
+      v-model:active="isLoading"
+      :can-cancel="false"
+      :is-full-page="fullPage"
+      :lock-scroll="true"
+      background-color="#54504b"
+      color="#79d1cb"
+    />
     <div @click.stop class="container">
       <div class="button-group">
         <span style="display: flex; align-items: center">

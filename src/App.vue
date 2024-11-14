@@ -23,7 +23,9 @@ const toggleTable = () => {
       <button @click="toggleTable">
         <img src="@/assets/custom_icon/table.svg" alt="table" />
       </button>
-      <ShowTable v-if="isTableVisible" @close="toggleTable" />
+      <Transition name="modal">
+        <ShowTable v-if="isTableVisible" @close="toggleTable" />
+      </Transition>
     </nav>
     <main class="scrollbar-style-1">
       <div class="box_container"><SelectBoxes /></div>
@@ -50,6 +52,18 @@ const toggleTable = () => {
 </template>
 
 <style scoped>
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.3s ease;
+}
+.modal-enter-from {
+  transform: scale(0.8);
+  opacity: 0;
+}
+.modal-leave-to {
+  transform: scale(0.8);
+  opacity: 0;
+}
 .page-layout {
   min-height: 100vh;
   display: grid;
