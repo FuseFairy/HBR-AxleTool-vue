@@ -25,6 +25,6 @@ export function getUsedSkills() {
       });
     });
   });
-  console.log(skillsDictionary)
+
   return skillsDictionary;
 }
