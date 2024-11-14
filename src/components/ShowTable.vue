@@ -435,8 +435,8 @@ image {
   gap: 0.5rem;
 }
 :deep(.multiselect) {
-  background-color: black;
-  border: 1px solid rgb(232, 201, 150);
+  background-color: rgba(50, 48, 50, 0.8);
+  border: 2px solid rgba(50, 48, 50, 0.8);
   margin-top: 2px;
   border-radius: 20px;
 }
@@ -444,8 +444,8 @@ image {
   box-shadow: none;
 }
 :deep(.multiselect-dropdown) {
-  background-color: black;
-  border: 1px solid rgb(232, 201, 150);
+  background-color: rgba(50, 48, 50, 0.8);
+  border: 2px solid rgba(50, 48, 50, 0.8);
   max-height: 15rem;
   border-radius: 20px;
 }
@@ -461,7 +461,7 @@ image {
   background-color: #555;
 }
 :deep(.multiselect-option.is-selected) {
-  background-color: rgb(60, 57, 57);
+  background-color: rgb(38, 37, 37);
 }
 :deep(.multiselect-option.is-pointed) {
   background-color: rgb(160, 160, 167);
@@ -487,7 +487,7 @@ image {
   font-size: 0;
 }
 :deep(.multiselect-tag) {
-  background-color: #cb832c;
+  background-color: rgb(89, 85, 89);
   border-radius: 20px;
 }
 :deep(.multiselect-wrapper) {
