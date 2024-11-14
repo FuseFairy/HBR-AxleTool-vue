@@ -3,33 +3,57 @@ import { ref, computed } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
+import { useShowRowStore } from '@/stores/showRow_stores.js'
 import { convertElementToPng } from '@/api/domToImage'
 import { getAssetsFile } from '@/api/util'
 import { getUsedSkills } from '@/api/getUsedSkills'
 import loading from 'vue-loading-overlay'
+import Multiselect from '@vueform/multiselect'
 
 const isLoading = ref(false)
 const fullPage = ref(true)
-
 const charStore = useCharStore()
 const skillStore = useSkillStore()
 const sliderStore = useSliderStore()
+const showRowStore = useShowRowStore()
 const usedSkills = getUsedSkills()
+const showOptions = [
+  { value: 'rank', name: 'Rank'},
+  { value: 'earring', name: 'Earring'},
+  { value: 'passive skill', name: 'Passive Skill'},
+  { value: 'skill', name: 'Skill'}
+]
 
 const hasRank = computed(() => {
-  return Object.values(charStore.selections).some(
+  const rankInShowRow = showRowStore.showRow.includes('rank');
+  const hasValidRankSelection = Object.values(charStore.selections).some(
     (selection) => selection?.rank !== null || selection?.flower
-  )
+  );
+
+  return rankInShowRow && hasValidRankSelection;
 })
 
 const hasEarring = computed(() => {
-  return Object.values(charStore.selections).some((selection) => selection?.earring !== null)
+  const earringInShowRow = showRowStore.showRow.includes('earring');
+  const hasValidEarringSelection = Object.values(charStore.selections).some((selection) => selection?.earring !== null);
+
+  return earringInShowRow && hasValidEarringSelection;
 })
 
 const hasPassiveSkill = computed(() => {
-  return Object.values(charStore.selections).some(
+  const passiveSkillInShowRow = showRowStore.showRow.includes('passive skill');
+  const hasValidPassiveSkillSelection = Object.values(charStore.selections).some(
     (selection) => selection?.passiveSkill !== null && selection?.passiveSkill.length > 0
-  )
+  );
+
+  return passiveSkillInShowRow && hasValidPassiveSkillSelection;
+})
+
+const hasSkill = computed(() => {
+  const skillInShowRow = showRowStore.showRow.includes('skill');
+  const hasValidSkill = Object.keys(usedSkills).length > 0;
+
+  return skillInShowRow && hasValidSkill;
 })
 
 const downloadTable = async () => {
@@ -66,6 +90,15 @@ const closeTable = () => {
           <button @click="downloadTable" class="download">
             <img src="@/assets/custom_icon/download.svg" alt="Download" />
           </button>
+          <Multiselect
+            v-model="showRowStore.showRow"
+            mode="tags"
+            placeholder="Select Row"
+            label="name"
+            :close-on-select="false"
+            :options="showOptions"
+            @change="(value) => showRowStore.setShowRow(value)"
+          />
           <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
         </span>
         <button @click="closeTable" class="close">
@@ -142,7 +175,7 @@ const closeTable = () => {
             </div>
           </div>
           <!-- Used skill row -->
-          <div v-if="Object.keys(usedSkills).length > 0" class="table-container" style="margin-top: 20px">
+          <div v-if="hasSkill" class="table-container" style="margin-top: 20px">
             <div v-for="i in 7" class="table-column">
               <div v-if="i === 1" class="label">Skill</div>
               <div
@@ -206,6 +239,7 @@ const closeTable = () => {
   </div>
 </template>
 
+<style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
 .axle-item {
   display: grid;
@@ -390,9 +424,70 @@ image {
   background-color: #555;
 }
 .mobile-warning {
-  display: none; /* 默认隐藏 */
-  color: rgb(162, 87, 87); /* 您可以根据需要调整文本颜色 */
-  margin-left: 10px; /* 与按钮之间的间距 */
+  display: none;
+  color: rgb(162, 87, 87);
+  margin-left: 10px;
+}
+:deep(.multiselect-option),
+.multiselect-single-label {
+  display: flex;
+  gap: 0.5rem;
+}
+:deep(.multiselect) {
+  background-color: black;
+  border: 1px solid rgb(150, 205, 232);
+  margin-top: 2px;
+}
+:deep(.multiselect.is-active) {
+  box-shadow: none;
+}
+:deep(.multiselect-dropdown) {
+  background-color: black;
+  border: 1px solid rgb(64, 68, 141);
+  max-height: 15rem
+}
+:deep(.multiselect-dropdown::-webkit-scrollbar) {
+  width: 5px;
+}
+:deep(.multiselect-dropdown::-webkit-scrollbar-track),
+:deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+:deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
+  background-color: #555;
+}
+:deep(.multiselect-option.is-selected) {
+  background-color: rgb(60, 57, 57);
+}
+:deep(.multiselect-option.is-pointed) {
+  background-color: rgb(160, 160, 167);
+  color: rgb(0, 0, 0);
+}
+:deep(.multiselect-caret) {
+  margin-left: 14px;
+}
+:deep(.multiselect-clear) {
+  padding: 0;
+}
+:deep(.multiselect-clear-icon:hover),
+:deep(.multiselect-clear-icon:active),
+:deep(.multiselect-clear-icon:focus) {
+  background-color: #999;
+}
+:deep(.multiselect-clear-icon) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+  font-size: 0;
+}
+:deep(.multiselect-tag) {
+  background-color: #4588cb;
+}
+:deep(.multiselect-wrapper) {
+  min-width: 450px;
 }
 @media (max-width: 950px) {
   .container {
