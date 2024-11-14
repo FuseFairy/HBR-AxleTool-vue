@@ -488,6 +488,7 @@ image {
 }
 :deep(.multiselect-tag) {
   background-color: #cb832c;
+  border-radius: 20px;
 }
 :deep(.multiselect-wrapper) {
   min-width: 300px;
