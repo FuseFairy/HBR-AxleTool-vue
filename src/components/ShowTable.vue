@@ -51,7 +51,7 @@ const hasPassiveSkill = computed(() => {
 
 const hasSkill = computed(() => {
   const skillInShowRow = showRowStore.showRow.includes('skill');
-  const hasValidSkill = Object.keys(usedSkills).length > 0;
+  const hasValidSkill = Object.values(usedSkills).some(skillSet => skillSet.size > 0);
 
   return skillInShowRow && hasValidSkill;
 })
@@ -93,11 +93,12 @@ const closeTable = () => {
           <Multiselect
             v-model="showRowStore.showRow"
             mode="tags"
-            placeholder="Select Row"
+            placeholder="Display Row"
             label="name"
             :close-on-select="false"
             :options="showOptions"
             @change="(value) => showRowStore.setShowRow(value)"
+            style="margin-left: 5px;"
           />
           <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
         </span>
@@ -435,16 +436,18 @@ image {
 }
 :deep(.multiselect) {
   background-color: black;
-  border: 1px solid rgb(150, 205, 232);
+  border: 1px solid rgb(232, 201, 150);
   margin-top: 2px;
+  border-radius: 20px;
 }
 :deep(.multiselect.is-active) {
   box-shadow: none;
 }
 :deep(.multiselect-dropdown) {
   background-color: black;
-  border: 1px solid rgb(64, 68, 141);
-  max-height: 15rem
+  border: 1px solid rgb(232, 201, 150);
+  max-height: 15rem;
+  border-radius: 20px;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
   width: 5px;
@@ -484,7 +487,7 @@ image {
   font-size: 0;
 }
 :deep(.multiselect-tag) {
-  background-color: #4588cb;
+  background-color: #cb832c;
 }
 :deep(.multiselect-wrapper) {
   min-width: 450px;
@@ -497,5 +500,8 @@ image {
   .mobile-warning {
     display: block;
   }
+  :deep(.multiselect-wrapper) {
+  min-width: auto;
+}
 }
 </style>
