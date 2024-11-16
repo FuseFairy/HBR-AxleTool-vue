@@ -4,10 +4,16 @@ import { ref } from 'vue'
 export const useSliderStore = defineStore(
   'slider',
   () => {
-    const rows = ref(0)
+    const rows = ref({
+      'Phase 1': 0,
+      'Phase 2': 0,
+      'Phase 3': 0,
+      'Phase 4': 0,
+      'Phase 5': 0
+    })
 
-    function setValue(newValue) {
-      rows.value = newValue
+    function setValue(phaseID, newValue) {
+      rows.value[phaseID] = newValue
     }
 
     return {

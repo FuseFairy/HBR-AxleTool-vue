@@ -15,6 +15,10 @@ const props = defineProps({
   buttonKey: {
     type: Number,
     required: true
+  },
+  tabId: {
+    type: String,
+    required: true,
   }
 })
 
@@ -26,16 +30,16 @@ const filteredSelections = computed(() => {
 })
 
 const isSelected = (key) => {
-  return skillStore.skills[props.row][props.buttonKey].style === filteredSelections.value[key].style
+  return skillStore.skills[props.tabId][props.row][props.buttonKey].style === filteredSelections.value[key].style
 }
 
 const handleImageClick = (key) => {
   if (isSelected(key)) {
-    skillStore.skills[props.row][props.buttonKey].style = null
-    skillStore.skills[props.row][props.buttonKey].style_img = null
+    skillStore.skills[props.tabId][props.row][props.buttonKey].style = null
+    skillStore.skills[props.tabId][props.row][props.buttonKey].style_img = null
   } else {
-    skillStore.skills[props.row][props.buttonKey].style = filteredSelections.value[key].style
-    skillStore.skills[props.row][props.buttonKey].style_img = filteredSelections.value[key].img
+    skillStore.skills[props.tabId][props.row][props.buttonKey].style = filteredSelections.value[key].style
+    skillStore.skills[props.tabId][props.row][props.buttonKey].style_img = filteredSelections.value[key].img
     closeContainer()
   }
 }

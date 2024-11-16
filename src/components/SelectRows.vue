@@ -25,7 +25,7 @@
       </div>
     </div>
     <vue-slider
-      v-model="sliderStore.rows"
+      v-model="sliderStore.rows[props.tabId]"
       :disabled="!hasChar"
       :min="0"
       :max="50"
@@ -68,13 +68,20 @@ const decreaseValue = () => {
 }
 
 const updateSkillsRows = (value) => {
-  skillStore.adjustSkills(value)
+  skillStore.adjustSkills(props.tabId, value)
 }
 
 const hasChar = computed(() => {
   return Object.values(charStore.selections).some(
     (selection) => selection.character !== null && selection.style !== null
   )
+})
+
+const props = defineProps({
+  tabId: {
+    type: String,
+    required: true,
+  },
 })
 </script>
 

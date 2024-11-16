@@ -211,7 +211,7 @@ const closeContainer = async () => {
             v-model="selectedTeam"
             placeholder="Select team"
             label="name"
-            :disabled="sliderStore.rows > 0"
+            :disabled="Object.values(sliderStore.rows).some(value => value > 0)"
             :options="teamOptions"
           >
             <template v-slot:singlelabel="{ value }">
@@ -234,7 +234,7 @@ const closeContainer = async () => {
             v-model="selectedCharacter"
             placeholder="Select character"
             label="name"
-            :disabled="isCharDisabled || sliderStore.rows > 0"
+            :disabled="isCharDisabled || Object.values(sliderStore.rows).some(value => value > 0)"
             :options="characterOptions"
           >
             <template v-slot:singlelabel="{ value }">
@@ -257,7 +257,7 @@ const closeContainer = async () => {
             v-model="selectedStyle"
             placeholder="Select style"
             label="name"
-            :disabled="isStyleDisabled || sliderStore.rows > 0"
+            :disabled="isStyleDisabled || Object.values(sliderStore.rows).some(value => value > 0)"
             :options="styleOptions"
           >
             <template v-slot:singlelabel="{ value }">
@@ -332,7 +332,7 @@ const closeContainer = async () => {
             placeholder="Select skill"
             label="name"
             :close-on-select="false"
-            :disabled="isOtherDisable || sliderStore.rows > 0"
+            :disabled="isOtherDisable || Object.values(sliderStore.rows).some(value => value > 0)"
             :options="skillOptions"
             @change="(value) => setSkill(value)"
           />

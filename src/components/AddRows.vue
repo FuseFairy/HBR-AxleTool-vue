@@ -3,7 +3,7 @@
     <button
       @click="addRow"
       class="circle-button add-button"
-      :disabled="sliderStore.rows === 50 || (sliderStore.rows === 0 && !hasChar)"
+      :disabled="sliderStore.rows[props.tabId] === 50 || (sliderStore.rows[props.tabId] === 0 && !hasChar)"
     >
       <img class="icon-img" src="@/assets/custom_icon/add_circle.svg" alt="Add a row" />
     </button>
@@ -21,9 +21,9 @@ const skillStore = useSkillStore()
 const charStore = useCharStore()
 
 const addRow = () => {
-  if (sliderStore.rows < 50) {
-    sliderStore.rows++
-    skillStore.adjustSkills(sliderStore.rows)
+  if (sliderStore.rows[props.tabId] < 50) {
+    sliderStore.rows[props.tabId]++
+    skillStore.adjustSkills(props.tabId, sliderStore.rows[props.tabId])
     nextTick(() => {
       scrollToBottom()
     })
@@ -45,6 +45,13 @@ const scrollToBottom = () => {
     })
   }
 }
+
+const props = defineProps({
+  tabId: {
+    type: String,
+    required: true,
+  },
+})
 </script>
 
 <style scoped>

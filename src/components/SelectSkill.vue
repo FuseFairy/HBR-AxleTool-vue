@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { ref, computed} from 'vue'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useCharStore } from '@/stores/char_stores'
@@ -26,7 +26,7 @@ const closeContainer = () => {
 }
 
 const getFilteredSkills = (row, key) => {
-  const currentSkill = skillStore.skills[row][key]
+  const currentSkill = skillStore.skills[props.tabId][row][key]
   if (currentSkill && currentSkill.style != null) {
     const currentStyle = currentSkill.style
     const selections = Object.values(charStore.selections)
@@ -42,15 +42,15 @@ const getFilteredSkills = (row, key) => {
     formattedSkills.unshift({ name: commandSkill, value: commandSkill, sp: 0 })
 
     const foundSkill = formattedSkills.some(
-      (option) => option.name === skillStore.skills[row][key].skill
+      (option) => option.name === skillStore.skills[props.tabId][row][key].skill
     )
     if (!foundSkill) {
-      skillStore.skills[row][key].skill = null
+      skillStore.skills[props.tabId][row][key].skill = null
     }
 
     return formattedSkills
   } else {
-    skillStore.skills[row][key].skill = null
+    skillStore.skills[props.tabId][row][key].skill = null
 
     return []
   }
@@ -63,14 +63,21 @@ const targetOptions = computed(() => {
 })
 
 const deleteRow = (index) => {
-  sliderStore.rows -= 1
-  skillStore.turns.splice(index, 1)
-  skillStore.skills.splice(index, 1)
+  sliderStore.rows[props.tabId] -= 1
+  skillStore.turns[props.tabId].splice(index, 1)
+  skillStore.skills[props.tabId].splice(index, 1)
 }
+
+const props = defineProps({
+  tabId: {
+    type: String,
+    required: true,
+  },
+})
 </script>
 
 <template>
-  <div v-for="i in sliderStore.rows" :key="i" class="container">
+  <div v-for="i in sliderStore.rows[props.tabId]" :key="i" class="container">
     <button class="fixed-button" @click="deleteRow(i - 1)">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -87,13 +94,13 @@ const deleteRow = (index) => {
     <div class="column">
       <div class="empty"></div>
       <Multiselect
-        v-model="skillStore.turns[i - 1].turn"
+        v-model="skillStore.turns[props.tabId][i - 1].turn"
         placeholder="Select turn"
         :options="turnOptions"
       >
       </Multiselect>
       <Multiselect
-        v-model="skillStore.turns[i - 1].od"
+        v-model="skillStore.turns[props.tabId][i - 1].od"
         placeholder="Select OD"
         :options="odOptions"
       >
@@ -103,20 +110,20 @@ const deleteRow = (index) => {
       <button
         @click="handleBoxClick(i - 1, n - 1)"
         :class="{
-          'circle-button selected-button': skillStore.skills[i - 1][n - 1].style_img !== null,
-          'circle-button add-button': skillStore.skills[i - 1][n - 1].style_img === null
+          'circle-button selected-button': skillStore.skills[props.tabId][i - 1][n - 1].style_img !== null,
+          'circle-button add-button': skillStore.skills[props.tabId][i - 1][n - 1].style_img === null
         }"
       >
         <img
-          v-if="skillStore.skills[i - 1][n - 1].style_img !== null"
+          v-if="skillStore.skills[props.tabId][i - 1][n - 1].style_img !== null"
           class="char-img"
-          :src="getAssetsFile(skillStore.skills[i - 1][n - 1].style_img)"
-          :alt="skillStore.skills[i - 1][n - 1].style"
+          :src="getAssetsFile(skillStore.skills[props.tabId][i - 1][n - 1].style_img)"
+          :alt="skillStore.skills[props.tabId][i - 1][n - 1].style"
         />
         <img v-else class="icon-img" src="@/assets/custom_icon/add.svg" alt="Add" />
       </button>
       <Multiselect
-        v-model="skillStore.skills[i - 1][n - 1].skill"
+        v-model="skillStore.skills[props.tabId][i - 1][n - 1].skill"
         placeholder="Select skill"
         label="name"
         :options="getFilteredSkills(i - 1, n - 1)"
@@ -132,7 +139,7 @@ const deleteRow = (index) => {
         </template>
       </Multiselect>
       <Multiselect
-        v-model="skillStore.skills[i - 1][n - 1].target"
+        v-model="skillStore.skills[props.tabId][i - 1][n - 1].target"
         placeholder="Select target"
         :options="targetOptions"
       >
@@ -144,6 +151,7 @@ const deleteRow = (index) => {
       v-if="activeComponent.row !== null"
       :row="activeComponent.row"
       :buttonKey="activeComponent.buttonKey"
+      :tabId="props.tabId"
       @close="closeContainer"
     />
   </Transition>

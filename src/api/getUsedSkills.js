@@ -8,19 +8,19 @@ export function getUsedSkills() {
 
   Object.values(charStore.selections).forEach((selection) => {
     const style = selection['style'];
-
     if (style && !skillsDictionary[style]) {
       skillsDictionary[style] = new Set();
     }
+  });
 
-    skillStore.skills.forEach(group => {
-      group.forEach(skillEntry => {
-        if (skillEntry.style === style) {
-          const { skill } = skillEntry;
+  Object.keys(skillStore.skills).forEach((phaseId) => {
+    skillStore.skills[phaseId].forEach((skillGroup) => {
+      skillGroup.forEach((skillEntry) => {
+        const style = skillEntry.style;
+        const skill = skillEntry.skill;
 
-          if (skill && skill != selection['commandSkill'] && !skillsDictionary[style].has(skill)) {
-            skillsDictionary[style].add(skill);
-          }
+        if (style && skillsDictionary[style] && skill) {
+          skillsDictionary[style].add(skill);
         }
       });
     });

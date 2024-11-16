@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { Tabs, Tab } from 'super-vue3-tabs';
 import './assets/main.css'
 import AddRows from './components/AddRows.vue'
 import SelectBoxes from '@/components/SelectBoxes.vue'
@@ -7,8 +8,18 @@ import SelectRows from '@/components/SelectRows.vue'
 import ShowTable from './components/ShowTable.vue'
 import uploadButton from './components/uploadButton.vue'
 import SelectSkill from './components/SelectSkill.vue'
+import { useActiveTabStore } from './stores/activeTab_stores';
 
 const isTableVisible = ref(false)
+const activeTabStore = useActiveTabStore()
+
+const tabs = ref([
+  'Phase 1',
+  'Phase 2',
+  'Phase 3',
+  'Phase 4',
+  'Phase 5'
+])
 
 const toggleTable = () => {
   isTableVisible.value = !isTableVisible.value
@@ -30,9 +41,17 @@ const toggleTable = () => {
     <main class="scrollbar-style-1">
       <div class="box_container"><SelectBoxes /></div>
       <div class="axle">
-        <SelectRows />
-        <SelectSkill />
-        <AddRows />
+        <Tabs v-model="activeTabStore.activeTab" @change="activeTabStore.handleTabChange">
+          <Tab
+            v-for="(tab_name, index) in tabs"
+            :key="index"
+            :value="tab_name"
+          >
+            <SelectRows :tabId="tab_name" />
+            <SelectSkill :tabId="tab_name" />
+            <AddRows :tabId="tab_name" />
+          </Tab>
+        </Tabs>
       </div>
       <div class="footer">
         <div class="footer-content">

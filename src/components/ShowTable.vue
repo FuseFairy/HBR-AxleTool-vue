@@ -190,47 +190,56 @@ const closeTable = () => {
             </div>
           </div>
           <!-- Skill row -->
-          <div v-if="sliderStore.rows > 0" class="axle-line-container" style="margin-top: 20px">
+          <div v-if="Object.values(sliderStore.rows).some(value => value > 0)" class="axle-line-container" style="margin-top: 20px">
             <div class="axle-column"></div>
           </div>
           <div
-            v-if="sliderStore.rows > 0"
-            v-for="row in sliderStore.rows"
-            class="table-container-2"
-            :style="{ 'border-top': row > 1 ? '2px dashed gray' : 'none' }"
+            v-for="[key, value] in Object.entries(sliderStore.rows)"
           >
-            <div v-for="col in 4" class="axle-table-column">
-              <div v-if="col === 1" class="label">
-                <span
-                  v-if="
-                    skillStore.turns[row - 1].turn !== null && skillStore.turns[row - 1].od !== null
-                  "
-                >
-                  {{ skillStore.turns[row - 1].turn }} / {{ skillStore.turns[row - 1].od }}
-                </span>
-                <span v-else-if="skillStore.turns[row - 1].turn !== null">{{
-                  skillStore.turns[row - 1].turn
-                }}</span>
-                <span v-else></span>
+            <div v-if = "value > 0">
+              <div v-if="Object.values(sliderStore.rows).filter(value => value > 0).length > 1" style="display: flex; justify-content: center; align-items: center;">
+                <p>{{ key }}</p>
               </div>
-              <div v-else>
-                <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
-                  <div class="image">
-                    <img
-                      :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
-                      :alt="skillStore.skills[row - 1][col - 2].style"
-                      class="axle-img"
-                    />
-                  </div>
-                  <div class="txt">
-                    <span class="axle-text">{{ skillStore.skills[row - 1][col - 2].skill }}</span>
+              <div 
+                v-for="row in value" 
+                :key="row"
+                class="table-container-2"
+                :style="{ 'border-top': row > 1 ? '2px dashed gray' : 'none' }"
+              >
+                <div v-for="col in 4" class="axle-table-column">
+                  <div v-if="col === 1" class="label">
                     <span
-                      v-if="skillStore.skills[row - 1][col - 2].target !== null"
-                      class="axle-text"
-                      ><br />（{{ skillStore.skills[row - 1][col - 2].target }}）</span
+                      v-if="
+                        skillStore.turns[key][row - 1].turn !== null && skillStore.turns[key][row - 1].od !== null
+                      "
                     >
+                      {{ skillStore.turns[key][row - 1].turn }} / {{ skillStore.turns[key][row - 1].od }}
+                    </span>
+                    <span v-else-if="skillStore.turns[key][row - 1].turn !== null">{{
+                      skillStore.turns[key][row - 1].turn
+                    }}
+                    </span>
                   </div>
-                </span>
+                  <div v-else>
+                    <span v-if="skillStore.skills[key][row - 1][col - 2].skill !== null" class="axle-item">
+                      <div class="image">
+                        <img
+                          :src="getAssetsFile(skillStore.skills[key][row - 1][col - 2].style_img)"
+                          :alt="skillStore.skills[key][row - 1][col - 2].style"
+                          class="axle-img"
+                        />
+                      </div>
+                      <div class="txt">
+                        <span class="axle-text">{{ skillStore.skills[key][row - 1][col - 2].skill }}</span>
+                        <span
+                          v-if="skillStore.skills[key][row - 1][col - 2].target !== null"
+                          class="axle-text"
+                          ><br />（{{ skillStore.skills[key][row - 1][col - 2].target }}）</span
+                        >
+                      </div>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
