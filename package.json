@@ -12,7 +12,7 @@
   "dependencies": {
     "@vueform/multiselect": "^2.6.9",
     "axios": "^1.7.7",
-    "dom-to-image-more": "3.4.5",
+    "dom-to-image-more": "^3.4.5",
     "hbr-axletool-vue": "file:",
     "piexifjs": "^1.0.4",
     "pinia": "^2.1.7",
