@@ -73,9 +73,23 @@ const toggleTable = () => {
     'navbar'
     'main';
   background-color: black;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+.page-layout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-image: url(@/assets/bg.webp);
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -1;
+  pointer-events: none;
 }
 nav {
   display: flex;
