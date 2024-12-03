@@ -67,11 +67,19 @@ const deleteRow = (index) => {
   skillStore.turns.splice(index, 1)
   skillStore.skills.splice(index, 1)
 }
+
+const copyRow = (index) => {
+  sliderStore.rows += 1
+  const copiedTurn = JSON.parse(JSON.stringify(skillStore.turns[index]));
+  const copiedSkill = JSON.parse(JSON.stringify(skillStore.skills[index]));
+  skillStore.turns.splice(index + 1, 0, copiedTurn);
+  skillStore.skills.splice(index + 1, 0, copiedSkill);
+}
 </script>
 
 <template>
   <div v-for="i in sliderStore.rows" :key="i" class="container">
-    <button class="fixed-button" @click="deleteRow(i - 1)">
+    <button class="delete-button" @click="deleteRow(i - 1)">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
@@ -83,6 +91,9 @@ const deleteRow = (index) => {
           d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"
         />
       </svg>
+    </button>
+    <button class="copy-button" @click="copyRow(i - 1)">
+      <img src="@/assets/custom_icon/copy.svg" alt="copy"/>
     </button>
     <div class="column">
       <div class="empty"></div>
@@ -223,10 +234,18 @@ span {
 .selected-button:hover .char-img {
   transform: scale(1.1);
 }
-.fixed-button {
+.delete-button {
   position: absolute;
   top: 10px;
   right: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+.copy-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
   background-color: transparent;
   cursor: pointer;
   border: none;
