@@ -53,14 +53,19 @@
     "style": {
       "Metal Crazy": "001",
       "Silent Reverberations": "002",
-      "末日要幹嘛？": "003"
+      "末日要幹嘛？": "003",
+      "Frozen Moon, Melting Heart": "004"
     },
     "skill": {
       "common": {
         "狂怒嘶吼": 5,
         "R.I.P.": 7,
         "可別先掛點了啊": 6,
-        "以破滅道晚安": 131
+        "以破滅道晚安": 13,
+        "補償": 5
+      },
+      "Frozen Moon, Melting Heart":{
+        "給你的禮物": 16
       }
     },
     "passive skill": []
