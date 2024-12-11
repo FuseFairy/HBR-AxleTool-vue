@@ -8,24 +8,30 @@ export const useCharStore = defineStore(
       Object.fromEntries(
         Array.from({ length: 6 }, (_, i) => [
           i + 1,
-          {
-            character: null,
-            style: null,
-            rank: null,
-            flower: false,
-            passiveSkill: [],
-            commandSkill: null,
-            earring: null,
-            skill: [],
-            img: null
-          }
+          Object.fromEntries(
+            Array.from({ length: 6 }, (_, j) => [
+              j + 1,
+              {
+                character: null,
+                style: null,
+                rank: null,
+                flower: false,
+                passiveSkill: [],
+                commandSkill: null,
+                earring: null,
+                skill: [],
+                img: null
+              }
+            ])
+          )
         ])
       )
     )
+    
 
-    const setSelection = (buttonKey, type, value) => {
-      if (!selections.value[buttonKey]) {
-        selections.value[buttonKey] = {
+    const setSelection = (buttonKey, type, value, selectedTab) => {
+      if (!selections.value[selectedTab][buttonKey]) {
+        selections.value[selectedTab][buttonKey] = {
           character: null,
           style: null,
           rank: null,
@@ -37,11 +43,11 @@ export const useCharStore = defineStore(
           img: null
         }
       }
-      selections.value[buttonKey][type] = value === undefined ? null : value
+      selections.value[selectedTab][buttonKey][type] = value === undefined ? null : value
     }
 
-    const getSelection = (buttonKey, type) => {
-      return selections.value[buttonKey]?.[type] || null
+    const getSelection = (buttonKey, type, selectedTab) => {
+      return selections.value[selectedTab][buttonKey]?.[type] || null
     }
 
     return {

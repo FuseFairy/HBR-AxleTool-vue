@@ -17,6 +17,10 @@ const props = defineProps({
   buttonKey: {
     type: Number,
     required: true
+  },
+  selectedTab: {
+    type: Number,
+    required: true
   }
 })
 
@@ -43,14 +47,14 @@ const styleOptions = ref([])
 const passiveSkillOptions = ref([])
 const skillOptions = ref([])
 
-const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team'))
-const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character'))
-const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style'))
-const selectedEarring = ref(charStore.getSelection(props.buttonKey, 'earring'))
-const selectedRank = ref(charStore.getSelection(props.buttonKey, 'rank'))
-const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower'))
-const selectedPassiveSkill = ref(charStore.getSelection(props.buttonKey, 'passiveSkill'))
-const selectedSkill = ref(charStore.getSelection(props.buttonKey, 'skill'))
+const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team', props.selectedTab))
+const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character', props.selectedTab))
+const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style', props.selectedTab))
+const selectedEarring = ref(charStore.getSelection(props.buttonKey, 'earring', props.selectedTab))
+const selectedRank = ref(charStore.getSelection(props.buttonKey, 'rank', props.selectedTab))
+const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower', props.selectedTab))
+const selectedPassiveSkill = ref(charStore.getSelection(props.buttonKey, 'passiveSkill', props.selectedTab))
+const selectedSkill = ref(charStore.getSelection(props.buttonKey, 'skill', props.selectedTab))
 if (selectedSkill.value.length > 0) {
   selectedSkill.value = selectedSkill.value.map((skill) => skill.name)
 }
@@ -90,7 +94,7 @@ onMounted(async () => {
 })
 
 watch(selectedTeam, async (newTeam) => {
-  charStore.setSelection(props.buttonKey, 'team', newTeam)
+  charStore.setSelection(props.buttonKey, 'team', newTeam, props.selectedTab)
   if (newTeam) {
     characterOptions.value = await fetchCharacterOptions(newTeam)
     selectedCharacter.value = null
@@ -103,7 +107,7 @@ watch(selectedTeam, async (newTeam) => {
 })
 
 watch(selectedCharacter, async (newChar) => {
-  charStore.setSelection(props.buttonKey, 'character', newChar)
+  charStore.setSelection(props.buttonKey, 'character', newChar, props.selectedTab)
   if (newChar) {
     styleOptions.value = await fetchStyleOptions(newChar, selectedTeam.value)
     selectedStyle.value = null
@@ -137,23 +141,23 @@ watch(selectedStyle, async (newStyle) => {
         selectedTeam.value,
         newStyle
       )
-      charStore.setSelection(props.buttonKey, 'commandSkill', commandSkill)
-      charStore.setSelection(props.buttonKey, 'style', newStyle)
-      charStore.setSelection(props.buttonKey, 'img', selectedOption.icon)
-      charStore.setSelection(props.buttonKey, 'passiveSkill', [])
+      charStore.setSelection(props.buttonKey, 'commandSkill', commandSkill, props.selectedTab)
+      charStore.setSelection(props.buttonKey, 'style', newStyle, props.selectedTab)
+      charStore.setSelection(props.buttonKey, 'img', selectedOption.icon, props.selectedTab)
+      charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
       selectedSkill.value = []
       selectedPassiveSkill.value = []
     }
   } else {
-    charStore.setSelection(props.buttonKey, 'style', null)
-    charStore.setSelection(props.buttonKey, 'img', null)
-    charStore.setSelection(props.buttonKey, 'skill', null)
-    charStore.setSelection(props.buttonKey, 'rank', null)
-    charStore.setSelection(props.buttonKey, 'flower', null)
-    charStore.setSelection(props.buttonKey, 'earring', null)
-    charStore.setSelection(props.buttonKey, 'commandSkill', null)
-    charStore.setSelection(props.buttonKey, 'passiveSkill', [])
-    charStore.setSelection(props.buttonKey, 'skill', [])
+    charStore.setSelection(props.buttonKey, 'style', null, props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'img', null, props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'skill', null, props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'rank', null, props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'flower', null, props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'earring', null, props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'commandSkill', null, props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'skill', [], props.selectedTab)
     // 確保同步更新
     selectedRank.value = null
     selectedPassiveSkill.value = []
@@ -166,7 +170,7 @@ watch(selectedStyle, async (newStyle) => {
 const toggleCheckbox = () => {
   if (!isOtherDisable.value) {
     selectedFlower.value = !selectedFlower.value
-    charStore.setSelection(props.buttonKey, 'flower', selectedFlower)
+    charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)
   }
 }
 
@@ -180,7 +184,7 @@ const setSkill = (skills) => {
     }
   })
 
-  charStore.setSelection(props.buttonKey, 'skill', temp)
+  charStore.setSelection(props.buttonKey, 'skill', temp, props.selectedTab)
 }
 
 const emit = defineEmits(['close'])
@@ -189,7 +193,8 @@ const closeContainer = async () => {
     charStore.setSelection(
       props.buttonKey,
       'skill',
-      await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value)
+      await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value),
+      props.selectedTab
     )
   }
   emit('close')
@@ -281,14 +286,14 @@ const closeContainer = async () => {
             placeholder="Select Rank"
             :disabled="isOtherDisable"
             :options="rankOptions"
-            @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value)"
+            @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)"
           />
           <div class="flower-container">
             <input
               type="checkbox"
               v-model="selectedFlower"
               :disabled="isOtherDisable"
-              @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower)"
+              @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)"
             />
             <img
               src="/src/assets/flower.webp"
@@ -308,7 +313,7 @@ const closeContainer = async () => {
             label="name"
             :disabled="isOtherDisable"
             :options="earringOptions"
-            @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value)"
+            @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value, props.selectedTab)"
           >
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
@@ -347,7 +352,7 @@ const closeContainer = async () => {
             :close-on-select="false"
             :disabled="isOtherDisable"
             :options="passiveSkillOptions"
-            @change="(value) => charStore.setSelection(props.buttonKey, 'passiveSkill', value)"
+            @change="(value) => charStore.setSelection(props.buttonKey, 'passiveSkill', value, props.selectedTab)"
           />
         </div>
       </div>
