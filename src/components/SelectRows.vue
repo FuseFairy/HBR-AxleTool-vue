@@ -53,20 +53,6 @@ const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
 const charStore = useCharStore()
 
-const increaseValue = () => {
-  if (sliderStore.rows < 50) {
-    sliderStore.rows++
-    updateSkillsRows(sliderStore.rows)
-  }
-}
-
-const decreaseValue = () => {
-  if (sliderStore.rows > 0) {
-    sliderStore.rows--
-    updateSkillsRows(sliderStore.rows)
-  }
-}
-
 const updateSkillsRows = (value) => {
   skillStore.adjustSkills(value)
 }

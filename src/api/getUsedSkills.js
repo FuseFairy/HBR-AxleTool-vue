@@ -1,12 +1,12 @@
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 
-export function getUsedSkills() {
+export function getUsedSkills(selectedTab) {
   const skillsDictionary = {};
   const charStore = useCharStore();
   const skillStore = useSkillStore();
 
-  Object.values(charStore.selections).forEach((selection) => {
+  Object.values(charStore.selections[selectedTab]).forEach((selection) => {
     const style = selection['style'];
 
     if (style && !skillsDictionary[style]) {
@@ -15,7 +15,7 @@ export function getUsedSkills() {
 
     skillStore.skills.forEach(group => {
       group.forEach(skillEntry => {
-        if (skillEntry.style === style) {
+        if (skillEntry.style === style && skillEntry.selectedTab === selectedTab) {
           const { skill } = skillEntry;
 
           if (skill && skill != selection['commandSkill'] && !skillsDictionary[style].has(skill)) {

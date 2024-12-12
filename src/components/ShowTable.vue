@@ -4,6 +4,7 @@ import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useShowRowStore } from '@/stores/showRow_stores.js'
+import { useShowTeamStore } from '@/stores/showTeam_stores'
 import { convertElementToPng } from '@/api/domToImage'
 import { getAssetsFile } from '@/api/util'
 import { getUsedSkills } from '@/api/getUsedSkills'
@@ -16,45 +17,48 @@ const charStore = useCharStore()
 const skillStore = useSkillStore()
 const sliderStore = useSliderStore()
 const showRowStore = useShowRowStore()
-const usedSkills = getUsedSkills()
+const showTeamStore = useShowTeamStore()
+
 const showOptions = [
   { value: 'rank', name: 'Rank'},
   { value: 'earring', name: 'Earring'},
   { value: 'passive skill', name: 'Passive Skill'},
-  { value: 'skill', name: 'Skill'}
+  { value: 'skill', name: 'Skill'},
+  { value: 'axle', name: 'Axle'}
+]
+const showTeams = [
+  { value: 1, name: 'Team 1' },
+  { value: 2, name: 'Team 2' },
+  { value: 3, name: 'Team 3' },
+  { value: 4, name: 'Team 4' },
+  { value: 5, name: 'Team 5' },
+  { value: 6, name: 'Team 6' }
 ]
 
-const hasRank = computed(() => {
+const hasRank = (selectedTab) => {
   const rankInShowRow = showRowStore.showRow.includes('rank');
-  const hasValidRankSelection = Object.values(charStore.selections).some(
+  const hasValidRankSelection = Object.values(charStore.selections[selectedTab]).some(
     (selection) => selection?.rank !== null || selection?.flower
   );
 
   return rankInShowRow && hasValidRankSelection;
-})
+};
 
-const hasEarring = computed(() => {
+const hasEarring = (selectedTab) => {
   const earringInShowRow = showRowStore.showRow.includes('earring');
-  const hasValidEarringSelection = Object.values(charStore.selections).some((selection) => selection?.earring !== null);
+  const hasValidEarringSelection = Object.values(charStore.selections[selectedTab]).some((selection) => selection?.earring !== null);
 
   return earringInShowRow && hasValidEarringSelection;
-})
+};
 
-const hasPassiveSkill = computed(() => {
+const hasPassiveSkill = (selectedTab) => {
   const passiveSkillInShowRow = showRowStore.showRow.includes('passive skill');
-  const hasValidPassiveSkillSelection = Object.values(charStore.selections).some(
+  const hasValidPassiveSkillSelection = Object.values(charStore.selections[selectedTab]).some(
     (selection) => selection?.passiveSkill !== null && selection?.passiveSkill.length > 0
   );
 
   return passiveSkillInShowRow && hasValidPassiveSkillSelection;
-})
-
-const hasSkill = computed(() => {
-  const skillInShowRow = showRowStore.showRow.includes('skill');
-  const hasValidSkill = Object.values(usedSkills).some(skillSet => skillSet.size > 0);
-
-  return skillInShowRow && hasValidSkill;
-})
+};
 
 const downloadTable = async () => {
   isLoading.value = true
@@ -91,6 +95,16 @@ const closeTable = () => {
             <img src="@/assets/custom_icon/download.svg" alt="Download" />
           </button>
           <Multiselect
+            v-model="showTeamStore.showTeam"
+            mode="tags"
+            placeholder="Display Team"
+            label="name"
+            :close-on-select="false"
+            :options="showTeams"
+            @change="(value) => showTeamStore.setShowTeam(value)"
+            style="margin-left: 5px;"
+          />
+          <Multiselect
             v-model="showRowStore.showRow"
             mode="tags"
             placeholder="Display Row"
@@ -108,129 +122,141 @@ const closeTable = () => {
       </div>
       <div id="show-axle" class="table scrollbar-style-1">
         <div class="table-wrapper">
-          <!-- Image row -->
-          <div class="table-container">
-            <div v-for="i in 7" class="table-column">
-              <div v-if="i === 1"></div>
-              <img
-                v-else-if="charStore.selections[i - 1].img"
-                :src="getAssetsFile(charStore.selections[i - 1].img)"
-                :alt="charStore.selections[i - 1].style"
-                class="character-image"
-              />
+          <div v-for="selectedTab in showTeamStore.showTeam" :key="selectedTab">
+            <div v-if="selectedTab > 1" class="axle-line-container" style="margin-top: 20px">
+              <div class="blue-line"></div>
             </div>
-          </div>
-          <!-- Rank row -->
-          <div v-if="hasRank" class="table-container" style="margin-top: 20px">
-            <div v-for="i in 7" class="table-column">
-              <div v-if="i === 1" class="label">Rank</div>
-              <div v-else-if="charStore.selections[i - 1].rank !== null" class="text">
-                {{ charStore.selections[i - 1].rank }}
+            <h1 v-if="showTeamStore.showTeam.length > 1" class="teamTitle" :style="{ 'margin-top': selectedTab === 1 ? '0' : '10px' }">
+              Team {{selectedTab}}
+            </h1>
+            <!-- Image row -->
+            <div class="table-container">
+              <div v-for="i in 7" class="table-column">
+                <div v-if="i === 1"></div>
                 <img
-                  v-if="charStore.selections[i - 1].flower"
-                  src="/src/assets/flower.webp"
-                  alt="flower"
-                  class="flower-img"
-                />
-              </div>
-              <div
-                v-else-if="
-                  charStore.selections[i - 1].rank === null &&
-                  charStore.selections[i - 1].style !== null
-                "
-                class="text"
-              >
-                <span>0</span>
-                <img
-                  v-if="charStore.selections[i - 1].flower"
-                  src="/src/assets/flower.webp"
-                  alt="flower"
-                  class="flower-img"
+                  v-else-if="charStore.selections[selectedTab][i - 1].img"
+                  :src="getAssetsFile(charStore.selections[selectedTab][i - 1].img)"
+                  :alt="charStore.selections[selectedTab][i - 1].style"
+                  class="character-image"
                 />
               </div>
             </div>
-          </div>
-          <!-- Earring row -->
-          <div v-if="hasEarring" class="table-container" style="margin-top: 20px">
-            <div v-for="i in 7" class="table-column">
-              <div v-if="i === 1" class="label">Earring</div>
-              <div v-else-if="charStore.selections[i - 1].earring !== null" class="text">
-                {{ charStore.selections[i - 1].earring }}
-              </div>
-            </div>
-          </div>
-          <!-- Passive Skill row -->
-          <div v-if="hasPassiveSkill" class="table-container" style="margin-top: 20px">
-            <div v-for="i in 7" class="table-column">
-              <div v-if="i === 1" class="label">Passive<br />Skill</div>
-              <div
-                v-else-if="
-                  charStore.selections[i - 1].passiveSkill !== null &&
-                  charStore.selections[i - 1].passiveSkill.length > 0
-                "
-                class="text"
-                style="white-space: pre-line;"
-              >
-                {{ charStore.selections[i - 1].passiveSkill.join('/ ') }}
-              </div>
-            </div>
-          </div>
-          <!-- Used skill row -->
-          <div v-if="hasSkill" class="table-container" style="margin-top: 20px">
-            <div v-for="i in 7" class="table-column">
-              <div v-if="i === 1" class="label">Skill</div>
-              <div
-                v-else-if="
-                  charStore.selections[i - 1].style !== null
-                "
-                class="text"
-              >
-                {{ Array.from(usedSkills[charStore.selections[i - 1].style]).join('\n') }}
-              </div>
-            </div>
-          </div>
-          <!-- Skill row -->
-          <div v-if="sliderStore.rows > 0" class="axle-line-container" style="margin-top: 20px">
-            <div class="axle-column"></div>
-          </div>
-          <div
-            v-if="sliderStore.rows > 0"
-            v-for="row in sliderStore.rows"
-            class="table-container-2"
-            :style="{ 'border-top': row > 1 ? '2px dashed gray' : 'none' }"
-          >
-            <div v-for="col in 4" class="axle-table-column">
-              <div v-if="col === 1" class="label">
-                <span
-                  v-if="
-                    skillStore.turns[row - 1].turn !== null && skillStore.turns[row - 1].od !== null
+            <!-- Rank row -->
+            <div v-if="hasRank(selectedTab)" class="table-container" style="margin-top: 20px">
+              <div v-for="i in 7" class="table-column">
+                <div v-if="i === 1" class="label">Rank</div>
+                <div v-else-if="charStore.selections[selectedTab][i - 1].rank !== null" class="text">
+                  {{ charStore.selections[selectedTab][i - 1].rank }}
+                  <img
+                    v-if="charStore.selections[selectedTab][i - 1].flower"
+                    src="/src/assets/flower.webp"
+                    alt="flower"
+                    class="flower-img"
+                  />
+                </div>
+                <div
+                  v-else-if="
+                    charStore.selections[selectedTab][i - 1].rank === null &&
+                    charStore.selections[selectedTab][i - 1].style !== null
                   "
+                  class="text"
                 >
-                  {{ skillStore.turns[row - 1].turn }} / {{ skillStore.turns[row - 1].od }}
-                </span>
-                <span v-else-if="skillStore.turns[row - 1].turn !== null">{{
-                  skillStore.turns[row - 1].turn
-                }}</span>
-                <span v-else></span>
+                  <span>0</span>
+                  <img
+                    v-if="charStore.selections[selectedTab][i - 1].flower"
+                    src="/src/assets/flower.webp"
+                    alt="flower"
+                    class="flower-img"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- Earring row -->
+            <div v-if="hasEarring(selectedTab)" class="table-container" style="margin-top: 20px">
+              <div v-for="i in 7" class="table-column">
+                <div v-if="i === 1" class="label">Earring</div>
+                <div v-else-if="charStore.selections[selectedTab][i - 1].earring !== null" class="text">
+                  {{ charStore.selections[selectedTab][i - 1].earring }}
+                </div>
+              </div>
+            </div>
+            <!-- Passive Skill row -->
+            <div v-if="hasPassiveSkill(selectedTab)" class="table-container" style="margin-top: 20px">
+              <div v-for="i in 7" class="table-column">
+                <div v-if="i === 1" class="label">Passive<br />Skill</div>
+                <div
+                  v-else-if="
+                    charStore.selections[selectedTab][i - 1].passiveSkill !== null &&
+                    charStore.selections[selectedTab][i - 1].passiveSkill.length > 0
+                  "
+                  class="text"
+                  style="white-space: pre-line;"
+                >
+                  {{ charStore.selections[selectedTab][i - 1].passiveSkill.join('/ ') }}
+                </div>
+              </div>
+            </div>
+            <!-- Used skill row -->
+            <div v-if="showRowStore.showRow.includes('skill')" class="table-container" style="margin-top: 20px">
+              <div v-for="i in 7" class="table-column">
+                <div v-if="i === 1" class="label">Skill</div>
+                <div
+                  v-else-if="
+                    charStore.selections[selectedTab][i - 1].style !== null
+                  "
+                  class="text"
+                >
+                  {{ Array.from(getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style]).join('\n') }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Axle -->
+          <div v-if="showRowStore.showRow.includes('axle')">
+            <div v-if="sliderStore.rows > 0 && showTeamStore.showTeam.length > 0" class="axle-line-container" style="margin-top: 20px">
+              <div class="red-line"></div>
+            </div>
+            <div
+              v-if="sliderStore.rows > 0"
+              v-for="row in sliderStore.rows"
+              :class="skillStore.turns[row - 1].turn !== 'Switch' ? 'table-container-2' : 'table-container-3'"
+              :style="{ 'border-top': row > 1 ? '2px dashed gray' : 'none' }"
+            >
+              <div v-if="skillStore.turns[row - 1].turn !== 'Switch'" v-for="col in 4" class="axle-table-column">
+                <div v-if="col === 1" class="label">
+                  <span
+                    v-if="
+                      skillStore.turns[row - 1].turn !== null && skillStore.turns[row - 1].od !== null
+                    "
+                  >
+                    {{ skillStore.turns[row - 1].turn }} / {{ skillStore.turns[row - 1].od }}
+                  </span>
+                  <span v-else-if="skillStore.turns[row - 1].turn !== null">{{
+                    skillStore.turns[row - 1].turn
+                  }}</span>
+                </div>
+                <div v-else>
+                  <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
+                    <div class="image">
+                      <img
+                        :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
+                        :alt="skillStore.skills[row - 1][col - 2].style"
+                        class="axle-img"
+                      />
+                    </div>
+                    <div class="txt">
+                      <span class="axle-text">{{ skillStore.skills[row - 1][col - 2].skill }}</span>
+                      <span
+                        v-if="skillStore.skills[row - 1][col - 2].target !== null"
+                        class="axle-text"
+                        ><br />（{{ skillStore.skills[row - 1][col - 2].target }}）</span
+                      >
+                    </div>
+                  </span>
+                </div>
               </div>
               <div v-else>
-                <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
-                  <div class="image">
-                    <img
-                      :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
-                      :alt="skillStore.skills[row - 1][col - 2].style"
-                      class="axle-img"
-                    />
-                  </div>
-                  <div class="txt">
-                    <span class="axle-text">{{ skillStore.skills[row - 1][col - 2].skill }}</span>
-                    <span
-                      v-if="skillStore.skills[row - 1][col - 2].target !== null"
-                      class="axle-text"
-                      ><br />（{{ skillStore.skills[row - 1][col - 2].target }}）</span
-                    >
-                  </div>
-                </span>
+                <span>{{ skillStore.turns[row - 1].turn }}</span>
               </div>
             </div>
           </div>
@@ -242,6 +268,11 @@ const closeTable = () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+.teamTitle {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
 .axle-item {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -274,6 +305,15 @@ image {
   padding: 10px 0;
   width: inherit;
 }
+.table-container-3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+  padding: 10px 0;
+  width: inherit;
+  background-color: #2a2f34;
+}
 .axle-line-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -297,11 +337,17 @@ image {
   width: 40px;
   vertical-align: middle;
 }
-.axle-column {
+.red-line {
   display: flex;
   flex-direction: column;
   align-items: center;
   border-top: 2px solid #d64040;
+}
+.blue-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 2px solid #4c71c9;
 }
 .label {
   font-size: 18px;
@@ -407,7 +453,7 @@ image {
   overflow-y: auto;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding: 1rem 1rem 0 0;
+  padding: 1rem 0 0 0;
 }
 .scrollbar-style-1 {
   overflow-x: auto;
@@ -491,8 +537,8 @@ image {
   border-radius: 20px;
 }
 :deep(.multiselect-wrapper) {
-  min-width: 300px;
-  max-width: 450px;
+  min-width: 250px;
+  max-width: 300px;
 }
 @media (max-width: 950px) {
   .container {

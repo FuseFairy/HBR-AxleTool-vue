@@ -3,6 +3,7 @@ import piexif from 'piexifjs'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
+import { compressToBase64 } from 'lz-string';
 
 export async function convertElementToPng(elementId) {
   const element = document.getElementById(elementId)
@@ -12,7 +13,7 @@ export async function convertElementToPng(elementId) {
 
   if (element) {
     const width = element.scrollWidth
-    const height = element.scrollHeight
+    const height = element.scrollHeight+10
 
     try {
       const pngDataUrl = await domtoimage.toPng(element, {
@@ -37,7 +38,6 @@ export async function convertElementToPng(elementId) {
         ctx.drawImage(img, 0, 0)
         const jpegDataUrl = canvas.toDataURL('image/jpeg', 1.0)
 
-        const exif = {}
         const customData = {
           char: charStore.selections,
           skills: skillStore.skills,
@@ -46,8 +46,10 @@ export async function convertElementToPng(elementId) {
         }
 
         const jsonString = JSON.stringify(customData)
-        const base64String = btoa(encodeURIComponent(jsonString))
-        exif[piexif.ExifIFD.UserComment] = base64String
+        const compressedData = compressToBase64(jsonString)
+        
+        const exif = {}
+        exif[piexif.ExifIFD.UserComment] = compressedData
 
         const exifObj = { Exif: exif }
         const exifBytes = piexif.dump(exifObj)

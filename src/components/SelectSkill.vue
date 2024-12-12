@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useCharStore } from '@/stores/char_stores'
@@ -13,8 +13,8 @@ const charStore = useCharStore()
 const odOptions = ['OD1', 'OD2', 'OD3']
 
 
-const options = Array.from({ length: 50 }, (_, i) => `T${i + 1}`);
-const turnOptions = ['追加回合', ...options]
+const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`);
+const turnOptions = ['Switch', '追加回合', ...options]
 
 const activeComponent = ref({ row: null, buttonKey: null })
 const handleBoxClick = (row, key) => {
@@ -29,7 +29,8 @@ const getFilteredSkills = (row, key) => {
   const currentSkill = skillStore.skills[row][key]
   if (currentSkill && currentSkill.style != null) {
     const currentStyle = currentSkill.style
-    const selections = Object.values(charStore.selections)
+    const selectedTab = currentSkill.selectedTab
+    const selections = Object.values(charStore.selections[selectedTab])
 
     const currentSelection = selections.find((selection) => selection.style === currentStyle)
     const formattedSkills = currentSelection.skill.map((skill) => ({
@@ -56,16 +57,33 @@ const getFilteredSkills = (row, key) => {
   }
 }
 
-const targetOptions = computed(() => {
-  return Object.values(charStore.selections)
-    .filter((selection) => selection.character !== null && selection.style !== null)
-    .map((selection) => selection.character)
-})
+const targetOptions = (row, key) => {
+  const currentSkill = skillStore.skills[row][key]
+  if (currentSkill && currentSkill.style != null) {
+    const selectedTab = currentSkill.selectedTab
+    return Object.values(charStore.selections[selectedTab])
+      .filter((selection) => selection.character !== null && selection.style !== null)
+      .map((selection) => selection.character)
+  }
+  else {
+    return []
+  }
+}
 
 const deleteRow = (index) => {
   sliderStore.rows -= 1
   skillStore.turns.splice(index, 1)
   skillStore.skills.splice(index, 1)
+}
+
+const scrollToBottom = () => {
+  const mainElement = document.querySelector('main.scrollbar-style-1')
+  if (mainElement) {
+    mainElement.scrollTo({
+      top: mainElement.scrollHeight,
+      behavior: 'smooth'
+    })
+  }
 }
 
 const copyRow = (index) => {
@@ -74,6 +92,9 @@ const copyRow = (index) => {
   const copiedSkill = JSON.parse(JSON.stringify(skillStore.skills[index]));
   skillStore.turns.splice(index + 1, 0, copiedTurn);
   skillStore.skills.splice(index + 1, 0, copiedSkill);
+  nextTick(() => {
+    scrollToBottom()
+  })
 }
 </script>
 
@@ -145,7 +166,7 @@ const copyRow = (index) => {
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].target"
         placeholder="Select target"
-        :options="targetOptions"
+        :options="targetOptions(i - 1, n - 1)"
       >
       </Multiselect>
     </div>

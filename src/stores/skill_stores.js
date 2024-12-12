@@ -12,9 +12,9 @@ export const useSkillStore = defineStore(
 
       if (difference > 0) {
         const newSkills = Array.from({ length: difference }, () => [
-          { style: null, style_img: null, skill: null, target: null },
-          { style: null, style_img: null, skill: null, target: null },
-          { style: null, style_img: null, skill: null, target: null }
+          { selectedTab: null, style: null, style_img: null, skill: null, target: null },
+          { selectedTab: null, style: null, style_img: null, skill: null, target: null },
+          { selectedTab: null, style: null, style_img: null, skill: null, target: null }
         ])
         skills.value.push(...newSkills)
 

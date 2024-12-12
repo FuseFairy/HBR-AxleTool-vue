@@ -31,10 +31,12 @@ const addRow = () => {
 }
 
 const hasChar = computed(() => {
-  return Object.values(charStore.selections).some(
-    (selection) => selection.character !== null && selection.style !== null
-  )
-})
+  return Object.values(charStore.selections).some((group) =>
+    Object.values(group).some(
+      (selection) => selection.character !== null && selection.style !== null
+    )
+  );
+});
 
 const scrollToBottom = () => {
   const mainElement = document.querySelector('main.scrollbar-style-1')
