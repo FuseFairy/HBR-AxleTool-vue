@@ -13,7 +13,7 @@ const charStore = useCharStore()
 const odOptions = ['OD1', 'OD2', 'OD3']
 
 
-const options = Array.from({ length: 50 }, (_, i) => `T${i + 1}`);
+const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`);
 const turnOptions = ['追加回合', ...options]
 
 const activeComponent = ref({ row: null, buttonKey: null })
