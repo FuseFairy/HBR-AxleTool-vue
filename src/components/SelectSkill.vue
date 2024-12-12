@@ -29,7 +29,8 @@ const getFilteredSkills = (row, key) => {
   const currentSkill = skillStore.skills[row][key]
   if (currentSkill && currentSkill.style != null) {
     const currentStyle = currentSkill.style
-    const selections = Object.values(charStore.selections)
+    const selectedTab = currentSkill.selectedTab
+    const selections = Object.values(charStore.selections[selectedTab])
 
     const currentSelection = selections.find((selection) => selection.style === currentStyle)
     const formattedSkills = currentSelection.skill.map((skill) => ({

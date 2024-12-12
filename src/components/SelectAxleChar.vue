@@ -18,9 +18,26 @@ const props = defineProps({
   }
 })
 
+const tabs = [
+  { key: 1, label: 'Team 1' },
+  { key: 2, label: 'Team 2' },
+  { key: 3, label: 'Team 3' },
+  { key: 4, label: 'Team 4' },
+  { key: 5, label: 'Team 5' },
+  { key: 6, label: 'Team 6' }
+]
+
+const selectedTab = ref(
+  skillStore.skills[props.row][props.buttonKey].selectedTab ?? 1
+)
+
+const selectTab = (key) => {
+  selectedTab.value = key
+}
+
 const filteredSelections = computed(() => {
   const filtered = Object.fromEntries(
-    Object.entries(charStore.selections).filter(([key, value]) => value.img !== null)
+    Object.entries(charStore.selections[selectedTab.value]).filter(([key, value]) => value.img !== null)
   )
   return filtered
 })
@@ -31,9 +48,11 @@ const isSelected = (key) => {
 
 const handleImageClick = (key) => {
   if (isSelected(key)) {
+    skillStore.skills[props.row][props.buttonKey].selectedTab = null
     skillStore.skills[props.row][props.buttonKey].style = null
     skillStore.skills[props.row][props.buttonKey].style_img = null
   } else {
+    skillStore.skills[props.row][props.buttonKey].selectedTab = selectedTab.value
     skillStore.skills[props.row][props.buttonKey].style = filteredSelections.value[key].style
     skillStore.skills[props.row][props.buttonKey].style_img = filteredSelections.value[key].img
     closeContainer()
@@ -52,6 +71,17 @@ const closeContainer = () => {
       <button @click="closeContainer" class="close">
         <img src="@/assets/custom_icon/close.svg" alt="Close" />
       </button>
+      <div class="tabs">
+        <button
+            v-for="tab in tabs"
+            :key="tab.key"
+            class="tab"
+            :class="{ active: selectedTab === tab.key }"
+            @click="selectTab(tab.key)"
+          >
+            {{ tab.label }}
+        </button>
+      </div>
       <div class="button-container">
         <button
           v-for="(item, key) in filteredSelections"
@@ -68,6 +98,32 @@ const closeContainer = () => {
 </template>
 
 <style scoped>
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #ccc;
+  padding: 0 20px;
+}
+
+button.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: white;
+  transition: background-color 0.3s ease;
+  flex-grow: 1;
+}
+
+button.tab.active {
+  background-color: grey;
+  color: black;
+}
+
+button.tab:hover {
+  background-color: #454242;
+}
+
 .container {
   position: fixed;
   top: 50%;
@@ -125,7 +181,7 @@ const closeContainer = () => {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  /* margin-top: 1rem; */
+  margin-top: 1rem;
 }
 
 .circle-button {
