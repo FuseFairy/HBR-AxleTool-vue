@@ -17,7 +17,7 @@ export const useShowTeamStore = defineStore(
   },
   {
     persist: {
-      storage: sessionStorage,
+      storage: localStorage,
     },
   }
 )
