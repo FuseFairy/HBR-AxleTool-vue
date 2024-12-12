@@ -213,7 +213,7 @@ const closeTable = () => {
           </div>
           <!-- Axle -->
           <div v-if="showRowStore.showRow.includes('axle')">
-            <div v-if="sliderStore.rows > 0" class="axle-line-container" style="margin-top: 20px">
+            <div v-if="sliderStore.rows > 0 && showTeamStore.showTeam.length > 0" class="axle-line-container" style="margin-top: 20px">
               <div class="red-line"></div>
             </div>
             <div
