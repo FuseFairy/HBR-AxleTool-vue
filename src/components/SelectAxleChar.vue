@@ -102,7 +102,6 @@ const closeContainer = () => {
   display: flex;
   gap: 0;
   border-bottom: 2px solid #ccc;
-  padding: 0 20px;
 }
 
 button.tab {
