@@ -57,11 +57,18 @@ const getFilteredSkills = (row, key) => {
   }
 }
 
-const targetOptions = computed(() => {
-  return Object.values(charStore.selections)
-    .filter((selection) => selection.character !== null && selection.style !== null)
-    .map((selection) => selection.character)
-})
+const targetOptions = (row, key) => {
+  const currentSkill = skillStore.skills[row][key]
+  if (currentSkill && currentSkill.style != null) {
+    const selectedTab = currentSkill.selectedTab
+    return Object.values(charStore.selections[selectedTab])
+      .filter((selection) => selection.character !== null && selection.style !== null)
+      .map((selection) => selection.character)
+  }
+  else {
+    return []
+  }
+}
 
 const deleteRow = (index) => {
   sliderStore.rows -= 1
@@ -159,7 +166,7 @@ const copyRow = (index) => {
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].target"
         placeholder="Select target"
-        :options="targetOptions"
+        :options="targetOptions(i - 1, n - 1)"
       >
       </Multiselect>
     </div>
