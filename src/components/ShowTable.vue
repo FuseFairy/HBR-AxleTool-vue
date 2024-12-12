@@ -219,10 +219,10 @@ const closeTable = () => {
             <div
               v-if="sliderStore.rows > 0"
               v-for="row in sliderStore.rows"
-              class="table-container-2"
+              :class="skillStore.turns[row - 1].turn !== 'Switch' ? 'table-container-2' : 'table-container-3'"
               :style="{ 'border-top': row > 1 ? '2px dashed gray' : 'none' }"
             >
-              <div v-for="col in 4" class="axle-table-column">
+              <div v-if="skillStore.turns[row - 1].turn !== 'Switch'" v-for="col in 4" class="axle-table-column">
                 <div v-if="col === 1" class="label">
                   <span
                     v-if="
@@ -234,7 +234,6 @@ const closeTable = () => {
                   <span v-else-if="skillStore.turns[row - 1].turn !== null">{{
                     skillStore.turns[row - 1].turn
                   }}</span>
-                  <span v-else></span>
                 </div>
                 <div v-else>
                   <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
@@ -255,6 +254,9 @@ const closeTable = () => {
                     </div>
                   </span>
                 </div>
+              </div>
+              <div v-else>
+                <span>{{ skillStore.turns[row - 1].turn }}</span>
               </div>
             </div>
           </div>
@@ -302,6 +304,15 @@ image {
   margin: 0 10px;
   padding: 10px 0;
   width: inherit;
+}
+.table-container-3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+  padding: 10px 0;
+  width: inherit;
+  background-color: #2a2f34;
 }
 .axle-line-container {
   display: grid;
@@ -442,7 +453,7 @@ image {
   overflow-y: auto;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding: 1rem 1rem 1rem 0;
+  padding: 1rem 0 0 0;
 }
 .scrollbar-style-1 {
   overflow-x: auto;
