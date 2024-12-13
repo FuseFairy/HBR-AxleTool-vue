@@ -122,8 +122,8 @@ const closeTable = () => {
       </div>
       <div id="show-axle" class="table scrollbar-style-1">
         <div class="table-wrapper">
-          <div v-for="selectedTab in showTeamStore.showTeam" :key="selectedTab">
-            <div v-if="selectedTab > 1" class="axle-line-container" style="margin-top: 20px">
+          <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
+            <div v-if="showTeamStore.showTeam.length > 1 && index > 0" class="axle-line-container" style="margin-top: 20px">
               <div class="blue-line"></div>
             </div>
             <h1 v-if="showTeamStore.showTeam.length > 1" class="teamTitle" :style="{ 'margin-top': selectedTab === 1 ? '0' : '10px' }">
