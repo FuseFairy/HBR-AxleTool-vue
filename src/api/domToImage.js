@@ -3,7 +3,7 @@ import piexif from 'piexifjs'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
-import { compressToBase64 } from 'lz-string';
+import { compressToBase64, compressToEncodedURIComponent } from 'lz-string';
 
 export async function convertElementToPng(elementId) {
   const element = document.getElementById(elementId)
@@ -46,7 +46,8 @@ export async function convertElementToPng(elementId) {
         }
 
         const jsonString = JSON.stringify(customData)
-        const compressedData = compressToBase64(jsonString)
+        const compressedData = compressToEncodedURIComponent(jsonString);
+        // const compressedData = compressToBase64(jsonString)
         
         const exif = {}
         exif[piexif.ExifIFD.UserComment] = compressedData
