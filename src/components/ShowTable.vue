@@ -120,8 +120,8 @@ const closeTable = () => {
           <img src="@/assets/custom_icon/close.svg" alt="Close" />
         </button>
       </div>
-      <div id="show-axle" class="table scrollbar-style-1">
-        <div class="table-wrapper">
+      <div class="table scrollbar-style-1">
+        <div id="show-axle" class="table-wrapper">
           <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
             <div v-if="showTeamStore.showTeam.length > 1 && index > 0" class="axle-line-container" style="margin-top: 20px">
               <div class="blue-line"></div>
@@ -291,6 +291,7 @@ image {
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-top: 0.5rem;
 }
 .table-container {
   display: grid;
@@ -453,7 +454,6 @@ image {
   overflow-y: auto;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding: 0.5rem;
 }
 .scrollbar-style-1 {
   overflow-x: auto;
