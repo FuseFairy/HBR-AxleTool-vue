@@ -453,7 +453,7 @@ image {
   overflow-y: auto;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding-left: 1rem;
+  padding: 0.5rem;
 }
 .scrollbar-style-1 {
   overflow-x: auto;
