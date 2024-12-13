@@ -33,7 +33,7 @@ export async function convertElementToPng(elementId) {
         const canvas = document.createElement('canvas')
         const ctx = canvas.getContext('2d')
         canvas.width = img.width
-        canvas.height = img.height
+        canvas.height = img.height+5
 
         ctx.drawImage(img, 0, 0)
         const jpegDataUrl = canvas.toDataURL('image/jpeg', 1.0)
@@ -55,22 +55,17 @@ export async function convertElementToPng(elementId) {
         const exifBytes = piexif.dump(exifObj)
         const jpegWithExifData = piexif.insert(exifBytes, jpegDataUrl)
 
-        const jpegBase64 = jpegWithExifData.split(',')[1];
-        const link = document.createElement('a');
-        link.href = `data:image/jpeg;base64,${jpegBase64}`;
-        link.download = 'HBR_Axle.jpg';
+        const buffer = jpegWithExifData.split(',')[1]
+        const byteCharacters = atob(buffer)
+        const byteNumbers = new Uint8Array(byteCharacters.length)
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i)
+        }
 
-        // const buffer = jpegWithExifData.split(',')[1]
-        // const byteCharacters = atob(buffer)
-        // const byteNumbers = new Uint8Array(byteCharacters.length)
-        // for (let i = 0; i < byteCharacters.length; i++) {
-        //   byteNumbers[i] = byteCharacters.charCodeAt(i)
-        // }
-
-        // const blob = new Blob([byteNumbers], { type: 'image/jpeg' })
-        // const link = document.createElement('a')
-        // link.href = URL.createObjectURL(blob)
-        // link.download = 'HBR_Axle.jpg'
+        const blob = new Blob([byteNumbers], { type: 'image/jpeg' })
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.download = 'HBR_Axle.jpg'
 
         document.body.appendChild(link)
         link.click()
