@@ -76,25 +76,12 @@ const deleteRow = (index) => {
   skillStore.skills.splice(index, 1)
 }
 
-const scrollToBottom = () => {
-  const mainElement = document.querySelector('main.scrollbar-style-1')
-  if (mainElement) {
-    mainElement.scrollTo({
-      top: mainElement.scrollHeight,
-      behavior: 'smooth'
-    })
-  }
-}
-
 const copyRow = (index) => {
   sliderStore.rows += 1
   const copiedTurn = JSON.parse(JSON.stringify(skillStore.turns[index]));
   const copiedSkill = JSON.parse(JSON.stringify(skillStore.skills[index]));
   skillStore.turns.splice(index + 1, 0, copiedTurn);
   skillStore.skills.splice(index + 1, 0, copiedSkill);
-  nextTick(() => {
-    scrollToBottom()
-  })
 }
 </script>
 
