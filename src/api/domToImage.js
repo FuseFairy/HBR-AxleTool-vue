@@ -13,7 +13,7 @@ export async function convertElementToPng(elementId) {
 
   if (element) {
     const width = element.scrollWidth
-    const height = element.scrollHeight+10
+    const height = element.scrollHeight
 
     try {
       const pngDataUrl = await domtoimage.toPng(element, {
