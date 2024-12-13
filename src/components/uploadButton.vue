@@ -17,7 +17,7 @@ import piexif from 'piexifjs'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
-import { decompressFromBase64, decompressFromEncodedURIComponent } from 'lz-string';
+import { decompressFromBase64 } from 'lz-string';
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -42,7 +42,7 @@ const onFileChange = async (event) => {
         const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || ''
 
         if (customData) {
-          const jsonString = decompressFromEncodedURIComponent(customData);
+          const jsonString = decompressFromBase64(customData);
           const decodedData = JSON.parse(jsonString)
 
           charStore.selections = decodedData.char
