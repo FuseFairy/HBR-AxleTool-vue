@@ -2,10 +2,12 @@
 import { ref, computed } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
+import { useLastTabStore } from '@/stores/lastTab_stores'
 import { getAssetsFile } from '@/api/util'
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
+const lastTabStore = useLastTabStore()
 
 const props = defineProps({
   row: {
@@ -28,11 +30,13 @@ const tabs = [
 ]
 
 const selectedTab = ref(
-  skillStore.skills[props.row][props.buttonKey].selectedTab ?? 1
+  skillStore.skills[props.row][props.buttonKey]?.selectedTab ?? 
+  (lastTabStore.lastTab !== 1 ? lastTabStore.lastTab : 1)
 )
 
 const selectTab = (key) => {
   selectedTab.value = key
+  lastTabStore.lastTab = key
 }
 
 const filteredSelections = computed(() => {
