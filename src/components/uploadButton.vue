@@ -64,11 +64,11 @@ const onFileChange = async (event) => {
           const decodedData = JSON.parse(jsonString)
 
           charStore.selections = decodedData.char
+          await updateSelections(charStore)
           skillStore.skills = decodedData.skills
           skillStore.turns = decodedData.turns
           sliderStore.rows = decodedData.rows
 
-          await updateSelections(charStore)
         } else {
           console.error('Custom metadata not found')
           alert('Custom metadata not found. Please check the file.')
