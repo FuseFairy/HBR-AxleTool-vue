@@ -17,6 +17,7 @@ import piexif from 'piexifjs'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
+import { fetchSkillOptions } from '@/api/skillOptions'
 import { decompressFromBase64 } from 'lz-string';
 
 const charStore = useCharStore()
@@ -27,6 +28,23 @@ const fileInput = ref(null)
 
 const triggerFileInput = () => {
   fileInput.value.click()
+}
+
+async function updateSelections(charStore) {
+  for (const teamKey in charStore.selections) {
+    const Team = charStore.selections[teamKey];
+    for (const charKey in Team) {
+      const { character, team, style } = Team[charKey];
+      if (style) {
+        const skillOptions = await fetchSkillOptions(
+          character,
+          team,
+          style
+        );
+        charStore.setSelection(charKey, 'skill', skillOptions, teamKey);
+      }
+    }
+  }
 }
 
 const onFileChange = async (event) => {
@@ -46,9 +64,11 @@ const onFileChange = async (event) => {
           const decodedData = JSON.parse(jsonString)
 
           charStore.selections = decodedData.char
+          await updateSelections(charStore)
           skillStore.skills = decodedData.skills
           skillStore.turns = decodedData.turns
           sliderStore.rows = decodedData.rows
+
         } else {
           console.error('Custom metadata not found')
           alert('Custom metadata not found. Please check the file.')
