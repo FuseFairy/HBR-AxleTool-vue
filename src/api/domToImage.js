@@ -45,6 +45,7 @@ export async function convertElementToPng(elementId) {
       img.src = pngDataUrl
 
       img.onload = async () => {
+        await new Promise(resolve => setTimeout(resolve, 50));
         const canvas = document.createElement('canvas')
         const ctx = canvas.getContext('2d')
         canvas.width = img.width
