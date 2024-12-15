@@ -71,25 +71,16 @@ export async function convertElementToPng(elementId) {
         const jpegWithExifData = piexif.insert(exifBytes, jpegDataUrl)
 
         const jpegBase64 = jpegWithExifData.split(',')[1];
+        const binary = atob(jpegBase64);
+        const array = Uint8Array.from(binary, char => char.charCodeAt(0));
+        const blob = new Blob([array], { type: 'image/jpeg' });
         const link = document.createElement('a');
-        link.href = `data:image/jpeg;base64,${jpegBase64}`;
+        link.href = URL.createObjectURL(blob);
         link.download = 'HBR_Axle.jpg';
-
-        // const buffer = jpegWithExifData.split(',')[1]
-        // const byteCharacters = atob(buffer)
-        // const byteNumbers = new Uint8Array(byteCharacters.length)
-        // for (let i = 0; i < byteCharacters.length; i++) {
-        //   byteNumbers[i] = byteCharacters.charCodeAt(i)
-        // }
-
-        // const blob = new Blob([byteNumbers], { type: 'image/jpeg' })
-        // const link = document.createElement('a')
-        // link.href = URL.createObjectURL(blob)
-        // link.download = 'HBR_Axle.jpg'
-
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
       }
     } catch (error) {
       console.error('Error generating or saving image:', error)
