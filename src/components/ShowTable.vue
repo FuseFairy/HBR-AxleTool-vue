@@ -145,7 +145,7 @@ const closeTable = () => {
             <div v-if="hasRank(selectedTab)" class="table-container" style="margin-top: 20px">
               <div v-for="i in 7" class="table-column">
                 <div v-if="i === 1" class="label">Rank</div>
-                <div v-else-if="charStore.selections[selectedTab][i - 1].rank !== null" class="text">
+                <div v-else-if="charStore.selections[selectedTab][i - 1].rank !== null" class="rank-text">
                   {{ charStore.selections[selectedTab][i - 1].rank }}
                   <img
                     v-if="charStore.selections[selectedTab][i - 1].flower"
@@ -159,7 +159,7 @@ const closeTable = () => {
                     charStore.selections[selectedTab][i - 1].rank === null &&
                     charStore.selections[selectedTab][i - 1].style !== null
                   "
-                  class="text"
+                  class="rank-text"
                 >
                   <span>0</span>
                   <img
@@ -190,9 +190,13 @@ const closeTable = () => {
                     charStore.selections[selectedTab][i - 1].passiveSkill.length > 0
                   "
                   class="text"
-                  style="white-space: pre-line;"
                 >
-                  {{ charStore.selections[selectedTab][i - 1].passiveSkill.join('/ ') }}
+                  <span
+                    v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill"
+                    class="passive-skill"
+                  >
+                    {{ skill }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -206,7 +210,13 @@ const closeTable = () => {
                   "
                   class="text"
                 >
-                  {{ Array.from(getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style]).join('\n') }}
+                  <span
+                    v-for="(skill, index) in Array.from(getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style])"
+                    :key="index"
+                    class="used-skill"
+                  >
+                    {{ skill }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -326,6 +336,8 @@ image {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  justify-content: center;
 }
 .axle-table-column {
   display: flex;
@@ -366,13 +378,32 @@ image {
 }
 .text {
   display: flex;
+  flex-wrap: wrap;
   font-size: 16px;
   font-weight: normal;
   text-align: center;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  white-space: pre-line;
+}
+.rank-text {
+  display: flex;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.used-skill {
+  margin: 3px;
+  padding: 2px 8px;
+  background-color: #312828;
+  border-radius: 4px;
+}
+.passive-skill {
+  margin: 3px;
+  padding: 2px 8px;
+  background-color: #2d3851;
+  border-radius: 4px;
 }
 .axle-text {
   font-size: 18px;
