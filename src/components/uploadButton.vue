@@ -35,8 +35,7 @@ async function updateSelections(charStore) {
     const Team = charStore.selections[teamKey];
     for (const charKey in Team) {
       const { character, team, style } = Team[charKey];
-      console.log(character, team, style)
-      if (style !== null) {
+      if (style) {
         const skillOptions = await fetchSkillOptions(
           character,
           team,
