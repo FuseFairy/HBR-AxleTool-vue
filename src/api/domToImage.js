@@ -16,6 +16,21 @@ export async function convertElementToPng(elementId) {
     const height = element.scrollHeight
 
     try {
+      const newCharStore = Object.fromEntries(
+        Object.entries(charStore.selections).map(([key, value]) => [
+            key,
+            Object.fromEntries(
+                Object.entries(value).map(([innerKey, innerValue]) => [
+                    innerKey,
+                    {
+                        ...innerValue,
+                        skill: [],
+                    },
+                ])
+            ),
+        ])
+      );
+
       const pngDataUrl = await domtoimage.toPng(element, {
         width: width,
         height: height,
@@ -39,7 +54,7 @@ export async function convertElementToPng(elementId) {
         const jpegDataUrl = canvas.toDataURL('image/jpeg', 1.0)
 
         const customData = {
-          char: charStore.selections,
+          char: newCharStore,
           skills: skillStore.skills,
           turns: skillStore.turns,
           rows: sliderStore.rows
