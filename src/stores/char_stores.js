@@ -58,7 +58,7 @@ export const useCharStore = defineStore(
   },
   {
     persist: {
-      storage: localStorage,
+      storage: sessionStorage,
     }
   }
 )
