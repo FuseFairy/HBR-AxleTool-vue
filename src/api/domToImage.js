@@ -5,7 +5,7 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { compressToBase64 } from 'lz-string';
 
-function blobToDataUrl(blob) {
+async function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => resolve(reader.result);
@@ -64,9 +64,7 @@ export async function convertElementToPng(elementId) {
       const img = new Image()
       img.src = pngDataUrl
 
-      img.onload = async () => {
-        await new Promise(resolve => setTimeout(resolve, 50));
-      
+      img.onload = async () => {      
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = img.width;
