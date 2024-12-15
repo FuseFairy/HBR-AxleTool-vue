@@ -79,8 +79,11 @@ export async function convertElementToPng(elementId) {
         link.download = 'HBR_Axle.jpg';
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
+
+        setTimeout(() => {
+          document.body.removeChild(link);
+          URL.revokeObjectURL(link.href);
+        }, 100);
       }
     } catch (error) {
       console.error('Error generating or saving image:', error)
