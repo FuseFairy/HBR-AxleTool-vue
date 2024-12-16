@@ -211,8 +211,7 @@ const closeTable = () => {
                   class="text"
                 >
                   <span
-                    v-for="(skill, index) in Array.from(getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style])"
-                    :key="index"
+                    v-for="skill in Array.from(getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style])"
                     class="used-skill"
                   >
                     {{ skill }}
@@ -378,6 +377,7 @@ image {
 }
 .text {
   display: flex;
+  /* flex-direction: column; */
   flex-wrap: wrap;
   font-size: 16px;
   font-weight: normal;
