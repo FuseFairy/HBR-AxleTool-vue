@@ -72,6 +72,14 @@ const downloadTable = async () => {
   }
 }
 
+function hasTeam(selectedTab) {
+  const usedSkills = getUsedSkills(selectedTab);
+  return (
+    Object.keys(usedSkills).length > 0 &&
+    Object.values(usedSkills).every(set => set.size !== 0)
+  );
+}
+
 const emit = defineEmits(['close'])
 const closeTable = () => {
   emit('close')
@@ -201,7 +209,7 @@ const closeTable = () => {
               </div>
             </div>
             <!-- Used skill row -->
-            <div v-if="showRowStore.showRow.includes('skill') && Object.values(getUsedSkills(selectedTab)).every(set => set.size !== 0)" class="table-container" style="margin-top: 20px">
+            <div v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)" class="table-container" style="margin-top: 20px">
               <div v-for="i in 7" class="table-column">
                 <div v-if="i === 1" class="label">Skill</div>
                 <div
