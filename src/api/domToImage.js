@@ -25,11 +25,33 @@ function dataUrlToBlob(dataUrl) {
   return new Blob([ab], { type: mimeString });
 }
 
+function getUsedTeams(skillStore) {
+  const teamsList = [];
+
+  skillStore.skills.forEach(group => {
+    group.forEach(skillEntry => {
+      if (skillEntry.selectedTab != null && !teamsList.includes(skillEntry.selectedTab)) {
+        teamsList.push(skillEntry.selectedTab);
+      }
+    });
+  });
+
+  return teamsList;
+}
+
+
 export async function convertElementToPng(elementId) {
   const element = document.getElementById(elementId)
   const charStore = useCharStore()
   const skillStore = useSkillStore()
   const sliderStore = useSliderStore()
+  const usedTeams = getUsedTeams(skillStore)
+  const usedCharStore = usedTeams.reduce((result, team) => {
+    if (team in charStore.selections) {
+      result[team] = charStore.selections[team];
+    }
+    return result;
+  }, {});
 
   if (element) {
     const width = element.scrollWidth
@@ -37,7 +59,7 @@ export async function convertElementToPng(elementId) {
 
     try {
       const newCharStore = Object.fromEntries(
-        Object.entries(charStore.selections).map(([key, value]) => [
+        Object.entries(usedCharStore).map(([key, value]) => [
             key,
             Object.fromEntries(
                 Object.entries(value).map(([innerKey, innerValue]) => [
@@ -77,7 +99,6 @@ export async function convertElementToPng(elementId) {
             console.error('Failed to create blob from canvas.');
             return;
           }
-      
           const customData = {
             char: newCharStore,
             skills: skillStore.skills,

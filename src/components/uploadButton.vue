@@ -62,8 +62,11 @@ const onFileChange = async (event) => {
         if (customData) {
           const jsonString = decompressFromBase64(customData);
           const decodedData = JSON.parse(jsonString)
-
-          charStore.selections = decodedData.char
+          console.log(decodedData.char)
+          Object.keys(decodedData.char).forEach(key => {
+            charStore.selections[key] = decodedData.char[key];
+          });
+          console.log(charStore.selections)
           await updateSelections(charStore)
           skillStore.skills = decodedData.skills
           skillStore.turns = decodedData.turns
