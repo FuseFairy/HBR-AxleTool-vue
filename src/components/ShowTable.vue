@@ -385,7 +385,6 @@ image {
 }
 .text {
   display: flex;
-  /* flex-direction: column; */
   flex-wrap: wrap;
   font-size: 16px;
   font-weight: normal;
@@ -406,12 +405,18 @@ image {
   padding: 2px 8px;
   background-color: #312828;
   border-radius: 4px;
+  word-wrap: break-word;
+  word-break: break-word;
+  display: inline-block;
 }
 .passive-skill {
   margin: 3px;
   padding: 2px 8px;
   background-color: #2d3851;
   border-radius: 4px;
+  word-wrap: break-word;
+  word-break: break-word;
+  display: inline-block;
 }
 .axle-text {
   font-size: 18px;
