@@ -486,7 +486,7 @@ image {
   width: 70%;
   max-width: 1024px;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 15px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
