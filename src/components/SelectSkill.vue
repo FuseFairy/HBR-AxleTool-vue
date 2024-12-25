@@ -138,6 +138,7 @@ const copyRow = (index) => {
         v-model="skillStore.skills[i - 1][n - 1].skill"
         placeholder="Select skill"
         label="name"
+        searchable="true"
         :options="getFilteredSkills(i - 1, n - 1)"
       >
         <template v-slot:singlelabel="{ value }">
@@ -289,6 +290,10 @@ span {
 :deep(.multiselect-option) {
   display: flex;
   gap: 0.5rem;
+}
+:deep(.multiselect-search) {
+  background-color: black;
+  color: white;
 }
 :deep(.multiselect) {
   background-color: black;
