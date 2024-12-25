@@ -251,6 +251,9 @@ span {
   cursor: pointer;
   border: none;
 }
+.delete-button:hover svg {
+    fill: red;
+}
 .copy-button {
   position: absolute;
   top: 10px;
@@ -259,6 +262,9 @@ span {
   cursor: pointer;
   border: none;
 }
+.copy-button:hover img {
+    filter: hue-rotate(180deg) brightness(1.2);
+  }
 .fixed-button svg {
   width: 24px;
   height: 24px;
