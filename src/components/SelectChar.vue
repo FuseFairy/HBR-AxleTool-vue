@@ -336,6 +336,7 @@ const closeContainer = async () => {
             mode="tags"
             placeholder="Select skill"
             label="name"
+            searchable="true"
             :close-on-select="false"
             :disabled="isOtherDisable || sliderStore.rows > 0"
             :options="skillOptions"
@@ -470,6 +471,10 @@ span {
 .multiselect-single-label {
   display: flex;
   gap: 0.5rem;
+}
+:deep(.multiselect-tags-search) {
+  background-color: black;
+  color: white;
 }
 :deep(.multiselect) {
   background-color: black;
