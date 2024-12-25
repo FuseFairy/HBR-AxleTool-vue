@@ -263,7 +263,7 @@ span {
   border: none;
 }
 .copy-button:hover img {
-    filter: hue-rotate(180deg) brightness(1.2);
+    filter: brightness(1.2);
   }
 .fixed-button svg {
   width: 24px;
