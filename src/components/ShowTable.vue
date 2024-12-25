@@ -111,7 +111,23 @@ const closeTable = () => {
             :options="showTeams"
             @change="(value) => showTeamStore.setShowTeam(value)"
             style="margin-left: 5px;"
-          />
+          >
+            <template v-slot:option="{ option }">
+              <div class="option-container">
+                <span :title="option.name">{{ option.name }}</span>
+                <div class="option-images">
+                  <div v-for="i in 7">
+                    <img
+                      v-if="i !== 1 && charStore.selections[option.value][i - 1].img"
+                      :src="getAssetsFile(charStore.selections[option.value][i - 1].img)"
+                      :alt="charStore.selections[option.value][i - 1].style"
+                      class="option-icon"
+                    />
+                  </div>
+                </div>
+              </div>
+            </template>
+          </Multiselect>
           <Multiselect
             v-model="showRowStore.showRow"
             mode="tags"
@@ -285,6 +301,20 @@ const closeTable = () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+.option-icon {
+  width: 24px;
+  height: 24px;
+  padding-top: 3px;
+  padding-right: 7px;
+}
+.option-container {
+  display: flex;
+  flex-direction: column;
+}
+.option-images {
+  display: flex;
+  flex-wrap: wrap;
+}
 .teamTitle {
   text-align: center;
   font-size: 18px;
@@ -522,7 +552,6 @@ image {
 :deep(.multiselect-option),
 .multiselect-single-label {
   display: flex;
-  gap: 0.5rem;
 }
 :deep(.multiselect) {
   background-color: rgba(50, 48, 50, 0.8);
@@ -540,7 +569,7 @@ image {
   border-radius: 20px;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
-  width: 5px;
+  width: 0;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar-track),
 :deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
