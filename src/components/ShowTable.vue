@@ -569,15 +569,7 @@ image {
   border-radius: 20px;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
-  width: 0;
-}
-:deep(.multiselect-dropdown::-webkit-scrollbar-track),
-:deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-:deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
-  background-color: #555;
+  width: 0px;
 }
 :deep(.multiselect-option.is-selected) {
   background-color: rgb(38, 37, 37);
