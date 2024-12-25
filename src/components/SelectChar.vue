@@ -336,7 +336,7 @@ const closeContainer = async () => {
             mode="tags"
             placeholder="Select skill"
             label="name"
-            searchable="true"
+            :searchable="true"
             :close-on-select="false"
             :disabled="isOtherDisable || sliderStore.rows > 0"
             :options="skillOptions"

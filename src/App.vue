@@ -4,9 +4,9 @@ import './assets/main.css'
 import AddRows from './components/AddRows.vue'
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
-import ShowTable from './components/ShowTable.vue'
-import uploadButton from './components/uploadButton.vue'
-import SelectSkill from './components/SelectSkill.vue'
+import ShowTable from '@/components/ShowTable.vue'
+import uploadButton from '@/components/uploadButton.vue'
+import SelectSkill from '@/components/SelectSkill.vue'
 
 const isTableVisible = ref(false)
 

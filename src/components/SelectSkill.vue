@@ -138,7 +138,7 @@ const copyRow = (index) => {
         v-model="skillStore.skills[i - 1][n - 1].skill"
         placeholder="Select skill"
         label="name"
-        searchable="true"
+        :searchable="true"
         :options="getFilteredSkills(i - 1, n - 1)"
       >
         <template v-slot:singlelabel="{ value }">
