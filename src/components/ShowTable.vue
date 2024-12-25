@@ -302,9 +302,8 @@ const closeTable = () => {
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
 .option-icon {
-  width: 24px;
-  height: 24px;
-  padding-top: 3px;
+  width: 34px;
+  height: 34px;
   padding-right: 7px;
 }
 .option-container {
@@ -314,6 +313,7 @@ const closeTable = () => {
 .option-images {
   display: flex;
   flex-wrap: wrap;
+  padding-top: 1px;
 }
 .teamTitle {
   text-align: center;
