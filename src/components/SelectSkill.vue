@@ -252,7 +252,7 @@ span {
   border: none;
 }
 .delete-button:hover svg {
-    fill: red;
+    fill: rgb(239, 67, 58);
 }
 .copy-button {
   position: absolute;
