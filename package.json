@@ -10,7 +10,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@vueform/multiselect": "^2.6.9",
+    "@vueform/multiselect": "^2.6.11",
     "axios": "^1.7.7",
     "dom-to-image-more": "^3.5.0",
     "hbr-axletool-vue": "file:",
