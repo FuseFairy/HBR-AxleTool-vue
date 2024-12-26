@@ -47,7 +47,9 @@ const filteredSelections = computed(() => {
 })
 
 const isSelected = (key) => {
-  return skillStore.skills[props.row][props.buttonKey].style === filteredSelections.value[key].style
+  const skill = skillStore.skills[props.row][props.buttonKey];
+  const selection = filteredSelections.value[key];
+  return skill.style === selection.style && skill.selectedTab === selectedTab.value;
 }
 
 const handleImageClick = (key) => {
