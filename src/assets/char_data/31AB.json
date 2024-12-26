@@ -70,5 +70,50 @@
       }
     },
     "passive skill": []
+  },
+  "關根 詩織": {
+    "english name": "Shiori_Sekine",
+    "style": {
+      "溫暖的記憶": "001"
+    },
+    "skill": {
+      "common": {
+        "韻律樂音": 6,
+        "技術性節拍": 9
+      }
+    },
+    "passive skill": []
+  },
+  "芳岡 唯": {
+    "english name": "Yui_Yoshioka",
+    "style": {
+      "Stir Soul Song": "001"
+    },
+    "skill": {
+      "common": {
+        "魅力嗓音": 12,
+        "交互撥弦": 9
+      },
+      "Stir Soul Song": {
+        "美妙歌曲彈下去": 12
+      }
+    },
+    "passive skill": []
+  },
+  "岩澤 雅美": {
+    "english name": "Masami_Iwasawa",
+    "style": {
+      "Dreamlike Days": "001"
+    },
+    "skill": {
+      "common": {
+        "琶音": 12,
+        "即興演奏": 7
+      },
+      "Dreamlike Days": {
+        "以烏鴉的叫聲": 8
+      }
+    },
+    "passive skill": []
   }
 }
