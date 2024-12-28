@@ -1,16 +1,3 @@
-<template>
-  <button @click="triggerFileInput" class="upload-button">
-    <img src="@/assets/custom_icon/upload.svg" alt="upload" />
-  </button>
-  <input
-    type="file"
-    ref="fileInput"
-    @change="onFileChange"
-    accept=".jpg,.jpeg"
-    style="display: none"
-  />
-</template>
-
 <script setup>
 import { ref } from 'vue'
 import piexif from 'piexifjs'
@@ -19,12 +6,14 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { fetchSkillOptions } from '@/api/skillOptions'
 import { decompressFromBase64 } from 'lz-string';
+import loading from 'vue-loading-overlay'
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
 const sliderStore = useSliderStore()
-
 const fileInput = ref(null)
+const isLoading = ref(false)
+const fullPage = ref(true)
 
 const triggerFileInput = () => {
   fileInput.value.click()
@@ -53,10 +42,9 @@ const onFileChange = async (event) => {
     const reader = new FileReader()
     reader.onload = async (e) => {
       try {
+        isLoading.value = true
         const jpegDataUrl = e.target.result
-
         const exifObj = piexif.load(jpegDataUrl)
-
         const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || ''
 
         if (customData) {
@@ -81,6 +69,7 @@ const onFileChange = async (event) => {
         )
       } finally {
         event.target.value = ''
+        isLoading.value = false
       }
     }
 
@@ -90,6 +79,28 @@ const onFileChange = async (event) => {
   }
 }
 </script>
+
+<template>
+<loading
+  v-model:active="isLoading"
+  :can-cancel="false"
+  :is-full-page="fullPage"
+  :lock-scroll="true"
+  background-color="#54504b"
+  loader="dots"
+  color="#79d1cb"
+/>
+<button @click="triggerFileInput" class="upload-button">
+  <img src="@/assets/custom_icon/upload.svg" alt="upload" />
+</button>
+<input
+  type="file"
+  ref="fileInput"
+  @change="onFileChange"
+  accept=".jpg,.jpeg"
+  style="display: none"
+/>
+</template>
 
 <style scoped>
 .upload-button {
