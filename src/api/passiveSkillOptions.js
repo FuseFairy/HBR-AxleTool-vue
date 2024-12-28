@@ -14,7 +14,7 @@ export async function fetchPassiveSkillOptions(characterName, team, styleName) {
     const passiveSkills = [
       ...(characterData.skill[styleName]?.['passive skill'] || []),
       ...(characterData['passive skill'] || [])
-    ];
+    ]
 
     return passiveSkills
   } catch (error) {

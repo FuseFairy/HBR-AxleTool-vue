@@ -43,13 +43,13 @@ const closeContainer = () => {
 <template>
   <div class="tabs">
     <button
-        v-for="tab in tabs"
-        :key="tab.key"
-        class="tab"
-        :class="{ active: selectedTab === tab.key }"
-        @click="selectTab(tab.key)"
-      >
-        {{ tab.label }}
+      v-for="tab in tabs"
+      :key="tab.key"
+      class="tab"
+      :class="{ active: selectedTab === tab.key }"
+      @click="selectTab(tab.key)"
+    >
+      {{ tab.label }}
     </button>
   </div>
 

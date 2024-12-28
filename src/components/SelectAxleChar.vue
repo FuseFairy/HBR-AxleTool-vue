@@ -30,8 +30,8 @@ const tabs = [
 ]
 
 const selectedTab = ref(
-  skillStore.skills[props.row][props.buttonKey]?.selectedTab ?? 
-  (lastTabStore.lastTab !== 1 ? lastTabStore.lastTab : 1)
+  skillStore.skills[props.row][props.buttonKey]?.selectedTab ??
+    (lastTabStore.lastTab !== 1 ? lastTabStore.lastTab : 1)
 )
 
 const selectTab = (key) => {
@@ -41,15 +41,17 @@ const selectTab = (key) => {
 
 const filteredSelections = computed(() => {
   const filtered = Object.fromEntries(
-    Object.entries(charStore.selections[selectedTab.value]).filter(([key, value]) => value.img !== null)
+    Object.entries(charStore.selections[selectedTab.value]).filter(
+      ([key, value]) => value.img !== null
+    )
   )
   return filtered
 })
 
 const isSelected = (key) => {
-  const skill = skillStore.skills[props.row][props.buttonKey];
-  const selection = filteredSelections.value[key];
-  return skill.style === selection.style && skill.selectedTab === selectedTab.value;
+  const skill = skillStore.skills[props.row][props.buttonKey]
+  const selection = filteredSelections.value[key]
+  return skill.style === selection.style && skill.selectedTab === selectedTab.value
 }
 
 const handleImageClick = (key) => {
@@ -79,13 +81,13 @@ const closeContainer = () => {
       </button>
       <div class="tabs">
         <button
-            v-for="tab in tabs"
-            :key="tab.key"
-            class="tab"
-            :class="{ active: selectedTab === tab.key }"
-            @click="selectTab(tab.key)"
-          >
-            {{ tab.label }}
+          v-for="tab in tabs"
+          :key="tab.key"
+          class="tab"
+          :class="{ active: selectedTab === tab.key }"
+          @click="selectTab(tab.key)"
+        >
+          {{ tab.label }}
         </button>
       </div>
       <div class="button-container">

@@ -48,12 +48,16 @@ const passiveSkillOptions = ref([])
 const skillOptions = ref([])
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team', props.selectedTab))
-const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character', props.selectedTab))
+const selectedCharacter = ref(
+  charStore.getSelection(props.buttonKey, 'character', props.selectedTab)
+)
 const selectedStyle = ref(charStore.getSelection(props.buttonKey, 'style', props.selectedTab))
 const selectedEarring = ref(charStore.getSelection(props.buttonKey, 'earring', props.selectedTab))
 const selectedRank = ref(charStore.getSelection(props.buttonKey, 'rank', props.selectedTab))
 const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower', props.selectedTab))
-const selectedPassiveSkill = ref(charStore.getSelection(props.buttonKey, 'passiveSkill', props.selectedTab))
+const selectedPassiveSkill = ref(
+  charStore.getSelection(props.buttonKey, 'passiveSkill', props.selectedTab)
+)
 const selectedSkill = ref(charStore.getSelection(props.buttonKey, 'skill', props.selectedTab))
 if (selectedSkill.value.length > 0) {
   selectedSkill.value = selectedSkill.value.map((skill) => skill.name)
@@ -286,14 +290,18 @@ const closeContainer = async () => {
             placeholder="Select Rank"
             :disabled="isOtherDisable"
             :options="rankOptions"
-            @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)"
+            @change="
+              (value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)
+            "
           />
           <div class="flower-container">
             <input
               type="checkbox"
               v-model="selectedFlower"
               :disabled="isOtherDisable"
-              @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)"
+              @change="
+                charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)
+              "
             />
             <img
               src="/src/assets/flower.webp"
@@ -313,7 +321,10 @@ const closeContainer = async () => {
             label="name"
             :disabled="isOtherDisable"
             :options="earringOptions"
-            @change="(value) => charStore.setSelection(props.buttonKey, 'earring', value, props.selectedTab)"
+            @change="
+              (value) =>
+                charStore.setSelection(props.buttonKey, 'earring', value, props.selectedTab)
+            "
           >
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
@@ -353,7 +364,10 @@ const closeContainer = async () => {
             :close-on-select="false"
             :disabled="isOtherDisable"
             :options="passiveSkillOptions"
-            @change="(value) => charStore.setSelection(props.buttonKey, 'passiveSkill', value, props.selectedTab)"
+            @change="
+              (value) =>
+                charStore.setSelection(props.buttonKey, 'passiveSkill', value, props.selectedTab)
+            "
           />
         </div>
       </div>
@@ -487,7 +501,7 @@ span {
 :deep(.multiselect-dropdown) {
   background-color: black;
   border: 1px solid rgb(64, 68, 141);
-  max-height: 15rem
+  max-height: 15rem;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
   width: 5px;

@@ -20,11 +20,11 @@ const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
 
 const showOptions = [
-  { value: 'rank', name: 'Rank'},
-  { value: 'earring', name: 'Earring'},
-  { value: 'passive skill', name: 'Passive Skill'},
-  { value: 'skill', name: 'Skill'},
-  { value: 'axle', name: 'Axle'}
+  { value: 'rank', name: 'Rank' },
+  { value: 'earring', name: 'Earring' },
+  { value: 'passive skill', name: 'Passive Skill' },
+  { value: 'skill', name: 'Skill' },
+  { value: 'axle', name: 'Axle' }
 ]
 const showTeams = [
   { value: 1, name: 'Team 1' },
@@ -36,29 +36,31 @@ const showTeams = [
 ]
 
 const hasRank = (selectedTab) => {
-  const rankInShowRow = showRowStore.showRow.includes('rank');
+  const rankInShowRow = showRowStore.showRow.includes('rank')
   const hasValidRankSelection = Object.values(charStore.selections[selectedTab]).some(
     (selection) => selection?.rank !== null || selection?.flower
-  );
+  )
 
-  return rankInShowRow && hasValidRankSelection;
-};
+  return rankInShowRow && hasValidRankSelection
+}
 
 const hasEarring = (selectedTab) => {
-  const earringInShowRow = showRowStore.showRow.includes('earring');
-  const hasValidEarringSelection = Object.values(charStore.selections[selectedTab]).some((selection) => selection?.earring !== null);
+  const earringInShowRow = showRowStore.showRow.includes('earring')
+  const hasValidEarringSelection = Object.values(charStore.selections[selectedTab]).some(
+    (selection) => selection?.earring !== null
+  )
 
-  return earringInShowRow && hasValidEarringSelection;
-};
+  return earringInShowRow && hasValidEarringSelection
+}
 
 const hasPassiveSkill = (selectedTab) => {
-  const passiveSkillInShowRow = showRowStore.showRow.includes('passive skill');
+  const passiveSkillInShowRow = showRowStore.showRow.includes('passive skill')
   const hasValidPassiveSkillSelection = Object.values(charStore.selections[selectedTab]).some(
     (selection) => selection?.passiveSkill !== null && selection?.passiveSkill.length > 0
-  );
+  )
 
-  return passiveSkillInShowRow && hasValidPassiveSkillSelection;
-};
+  return passiveSkillInShowRow && hasValidPassiveSkillSelection
+}
 
 const downloadTable = async () => {
   isLoading.value = true
@@ -73,11 +75,10 @@ const downloadTable = async () => {
 }
 
 function hasTeam(selectedTab) {
-  const usedSkills = getUsedSkills(selectedTab);
+  const usedSkills = getUsedSkills(selectedTab)
   return (
-    Object.keys(usedSkills).length > 0 &&
-    Object.values(usedSkills).every(set => set.size !== 0)
-  );
+    Object.keys(usedSkills).length > 0 && Object.values(usedSkills).every((set) => set.size !== 0)
+  )
 }
 
 const emit = defineEmits(['close'])
@@ -110,7 +111,7 @@ const closeTable = () => {
             :close-on-select="false"
             :options="showTeams"
             @change="(value) => showTeamStore.setShowTeam(value)"
-            style="margin-left: 5px;"
+            style="margin-left: 5px"
           >
             <template v-slot:option="{ option }">
               <div class="option-container">
@@ -136,7 +137,7 @@ const closeTable = () => {
             :close-on-select="false"
             :options="showOptions"
             @change="(value) => showRowStore.setShowRow(value)"
-            style="margin-left: 5px;"
+            style="margin-left: 5px"
           />
           <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
         </span>
@@ -147,11 +148,19 @@ const closeTable = () => {
       <div class="table scrollbar-style-1">
         <div id="show-axle" class="table-wrapper">
           <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
-            <div v-if="showTeamStore.showTeam.length > 1 && index > 0" class="axle-line-container" style="margin-top: 20px">
+            <div
+              v-if="showTeamStore.showTeam.length > 1 && index > 0"
+              class="axle-line-container"
+              style="margin-top: 20px"
+            >
               <div class="blue-line"></div>
             </div>
-            <h1 v-if="showTeamStore.showTeam.length > 1" class="teamTitle" :style="{ 'margin-top': selectedTab === 1 ? '0' : '10px' }">
-              Team {{selectedTab}}
+            <h1
+              v-if="showTeamStore.showTeam.length > 1"
+              class="teamTitle"
+              :style="{ 'margin-top': selectedTab === 1 ? '0' : '10px' }"
+            >
+              Team {{ selectedTab }}
             </h1>
             <!-- Image row -->
             <div class="table-container">
@@ -169,7 +178,10 @@ const closeTable = () => {
             <div v-if="hasRank(selectedTab)" class="table-container" style="margin-top: 20px">
               <div v-for="i in 7" class="table-column">
                 <div v-if="i === 1" class="label">Rank</div>
-                <div v-else-if="charStore.selections[selectedTab][i - 1].rank !== null" class="rank-text">
+                <div
+                  v-else-if="charStore.selections[selectedTab][i - 1].rank !== null"
+                  class="rank-text"
+                >
                   {{ charStore.selections[selectedTab][i - 1].rank }}
                   <img
                     v-if="charStore.selections[selectedTab][i - 1].flower"
@@ -199,13 +211,20 @@ const closeTable = () => {
             <div v-if="hasEarring(selectedTab)" class="table-container" style="margin-top: 20px">
               <div v-for="i in 7" class="table-column">
                 <div v-if="i === 1" class="label">Earring</div>
-                <div v-else-if="charStore.selections[selectedTab][i - 1].earring !== null" class="text">
+                <div
+                  v-else-if="charStore.selections[selectedTab][i - 1].earring !== null"
+                  class="text"
+                >
                   {{ charStore.selections[selectedTab][i - 1].earring }}
                 </div>
               </div>
             </div>
             <!-- Passive Skill row -->
-            <div v-if="hasPassiveSkill(selectedTab)" class="table-container" style="margin-top: 20px">
+            <div
+              v-if="hasPassiveSkill(selectedTab)"
+              class="table-container"
+              style="margin-top: 20px"
+            >
               <div v-for="i in 7" class="table-column">
                 <div v-if="i === 1" class="label">Passive<br />Skill</div>
                 <div
@@ -225,17 +244,21 @@ const closeTable = () => {
               </div>
             </div>
             <!-- Used skill row -->
-            <div v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)" class="table-container" style="margin-top: 20px">
+            <div
+              v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)"
+              class="table-container"
+              style="margin-top: 20px"
+            >
               <div v-for="i in 7" class="table-column">
                 <div v-if="i === 1" class="label">Skill</div>
                 <div
-                  v-else-if="
-                    charStore.selections[selectedTab][i - 1].style !== null
-                  "
+                  v-else-if="charStore.selections[selectedTab][i - 1].style !== null"
                   class="text"
                 >
                   <span
-                    v-for="skill in Array.from(getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style])"
+                    v-for="skill in Array.from(
+                      getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style]
+                    )"
                     class="used-skill"
                   >
                     {{ skill }}
@@ -246,20 +269,33 @@ const closeTable = () => {
           </div>
           <!-- Axle -->
           <div v-if="showRowStore.showRow.includes('axle')">
-            <div v-if="sliderStore.rows > 0 && showTeamStore.showTeam.length > 0" class="axle-line-container" style="margin-top: 20px">
+            <div
+              v-if="sliderStore.rows > 0 && showTeamStore.showTeam.length > 0"
+              class="axle-line-container"
+              style="margin-top: 20px"
+            >
               <div class="red-line"></div>
             </div>
             <div
               v-if="sliderStore.rows > 0"
               v-for="row in sliderStore.rows"
-              :class="skillStore.turns[row - 1].turn !== 'Switch' ? 'table-container-2' : 'table-container-3'"
+              :class="
+                skillStore.turns[row - 1].turn !== 'Switch'
+                  ? 'table-container-2'
+                  : 'table-container-3'
+              "
               :style="{ 'border-top': row > 1 ? '2px dashed gray' : 'none' }"
             >
-              <div v-if="skillStore.turns[row - 1].turn !== 'Switch'" v-for="col in 4" class="axle-table-column">
+              <div
+                v-if="skillStore.turns[row - 1].turn !== 'Switch'"
+                v-for="col in 4"
+                class="axle-table-column"
+              >
                 <div v-if="col === 1" class="label">
                   <span
                     v-if="
-                      skillStore.turns[row - 1].turn !== null && skillStore.turns[row - 1].od !== null
+                      skillStore.turns[row - 1].turn !== null &&
+                      skillStore.turns[row - 1].od !== null
                     "
                   >
                     {{ skillStore.turns[row - 1].turn }} / {{ skillStore.turns[row - 1].od }}
@@ -614,7 +650,7 @@ image {
     display: block;
   }
   :deep(.multiselect-wrapper) {
-  min-width: auto;
-}
+    min-width: auto;
+  }
 }
 </style>

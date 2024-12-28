@@ -27,7 +27,6 @@ export const useCharStore = defineStore(
         ])
       )
     )
-    
 
     const setSelection = (buttonKey, type, value, selectedTab) => {
       if (!selections.value[selectedTab][buttonKey]) {
@@ -58,7 +57,7 @@ export const useCharStore = defineStore(
   },
   {
     persist: {
-      storage: localStorage,
+      storage: localStorage
     }
   }
 )

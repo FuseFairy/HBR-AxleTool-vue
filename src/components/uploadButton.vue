@@ -5,7 +5,7 @@ import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { fetchSkillOptions } from '@/api/skillOptions'
-import { decompressFromBase64 } from 'lz-string';
+import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
 
 const charStore = useCharStore()
@@ -21,16 +21,12 @@ const triggerFileInput = () => {
 
 async function updateSelections(charStore) {
   for (const teamKey in charStore.selections) {
-    const Team = charStore.selections[teamKey];
+    const Team = charStore.selections[teamKey]
     for (const charKey in Team) {
-      const { character, team, style } = Team[charKey];
+      const { character, team, style } = Team[charKey]
       if (style) {
-        const skillOptions = await fetchSkillOptions(
-          character,
-          team,
-          style
-        );
-        charStore.setSelection(charKey, 'skill', skillOptions, teamKey);
+        const skillOptions = await fetchSkillOptions(character, team, style)
+        charStore.setSelection(charKey, 'skill', skillOptions, teamKey)
       }
     }
   }
@@ -48,16 +44,15 @@ const onFileChange = async (event) => {
         const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || ''
 
         if (customData) {
-          const jsonString = decompressFromBase64(customData);
+          const jsonString = decompressFromBase64(customData)
           const decodedData = JSON.parse(jsonString)
-          Object.keys(decodedData.char).forEach(key => {
-            charStore.selections[key] = decodedData.char[key];
-          });
+          Object.keys(decodedData.char).forEach((key) => {
+            charStore.selections[key] = decodedData.char[key]
+          })
           await updateSelections(charStore)
           skillStore.skills = decodedData.skills
           skillStore.turns = decodedData.turns
           sliderStore.rows = decodedData.rows
-
         } else {
           console.error('Custom metadata not found')
           alert('Custom metadata not found. Please check the file.')
@@ -81,25 +76,25 @@ const onFileChange = async (event) => {
 </script>
 
 <template>
-<loading
-  v-model:active="isLoading"
-  :can-cancel="false"
-  :is-full-page="fullPage"
-  :lock-scroll="true"
-  background-color="#54504b"
-  loader="dots"
-  color="#79d1cb"
-/>
-<button @click="triggerFileInput" class="upload-button">
-  <img src="@/assets/custom_icon/upload.svg" alt="upload" />
-</button>
-<input
-  type="file"
-  ref="fileInput"
-  @change="onFileChange"
-  accept=".jpg,.jpeg"
-  style="display: none"
-/>
+  <loading
+    v-model:active="isLoading"
+    :can-cancel="false"
+    :is-full-page="fullPage"
+    :lock-scroll="true"
+    background-color="#54504b"
+    loader="dots"
+    color="#79d1cb"
+  />
+  <button @click="triggerFileInput" class="upload-button">
+    <img src="@/assets/custom_icon/upload.svg" alt="upload" />
+  </button>
+  <input
+    type="file"
+    ref="fileInput"
+    @change="onFileChange"
+    accept=".jpg,.jpeg"
+    style="display: none"
+  />
 </template>
 
 <style scoped>

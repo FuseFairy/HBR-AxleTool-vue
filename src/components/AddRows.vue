@@ -35,8 +35,8 @@ const hasChar = computed(() => {
     Object.values(group).some(
       (selection) => selection.character !== null && selection.style !== null
     )
-  );
-});
+  )
+})
 
 const scrollToBottom = () => {
   const mainElement = document.querySelector('main.scrollbar-style-1')

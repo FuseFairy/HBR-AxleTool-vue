@@ -12,8 +12,7 @@ const skillStore = useSkillStore()
 const charStore = useCharStore()
 const odOptions = ['OD1', 'OD2', 'OD3']
 
-
-const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`);
+const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`)
 const turnOptions = ['Switch', '追加回合', ...options]
 
 const activeComponent = ref({ row: null, buttonKey: null })
@@ -38,7 +37,7 @@ const getFilteredSkills = (row, key) => {
       value: skill.name,
       sp: skill.sp
     }))
-    
+
     const commandSkill = currentSelection.commandSkill
     formattedSkills.unshift({ name: commandSkill, value: commandSkill, sp: 0 })
 
@@ -64,8 +63,7 @@ const targetOptions = (row, key) => {
     return Object.values(charStore.selections[selectedTab])
       .filter((selection) => selection.character !== null && selection.style !== null)
       .map((selection) => selection.character)
-  }
-  else {
+  } else {
     return []
   }
 }
@@ -78,10 +76,10 @@ const deleteRow = (index) => {
 
 const copyRow = (index) => {
   sliderStore.rows += 1
-  const copiedTurn = JSON.parse(JSON.stringify(skillStore.turns[index]));
-  const copiedSkill = JSON.parse(JSON.stringify(skillStore.skills[index]));
-  skillStore.turns.splice(index + 1, 0, copiedTurn);
-  skillStore.skills.splice(index + 1, 0, copiedSkill);
+  const copiedTurn = JSON.parse(JSON.stringify(skillStore.turns[index]))
+  const copiedSkill = JSON.parse(JSON.stringify(skillStore.skills[index]))
+  skillStore.turns.splice(index + 1, 0, copiedTurn)
+  skillStore.skills.splice(index + 1, 0, copiedSkill)
 }
 </script>
 
@@ -101,7 +99,7 @@ const copyRow = (index) => {
       </svg>
     </button>
     <button class="copy-button" @click="copyRow(i - 1)">
-      <img src="@/assets/custom_icon/copy.svg" alt="copy"/>
+      <img src="@/assets/custom_icon/copy.svg" alt="copy" />
     </button>
     <div class="column">
       <div class="empty"></div>
@@ -202,7 +200,9 @@ span {
   transition: box-shadow 0.3s ease; /* 添加過渡效果 */
 }
 .container:hover {
-  box-shadow: 0 0 0 0.5px #c12277, 0 0 20px rgba(240, 152, 199, 0.5);
+  box-shadow:
+    0 0 0 0.5px #c12277,
+    0 0 20px rgba(240, 152, 199, 0.5);
 }
 .column {
   flex: 1;
@@ -252,7 +252,7 @@ span {
   border: none;
 }
 .delete-button:hover svg {
-    fill: rgb(239, 67, 58);
+  fill: rgb(239, 67, 58);
 }
 .copy-button {
   position: absolute;
@@ -263,8 +263,8 @@ span {
   border: none;
 }
 .copy-button:hover img {
-    filter: brightness(1.2);
-  }
+  filter: brightness(1.2);
+}
 .fixed-button svg {
   width: 24px;
   height: 24px;
