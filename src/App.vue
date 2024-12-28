@@ -124,7 +124,6 @@ button:hover {
 .nav-title {
   flex-grow: 1;
   text-align: center;
-  font-size: 1.5rem;
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
 }
 @keyframes slideIn {

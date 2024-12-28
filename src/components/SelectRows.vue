@@ -68,6 +68,7 @@ const hasChar = computed(() => {
 .top-container {
   margin-bottom: 1.5vh;
   display: flex;
+  color: #efc2c2;
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
 }
 
