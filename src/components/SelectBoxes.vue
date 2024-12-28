@@ -97,13 +97,15 @@ button.tab {
   transition: background-color 0.3s ease;
   flex-grow: 1;
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+  font-size: 18px;
 }
 button.tab.active {
-  background-color: grey;
+  background-color: #ccc;
   color: black;
 }
 button.tab:hover {
-  background-color: #454242;
+  background-color: #a5a5a5;
+  color: black;
 }
 .modal-enter-active,
 .modal-leave-active {
