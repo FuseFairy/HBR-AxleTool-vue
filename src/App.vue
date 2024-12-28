@@ -19,7 +19,7 @@ const toggleTable = () => {
   <div class="page-layout">
     <nav>
       <uploadButton />
-      <p class="nav-title">HBR Axle Tool</p>
+      <h1 class="nav-title">HBR Axle Tool</h1>
       <button @click="toggleTable">
         <img src="@/assets/custom_icon/table.svg" alt="table" />
       </button>
