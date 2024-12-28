@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Gugi';
+  src: url('./src/font/Gugi.ttf') format('truetype');
+}
+
 * {
   margin: 0;
   padding: 0;

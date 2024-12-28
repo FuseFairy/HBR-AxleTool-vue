@@ -1,7 +1,7 @@
 <template>
   <div class="slider-container">
     <div class="top-container">
-      <h3>{{ title }}</h3>
+      <p>{{ title }}</p>
       <div class="input-container">
         <!-- <input v-model="sliderStore.rows" disabled="disabled" />
       <button 
@@ -68,6 +68,7 @@ const hasChar = computed(() => {
 .top-container {
   margin-bottom: 1.5vh;
   display: flex;
+  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
 }
 
 .input-container {

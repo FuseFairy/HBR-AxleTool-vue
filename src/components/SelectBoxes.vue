@@ -96,6 +96,7 @@ button.tab {
   color: white;
   transition: background-color 0.3s ease;
   flex-grow: 1;
+  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
 }
 button.tab.active {
   background-color: grey;

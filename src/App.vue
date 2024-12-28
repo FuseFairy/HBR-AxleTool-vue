@@ -19,7 +19,7 @@ const toggleTable = () => {
   <div class="page-layout">
     <nav>
       <uploadButton />
-      <h1 class="nav-title">HBR Axle Tool</h1>
+      <p class="nav-title">HBR Axle Tool</p>
       <button @click="toggleTable">
         <img src="@/assets/custom_icon/table.svg" alt="table" />
       </button>
@@ -41,9 +41,9 @@ const toggleTable = () => {
           </a>
           <div class="footer-text">
             <p>Developed by</p>
-            <a href="https://github.com/FuseFairy" target="_blank"> Zhuang </a>
+            <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a>
             <p>&</p>
-            <a href="https://github.com/Yuuzi261" target="_blank"> Yuuzi</a>
+            <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
           </div>
         </div>
       </div>
@@ -125,6 +125,7 @@ button:hover {
   flex-grow: 1;
   text-align: center;
   font-size: 1.5rem;
+  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
 }
 @keyframes slideIn {
   from {

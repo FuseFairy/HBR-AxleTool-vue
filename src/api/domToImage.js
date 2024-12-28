@@ -76,7 +76,7 @@ export async function convertElementToPng(elementId) {
         width: width,
         height: height,
         style: {
-          fontFamily: 'Noto Sans TC, sans-serif',
+          fontFamily: 'Gugi, Noto Sans TC, sans-serif',
           backgroundColor: 'black',
           color: 'white'
         }

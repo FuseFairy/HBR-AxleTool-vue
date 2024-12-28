@@ -437,7 +437,7 @@ image {
 }
 .label {
   font-size: 18px;
-  font-weight: bold;
+  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
   text-align: center;
   display: flex;
   justify-content: center;
