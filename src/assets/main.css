@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Gugi';
-  src: url('./src/font/Gugi.ttf') format('truetype');
+  src: url('@/assets/font/Gugi.ttf') format('truetype');
 }
 
 * {
