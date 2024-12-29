@@ -81,10 +81,20 @@ const copyRow = (index) => {
   skillStore.turns.splice(index + 1, 0, copiedTurn)
   skillStore.skills.splice(index + 1, 0, copiedSkill)
 }
+
+function handleTurnChange(value, index) {
+  if (value === "Switch") {
+    skillStore.skills[index - 1] = [
+      { selectedTab: null, style: null, style_img: null, skill: null, target: null },
+      { selectedTab: null, style: null, style_img: null, skill: null, target: null },
+      { selectedTab: null, style: null, style_img: null, skill: null, target: null }
+    ];
+  }
+}
 </script>
 
 <template>
-  <div v-for="i in sliderStore.rows" :key="i" class="container">
+  <div v-for="i in sliderStore.rows" :key="i" :class="['container', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]">
     <button class="delete-button" @click="deleteRow(i - 1)">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -102,21 +112,23 @@ const copyRow = (index) => {
       <img src="@/assets/custom_icon/copy.svg" alt="copy" />
     </button>
     <div class="column">
-      <div class="empty"></div>
+      <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]"></div>
       <Multiselect
         v-model="skillStore.turns[i - 1].turn"
         placeholder="Select turn"
         :options="turnOptions"
+        @update:model-value="(value) => handleTurnChange(value, i)"
       >
       </Multiselect>
       <Multiselect
+        v-if="skillStore.turns[i - 1].turn !== 'Switch'"
         v-model="skillStore.turns[i - 1].od"
         placeholder="Select OD"
         :options="odOptions"
       >
       </Multiselect>
     </div>
-    <div class="column" v-for="n in 3" :key="n">
+    <div class="column" v-if="skillStore.turns[i - 1].turn !== 'Switch'" v-for="n in 3" :key="n">
       <button
         @click="handleBoxClick(i - 1, n - 1)"
         :class="{
@@ -197,7 +209,10 @@ span {
   margin: 20px 20px 0 20px;
   grid-template-columns: 160px repeat(3, 1fr);
   align-items: center;
-  transition: box-shadow 0.3s ease; /* 添加過渡效果 */
+  transition: box-shadow 0.3s ease;
+}
+.grid-disabled {
+  grid-template-columns: none !important;
 }
 .container:hover {
   box-shadow:
@@ -211,9 +226,17 @@ span {
   align-items: center;
   gap: 10px;
 }
-.empty {
+.empty-1 {
   width: 80px;
   height: 80px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+div.empty-2 {
+  width: 20px;
+  height: 20px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -352,7 +375,7 @@ span {
     height: 60px;
     font-size: 14px;
   }
-  .empty {
+  .empty-1 {
     width: 60px;
     height: 60px;
   }
