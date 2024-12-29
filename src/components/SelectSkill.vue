@@ -81,6 +81,16 @@ const copyRow = (index) => {
   skillStore.turns.splice(index + 1, 0, copiedTurn)
   skillStore.skills.splice(index + 1, 0, copiedSkill)
 }
+
+function handleTurnChange(value, index) {
+  if (value === "Switch") {
+    skillStore.skills[index - 1] = [
+      { selectedTab: null, style: null, style_img: null, skill: null, target: null },
+      { selectedTab: null, style: null, style_img: null, skill: null, target: null },
+      { selectedTab: null, style: null, style_img: null, skill: null, target: null }
+    ];
+  }
+}
 </script>
 
 <template>
@@ -107,6 +117,7 @@ const copyRow = (index) => {
         v-model="skillStore.turns[i - 1].turn"
         placeholder="Select turn"
         :options="turnOptions"
+        @update:model-value="(value) => handleTurnChange(value, i)"
       >
       </Multiselect>
       <Multiselect
