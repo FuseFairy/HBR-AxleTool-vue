@@ -4,6 +4,7 @@ import piexif from 'piexifjs'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
+import { useLastTabStore } from '@/stores/lastTab_stores'
 import { fetchSkillOptions } from '@/api/skillOptions'
 import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
@@ -11,6 +12,7 @@ import loading from 'vue-loading-overlay'
 const charStore = useCharStore()
 const skillStore = useSkillStore()
 const sliderStore = useSliderStore()
+const lastTabStore = useLastTabStore()
 const fileInput = ref(null)
 const isLoading = ref(false)
 const fullPage = ref(true)
@@ -20,13 +22,22 @@ const triggerFileInput = () => {
 }
 
 async function updateSelections(charStore) {
+  let lastTabAssigned = false;
+
   for (const teamKey in charStore.selections) {
-    const Team = charStore.selections[teamKey]
+    const Team = charStore.selections[teamKey];
+    
     for (const charKey in Team) {
-      const { character, team, style } = Team[charKey]
+      const { character, team, style } = Team[charKey];
+      
+      if (style && !lastTabAssigned) {
+        lastTabStore.box_lastTab = parseInt(teamKey, 10);
+        lastTabAssigned = true;
+      }
+
       if (style) {
-        const skillOptions = await fetchSkillOptions(character, team, style)
-        charStore.setSelection(charKey, 'skill', skillOptions, teamKey)
+        const skillOptions = await fetchSkillOptions(character, team, style);
+        charStore.setSelection(charKey, 'skill', skillOptions, teamKey);
       }
     }
   }

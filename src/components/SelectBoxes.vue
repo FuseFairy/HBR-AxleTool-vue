@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useLastTabStore } from '@/stores/lastTab_stores'
 import SelectChar from '@/components/SelectChar.vue'
@@ -26,9 +26,9 @@ const tabs = [
   { key: 6, label: 'Team 6' }
 ]
 
-const selectedTab = ref(
-  lastTabStore.box_lastTab !== 1 ? lastTabStore.box_lastTab : 1
-)
+const selectedTab = computed(() => {
+  return lastTabStore.box_lastTab !== 1 ? lastTabStore.box_lastTab : 1;
+});
 const activeComponent = ref(null)
 
 const selectTab = (key) => {
