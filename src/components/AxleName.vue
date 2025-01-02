@@ -9,7 +9,7 @@ const maxlength = 35
   <p class="form-label">Axle Name</p>
   <input 
     type="text" 
-    placeholder="Input text"
+    placeholder="Enter your axle name"
     class="form-input"
     v-model="skillStore.axleName"
     :maxlength="maxlength"
