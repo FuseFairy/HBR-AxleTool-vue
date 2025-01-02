@@ -51,6 +51,7 @@ export async function convertElementToPng(elementId) {
     }
     return result
   }, {})
+  const axleName = skillStore.axleName.trimEnd()
 
   if (element) {
     const width = element.scrollWidth
@@ -101,7 +102,7 @@ export async function convertElementToPng(elementId) {
             }
             const customData = {
               char: newCharStore,
-              axleName: skillStore.axleName,
+              axleName: axleName,
               skills: skillStore.skills,
               turns: skillStore.turns,
               rows: sliderStore.rows
@@ -121,7 +122,7 @@ export async function convertElementToPng(elementId) {
 
             const link = document.createElement('a')
             link.href = URL.createObjectURL(finalBlob)
-            link.download = `${skillStore.axleName.trimEnd() || 'hbr_axle'}.jpg`;
+            link.download = `${axleName || 'hbr_axle'}.jpg`;
             document.body.appendChild(link)
             link.click()
 
