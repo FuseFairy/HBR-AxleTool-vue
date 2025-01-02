@@ -4,10 +4,12 @@ import { ref } from 'vue'
 export const useLastTabStore = defineStore(
   'last tab',
   () => {
-    const lastTab = ref(1)
+    const axle_lastTab = ref(1)
+    const box_lastTab = ref(1)
 
     return {
-      lastTab
+      axle_lastTab,
+      box_lastTab
     }
   },
   {

@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
+import { useLastTabStore } from '@/stores/lastTab_stores'
 import SelectChar from '@/components/SelectChar.vue'
 import { getAssetsFile } from '@/api/util'
 
 const charStore = useCharStore()
+const lastTabStore = useLastTabStore()
 
 const buttons = [
   { key: 1, label: 'Button 1' },
@@ -24,11 +26,14 @@ const tabs = [
   { key: 6, label: 'Team 6' }
 ]
 
-const selectedTab = ref(1)
+const selectedTab = ref(
+  lastTabStore.box_lastTab !== 1 ? lastTabStore.box_lastTab : 1
+)
 const activeComponent = ref(null)
 
 const selectTab = (key) => {
   selectedTab.value = key
+  lastTabStore.box_lastTab = key
 }
 
 const handleBoxClick = (key) => {

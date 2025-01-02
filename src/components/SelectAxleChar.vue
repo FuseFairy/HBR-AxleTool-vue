@@ -31,12 +31,12 @@ const tabs = [
 
 const selectedTab = ref(
   skillStore.skills[props.row][props.buttonKey]?.selectedTab ??
-    (lastTabStore.lastTab !== 1 ? lastTabStore.lastTab : 1)
+    (lastTabStore.axle_lastTab !== 1 ? lastTabStore.axle_lastTab : 1)
 )
 
 const selectTab = (key) => {
   selectedTab.value = key
-  lastTabStore.lastTab = key
+  lastTabStore.axle_lastTab = key
 }
 
 const filteredSelections = computed(() => {
