@@ -76,11 +76,6 @@ export async function convertElementToPng(elementId) {
       const pngDataUrl = await domtoimage.toPng(element, {
         width: width,
         height: height,
-        style: {
-          fontFamily: 'Gugi, Noto Sans TC, sans-serif',
-          backgroundColor: 'black',
-          color: 'white'
-        }
       })
 
       const img = new Image()
