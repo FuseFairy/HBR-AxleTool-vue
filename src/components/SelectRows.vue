@@ -66,7 +66,7 @@ const hasChar = computed(() => {
 
 <style scoped>
 .top-container {
-  margin-bottom: 1.5vh;
+  margin-bottom: 5px;
   display: flex;
   color: #efc2c2;
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
@@ -94,7 +94,7 @@ const hasChar = computed(() => {
 
 .slider-container {
   width: 100%;
-  padding: 20px;
+  padding-bottom: 20px;
   background-color: transparent;
   box-sizing: border-box;
 }

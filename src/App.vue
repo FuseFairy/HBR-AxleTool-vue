@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import './assets/main.css'
-import AddRows from './components/AddRows.vue'
+import AddRows from '@/components/AddRows.vue'
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
 import ShowTable from '@/components/ShowTable.vue'
 import uploadButton from '@/components/uploadButton.vue'
 import SelectSkill from '@/components/SelectSkill.vue'
+import AxleName from '@/components/AxleName.vue'
 
 const isTableVisible = ref(false)
 
@@ -30,7 +31,10 @@ const toggleTable = () => {
     <main class="scrollbar-style-1">
       <div class="box_container"><SelectBoxes /></div>
       <div class="axle">
-        <SelectRows />
+        <div class="form-row">
+          <div class="left-column"><AxleName /></div>
+          <div class="right-column"><SelectRows /></div>
+        </div>
         <SelectSkill />
         <AddRows />
       </div>
@@ -40,9 +44,9 @@ const toggleTable = () => {
             <img src="@/assets/custom_icon/github.svg" alt="GitHub" class="github-icon" />
           </a>
           <div class="footer-text">
-            <p>Developed by</p>
+            <p>Developed by </p>
             <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a>
-            <p>&</p>
+            <p> & </p>
             <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
           </div>
         </div>
@@ -52,6 +56,22 @@ const toggleTable = () => {
 </template>
 
 <style scoped>
+/* .box_container, .axle, .footer {
+  border: 1px solid red;
+} */
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 20px 0 20px;
+}
+.left-column {
+  flex: 1;
+}
+.right-column {
+  flex: 3;
+}
 .modal-enter-active,
 .modal-leave-active {
   transition: all 0.3s ease;
@@ -165,6 +185,7 @@ main {
     'footer';
 }
 .footer {
+  grid-area: footer;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -200,11 +221,10 @@ main {
 .box_container {
   grid-area: box_container;
   margin: 10px;
-  height: auto;
 }
 .axle {
-  padding-top: 0.5rem;
   grid-area: axle;
+  padding-top: 0.5rem;
 }
 .scrollbar-style-1 {
   overflow-x: auto;
@@ -221,9 +241,18 @@ main {
 .scrollbar-style-1::-webkit-scrollbar-thumb {
   background-color: #555;
 }
-@media (max-width: 450px) {
-  .box_container {
-    height: 30vh;
+@media (max-width: 800px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .right-column {
+    flex: unset;
+    width: 100%;
+  }
+  .left-column {
+    flex: unset;
+    width: 100%;
   }
 }
 </style>

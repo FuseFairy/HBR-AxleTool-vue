@@ -1,6 +1,13 @@
 @font-face {
   font-family: 'Gugi';
   src: url('@/assets/font/Gugi.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kose';
+  src: url('@/assets/font/XiaolaiMonoSC-Regular.ttf') format('truetype');
+  font-display: swap;
 }
 
 * {

@@ -50,6 +50,9 @@ const onFileChange = async (event) => {
             charStore.selections[key] = decodedData.char[key]
           })
           await updateSelections(charStore)
+          if (decodedData.axleName !== undefined) {
+            skillStore.axleName = decodedData.axleName;
+          }
           skillStore.skills = decodedData.skills
           skillStore.turns = decodedData.turns
           sliderStore.rows = decodedData.rows

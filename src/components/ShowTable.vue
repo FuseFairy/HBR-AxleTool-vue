@@ -19,6 +19,8 @@ const sliderStore = useSliderStore()
 const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
 
+const axleName = skillStore.axleName.trimEnd()
+
 const showOptions = [
   { value: 'rank', name: 'Rank' },
   { value: 'earring', name: 'Earring' },
@@ -147,6 +149,7 @@ const closeTable = () => {
       </div>
       <div class="table scrollbar-style-1">
         <div id="show-axle" class="table-wrapper">
+          <span v-if="axleName.length > 0" class="axle-name">{{ axleName }}</span>
           <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
             <div
               v-if="showTeamStore.showTeam.length > 1 && index > 0"
@@ -155,13 +158,13 @@ const closeTable = () => {
             >
               <div class="blue-line"></div>
             </div>
-            <h1
+            <!-- <h1
               v-if="showTeamStore.showTeam.length > 1"
               class="teamTitle"
               :style="{ 'margin-top': selectedTab === 1 ? '0' : '10px' }"
             >
               Team {{ selectedTab }}
-            </h1>
+            </h1> -->
             <!-- Image row -->
             <div class="table-container">
               <div v-for="i in 7" class="table-column">
@@ -337,6 +340,16 @@ const closeTable = () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+.axle-name {
+  display: block;
+  font-size: 36px;
+  text-align: center;
+  margin: 0 auto 20px;
+  padding: 0 24px;
+  font-family: 'Kose', 'Noto Sans TC', sans-serif;
+  color: rgb(225, 230, 209);
+  border-bottom: 4px solid rgb(110, 107, 102);
+}
 .option-icon {
   width: 34px;
   height: 34px;
@@ -374,7 +387,7 @@ image {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-top: 0.5rem;
+  padding: 0.5rem 0;
 }
 .table-container {
   display: grid;
@@ -427,13 +440,14 @@ image {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 2px solid #d64040;
+  border-top: 4px solid #d64040;
 }
 .blue-line {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-top: 2px solid #4c71c9;
+  border-top: 3px solid #4c71c9;
+  margin-bottom: 15px;
 }
 .label {
   font-size: 18px;

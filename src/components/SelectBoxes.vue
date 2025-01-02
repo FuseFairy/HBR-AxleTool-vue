@@ -125,7 +125,8 @@ button.tab:hover {
   gap: 20px;
   justify-items: center;
   align-items: center;
-  height: 100%;
+  height: auto;
+  padding-top: 20px;
 }
 .circle-button {
   border-radius: 50%;
@@ -174,13 +175,6 @@ button.tab:hover {
   .button-container {
     grid-template-columns: repeat(3, 1fr);
   }
-  .circle-button {
-    width: 100px;
-    height: 100px;
-    font-size: 14px;
-  }
-}
-@media (max-width: 390px) {
   .circle-button {
     width: 80px;
     height: 80px;

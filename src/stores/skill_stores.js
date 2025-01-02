@@ -4,6 +4,7 @@ import { ref } from 'vue'
 export const useSkillStore = defineStore(
   'skill',
   () => {
+    const axleName = ref('')
     const skills = ref([])
     const turns = ref([])
 
@@ -27,6 +28,7 @@ export const useSkillStore = defineStore(
     }
 
     return {
+      axleName,
       skills,
       turns,
       adjustSkills
