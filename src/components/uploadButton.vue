@@ -21,11 +21,11 @@ const triggerFileInput = () => {
   fileInput.value.click()
 }
 
-async function updateSelections(charStore) {
+async function updateSelections(decodedDataChar) {
   let lastTabAssigned = false;
 
-  for (const teamKey in charStore.selections) {
-    const Team = charStore.selections[teamKey];
+  for (const teamKey in decodedDataChar) {
+    const Team = decodedDataChar[teamKey];
     
     for (const charKey in Team) {
       const { character, team, style } = Team[charKey];
@@ -37,10 +37,12 @@ async function updateSelections(charStore) {
 
       if (style) {
         const skillOptions = await fetchSkillOptions(character, team, style);
-        charStore.setSelection(charKey, 'skill', skillOptions, teamKey);
+        decodedDataChar[teamKey][charKey]['skill'] = skillOptions;
       }
     }
   }
+
+  return decodedDataChar;
 }
 
 const onFileChange = async (event) => {
@@ -57,10 +59,10 @@ const onFileChange = async (event) => {
         if (customData) {
           const jsonString = decompressFromBase64(customData)
           const decodedData = JSON.parse(jsonString)
-          Object.keys(decodedData.char).forEach((key) => {
-            charStore.selections[key] = decodedData.char[key]
+          const decodedDataUpdate = await updateSelections(decodedData.char)
+          Object.keys(decodedDataUpdate).forEach((key) => {
+            charStore.selections[key] = decodedDataUpdate[key]
           })
-          await updateSelections(charStore)
           if (decodedData.axleName !== undefined) {
             skillStore.axleName = decodedData.axleName;
           }
