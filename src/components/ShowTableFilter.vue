@@ -103,6 +103,9 @@ onClickOutside(
   padding: 15px;
   z-index: 1500;
 }
+label {
+  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+}
 .option-icon {
   width: 34px;
   height: 34px;

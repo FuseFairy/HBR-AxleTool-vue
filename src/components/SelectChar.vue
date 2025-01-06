@@ -476,6 +476,9 @@ span {
 .scrollbar-style-1::-webkit-scrollbar-thumb {
   background-color: #555;
 }
+label {
+  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+}
 .option-icon,
 .label-icon {
   width: 32px;
