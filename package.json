@@ -10,6 +10,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "@vueform/multiselect": "^2.6.11",
     "axios": "^1.7.7",
     "dom-to-image-more": "^3.5.0",

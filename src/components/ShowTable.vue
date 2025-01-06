@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
@@ -9,10 +9,11 @@ import { convertElementToPng } from '@/api/domToImage'
 import { getAssetsFile } from '@/api/util'
 import { getUsedSkills } from '@/api/getUsedSkills'
 import loading from 'vue-loading-overlay'
-import Multiselect from '@vueform/multiselect'
+import ShowTableFilter from '@/components/ShowTableFilter.vue'
 
 const isLoading = ref(false)
 const fullPage = ref(true)
+const isShowFilter = ref(false)
 const charStore = useCharStore()
 const skillStore = useSkillStore()
 const sliderStore = useSliderStore()
@@ -20,22 +21,6 @@ const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
 
 const axleName = skillStore.axleName.trimEnd()
-
-const showOptions = [
-  { value: 'rank', name: 'Rank' },
-  { value: 'earring', name: 'Earring' },
-  { value: 'passive skill', name: 'Passive Skill' },
-  { value: 'skill', name: 'Skill' },
-  { value: 'axle', name: 'Axle' }
-]
-const showTeams = [
-  { value: 1, name: 'Team 1' },
-  { value: 2, name: 'Team 2' },
-  { value: 3, name: 'Team 3' },
-  { value: 4, name: 'Team 4' },
-  { value: 5, name: 'Team 5' },
-  { value: 6, name: 'Team 6' }
-]
 
 const hasRank = (selectedTab) => {
   const rankInShowRow = showRowStore.showRow.includes('rank')
@@ -101,53 +86,16 @@ const closeTable = () => {
     />
     <div @click.stop class="container">
       <div class="button-group">
-        <span style="display: flex; align-items: center">
-          <button @click="downloadTable" class="download">
-            <img src="@/assets/custom_icon/download.svg" alt="Download" />
-          </button>
-          <Multiselect
-            v-model="showTeamStore.showTeam"
-            mode="tags"
-            placeholder="Display Team"
-            label="name"
-            :close-on-select="false"
-            :options="showTeams"
-            @change="(value) => showTeamStore.setShowTeam(value)"
-            style="margin-left: 5px"
-          >
-            <template v-slot:option="{ option }">
-              <div class="option-container">
-                <span :title="option.name">{{ option.name }}</span>
-                <div class="option-images">
-                  <div v-for="i in 7">
-                    <img
-                      v-if="i !== 1 && charStore.selections[option.value][i - 1].img"
-                      :src="getAssetsFile(charStore.selections[option.value][i - 1].img)"
-                      :alt="charStore.selections[option.value][i - 1].style"
-                      class="option-icon"
-                    />
-                  </div>
-                </div>
-              </div>
-            </template>
-          </Multiselect>
-          <Multiselect
-            v-model="showRowStore.showRow"
-            mode="tags"
-            placeholder="Display Row"
-            label="name"
-            :close-on-select="false"
-            :options="showOptions"
-            @change="(value) => showRowStore.setShowRow(value)"
-            style="margin-left: 5px"
-          />
-          <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
-        </span>
+        <button @click="downloadTable" class="download">
+          <img src="@/assets/custom_icon/download.svg" alt="Download" />
+        </button>
+        <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
         <button @click="closeTable" class="close">
           <img src="@/assets/custom_icon/close.svg" alt="Close" />
         </button>
       </div>
-      <div class="table scrollbar-style-1">
+      <div class="table scrollbar-style-1" :style="{ flexDirection: isShowFilter ? 'column' : 'row' }">
+        <div><ShowTableFilter @update-filter-show="isShowFilter = $event" /></div>
         <div id="show-axle" class="table-wrapper">
           <span v-if="axleName.length > 0" class="axle-name">{{ axleName }}</span>
           <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
@@ -598,73 +546,16 @@ image {
   display: none;
   color: rgb(162, 87, 87);
   margin-left: 10px;
-}
-:deep(.multiselect-option),
-.multiselect-single-label {
-  display: flex;
-}
-:deep(.multiselect) {
-  background-color: rgba(50, 48, 50, 0.8);
-  border: 2px solid rgba(50, 48, 50, 0.8);
-  margin-top: 2px;
-  border-radius: 20px;
-}
-:deep(.multiselect.is-active) {
-  box-shadow: none;
-}
-:deep(.multiselect-dropdown) {
-  background-color: rgba(50, 48, 50, 0.8);
-  border: 2px solid rgba(50, 48, 50, 0.8);
-  max-height: 15rem;
-  border-radius: 20px;
-}
-:deep(.multiselect-dropdown::-webkit-scrollbar) {
-  width: 0px;
-}
-:deep(.multiselect-option.is-selected) {
-  background-color: rgb(38, 37, 37);
-}
-:deep(.multiselect-option.is-pointed) {
-  background-color: rgb(160, 160, 167);
-  color: rgb(0, 0, 0);
-}
-:deep(.multiselect-caret) {
-  margin-left: 14px;
-}
-:deep(.multiselect-clear) {
-  padding: 0;
-}
-:deep(.multiselect-clear-icon:hover),
-:deep(.multiselect-clear-icon:active),
-:deep(.multiselect-clear-icon:focus) {
-  background-color: #999;
-}
-:deep(.multiselect-clear-icon) {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
-  font-size: 0;
-}
-:deep(.multiselect-tag) {
-  background-color: rgb(89, 85, 89);
-  border-radius: 20px;
-}
-:deep(.multiselect-wrapper) {
-  min-width: 250px;
-  max-width: 300px;
+  font-size: 18px;
 }
 @media (max-width: 950px) {
   .container {
     width: 100%;
+    height: 100%;
     max-width: none;
   }
   .mobile-warning {
     display: block;
-  }
-  :deep(.multiselect-wrapper) {
-    min-width: auto;
   }
 }
 </style>
