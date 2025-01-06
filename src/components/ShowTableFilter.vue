@@ -96,7 +96,7 @@ onClickOutside(
   position: absolute;
 	display: flex;
 	flex-direction: column;
-  background-color: rgba(19, 13, 13, 0.9);
+  background-color: rgba(18, 9, 9, 0.95);
   border-radius: 15px;
   width: 50vw;
   max-width: 500px;
