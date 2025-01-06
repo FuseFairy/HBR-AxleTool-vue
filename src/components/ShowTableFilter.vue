@@ -1,11 +1,11 @@
 <script setup>
-import { ref, onMounted, defineEmits } from 'vue'
+import { ref } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useShowRowStore } from '@/stores/showRow_stores.js'
 import { useShowTeamStore } from '@/stores/showTeam_stores'
 import { getAssetsFile } from '@/api/util'
+import { onClickOutside } from '@vueuse/core'
 import Multiselect from '@vueform/multiselect'
-import autoAnimate from "@formkit/auto-animate"
 
 const charStore = useCharStore()
 const showRowStore = useShowRowStore()
@@ -27,34 +27,24 @@ const showTeams = [
   { value: 6, name: 'Team 6' }
 ]
 
-const dropdown = ref()
 const show = ref(false)
-
-onMounted(() => {
-  autoAnimate(dropdown.value)
-})
-
-const emit = defineEmits(['update-filter-show'])
-const toggleShow = () => {
-  show.value = !show.value
-  if (show.value) {
-    emit('update-filter-show', show.value)
-  } else {
-    setTimeout(() => {
-      emit('update-filter-show', show.value)
-    }, 300)
-  }
-}
+const filterRef = ref(null)
+onClickOutside(
+  filterRef,
+  (event) => {
+    show.value = false
+  },
+)
 </script>
 
 <template>
-<div ref="dropdown">
-	<strong @click="toggleShow" class="filter">
+<div ref="filterRef">
+	<button @click="show = !show" class="filter">
 		<img
 		:src="show ? './src/assets/custom_icon/filter-off.svg' : './src/assets/custom_icon/filter-on.svg'"
 		alt="Filter"
 		/>
-	</strong>
+	</button>
 	<div v-if="show" class="filter-content">
 		<label>Teams</label>
 		<Multiselect
@@ -108,7 +98,8 @@ const toggleShow = () => {
 	flex-direction: column;
   background-color: rgba(19, 13, 13, 0.9);
   border-radius: 15px;
-  width: 300px;
+  width: 50vw;
+  max-width: 500px;
   padding: 15px;
   z-index: 1500;
 }
@@ -199,13 +190,6 @@ const toggleShow = () => {
   width: 100%;
 }
 @media (max-width: 950px) {
-  .container {
-    width: 100%;
-    max-width: none;
-  }
-  .mobile-warning {
-    display: block;
-  }
   :deep(.multiselect-wrapper) {
     min-width: auto;
   }

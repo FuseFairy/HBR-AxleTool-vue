@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
@@ -87,7 +87,7 @@ const closeTable = () => {
     <div @click.stop class="container">
       <div class="button-group">
         <div class="left-button-group">
-          <ShowTableFilter @update-filter-show="isShowFilter = $event" />
+          <ShowTableFilter />
           <button @click="downloadTable" class="download">
             <img src="@/assets/custom_icon/download.svg" alt="Download" />
           </button>
