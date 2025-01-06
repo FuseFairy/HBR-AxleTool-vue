@@ -98,8 +98,8 @@ onClickOutside(
 	flex-direction: column;
   background-color: rgba(18, 9, 9, 0.95);
   border-radius: 15px;
-  width: 50vw;
-  max-width: 500px;
+  width: 30vw;
+  max-width: 35vw;
   padding: 15px;
   z-index: 1500;
 }
@@ -193,8 +193,12 @@ label {
   width: 100%;
 }
 @media (max-width: 950px) {
-  :deep(.multiselect-wrapper) {
-    min-width: auto;
+  .filter-content {
+    width: 45vw;
+    max-width: 50vw;
+  }
+  :deep(.multiselect-dropdown) {
+    max-height: 33vh;
   }
 }
 </style>
