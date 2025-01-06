@@ -6,6 +6,8 @@ import { useShowTeamStore } from '@/stores/showTeam_stores'
 import { getAssetsFile } from '@/api/util'
 import { onClickOutside } from '@vueuse/core'
 import Multiselect from '@vueform/multiselect'
+import filterOffIcon from '@/assets/custom_icon/filter-off.svg'
+import filterOnIcon from '@/assets/custom_icon/filter-on.svg'
 
 const charStore = useCharStore()
 const showRowStore = useShowRowStore()
@@ -40,10 +42,10 @@ onClickOutside(
 <template>
 <div ref="filterRef">
 	<button @click="show = !show" class="filter">
-		<img
-		:src="show ? './src/assets/custom_icon/filter-off.svg' : './src/assets/custom_icon/filter-on.svg'"
-		alt="Filter"
-		/>
+    <img
+      :src="show ? filterOffIcon : filterOnIcon"
+      alt="Filter"
+    />
 	</button>
 	<div v-if="show" class="filter-content">
 		<label>Teams</label>
