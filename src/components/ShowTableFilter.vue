@@ -48,7 +48,7 @@ const toggleShow = () => {
 </script>
 
 <template>
-<div ref="dropdown" style="margin-bottom: 10px;">
+<div ref="dropdown">
 	<strong @click="toggleShow" class="filter">
 		<img
 		:src="show ? './src/assets/custom_icon/filter-off.svg' : './src/assets/custom_icon/filter-on.svg'"
@@ -103,11 +103,14 @@ const toggleShow = () => {
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
 .filter-content {
+  position: absolute;
 	display: flex;
 	flex-direction: column;
-  background-color: rgba(46, 40, 40, 0.2);
-  border-radius: 4px;
-  padding: 10px;
+  background-color: rgba(19, 13, 13, 0.9);
+  border-radius: 15px;
+  width: 300px;
+  padding: 15px;
+  z-index: 1500;
 }
 .option-icon {
   width: 34px;

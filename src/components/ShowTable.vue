@@ -86,16 +86,18 @@ const closeTable = () => {
     />
     <div @click.stop class="container">
       <div class="button-group">
-        <button @click="downloadTable" class="download">
-          <img src="@/assets/custom_icon/download.svg" alt="Download" />
-        </button>
+        <div class="left-button-group">
+          <ShowTableFilter @update-filter-show="isShowFilter = $event" />
+          <button @click="downloadTable" class="download">
+            <img src="@/assets/custom_icon/download.svg" alt="Download" />
+          </button>
+        </div>
         <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
         <button @click="closeTable" class="close">
           <img src="@/assets/custom_icon/close.svg" alt="Close" />
         </button>
       </div>
-      <div class="table scrollbar-style-1" :style="{ flexDirection: isShowFilter ? 'column' : 'row' }">
-        <div><ShowTableFilter @update-filter-show="isShowFilter = $event" /></div>
+      <div class="table scrollbar-style-1">
         <div id="show-axle" class="table-wrapper">
           <span v-if="axleName.length > 0" class="axle-name">{{ axleName }}</span>
           <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
@@ -486,6 +488,11 @@ image {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.left-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .close img {
   height: 100%;
