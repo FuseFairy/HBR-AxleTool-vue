@@ -18,7 +18,7 @@ export function getUsedSkills(selectedTab) {
         if (skillEntry.style === style && skillEntry.selectedTab === selectedTab) {
           const { skill } = skillEntry
 
-          if (skill && skill != selection['commandSkill'] && !skillsDictionary[style].has(skill)) {
+          if (skill && skill !== selection['commandSkill'] && !skillsDictionary[style].has(skill)) {
             skillsDictionary[style].add(skill)
           }
         }
@@ -26,5 +26,12 @@ export function getUsedSkills(selectedTab) {
     })
   })
 
+  Object.keys(skillsDictionary).forEach((style) => {
+    const sortedSkills = Array.from(skillsDictionary[style])
+      .sort((a, b) => a.length - b.length)
+    skillsDictionary[style] = new Set(sortedSkills)
+  })
+
   return skillsDictionary
 }
+
