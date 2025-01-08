@@ -59,9 +59,6 @@ const selectedPassiveSkill = ref(
   charStore.getSelection(props.buttonKey, 'passiveSkill', props.selectedTab)
 )
 const selectedSkill = ref(charStore.getSelection(props.buttonKey, 'skill', props.selectedTab))
-if (selectedSkill.value.length > 0) {
-  selectedSkill.value = selectedSkill.value.map((skill) => skill.name)
-}
 
 const isCharDisabled = computed(() => !selectedTeam.value)
 const isStyleDisabled = computed(() => !selectedCharacter.value)
@@ -155,7 +152,6 @@ watch(selectedStyle, async (newStyle) => {
   } else {
     charStore.setSelection(props.buttonKey, 'style', null, props.selectedTab)
     charStore.setSelection(props.buttonKey, 'img', null, props.selectedTab)
-    charStore.setSelection(props.buttonKey, 'skill', null, props.selectedTab)
     charStore.setSelection(props.buttonKey, 'rank', null, props.selectedTab)
     charStore.setSelection(props.buttonKey, 'flower', null, props.selectedTab)
     charStore.setSelection(props.buttonKey, 'earring', null, props.selectedTab)
@@ -176,19 +172,6 @@ const toggleCheckbox = () => {
     selectedFlower.value = !selectedFlower.value
     charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)
   }
-}
-
-const setSkill = (skills) => {
-  selectedSkill.value = skills
-  const temp = []
-  skills.forEach((skillName) => {
-    const skill = skillOptions.value.find((option) => option.value === skillName)
-    if (skill) {
-      temp.push({ name: skill.name, sp: skill.sp })
-    }
-  })
-
-  charStore.setSelection(props.buttonKey, 'skill', temp, props.selectedTab)
 }
 
 const emit = defineEmits(['close'])
@@ -338,21 +321,6 @@ const closeContainer = async () => {
               <span :title="option.name">{{ option.name }}</span>
             </template>
           </Multiselect>
-        </div>
-
-        <div class="section">
-          <label>Skill (optional)</label>
-          <Multiselect
-            v-model="selectedSkill"
-            mode="tags"
-            placeholder="Select skill"
-            label="name"
-            :searchable="true"
-            :close-on-select="false"
-            :disabled="isOtherDisable || sliderStore.rows > 0"
-            :options="skillOptions"
-            @change="(value) => setSkill(value)"
-          />
         </div>
 
         <div class="section">
