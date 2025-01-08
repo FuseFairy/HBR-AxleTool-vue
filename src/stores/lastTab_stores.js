@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useLastTabStore = defineStore(
-  'last tab',
+  'lastTab',
   () => {
     const axle_lastTab = ref(1)
     const box_lastTab = ref(1)
