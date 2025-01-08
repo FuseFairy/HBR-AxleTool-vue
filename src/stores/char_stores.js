@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useCharStore = defineStore(
-  'character_select',
+  'characterSelect',
   () => {
     const selections = ref(
       Object.fromEntries(
