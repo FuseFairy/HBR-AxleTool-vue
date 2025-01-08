@@ -145,6 +145,7 @@ button:hover {
   flex-grow: 1;
   text-align: center;
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+  color: rgb(210, 203, 208);
 }
 @keyframes slideIn {
   from {
