@@ -13,12 +13,17 @@ import ShowTableFilter from '@/components/ShowTableFilter.vue'
 
 const isLoading = ref(false)
 const fullPage = ref(true)
-const isShowFilter = ref(false)
 const charStore = useCharStore()
 const skillStore = useSkillStore()
 const sliderStore = useSliderStore()
 const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
+const earringDict = {
+  'BREAK耳環':'earring_icon/break.webp',
+  '進攻耳環':'earring_icon/attach.webp',
+  'DRIVE耳環':'earring_icon/drive.webp',
+  '爆破耳環':'earring_icon/explosion.webp'
+}
 
 const axleName = skillStore.axleName.trimEnd()
 
@@ -108,71 +113,53 @@ const closeTable = () => {
             >
               <div class="blue-line"></div>
             </div>
-            <!-- <h1
-              v-if="showTeamStore.showTeam.length > 1"
-              class="teamTitle"
-              :style="{ 'margin-top': selectedTab === 1 ? '0' : '10px' }"
-            >
-              Team {{ selectedTab }}
-            </h1> -->
-            <!-- Image row -->
             <div class="table-container">
               <div v-for="i in 7" class="table-column">
-                <div v-if="i === 1"></div>
-                <img
-                  v-else-if="charStore.selections[selectedTab][i - 1].img"
-                  :src="getAssetsFile(charStore.selections[selectedTab][i - 1].img)"
-                  :alt="charStore.selections[selectedTab][i - 1].style"
-                  class="character-image"
-                />
-              </div>
-            </div>
-            <!-- Rank row -->
-            <div v-if="hasRank(selectedTab)" class="table-container" style="margin-top: 20px">
-              <div v-for="i in 7" class="table-column">
-                <div v-if="i === 1" class="label">Rank</div>
-                <div
-                  v-else-if="charStore.selections[selectedTab][i - 1].rank !== null"
-                  class="rank-text"
-                >
-                  {{ charStore.selections[selectedTab][i - 1].rank }}
-                  <img
-                    v-if="charStore.selections[selectedTab][i - 1].flower"
-                    src="/src/assets/flower.webp"
-                    alt="flower"
-                    class="flower-img"
-                  />
-                </div>
-                <div
-                  v-else-if="
-                    charStore.selections[selectedTab][i - 1].rank === null &&
-                    charStore.selections[selectedTab][i - 1].style !== null
-                  "
-                  class="rank-text"
-                >
-                  <span>0</span>
-                  <img
-                    v-if="charStore.selections[selectedTab][i - 1].flower"
-                    src="/src/assets/flower.webp"
-                    alt="flower"
-                    class="flower-img"
-                  />
-                </div>
-              </div>
-            </div>
-            <!-- Earring row -->
-            <div v-if="hasEarring(selectedTab)" class="table-container" style="margin-top: 20px">
-              <div v-for="i in 7" class="table-column">
-                <div v-if="i === 1" class="label">Earring</div>
-                <div
-                  v-else-if="charStore.selections[selectedTab][i - 1].earring !== null"
-                  class="text"
-                >
-                  {{ charStore.selections[selectedTab][i - 1].earring }}
+                <div class="character-container">
+                  <div v-if="i === 1"></div>
+                  <div v-else>
+                    <img
+                      v-if="charStore.selections[selectedTab][i - 1].img"
+                      :src="getAssetsFile(charStore.selections[selectedTab][i - 1].img)"
+                      :alt="charStore.selections[selectedTab][i - 1].style"
+                      class="character-image"
+                    />
+
+                    <!-- Rank -->
+                    <div
+                      v-if="hasRank(selectedTab) && charStore.selections[selectedTab][i - 1].rank !== null"
+                      class="rank-text"
+                    >
+                      {{ charStore.selections[selectedTab][i - 1].rank }}
+                    </div>
+                    <div
+                      v-else-if="
+                        hasRank(selectedTab) &&
+                        charStore.selections[selectedTab][i - 1].rank === null &&
+                        charStore.selections[selectedTab][i - 1].style !== null
+                      "
+                      class="rank-text"
+                    >
+                      <span>0</span>
+                    </div>
+                    <img
+                      v-if="hasRank(selectedTab) && charStore.selections[selectedTab][i - 1].flower"
+                      src="/src/assets/flower.webp"
+                      alt="flower"
+                      class="flower-img"
+                    />
+
+                    <!-- Earring -->
+                    <img
+                      v-if="hasEarring(selectedTab) && charStore.selections[selectedTab][i - 1].earring !== null"
+                      :src="getAssetsFile(earringDict[charStore.selections[selectedTab][i - 1].earring])"
+                      :alt="charStore.selections[selectedTab][i - 1].earring"
+                      class="earring-icon"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- Passive Skill row -->
             <div
               v-if="hasPassiveSkill(selectedTab)"
               class="table-container"
@@ -290,6 +277,10 @@ const closeTable = () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+.character-container {
+  position: relative;
+  display: inline-block;
+}
 .axle-name {
   display: block;
   font-size: 36px;
@@ -409,8 +400,9 @@ image {
   height: 100%;
 }
 .character-image {
-  width: 70px;
-  height: 70px;
+  display: block;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
 }
 .text {
@@ -423,12 +415,23 @@ image {
   align-items: center;
 }
 .rank-text {
-  display: flex;
-  font-size: 16px;
-  font-weight: normal;
+  position: absolute;
+  top: -1px;
+  right: -6px;
+  background-color: rgba(93, 80, 86, 0.7);
+  font-family: 'Kose', 'Noto Sans TC', sans-serif;
+  color: rgb(192, 229, 250);
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 20px;
   text-align: center;
+  display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 0 8px 4px rgba(201, 198, 200, 0.8);
+  text-shadow: 0 0 4px rgb(0, 0, 0), 0 0 8px rgb(0, 0, 0), 0 0 16px rgb(0, 0, 0);
 }
 .used-skill {
   margin: 3px;
@@ -455,9 +458,20 @@ image {
   vertical-align: middle;
 }
 .flower-img {
-  margin-left: 5px;
-  height: 20px;
-  width: 20px;
+  position: absolute;
+  bottom: -10px;
+  right: 5px;
+  height: 30px;
+  width: 30px;
+  filter: drop-shadow(0 0 12px rgb(255, 190, 218));
+}
+.earring-icon {
+  position: absolute;
+  bottom: 0px;
+  left: -10px;
+  height: 33px;
+  width: 33px;
+  filter: drop-shadow(0 0 12px rgb(190, 240, 255));
 }
 .close {
   background-color: transparent;
