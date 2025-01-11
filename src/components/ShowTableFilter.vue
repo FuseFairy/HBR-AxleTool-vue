@@ -5,6 +5,7 @@ import { useShowRowStore } from '@/stores/showRow_stores.js'
 import { useShowTeamStore } from '@/stores/showTeam_stores'
 import { getAssetsFile } from '@/api/util'
 import { onClickOutside } from '@vueuse/core'
+import { getUsedTeams } from '@/api/getUsedTeams'
 import Multiselect from '@vueform/multiselect'
 import filterOffIcon from '@/assets/custom_icon/filter-off.svg'
 import filterOnIcon from '@/assets/custom_icon/filter-on.svg'
@@ -12,6 +13,7 @@ import filterOnIcon from '@/assets/custom_icon/filter-on.svg'
 const charStore = useCharStore()
 const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
+showTeamStore.showTeam = getUsedTeams()
 
 const showOptions = [
   { value: 'rank', name: 'Rank' },

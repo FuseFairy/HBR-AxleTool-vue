@@ -4,6 +4,7 @@ import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { compressToBase64 } from 'lz-string'
+import { getUsedTeams } from '@/api/getUsedTeams'
 
 async function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
@@ -25,26 +26,12 @@ function dataUrlToBlob(dataUrl) {
   return new Blob([ab], { type: mimeString })
 }
 
-function getUsedTeams(skillStore) {
-  const teamsList = []
-
-  skillStore.skills.forEach((group) => {
-    group.forEach((skillEntry) => {
-      if (skillEntry.selectedTab != null && !teamsList.includes(skillEntry.selectedTab)) {
-        teamsList.push(skillEntry.selectedTab)
-      }
-    })
-  })
-
-  return teamsList
-}
-
 export async function convertElementToPng(elementId) {
   const element = document.getElementById(elementId)
   const charStore = useCharStore()
   const skillStore = useSkillStore()
   const sliderStore = useSliderStore()
-  const usedTeams = getUsedTeams(skillStore)
+  const usedTeams = getUsedTeams()
   const usedCharStore = usedTeams.reduce((result, team) => {
     if (team in charStore.selections) {
       result[team] = charStore.selections[team]
