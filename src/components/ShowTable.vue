@@ -404,6 +404,7 @@ image {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #ddb0b0;
   height: 100%;
 }
 .character-image {
