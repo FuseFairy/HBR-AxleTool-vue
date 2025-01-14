@@ -265,7 +265,7 @@ const closeTable = () => {
                 </div>
               </div>
               <div v-else>
-                <span>{{ skillStore.turns[row - 1].turn }}</span>
+                <span class="switch-turn">{{ skillStore.turns[row - 1].turn }}</span>
               </div>
             </div>
           </div>
@@ -277,6 +277,13 @@ const closeTable = () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+.switch-turn {
+  font-size: 36px;
+  font-style: italic;
+  font-weight: bold;
+  color: rgb(210, 188, 188);
+  font-family: 'Kose', 'Noto Sans TC', sans-serif;
+}
 .character-container {
   position: relative;
   display: inline-block;
@@ -350,7 +357,7 @@ image {
   margin: 0 10px;
   padding: 10px 0;
   width: inherit;
-  background-color: #2a2f34;
+  background-color: transparent;
 }
 .axle-line-container {
   display: grid;
