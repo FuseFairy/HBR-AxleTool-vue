@@ -5,7 +5,7 @@ import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useLastTabStore } from '@/stores/lastTab_stores'
-import { fetchSkillOptions } from '@/api/skillOptions'
+import { fetchSkillOptions } from '@/scripts/skillOptions'
 import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
 

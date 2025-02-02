@@ -4,7 +4,7 @@ import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { compressToBase64 } from 'lz-string'
-import { getUsedTeams } from '@/api/getUsedTeams'
+import { getUsedTeams } from '@/scripts/getUsedTeams'
 
 async function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {

@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useLastTabStore } from '@/stores/lastTab_stores'
 import SelectChar from '@/components/SelectChar.vue'
-import { getAssetsFile } from '@/api/util'
+import { getAssetsFile } from '@/scripts/util'
 
 const charStore = useCharStore()
 const lastTabStore = useLastTabStore()

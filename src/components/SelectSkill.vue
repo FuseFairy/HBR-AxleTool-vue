@@ -5,7 +5,7 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useCharStore } from '@/stores/char_stores'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from './SelectAxleChar.vue'
-import { getAssetsFile } from '@/api/util'
+import { getAssetsFile } from '@/scripts/util'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()

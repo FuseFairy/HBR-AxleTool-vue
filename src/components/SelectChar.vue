@@ -3,12 +3,12 @@ import { ref, watch, computed, onMounted } from 'vue'
 import Multiselect from '@vueform/multiselect'
 import { useCharStore } from '@/stores/char_stores'
 import { useSliderStore } from '@/stores/slider_stores'
-import { fetchCharacterOptions } from '@/api/charData'
-import { fetchStyleOptions } from '@/api/styleData'
-import { fetchSkillOptions } from '@/api/skillOptions'
-import { fetchPassiveSkillOptions } from '@/api/passiveSkillOptions'
-import { getAssetsFile } from '@/api/util'
-import { fetchCommandSkill } from '@/api/commandSkill'
+import { fetchCharacterOptions } from '@/scripts/charData'
+import { fetchStyleOptions } from '@/scripts/styleData'
+import { fetchSkillOptions } from '@/scripts/skillOptions'
+import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
+import { getAssetsFile } from '@/scripts/util'
+import { fetchCommandSkill } from '@/scripts/commandSkill'
 
 const charStore = useCharStore()
 const sliderStore = useSliderStore()
