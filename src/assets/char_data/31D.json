@@ -6,7 +6,8 @@
       "今昔之感，思緒萬千": "002",
       "甜蜜的悠閒時光": "004",
       "至高無上的終局": "003",
-      "Holiday Ring a Bell": "005"
+      "Holiday Ring a Bell": "005",
+      "Lead by Example": "006"
     },
     "skill": {
       "common": {
@@ -16,10 +17,14 @@
         "石塔的手筋": 11,
         "石塔的手筋+": 11,
         "北風的昴星": 4,
-        "補充甜點！": 5
+        "補充甜點！": 5,
+        "優勢": 12
       },
       "Holiday Ring a Bell": {
         "冰凍圓舞曲": 14
+      },
+      "Lead by Example": {
+        "國士無雙": 13
       }
     },
     "passive skill": []
