@@ -59,6 +59,21 @@ export async function convertElementToPng(elementId) {
           )
         ])
       )
+      
+      const originalStyles = document.styleSheets;
+      const allowedFonts = ["kaiu", "Gugi", "Kose"];
+      Array.from(originalStyles).forEach((styleSheet) => {
+        try {
+          Array.from(styleSheet.cssRules).forEach((rule, index) => {
+            if (rule instanceof CSSFontFaceRule) {
+              const fontName = rule.style.getPropertyValue("font-family");
+              if (!allowedFonts.includes(fontName.replace(/["']/g, ""))) {
+                styleSheet.deleteRule(index);
+              }
+            }
+          });
+        } catch {}
+      });
 
       const pngDataUrl = await domtoimage.toPng(element, {
         width: width,
