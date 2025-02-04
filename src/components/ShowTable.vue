@@ -186,7 +186,7 @@ const closeTable = () => {
             <!-- Used skill row -->
             <div
               v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)"
-              class="table-container"
+              class="Used-skill table-container"
               style="margin-top: 20px"
             >
               <div v-for="i in 7" class="table-column">
@@ -224,7 +224,11 @@ const closeTable = () => {
                   ? 'table-container-2'
                   : 'table-container-3'
               "
-              :style="{ 'border-top': row > 1 ? '2px dashed gray' : 'none' }"
+              :style="{
+                'background-color': skillStore.turns[row - 1].turn === 'Switch'
+                  ? 'rgba(153, 196, 229, 0.3)'
+                  : (row % 2 === 0 ? 'rgba(33, 33, 33, 0.9)' : 'transparent')
+              }"
             >
               <div
                 v-if="skillStore.turns[row - 1].turn !== 'Switch'"
@@ -343,6 +347,10 @@ image {
   margin: 0 10px;
   width: inherit;
 }
+.Used-skill {
+  background: rgba(113, 108, 122, 0.3);
+  border-radius: 10px;
+}
 .table-container-2 {
   display: grid;
   grid-template-columns: 100px repeat(3, 1fr);
@@ -442,6 +450,7 @@ image {
   text-shadow: 0 0 4px rgb(0, 0, 0), 0 0 8px rgb(0, 0, 0), 0 0 16px rgb(0, 0, 0);
 }
 .used-skill {
+  font-family: 'kaiu', 'Noto Sans TC', sans-serif;
   margin: 3px;
   padding: 2px 8px;
   background-color: #312828;
@@ -451,6 +460,7 @@ image {
   display: inline-block;
 }
 .passive-skill {
+  font-family: 'kaiu', 'Noto Sans TC', sans-serif;
   margin: 3px;
   padding: 2px 8px;
   background-color: #2d3851;
@@ -460,6 +470,7 @@ image {
   display: inline-block;
 }
 .axle-text {
+  font-family: 'kaiu', 'Noto Sans TC', sans-serif;
   font-size: 18px;
   font-weight: normal;
   height: 100%;
