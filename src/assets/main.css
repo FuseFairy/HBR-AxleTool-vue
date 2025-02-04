@@ -10,12 +10,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'kaiu';
-  src: url('@/assets/font/kaiu.woff') format('woff');
-  font-display: swap;
-}
-
 * {
   margin: 0;
   padding: 0;

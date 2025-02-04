@@ -61,7 +61,7 @@ export async function convertElementToPng(elementId) {
       )
       
       const originalStyles = document.styleSheets;
-      const allowedFonts = ["kaiu", "Gugi", "Kose"];
+      const allowedFonts = ["LXGW WenKai Mono TC", "Gugi", "Kose"];
       Array.from(originalStyles).forEach((styleSheet) => {
         try {
           Array.from(styleSheet.cssRules).forEach((rule, index) => {

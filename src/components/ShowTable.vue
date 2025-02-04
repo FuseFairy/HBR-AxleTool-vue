@@ -450,7 +450,6 @@ image {
   text-shadow: 0 0 4px rgb(0, 0, 0), 0 0 8px rgb(0, 0, 0), 0 0 16px rgb(0, 0, 0);
 }
 .used-skill {
-  font-family: 'kaiu', 'Noto Sans TC', sans-serif;
   margin: 3px;
   padding: 2px 8px;
   background-color: #312828;
@@ -460,7 +459,6 @@ image {
   display: inline-block;
 }
 .passive-skill {
-  font-family: 'kaiu', 'Noto Sans TC', sans-serif;
   margin: 3px;
   padding: 2px 8px;
   background-color: #2d3851;
@@ -470,7 +468,6 @@ image {
   display: inline-block;
 }
 .axle-text {
-  font-family: 'kaiu', 'Noto Sans TC', sans-serif;
   font-size: 18px;
   font-weight: normal;
   height: 100%;
