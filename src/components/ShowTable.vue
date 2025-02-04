@@ -457,6 +457,7 @@ image {
   word-wrap: break-word;
   word-break: break-word;
   display: inline-block;
+  border: 2px solid rgb(86, 64, 64);
 }
 .passive-skill {
   margin: 3px;
