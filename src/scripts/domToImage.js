@@ -60,11 +60,28 @@ export async function convertElementToPng(elementId) {
         ])
       )
 
+      const patchCssRulesGetter = () => {
+        const descriptor = Object.getOwnPropertyDescriptor(CSSStyleSheet.prototype, 'cssRules');
+        if (descriptor && descriptor.get) {
+          const originalGetter = descriptor.get;
+          Object.defineProperty(CSSStyleSheet.prototype, 'cssRules', {
+            get: function() {
+              try {
+                return originalGetter.call(this);
+              } catch (e) {
+                return null;
+              }
+            }
+          });
+        }
+      };
+      
+      patchCssRulesGetter();
+      
       const pngDataUrl = await domtoimage.toPng(element, {
-        useCORS: true,
         width: width,
         height: height,
-      })
+      });
 
       const img = new Image()
       img.src = pngDataUrl
