@@ -61,6 +61,7 @@ export async function convertElementToPng(elementId) {
       )
 
       const pngDataUrl = await domtoimage.toPng(element, {
+        useCORS: true,
         width: width,
         height: height,
       })
