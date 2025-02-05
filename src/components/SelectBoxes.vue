@@ -165,6 +165,7 @@ button.tab {
   flex-grow: 1;
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
   font-size: 18px;
+  border-radius: 10px 10px 0 0;
 }
 button.tab.active {
   background-color: #ccc;
