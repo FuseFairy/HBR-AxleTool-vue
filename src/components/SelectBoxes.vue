@@ -4,6 +4,7 @@ import { useCharStore } from '@/stores/char_stores'
 import { useLastTabStore } from '@/stores/lastTab_stores'
 import SelectChar from '@/components/SelectChar.vue'
 import { getAssetsFile } from '@/scripts/util'
+import { fetchSkillOptions } from '@/scripts/skillOptions'
 
 const charStore = useCharStore()
 const lastTabStore = useLastTabStore()
@@ -43,6 +44,20 @@ const handleBoxClick = (key) => {
 const closeContainer = () => {
   activeComponent.value = null
 }
+
+async function refreshData() {
+  const currentTab = lastTabStore.box_lastTab;
+  const Team = charStore.selections[currentTab];
+  
+  for (const charKey in Team) {
+    const { character, team, style } = Team[charKey];
+
+    if (style) {
+      const skillOptions = await fetchSkillOptions(character, team, style);
+      charStore.selections[currentTab][charKey]['skill'] = skillOptions;
+    }
+  }
+}
 </script>
 
 <template>
@@ -58,6 +73,11 @@ const closeContainer = () => {
     </button>
   </div>
 
+  <div class="tool-container">
+    <button @click="refreshData" class="refresh-button">
+      <img src="@/assets/custom_icon/refresh.svg" alt="refresh" />
+    </button>
+  </div>
   <div class="button-container">
     <button
       v-for="button in buttons"
@@ -92,6 +112,22 @@ const closeContainer = () => {
   display: flex;
   gap: 0;
   border-bottom: 2px solid #ccc;
+}
+button.refresh-button {
+  background-color: transparent;
+  padding: 1px;
+  border: none;
+  box-sizing: border-box;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button.refresh-button:hover {
+  background-color: rgba(78, 69, 69, 0.3);
 }
 button.tab {
   padding: 10px 20px;
@@ -131,7 +167,14 @@ button.tab:hover {
   justify-items: center;
   align-items: center;
   height: auto;
-  padding-top: 20px;
+  padding-top: 10px;
+}
+.tool-container {
+  display: flex;
+  height: auto;
+  padding-top: 10px;
+  justify-content: right;
+  align-items: center;
 }
 .circle-button {
   border-radius: 50%;
