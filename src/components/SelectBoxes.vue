@@ -75,7 +75,7 @@ async function refreshData() {
     "newestOnTop": true,
     "limit": 1,
     "toastStyle": {
-      "backgroundColor": "rgba(22, 21, 24, 0.8)",
+      "backgroundColor": "rgba(22, 21, 24, 0.9)",
       "font-family": "LXGW WenKai Mono TC",
       "color": "rgb(248, 216, 251)"
     },
