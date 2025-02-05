@@ -6,15 +6,6 @@ import { useSliderStore } from '@/stores/slider_stores'
 import { compressToBase64 } from 'lz-string'
 import { getUsedTeams } from '@/scripts/getUsedTeams'
 
-async function blobToDataUrl(blob) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result)
-    reader.onerror = reject
-    reader.readAsDataURL(blob)
-  })
-}
-
 function dataUrlToBlob(dataUrl) {
   const byteString = atob(dataUrl.split(',')[1])
   const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0]
@@ -26,7 +17,7 @@ function dataUrlToBlob(dataUrl) {
   return new Blob([ab], { type: mimeString })
 }
 
-export async function convertElementToPng(elementId) {
+export async function convertElementToJpg(elementId) {
   const element = document.getElementById(elementId)
   const charStore = useCharStore()
   const skillStore = useSkillStore()
@@ -59,79 +50,44 @@ export async function convertElementToPng(elementId) {
           )
         ])
       )
-      
-      const originalStyles = document.styleSheets;
-      const allowedFonts = ["LXGW WenKai Mono TC", "Gugi", "Kose"];
-      Array.from(originalStyles).forEach((styleSheet) => {
-        try {
-          Array.from(styleSheet.cssRules).forEach((rule, index) => {
-            if (rule instanceof CSSFontFaceRule) {
-              const fontName = rule.style.getPropertyValue("font-family");
-              if (!allowedFonts.includes(fontName.replace(/["']/g, ""))) {
-                styleSheet.deleteRule(index);
-              }
-            }
-          });
-        } catch {}
-      });
 
-      const pngDataUrl = await domtoimage.toPng(element, {
+      const dataUrl = await domtoimage.toJpeg(element, {
         width: width,
         height: height,
-      })
+        quality: 1.0,
+      });
 
-      const img = new Image()
-      img.src = pngDataUrl
+      const customData = {
+        char: newCharStore,
+        axleName: axleName,
+        skills: skillStore.skills,
+        turns: skillStore.turns,
+        rows: sliderStore.rows
+      };
 
-      img.onload = async () => {
-        const canvas = document.createElement('canvas')
-        const ctx = canvas.getContext('2d')
-        canvas.width = img.width
-        canvas.height = img.height
+      const jsonString = JSON.stringify(customData);
+      const compressedData = compressToBase64(jsonString);
 
-        ctx.drawImage(img, 0, 0)
+      const exif = {};
+      exif[piexif.ExifIFD.UserComment] = compressedData;
 
-        canvas.toBlob(
-          async (blob) => {
-            if (!blob) {
-              console.error('Failed to create blob from canvas.')
-              return
-            }
-            const customData = {
-              char: newCharStore,
-              axleName: axleName,
-              skills: skillStore.skills,
-              turns: skillStore.turns,
-              rows: sliderStore.rows
-            }
+      const exifObj = { Exif: exif };
+      const exifBytes = piexif.dump(exifObj);
+      const jpegWithExifData = piexif.insert(exifBytes, dataUrl);
 
-            const jsonString = JSON.stringify(customData)
-            const compressedData = compressToBase64(jsonString)
+      const finalBlob = dataUrlToBlob(jpegWithExifData);
 
-            const exif = {}
-            exif[piexif.ExifIFD.UserComment] = compressedData
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(finalBlob);
+      link.download = `${axleName || 'hbr_axle'}.jpg`;
+      document.body.appendChild(link);
+      link.click();
 
-            const exifObj = { Exif: exif }
-            const exifBytes = piexif.dump(exifObj)
-            const jpegWithExifData = piexif.insert(exifBytes, await blobToDataUrl(blob))
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+      }, 100);
 
-            const finalBlob = dataUrlToBlob(jpegWithExifData)
-
-            const link = document.createElement('a')
-            link.href = URL.createObjectURL(finalBlob)
-            link.download = `${axleName || 'hbr_axle'}.jpg`;
-            document.body.appendChild(link)
-            link.click()
-
-            setTimeout(() => {
-              document.body.removeChild(link)
-              URL.revokeObjectURL(link.href)
-            }, 100)
-          },
-          'image/jpeg',
-          1.0
-        )
-      }
     } catch (error) {
       console.error('Error generating or saving image:', error)
     }

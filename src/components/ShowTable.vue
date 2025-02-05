@@ -5,7 +5,7 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useShowRowStore } from '@/stores/showRow_stores.js'
 import { useShowTeamStore } from '@/stores/showTeam_stores'
-import { convertElementToPng } from '@/scripts/domToImage'
+import { convertElementToJpg } from '@/scripts/domToImage'
 import { getAssetsFile } from '@/scripts/util'
 import { getUsedSkills } from '@/scripts/getUsedSkills'
 import loading from 'vue-loading-overlay'
@@ -57,7 +57,7 @@ const hasPassiveSkill = (selectedTab) => {
 const downloadTable = async () => {
   isLoading.value = true
   try {
-    await convertElementToPng('show-axle')
+    await convertElementToJpg('show-axle')
   } catch (error) {
     console.error('Error during download:', error)
     alert('Error during download:', error)
