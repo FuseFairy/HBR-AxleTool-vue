@@ -95,7 +95,7 @@ function handleTurnChange(value, index) {
 
 <template>
   <div v-for="i in sliderStore.rows" :key="i" :class="['container', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]">
-    <button class="delete-button" @click="deleteRow(i - 1)">
+    <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
@@ -108,7 +108,7 @@ function handleTurnChange(value, index) {
         />
       </svg>
     </button>
-    <button class="copy-button" @click="copyRow(i - 1)">
+    <button class="copy-button" @click="copyRow(i - 1)" v-tooltip="{ content: 'copy', placement: 'bottom' }">
       <img src="@/assets/custom_icon/copy.svg" alt="copy" />
     </button>
     <div class="column">

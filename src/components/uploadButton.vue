@@ -101,7 +101,7 @@ const onFileChange = async (event) => {
     loader="dots"
     color="#79d1cb"
   />
-  <button @click="triggerFileInput" class="upload-button">
+  <button @click="triggerFileInput" class="upload-button" v-tooltip="{ content: 'upload', placement: 'bottom' }">
     <img src="@/assets/custom_icon/upload.svg" alt="upload" />
   </button>
   <input

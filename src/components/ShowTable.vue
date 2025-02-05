@@ -91,9 +91,9 @@ const closeTable = () => {
     />
     <div @click.stop class="container">
       <div class="button-group">
-        <div class="left-button-group">
+        <div class="left-button-group" >
           <ShowTableFilter />
-          <button @click="downloadTable" class="download">
+          <button @click="downloadTable" class="download" v-tooltip="{ content: 'download', placement: 'bottom' }">
             <img src="@/assets/custom_icon/download.svg" alt="Download" />
           </button>
         </div>

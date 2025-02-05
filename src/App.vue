@@ -21,7 +21,7 @@ const toggleTable = () => {
     <nav>
       <uploadButton />
       <h1 class="nav-title">HBR Axle Tool</h1>
-      <button @click="toggleTable">
+      <button @click="toggleTable" v-tooltip="{ content: 'table', placement: 'bottom' }">
         <img src="@/assets/custom_icon/table.svg" alt="table" />
       </button>
       <Transition name="modal">
