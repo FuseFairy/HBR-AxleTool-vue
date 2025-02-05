@@ -115,7 +115,7 @@ function handleTurnChange(value, index) {
       <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]"></div>
       <Multiselect
         v-model="skillStore.turns[i - 1].turn"
-        placeholder="Select turn"
+        placeholder="Turn"
         :options="turnOptions"
         @update:model-value="(value) => handleTurnChange(value, i)"
       >
@@ -123,7 +123,7 @@ function handleTurnChange(value, index) {
       <Multiselect
         v-if="skillStore.turns[i - 1].turn !== 'Switch'"
         v-model="skillStore.turns[i - 1].od"
-        placeholder="Select OD"
+        placeholder="OD"
         :options="odOptions"
       >
       </Multiselect>
@@ -146,7 +146,7 @@ function handleTurnChange(value, index) {
       </button>
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].skill"
-        placeholder="Select skill"
+        placeholder="Skill"
         label="name"
         :searchable="true"
         :options="getFilteredSkills(i - 1, n - 1)"
@@ -163,7 +163,7 @@ function handleTurnChange(value, index) {
       </Multiselect>
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].target"
-        placeholder="Select target"
+        placeholder="Target"
         :options="targetOptions(i - 1, n - 1)"
       >
       </Multiselect>
