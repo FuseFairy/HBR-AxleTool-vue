@@ -95,7 +95,7 @@ function handleTurnChange(value, index) {
 
 <template>
   <div v-for="i in sliderStore.rows" :key="i" :class="['container', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]">
-    <button class="delete-button" @click="deleteRow(i - 1)">
+    <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
@@ -108,14 +108,14 @@ function handleTurnChange(value, index) {
         />
       </svg>
     </button>
-    <button class="copy-button" @click="copyRow(i - 1)">
+    <button class="copy-button" @click="copyRow(i - 1)" v-tooltip="{ content: 'copy', placement: 'bottom' }">
       <img src="@/assets/custom_icon/copy.svg" alt="copy" />
     </button>
     <div class="column">
       <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]"></div>
       <Multiselect
         v-model="skillStore.turns[i - 1].turn"
-        placeholder="Select turn"
+        placeholder="Turn"
         :options="turnOptions"
         @update:model-value="(value) => handleTurnChange(value, i)"
       >
@@ -123,7 +123,7 @@ function handleTurnChange(value, index) {
       <Multiselect
         v-if="skillStore.turns[i - 1].turn !== 'Switch'"
         v-model="skillStore.turns[i - 1].od"
-        placeholder="Select OD"
+        placeholder="OD"
         :options="odOptions"
       >
       </Multiselect>
@@ -146,7 +146,7 @@ function handleTurnChange(value, index) {
       </button>
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].skill"
-        placeholder="Select skill"
+        placeholder="Skill"
         label="name"
         :searchable="true"
         :options="getFilteredSkills(i - 1, n - 1)"
@@ -163,7 +163,7 @@ function handleTurnChange(value, index) {
       </Multiselect>
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].target"
-        placeholder="Select target"
+        placeholder="Target"
         :options="targetOptions(i - 1, n - 1)"
       >
       </Multiselect>

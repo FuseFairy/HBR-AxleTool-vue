@@ -5,13 +5,13 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useShowRowStore } from '@/stores/showRow_stores.js'
 import { useShowTeamStore } from '@/stores/showTeam_stores'
-import { convertElementToPng } from '@/scripts/domToImage'
+import { convertElementToJpg } from '@/scripts/domToImage'
 import { getAssetsFile } from '@/scripts/util'
 import { getUsedSkills } from '@/scripts/getUsedSkills'
 import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ShowTableFilter.vue'
 
-const isLoading = ref(false)
+const isDownloading = ref(false)
 const fullPage = ref(true)
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -55,14 +55,14 @@ const hasPassiveSkill = (selectedTab) => {
 }
 
 const downloadTable = async () => {
-  isLoading.value = true
+  isDownloading.value = true
   try {
-    await convertElementToPng('show-axle')
+    await convertElementToJpg('show-axle')
   } catch (error) {
     console.error('Error during download:', error)
     alert('Error during download:', error)
   } finally {
-    isLoading.value = false
+    isDownloading.value = false
   }
 }
 
@@ -82,7 +82,7 @@ const closeTable = () => {
 <template>
   <div @click="closeTable" class="overlay">
     <loading
-      v-model:active="isLoading"
+      v-model:active="isDownloading"
       :can-cancel="false"
       :is-full-page="fullPage"
       :lock-scroll="true"
@@ -91,7 +91,7 @@ const closeTable = () => {
     />
     <div @click.stop class="container">
       <div class="button-group">
-        <div class="left-button-group">
+        <div class="left-button-group" >
           <ShowTableFilter />
           <button @click="downloadTable" class="download">
             <img src="@/assets/custom_icon/download.svg" alt="Download" />

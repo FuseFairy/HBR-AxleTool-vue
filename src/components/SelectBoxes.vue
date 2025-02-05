@@ -4,6 +4,9 @@ import { useCharStore } from '@/stores/char_stores'
 import { useLastTabStore } from '@/stores/lastTab_stores'
 import SelectChar from '@/components/SelectChar.vue'
 import { getAssetsFile } from '@/scripts/util'
+import { fetchSkillOptions } from '@/scripts/skillOptions'
+import { toast } from "vue3-toastify"
+import "vue3-toastify/dist/index.css"
 
 const charStore = useCharStore()
 const lastTabStore = useLastTabStore()
@@ -43,6 +46,44 @@ const handleBoxClick = (key) => {
 const closeContainer = () => {
   activeComponent.value = null
 }
+
+const isSpinning = ref(false)
+async function refreshData() {
+  const currentTab = lastTabStore.box_lastTab;
+  const Team = charStore.selections[currentTab];
+  isSpinning.value = true
+
+  setTimeout(() => {
+    isSpinning.value = false
+  }, 200)
+    
+  for (const charKey in Team) {
+    const { character, team, style } = Team[charKey];
+
+    if (style) {
+      const skillOptions = await fetchSkillOptions(character, team, style);
+      charStore.selections[currentTab][charKey]['skill'] = skillOptions;
+    }
+  }
+
+  toast("技能選項成功刷新!", {
+    "theme": "colored",
+    "type": "success",
+    "position": "bottom-right",
+    "autoClose": 1500,
+    "dangerouslyHTMLString": true,
+    "newestOnTop": true,
+    "limit": 1,
+    "toastStyle": {
+      "backgroundColor": "rgba(22, 21, 24, 0.9)",
+      "font-family": "LXGW WenKai Mono TC",
+      "color": "rgb(248, 216, 251)"
+    },
+    "progressStyle": {
+      "backgroundColor": "rgb(180, 68, 191)",
+    }
+  })
+}
 </script>
 
 <template>
@@ -58,6 +99,11 @@ const closeContainer = () => {
     </button>
   </div>
 
+  <div class="tool-container">
+    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: '刷新技能選項', placement: 'bottom', disabled: isSpinning}">
+      <img src="@/assets/custom_icon/update.svg" alt="refresh" :class="{ spin: isSpinning }" />
+    </button>
+  </div>
   <div class="button-container">
     <button
       v-for="button in buttons"
@@ -93,6 +139,22 @@ const closeContainer = () => {
   gap: 0;
   border-bottom: 2px solid #ccc;
 }
+button.refresh-button {
+  background-color: transparent;
+  padding: 1px;
+  border: none;
+  box-sizing: border-box;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button.refresh-button:hover {
+  background-color: rgba(78, 69, 69, 0.3);
+}
 button.tab {
   padding: 10px 20px;
   cursor: pointer;
@@ -103,6 +165,7 @@ button.tab {
   flex-grow: 1;
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
   font-size: 18px;
+  border-radius: 10px 10px 0 0;
 }
 button.tab.active {
   background-color: #ccc;
@@ -131,7 +194,14 @@ button.tab:hover {
   justify-items: center;
   align-items: center;
   height: auto;
-  padding-top: 20px;
+  padding-top: 10px;
+}
+.tool-container {
+  display: flex;
+  height: auto;
+  padding-top: 10px;
+  justify-content: right;
+  align-items: center;
 }
 .circle-button {
   border-radius: 50%;
@@ -175,6 +245,14 @@ button.tab:hover {
 .icon-img {
   width: 50px;
   height: 50px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.spin {
+  animation: spin 0.2s ease-in-out;
 }
 @media (max-width: 800px) {
   .button-container {

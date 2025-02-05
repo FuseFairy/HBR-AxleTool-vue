@@ -45,7 +45,6 @@ const rankOptions = Array.from({ length: 10 }, (_, i) => i + 1)
 const characterOptions = ref([])
 const styleOptions = ref([])
 const passiveSkillOptions = ref([])
-const skillOptions = ref([])
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team', props.selectedTab))
 const selectedCharacter = ref(
@@ -58,7 +57,6 @@ const selectedFlower = ref(charStore.getSelection(props.buttonKey, 'flower', pro
 const selectedPassiveSkill = ref(
   charStore.getSelection(props.buttonKey, 'passiveSkill', props.selectedTab)
 )
-const selectedSkill = ref(charStore.getSelection(props.buttonKey, 'skill', props.selectedTab))
 
 const isCharDisabled = computed(() => !selectedTeam.value)
 const isStyleDisabled = computed(() => !selectedCharacter.value)
@@ -77,16 +75,6 @@ const initializeOptions = async () => {
       selectedTeam.value,
       selectedStyle.value
     )
-    const fetchedSkills = await fetchSkillOptions(
-      selectedCharacter.value,
-      selectedTeam.value,
-      selectedStyle.value
-    )
-    skillOptions.value = fetchedSkills.map((skill) => ({
-      name: skill.name,
-      sp: skill.sp,
-      value: skill.name
-    }))
   }
 }
 
@@ -122,16 +110,6 @@ watch(selectedStyle, async (newStyle) => {
   if (newStyle) {
     const selectedOption = styleOptions.value.find((option) => option.name === newStyle)
     if (selectedOption) {
-      const fetchedSkills = await fetchSkillOptions(
-        selectedCharacter.value,
-        selectedTeam.value,
-        newStyle
-      )
-      skillOptions.value = fetchedSkills.map((skill) => ({
-        name: skill.name,
-        sp: skill.sp,
-        value: skill.name
-      }))
       passiveSkillOptions.value = await fetchPassiveSkillOptions(
         selectedCharacter.value,
         selectedTeam.value,
@@ -146,7 +124,7 @@ watch(selectedStyle, async (newStyle) => {
       charStore.setSelection(props.buttonKey, 'style', newStyle, props.selectedTab)
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon, props.selectedTab)
       charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
-      selectedSkill.value = []
+
       selectedPassiveSkill.value = []
     }
   } else {
@@ -158,12 +136,11 @@ watch(selectedStyle, async (newStyle) => {
     charStore.setSelection(props.buttonKey, 'commandSkill', null, props.selectedTab)
     charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
     charStore.setSelection(props.buttonKey, 'skill', [], props.selectedTab)
-    // 確保同步更新
+
     selectedRank.value = null
     selectedPassiveSkill.value = []
     selectedFlower.value = false
     selectedEarring.value = null
-    selectedSkill.value = []
   }
 })
 
@@ -176,7 +153,7 @@ const toggleCheckbox = () => {
 
 const emit = defineEmits(['close'])
 const closeContainer = async () => {
-  if (selectedSkill.value.length <= 0 && selectedStyle.value) {
+  if (selectedStyle.value) {
     charStore.setSelection(
       props.buttonKey,
       'skill',
