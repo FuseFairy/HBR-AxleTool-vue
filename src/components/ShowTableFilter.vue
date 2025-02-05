@@ -43,7 +43,7 @@ onClickOutside(
 
 <template>
 <div ref="filterRef">
-	<button @click="show = !show" class="filter" v-tooltip="{ content: 'filter', placement: 'bottom' }">
+	<button @click="show = !show" class="filter">
     <img
       :src="show ? filterOffIcon : filterOnIcon"
       alt="Filter"
