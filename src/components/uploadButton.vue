@@ -16,6 +16,7 @@ const lastTabStore = useLastTabStore()
 const fileInput = ref(null)
 const isLoading = ref(false)
 const fullPage = ref(true)
+const isUploading = ref(false)
 
 const triggerFileInput = () => {
   fileInput.value.click()
@@ -46,6 +47,7 @@ async function updateSelections(decodedDataChar) {
 }
 
 const onFileChange = async (event) => {
+  isUploading.value = true
   const file = event.target.files[0]
   if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg')) {
     const reader = new FileReader()
@@ -81,6 +83,7 @@ const onFileChange = async (event) => {
       } finally {
         event.target.value = ''
         isLoading.value = false
+        isUploading.value = false
       }
     }
 
@@ -101,7 +104,7 @@ const onFileChange = async (event) => {
     loader="dots"
     color="#79d1cb"
   />
-  <button @click="triggerFileInput" class="upload-button" v-tooltip="{ content: 'upload', placement: 'bottom' }">
+  <button @click="triggerFileInput" class="upload-button" v-tooltip="{ content: 'upload', placement: 'bottom', disabled: isUploading }">
     <img src="@/assets/custom_icon/upload.svg" alt="upload" />
   </button>
   <input

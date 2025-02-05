@@ -100,7 +100,7 @@ async function refreshData() {
   </div>
 
   <div class="tool-container">
-    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: '刷新技能選項', placement: 'bottom' }">
+    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: '刷新技能選項', placement: 'bottom', disabled: isSpinning}">
       <img src="@/assets/custom_icon/refresh.svg" alt="refresh" :class="{ spin: isSpinning }" />
     </button>
   </div>
