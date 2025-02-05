@@ -5,6 +5,8 @@ import { useLastTabStore } from '@/stores/lastTab_stores'
 import SelectChar from '@/components/SelectChar.vue'
 import { getAssetsFile } from '@/scripts/util'
 import { fetchSkillOptions } from '@/scripts/skillOptions'
+import { toast } from "vue3-toastify"
+import "vue3-toastify/dist/index.css"
 
 const charStore = useCharStore()
 const lastTabStore = useLastTabStore()
@@ -45,10 +47,16 @@ const closeContainer = () => {
   activeComponent.value = null
 }
 
+const isSpinning = ref(false)
 async function refreshData() {
   const currentTab = lastTabStore.box_lastTab;
   const Team = charStore.selections[currentTab];
-  
+  isSpinning.value = true
+
+  setTimeout(() => {
+    isSpinning.value = false
+  }, 200)
+    
   for (const charKey in Team) {
     const { character, team, style } = Team[charKey];
 
@@ -57,6 +65,24 @@ async function refreshData() {
       charStore.selections[currentTab][charKey]['skill'] = skillOptions;
     }
   }
+
+  toast("技能選項成功刷新!", {
+    "theme": "colored",
+    "type": "success",
+    "position": "bottom-right",
+    "autoClose": 1500,
+    "dangerouslyHTMLString": true,
+    "newestOnTop": true,
+    "limit": 1,
+    "toastStyle": {
+      "backgroundColor": "rgba(22, 21, 24, 0.8)",
+      "font-family": "LXGW WenKai Mono TC",
+      "color": "rgb(248, 216, 251)"
+    },
+    "progressStyle": {
+      "backgroundColor": "rgb(180, 68, 191)",
+    }
+  })
 }
 </script>
 
@@ -74,8 +100,8 @@ async function refreshData() {
   </div>
 
   <div class="tool-container">
-    <button @click="refreshData" class="refresh-button">
-      <img src="@/assets/custom_icon/refresh.svg" alt="refresh" />
+    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: '刷新技能選項', placement: 'bottom' }">
+      <img src="@/assets/custom_icon/refresh.svg" alt="refresh" :class="{ spin: isSpinning }" />
     </button>
   </div>
   <div class="button-container">
@@ -218,6 +244,14 @@ button.tab:hover {
 .icon-img {
   width: 50px;
   height: 50px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.spin {
+  animation: spin 0.2s ease-in-out;
 }
 @media (max-width: 800px) {
   .button-container {
