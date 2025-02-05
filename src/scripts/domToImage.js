@@ -4,7 +4,7 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { compressToBase64 } from 'lz-string'
 import { getUsedTeams } from '@/scripts/getUsedTeams'
-import { toJpeg } from 'html-to-image'
+import domtoimage from 'dom-to-image-more'
 
 export async function convertElementToJpg(elementId) {
   const element = document.getElementById(elementId)
@@ -34,7 +34,7 @@ export async function convertElementToJpg(elementId) {
         ])
       );      
 
-      const dataUrl = await toJpeg(element, {
+      const dataUrl = await domtoimage.toJpeg(element, {
         quality: 1.0,
         backgroundColor: 'black',
         cacheBust: true,
