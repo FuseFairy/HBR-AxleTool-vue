@@ -24,7 +24,8 @@ const addRow = () => {
   if (sliderStore.rows < 50) {
     sliderStore.rows++
     skillStore.adjustSkills(sliderStore.rows)
-    nextTick(() => {
+    nextTick(async () => {
+      await nextTick()
       scrollToBottom()
     })
   }

@@ -80,6 +80,21 @@ const copyRow = (index) => {
   const copiedSkill = JSON.parse(JSON.stringify(skillStore.skills[index]))
   skillStore.turns.splice(index + 1, 0, copiedTurn)
   skillStore.skills.splice(index + 1, 0, copiedSkill)
+
+  nextTick(async () => {
+    await nextTick()
+    scrollToCopiedRow(index + 1)
+  })
+}
+
+const scrollToCopiedRow = (targetIndex) => {
+  const rowElements = document.querySelectorAll('.row-item')
+  if (rowElements[targetIndex]) {
+    rowElements[targetIndex].scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    })
+  }
 }
 
 function handleTurnChange(value, index) {
@@ -94,7 +109,7 @@ function handleTurnChange(value, index) {
 </script>
 
 <template>
-  <div v-for="i in sliderStore.rows" :key="i" :class="['container', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]">
+  <div v-for="i in sliderStore.rows" :key="i" :class="['container row-item', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]">
     <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
       <svg
         xmlns="http://www.w3.org/2000/svg"
