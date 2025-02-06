@@ -103,7 +103,10 @@ const closeTable = () => {
         </button>
       </div>
       <div class="table scrollbar-style-1">
-        <div id="show-axle" class="table-wrapper">
+        <div v-if="sliderStore.rows <= 0" class="sleeping-image">
+          <img src="/src/assets/sleeping.webp" />
+        </div>
+        <div v-else id="show-axle" class="table-wrapper">
           <span v-if="axleName.length > 0" class="axle-name">{{ axleName }}</span>
           <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
             <div
@@ -281,6 +284,10 @@ const closeTable = () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+.sleeping-image {
+  display: block;
+  margin: auto;
+}
 .switch-turn {
   font-size: 36px;
   font-style: italic;
