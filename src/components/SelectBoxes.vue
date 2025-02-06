@@ -29,15 +29,19 @@ const tabs = [
   { key: 6, label: 'Team 6' }
 ]
 
-const selectedTab = computed(() => {
-  return lastTabStore.box_lastTab !== 1 ? lastTabStore.box_lastTab : 1;
-});
 const activeComponent = ref(null)
 
+const selectedTab = computed({
+  get() {
+    return lastTabStore.box_lastTab || 1;
+  },
+  set(key) {
+    lastTabStore.box_lastTab = key;
+  }
+});
 const selectTab = (key) => {
-  selectedTab.value = key
-  lastTabStore.box_lastTab = key
-}
+  selectedTab.value = key;
+};
 
 const handleBoxClick = (key) => {
   activeComponent.value = key
