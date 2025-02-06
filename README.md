@@ -24,6 +24,7 @@ npm run dev
 
 ```sh
 npm run build
+npm run preview
 ```
 
 ### Format Code with Prettier
