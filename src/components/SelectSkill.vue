@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, nextTick } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useCharStore } from '@/stores/char_stores'
