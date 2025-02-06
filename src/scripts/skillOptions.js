@@ -19,9 +19,9 @@ export async function fetchSkillOptions(characterName, team, styleName) {
     )
     const universalSkills = {
       批判性思考: 5,
-      修復之光: 11,
+      修復之光: 9,
       DRIVE增幅: 6,
-      防護罩: 3,
+      防護罩: 0,
       進攻上升: 4,
       專注力: 4,
       重點保養: 1,
