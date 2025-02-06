@@ -25,7 +25,7 @@ const earringDict = {
   '爆破耳環':'earring_icon/explosion.webp'
 }
 
-const axleName = skillStore.axleName.trimEnd()
+const axleName = skillStore.axleName.trim()
 
 const hasRank = (selectedTab) => {
   const rankInShowRow = showRowStore.showRow.includes('rank')

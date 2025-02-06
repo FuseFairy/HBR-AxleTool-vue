@@ -31,7 +31,7 @@ export async function convertElementToJpg(elementId) {
     return result
   }, {})
 
-  const axleName = skillStore.axleName.trimEnd()
+  const axleName = skillStore.axleName.trim()
 
   try {
     const dataUrl = await domtoimage.toJpeg(element, {
