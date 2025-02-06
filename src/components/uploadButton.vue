@@ -17,67 +17,63 @@ const fileInput = ref(null)
 const isLoading = ref(false)
 const fullPage = ref(true)
 
-const triggerFileInput = () => {
-  fileInput.value.click()
-}
+const triggerFileInput = () => fileInput.value.click()
 
-async function updateSelections(decodedDataChar) {
-  let lastTabAssigned = false;
+const updateSelections = async (decodedDataChar) => {
+  let lastTabAssigned = false
 
   for (const teamKey in decodedDataChar) {
-    const Team = decodedDataChar[teamKey];
-    
-    for (const charKey in Team) {
-      const { character, team, style } = Team[charKey];
-      
-      if (style && !lastTabAssigned) {
-        lastTabStore.box_lastTab = parseInt(teamKey, 10);
-        lastTabAssigned = true;
-      }
+    const team = decodedDataChar[teamKey]
+
+    for (const charKey in team) {
+      const { character, team: teamName, style } = team[charKey]
 
       if (style) {
-        const skillOptions = await fetchSkillOptions(character, team, style);
-        decodedDataChar[teamKey][charKey]['skill'] = skillOptions;
+        if (!lastTabAssigned) {
+          lastTabStore.box_lastTab = parseInt(teamKey, 10)
+          lastTabAssigned = true
+        }
+        team[charKey]['skill'] = await fetchSkillOptions(character, teamName, style)
       }
     }
   }
-
-  return decodedDataChar;
+  return decodedDataChar
 }
 
 const onFileChange = async (event) => {
   const file = event.target.files[0]
-  if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg')) {
+  if (!file || !['image/jpeg', 'image/jpg'].includes(file.type)) {
+    alert('Please upload a JPEG image file!')
+    return
+  }
+
+  try {
+    isLoading.value = true
     const reader = new FileReader()
+    
     reader.onload = async (e) => {
       try {
-        isLoading.value = true
         const jpegDataUrl = e.target.result
         const exifObj = piexif.load(jpegDataUrl)
         const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || ''
 
-        if (customData) {
-          const jsonString = decompressFromBase64(customData)
-          const decodedData = JSON.parse(jsonString)
-          const decodedDataUpdate = await updateSelections(decodedData.char)
-          Object.keys(decodedDataUpdate).forEach((key) => {
-            charStore.selections[key] = decodedDataUpdate[key]
-          })
-          if (decodedData.axleName !== undefined) {
-            skillStore.axleName = decodedData.axleName;
-          }
-          skillStore.skills = decodedData.skills
-          skillStore.turns = decodedData.turns
-          sliderStore.rows = decodedData.rows
-        } else {
-          console.error('Custom metadata not found')
-          alert('Custom metadata not found. Please check the file.')
+        if (!customData) {
+          throw new Error('Custom metadata not found.')
         }
+
+        const decodedData = JSON.parse(decompressFromBase64(customData))
+        const updatedSelections = await updateSelections(decodedData.char)
+
+        Object.assign(charStore.selections, updatedSelections)
+        Object.assign(skillStore, {
+          axleName: decodedData.axleName ?? skillStore.axleName,
+          skills: decodedData.skills,
+          turns: decodedData.turns
+        })
+        sliderStore.rows = decodedData.rows
       } catch (error) {
-        console.error('Error reading image or parsing parameters:', error)
-        alert(
-          'The uploaded JPEG file format is incorrect or parameter parsing failed. Please check if the file is corrupted or if the parameter format is correct.'
-        )
+        console.error('Error reading image or parsing metadata:', error)
+        alert('Invalid JPEG file format or failed to parse metadata. Please check the file integrity and format.')
       } finally {
         event.target.value = ''
         isLoading.value = false
@@ -85,8 +81,9 @@ const onFileChange = async (event) => {
     }
 
     reader.readAsDataURL(file)
-  } else {
-    alert('Please upload a JPEG formatted image!')
+  } catch (error) {
+    console.error('Error reading file:', error)
+    alert('Failed to read the file. Please try again.')
   }
 }
 </script>
@@ -101,33 +98,27 @@ const onFileChange = async (event) => {
     loader="dots"
     color="#79d1cb"
   />
-  <button @click="triggerFileInput" class="upload-button" v-tooltip="{ content: 'upload', placement: 'bottom' }">
-    <img src="@/assets/custom_icon/upload.svg" alt="upload" />
+  <button @click="triggerFileInput" class="upload-button" v-tooltip="{ content: 'Upload', placement: 'bottom' }">
+    <img src="@/assets/custom_icon/upload.svg" alt="Upload" />
   </button>
-  <input
-    type="file"
-    ref="fileInput"
-    @change="onFileChange"
-    accept=".jpg,.jpeg"
-    style="display: none"
-  />
+  <input type="file" ref="fileInput" @change="onFileChange" accept=".jpg,.jpeg" style="display: none" />
 </template>
 
 <style scoped>
 .upload-button {
   background-color: transparent;
-  padding: 1px;
+  padding: 4px;
   border: none;
-  box-sizing: border-box;
-  height: 32px;
-  width: 32px;
+  height: 36px;
+  width: 36px;
   cursor: pointer;
-  border-radius: 30%;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s;
 }
 .upload-button:hover {
-  background-color: rgba(78, 69, 69, 0.3);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 </style>
