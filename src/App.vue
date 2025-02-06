@@ -25,9 +25,7 @@ const toggleTable = () => {
         <img src="@/assets/custom_icon/table.svg" alt="table" />
       </button>
       <Transition name="modal">
-        <keep-alive>
           <ShowTable v-if="isTableVisible" @close="toggleTable" />
-        </keep-alive>
       </Transition>
     </nav>
     <main class="scrollbar-style-1">
