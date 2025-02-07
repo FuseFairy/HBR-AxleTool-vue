@@ -31,7 +31,7 @@ export function getUsedSkills(selectedTab) {
       .sort((a, b) => a.length - b.length)
     skillsDictionary[style] = new Set(sortedSkills)
   })
-
+  console.log(skillsDictionary);
   return skillsDictionary
 }
 

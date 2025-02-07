@@ -69,7 +69,7 @@ const downloadTable = async () => {
 function hasTeam(selectedTab) {
   const usedSkills = getUsedSkills(selectedTab)
   return (
-    Object.keys(usedSkills).length > 0 && Object.values(usedSkills).every((set) => set.size !== 0)
+    Object.keys(usedSkills).length > 0 && Object.values(usedSkills).some((set) => set.size !== 0)
   )
 }
 
