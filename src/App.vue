@@ -44,10 +44,7 @@ const toggleTable = () => {
             <img src="@/assets/custom_icon/github.svg" alt="GitHub" class="github-icon" />
           </a>
           <div class="footer-text">
-            <p>Developed by </p>
-            <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a>
-            <p> & </p>
-            <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
+            Developed by <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a> & <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
           </div>
         </div>
       </div>
