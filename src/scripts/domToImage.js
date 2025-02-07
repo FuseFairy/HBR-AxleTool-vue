@@ -33,7 +33,21 @@ export async function convertElementToJpg(elementId) {
 
   const axleName = skillStore.axleName.trim()
 
+  const images = element.getElementsByTagName('img')
+  const imageLoadPromises = Array.from(images).map(img => {
+    return new Promise(resolve => {
+      if (img.complete) {
+        resolve()
+      } else {
+        img.onload = resolve
+        img.onerror = resolve
+      }
+    })
+  })
+
   try {
+    await Promise.all(imageLoadPromises)
+
     const dataUrl = await domtoimage.toJpeg(element, {
       quality: 1.0,
       backgroundColor: 'black',
