@@ -292,7 +292,7 @@ const closeTable = () => {
   font-size: 36px;
   font-style: italic;
   font-weight: bold;
-  color: rgba(255, 215, 0);
+  color: rgb(255, 215, 0);
   font-family: 'Kose', 'Noto Sans TC', sans-serif;
 }
 .character-container {

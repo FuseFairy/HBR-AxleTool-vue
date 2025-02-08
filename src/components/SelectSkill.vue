@@ -228,6 +228,7 @@ span {
 }
 .grid-disabled {
   grid-template-columns: none !important;
+  border-left: 2px solid rgba(255, 215, 0, 1);
 }
 .container:hover {
   box-shadow:
