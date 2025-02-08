@@ -65,7 +65,7 @@ const downloadTable = async () => {
     toast("下載發生錯誤，請盡量使用Chrome、Edge瀏覽器進行下載", {
       "theme": "colored",
       "type": "error",
-      "position": "bottom-right",
+      "position": "top-right",
       "autoClose": 3000,
       "dangerouslyHTMLString": true,
       "newestOnTop": true,
