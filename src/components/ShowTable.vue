@@ -229,7 +229,7 @@ const closeTable = () => {
               "
               :style="{
                 'background-color': skillStore.turns[row - 1].turn === 'Switch'
-                  ? 'rgba(153, 196, 229, 0.3)'
+                  ? 'rgba(26, 26, 26, 0.9)'
                   : (row % 2 === 0 ? 'rgba(33, 33, 33, 0.9)' : 'transparent')
               }"
             >
@@ -292,7 +292,7 @@ const closeTable = () => {
   font-size: 36px;
   font-style: italic;
   font-weight: bold;
-  color: rgb(210, 188, 188);
+  color: rgba(255, 215, 0);
   font-family: 'Kose', 'Noto Sans TC', sans-serif;
 }
 .character-container {
