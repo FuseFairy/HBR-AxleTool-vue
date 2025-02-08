@@ -80,6 +80,6 @@ export async function convertElementToJpg(elementId) {
     link.click()
 
   } catch (error) {
-    console.error('Error generating or saving image:', error)
+    throw error;
   }
 }

@@ -10,6 +10,8 @@ import { getAssetsFile } from '@/scripts/util'
 import { getUsedSkills } from '@/scripts/getUsedSkills'
 import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ShowTableFilter.vue'
+import { toast } from "vue3-toastify"
+import "vue3-toastify/dist/index.css"
 
 const isDownloading = ref(false)
 const fullPage = ref(true)
@@ -60,7 +62,18 @@ const downloadTable = async () => {
     await convertElementToJpg('show-axle')
   } catch (error) {
     console.error('Error during download:', error)
-    alert('Error during download:', error)
+    toast("下載發生錯誤，請盡量使用Chrome、Edge瀏覽器進行下載", {
+      "theme": "colored",
+      "type": "error",
+      "position": "bottom-right",
+      "autoClose": 3000,
+      "dangerouslyHTMLString": true,
+      "newestOnTop": true,
+      "limit": 1,
+      "toastStyle": {
+        "font-family": "LXGW WenKai Mono TC",
+      },
+    })
   } finally {
     isDownloading.value = false
   }
