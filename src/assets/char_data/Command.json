@@ -1,0 +1,16 @@
+{
+	"七瀨七海": {
+		"english name": "NNanase",
+		"style": {
+			"天使危機": "001"
+		},
+		"skill": {
+			"common": {
+				"音速增強": 7,
+				"霓虹爆裂": 7,
+				"新星肅清": 8
+			}
+		},
+		"passive skill": []
+	}
+}

@@ -33,7 +33,8 @@ const teamOptions = [
   { value: '31E', name: '31E', icon: 'team_icon/31E.webp' },
   { value: '31F', name: '31F', icon: 'team_icon/31F.webp' },
   { value: '31X', name: '31X', icon: 'team_icon/31X.webp' },
-  { value: '31AB', name: 'Angel Beats!', icon: 'team_icon/Angel Beats.webp' }
+  { value: '31AB', name: 'Angel Beats!', icon: 'team_icon/Angel Beats.webp' },
+  { value: 'Command', name: '司令部', icon: 'team_icon/Command.webp' }
 ]
 const earringOptions = [
   { value: 'BREAK耳環', name: 'BREAK耳環', icon: 'earring_icon/break.webp' },
