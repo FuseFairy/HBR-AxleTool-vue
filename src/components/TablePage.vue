@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
@@ -85,6 +85,28 @@ function hasTeam(selectedTab) {
     Object.keys(usedSkills).length > 0 && Object.values(usedSkills).some((set) => set.size !== 0)
   )
 }
+
+const getBackgroundColor = (row) => {
+  const turnData = skillStore.turns[row - 1];
+  if (!turnData) return "transparent";
+
+  if (turnData.turn === "Switch") return "rgba(26, 26, 26, 0.9)";
+
+  const odColors = {
+    OD1: "rgba(229, 131, 207, 0.25)",
+    OD2: "rgba(189, 247, 211, 0.25)",
+    OD3: "rgba(237, 225, 108, 0.25)",
+  };
+
+  if (turnData.od in odColors) return odColors[turnData.od];
+
+  return row % 2 === 0 ? "rgba(33, 33, 33, 0.9)" : "transparent";
+};
+
+const getStyle = computed(() => (row) => ({
+  "background-color": getBackgroundColor(row),
+  ...(skillStore.turns[row - 1]?.turn === "追加回合" ? { padding: "3px" } : {}),
+}));
 
 const emit = defineEmits(['close'])
 const closeTable = () => {
@@ -240,11 +262,7 @@ const closeTable = () => {
                   ? 'table-container-2'
                   : 'table-container-3'
               "
-              :style="{
-                'background-color': skillStore.turns[row - 1].turn === 'Switch'
-                  ? 'rgba(26, 26, 26, 0.9)'
-                  : (row % 2 === 0 ? 'rgba(33, 33, 33, 0.9)' : 'transparent')
-              }"
+              :style="getStyle(row)"
             >
               <div
                 v-if="skillStore.turns[row - 1].turn !== 'Switch'"
