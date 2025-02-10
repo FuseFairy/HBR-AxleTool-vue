@@ -3,7 +3,7 @@
     <button
       @click="addRow"
       class="circle-button add-button"
-      :disabled="sliderStore.rows === 50 || (sliderStore.rows === 0 && !hasChar)"
+      :disabled="sliderStore.rows === 80 || (sliderStore.rows === 0 && !hasChar)"
     >
       <img class="icon-img" src="@/assets/custom_icon/add_circle.svg" alt="Add a row" />
     </button>
@@ -21,7 +21,7 @@ const skillStore = useSkillStore()
 const charStore = useCharStore()
 
 const addRow = () => {
-  if (sliderStore.rows < 50) {
+  if (sliderStore.rows < 80) {
     sliderStore.rows++
     skillStore.adjustSkills(sliderStore.rows)
     nextTick(async () => {

@@ -28,12 +28,12 @@
       v-model="sliderStore.rows"
       :disabled="!hasChar"
       :min="0"
-      :max="50"
+      :max="80"
       :interval="1"
       :contained="true"
       :lazy="true"
       :drag-on-click="true"
-      :marks="[0, 50]"
+      :marks="[0, 80]"
       @change="updateSkillsRows"
     >
     </vue-slider>
