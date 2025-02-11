@@ -1,15 +1,18 @@
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, toRaw } from 'vue'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useCharStore } from '@/stores/char_stores'
+import { useSettingStore } from '@/stores/setting_stores'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from './SelectAxleChar.vue'
 import { getAssetsFile } from '@/scripts/util'
+import _ from 'lodash'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
 const charStore = useCharStore()
+const settingStore = useSettingStore()
 const odOptions = ['OD1', 'OD2', 'OD3']
 
 const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`)
@@ -31,24 +34,26 @@ const getFilteredSkills = (row, key) => {
     const selectedTab = currentSkill.selectedTab
     const selections = Object.values(charStore.selections[selectedTab])
 
-    const currentSelection = selections.find((selection) => selection.style === currentStyle)
-    const formattedSkills = currentSelection.skill.map((skill) => ({
-      name: skill.name,
-      value: skill.name,
-      sp: skill.sp
-    }))
+    const currentSelection = selections.find((selection) => selection.style === currentStyle);
+    const skillOptions = _.cloneDeep(currentSelection.skill);
+    const commandSkillRaw = toRaw(currentSelection.commandSkill);
 
-    const commandSkill = currentSelection.commandSkill
-    formattedSkills.unshift({ name: commandSkill, value: commandSkill, sp: 0 })
+    if (Array.isArray(commandSkillRaw)) {
+      commandSkillRaw.forEach(skill => {
+        skillOptions.unshift(skill);
+      });
+    } else if (commandSkillRaw) {
+      skillOptions.unshift(commandSkillRaw);
+    }
 
-    const foundSkill = formattedSkills.some(
-      (option) => option.name === skillStore.skills[row][key].skill
+    const foundSkill = skillOptions.some(
+      (option) => option.value === skillStore.skills[row][key].skill
     )
     if (!foundSkill) {
       skillStore.skills[row][key].skill = null
     }
 
-    return formattedSkills
+    return skillOptions
   } else {
     skillStore.skills[row][key].skill = null
 
@@ -76,8 +81,8 @@ const deleteRow = (index) => {
 
 const copyRow = (index) => {
   sliderStore.rows += 1
-  const copiedTurn = JSON.parse(JSON.stringify(skillStore.turns[index]))
-  const copiedSkill = JSON.parse(JSON.stringify(skillStore.skills[index]))
+  const copiedTurn = _.cloneDeep(skillStore.turns[index]);
+  const copiedSkill = _.cloneDeep(skillStore.skills[index]);
   skillStore.turns.splice(index + 1, 0, copiedTurn)
   skillStore.skills.splice(index + 1, 0, copiedSkill)
 
@@ -162,18 +167,21 @@ function handleTurnChange(value, index) {
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].skill"
         placeholder="Skill"
-        label="name"
+        label="names"
+        track-by="value"
+        :locale = "settingStore.lang"
+        fallback-locale = "zh-TW"
         :searchable="true"
         :options="getFilteredSkills(i - 1, n - 1)"
       >
         <template v-slot:singlelabel="{ value }">
           <div class="multiselect-single-label">
-            <span :title="value.name">{{ value.name }}/{{ value.sp }}SP</span>
+            <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}SP</span>
           </div>
         </template>
 
         <template v-slot:option="{ option }">
-          <span :title="option.name">{{ option.name }}/{{ option.sp }}SP</span>
+          <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}/{{ option.sp }}SP</span>
         </template>
       </Multiselect>
       <Multiselect

@@ -7,6 +7,8 @@ import { getAssetsFile } from '@/scripts/util'
 import { fetchSkillOptions } from '@/scripts/skillOptions'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
+import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
+import { fetchCommandSkill } from '@/scripts/commandSkill'
 
 const charStore = useCharStore()
 const lastTabStore = useLastTabStore()
@@ -67,6 +69,9 @@ async function refreshData() {
     if (style) {
       const skillOptions = await fetchSkillOptions(character, team, style);
       charStore.selections[currentTab][charKey]['skill'] = skillOptions;
+
+      const commandSkill = await fetchCommandSkill(character, team, style);
+      charStore.selections[currentTab][charKey]['commandSkill'] = commandSkill;
     }
   }
 

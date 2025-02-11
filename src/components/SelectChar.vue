@@ -9,9 +9,11 @@ import { fetchSkillOptions } from '@/scripts/skillOptions'
 import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
 import { getAssetsFile } from '@/scripts/util'
 import { fetchCommandSkill } from '@/scripts/commandSkill'
+import { useSettingStore } from '@/stores/setting_stores'
 
 const charStore = useCharStore()
 const sliderStore = useSliderStore()
+const settingStore = useSettingStore()
 
 const props = defineProps({
   buttonKey: {
@@ -37,10 +39,26 @@ const teamOptions = [
   { value: 'Command', name: '司令部', icon: 'team_icon/Command.webp' }
 ]
 const earringOptions = [
-  { value: 'BREAK耳環', name: 'BREAK耳環', icon: 'earring_icon/break.webp' },
-  { value: '進攻耳環', name: '進攻耳環', icon: 'earring_icon/attach.webp' },
-  { value: 'DRIVE耳環', name: 'DRIVE耳環', icon: 'earring_icon/drive.webp' },
-  { value: '爆破耳環', name: '爆破耳環', icon: 'earring_icon/explosion.webp' }
+  { 
+    value: 'BREAK耳環', 
+    names: { 'zh-TW': 'BREAK耳環' }, 
+    icon: 'earring_icon/break.webp' 
+  },
+  { 
+    value: '進攻耳環', 
+    names: { 'zh-TW': '進攻耳環' }, 
+    icon: 'earring_icon/attach.webp' 
+  },
+  { 
+    value: 'DRIVE耳環', 
+    names: { 'zh-TW': 'DRIVE耳環' }, 
+    icon: 'earring_icon/drive.webp' 
+  },
+  { 
+    value: '爆破耳環', 
+    names: { 'zh-TW': '爆破耳環' }, 
+    icon: 'earring_icon/explosion.webp' 
+  }
 ]
 const rankOptions = Array.from({ length: 10 }, (_, i) => i + 1)
 const characterOptions = ref([])
@@ -109,7 +127,7 @@ watch(selectedCharacter, async (newChar) => {
 
 watch(selectedStyle, async (newStyle) => {
   if (newStyle) {
-    const selectedOption = styleOptions.value.find((option) => option.name === newStyle)
+    const selectedOption = styleOptions.value.find((option) => option.value === newStyle)
     if (selectedOption) {
       passiveSkillOptions.value = await fetchPassiveSkillOptions(
         selectedCharacter.value,
@@ -203,20 +221,23 @@ const closeContainer = async () => {
           <Multiselect
             v-model="selectedCharacter"
             placeholder="Select character"
-            label="name"
             :disabled="isCharDisabled || sliderStore.rows > 0"
             :options="characterOptions"
+            label="names"
+            track-by="value"
+            :locale = "settingStore.lang"
+            fallback-locale = "zh-TW"
           >
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
                 <img class="label-icon" :src="getAssetsFile(value.icon)" />
-                <span :title="value.name">{{ value.name }}</span>
+                <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
               </div>
             </template>
 
             <template v-slot:option="{ option }">
               <img class="option-icon" :src="getAssetsFile(option.icon)" />
-              <span :title="option.name">{{ option.name }}</span>
+              <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
             </template>
           </Multiselect>
         </div>
@@ -226,20 +247,23 @@ const closeContainer = async () => {
           <Multiselect
             v-model="selectedStyle"
             placeholder="Select style"
-            label="name"
             :disabled="isStyleDisabled || sliderStore.rows > 0"
             :options="styleOptions"
+            label="names"
+            track-by="value"
+            :locale = "settingStore.lang"
+            fallback-locale = "zh-TW"
           >
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
                 <img class="label-icon" :src="getAssetsFile(value.icon)" />
-                <span :title="value.name">{{ value.name }}</span>
+                <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
               </div>
             </template>
 
             <template v-slot:option="{ option }">
               <img class="option-icon" :src="getAssetsFile(option.icon)" />
-              <span :title="option.name">{{ option.name }}</span>
+              <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
             </template>
           </Multiselect>
         </div>
@@ -277,26 +301,25 @@ const closeContainer = async () => {
         <div class="section">
           <label>Earring (optional)</label>
           <Multiselect
-            v-model="selectedEarring"
+            v-model="charStore.selections[props.selectedTab][props.buttonKey]['earring']"
             placeholder="Select earring"
-            label="name"
             :disabled="isOtherDisable"
             :options="earringOptions"
-            @change="
-              (value) =>
-                charStore.setSelection(props.buttonKey, 'earring', value, props.selectedTab)
-            "
+            label="names"
+            track-by="value"
+            :locale = "settingStore.lang"
+            fallback-locale = "zh-TW"
           >
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
                 <img class="label-icon" :src="getAssetsFile(value.icon)" />
-                <span :title="value.name">{{ value.name }}</span>
+                <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
               </div>
             </template>
 
             <template v-slot:option="{ option }">
               <img class="option-icon" :src="getAssetsFile(option.icon)" />
-              <span :title="option.name">{{ option.name }}</span>
+              <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
             </template>
           </Multiselect>
         </div>
@@ -304,16 +327,16 @@ const closeContainer = async () => {
         <div class="section">
           <label>Passive Skill (optional)</label>
           <Multiselect
-            v-model="selectedPassiveSkill"
+            v-model="charStore.selections[props.selectedTab][props.buttonKey]['passiveSkill']"
             mode="tags"
             placeholder="Select passive skill"
             :close-on-select="false"
             :disabled="isOtherDisable"
             :options="passiveSkillOptions"
-            @change="
-              (value) =>
-                charStore.setSelection(props.buttonKey, 'passiveSkill', value, props.selectedTab)
-            "
+            label="names"
+            track-by="value"
+            :locale = "settingStore.lang"
+            fallback-locale = "zh-TW"
           />
         </div>
       </div>

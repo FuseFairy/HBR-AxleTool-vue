@@ -18,27 +18,88 @@ export async function fetchSkillOptions(characterName, team, styleName) {
       )
     )
     const universalSkills = {
-      批判性思考: 5,
-      修復之光: 9,
-      DRIVE增幅: 6,
-      防護罩: 0,
-      進攻上升: 4,
-      專注力: 4,
-      重點保養: 1,
-      自我療癒: 4,
-      軟化: 9,
-      衰減之力: 6,
-      火焰重力子: 6,
-      雷霆重力子: 6,
-      暗黑重力子: 6,
-      光明重力子: 6,
-      寒冰重力子: 6
+      "批判性思考": {
+        "value": "批判性思考",
+        "names": { "zh-TW": "批判性思考" },
+        "sp": 5
+      },
+      "修復之光": {
+        "value": "修復之光",
+        "names": { "zh-TW": "修復之光" },
+        "sp": 9
+      },
+      "DRIVE增幅": {
+        "value": "DRIVE增幅",
+        "names": { "zh-TW": "DRIVE增幅" },
+        "sp": 6
+      },
+      "防護罩": {
+        "value": "防護罩",
+        "names": { "zh-TW": "防護罩" },
+        "sp": 0
+      },
+      "進攻上升": {
+        "value": "進攻上升",
+        "names": { "zh-TW": "進攻上升" },
+        "sp": 4
+      },
+      "專注力": {
+        "value": "專注力",
+        "names": { "zh-TW": "專注力" },
+        "sp": 4
+      },
+      "重點保養": {
+        "value": "重點保養",
+        "names": { "zh-TW": "重點保養" },
+        "sp": 1
+      },
+      "自我療癒": {
+        "value": "自我療癒",
+        "names": { "zh-TW": "自我療癒" },
+        "sp": 4
+      },
+      "軟化": {
+        "value": "軟化",
+        "names": { "zh-TW": "軟化" },
+        "sp": 9
+      },
+      "衰減之力": {
+        "value": "衰減之力",
+        "names": { "zh-TW": "衰減之力" },
+        "sp": 6
+      },
+      "火焰重力子": {
+        "value": "火焰重力子",
+        "names": { "zh-TW": "火焰重力子" },
+        "sp": 6
+      },
+      "雷霆重力子": {
+        "value": "雷霆重力子",
+        "names": { "zh-TW": "雷霆重力子" },
+        "sp": 6
+      },
+      "暗黑重力子": {
+        "value": "暗黑重力子",
+        "names": { "zh-TW": "暗黑重力子" },
+        "sp": 6
+      },
+      "光明重力子": {
+        "value": "光明重力子",
+        "names": { "zh-TW": "光明重力子" },
+        "sp": 6
+      },
+      "寒冰重力子": {
+        "value": "寒冰重力子",
+        "names": { "zh-TW": "寒冰重力子" },
+        "sp": 6
+      }
     }
-
+    
+    
     const allSkills = [
-      ...Object.entries(specificSkills).map(([name, sp]) => ({ name, sp })),
-      ...Object.entries(commonSkills).map(([name, sp]) => ({ name, sp })),
-      ...Object.entries(universalSkills).map(([name, sp]) => ({ name, sp }))
+      ...Object.entries(specificSkills).map(([_, info]) => ({ "value": info["value"], "names": info["names"], "sp": info["sp"] })),
+      ...Object.entries(commonSkills).map(([_, info]) => ({ "value": info["value"], "names": info["names"], "sp": info["sp"]})),
+      ...Object.entries(universalSkills).map(([_, info]) => ({ "value": info["value"], "names": info["names"], "sp": info["sp"] }))
     ]
     return allSkills
   } catch (error) {
