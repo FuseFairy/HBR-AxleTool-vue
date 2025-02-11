@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import './assets/main.css'
 import AddRows from '@/components/AddRows.vue'
 import SelectBoxes from '@/components/SelectBoxes.vue'
@@ -9,10 +9,19 @@ import uploadButton from '@/components/UploadButton.vue'
 import SelectSkill from '@/components/SelectSkill.vue'
 import AxleName from '@/components/AxleName.vue'
 
-const isTableVisible = ref(false)
+const buttons = [
+  { key: 'table', tooltip: 'table', icon: 'src/assets/custom_icon/table.svg', component: ShowTable },
+]
 
-const toggleTable = () => {
-  isTableVisible.value = !isTableVisible.value
+const activeModal = ref(null)
+
+const activeComponent = computed(() => {
+  const btn = buttons.find(b => b.key === activeModal.value)
+  return btn ? btn.component : null
+})
+
+const toggleModal = (key) => {
+  activeModal.value = activeModal.value === key ? null : key
 }
 </script>
 
@@ -21,11 +30,18 @@ const toggleTable = () => {
     <nav>
       <uploadButton />
       <h1 class="nav-title">HBR Axle Tool</h1>
-      <button @click="toggleTable" v-tooltip="{ content: 'table', placement: 'bottom' }">
-        <img src="@/assets/custom_icon/table.svg" alt="table" />
-      </button>
+      <div style="display: flex; gap: 10px">
+        <button
+          v-for="btn in buttons"
+          :key="btn.key"
+          @click="toggleModal(btn.key)"
+          v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
+        >
+          <img :src="btn.icon" :alt="btn.key" />
+        </button>
+      </div>
       <Transition name="modal">
-        <ShowTable v-if="isTableVisible" @close="toggleTable" />
+        <component :is="activeComponent" v-if="activeComponent" @close="toggleModal(null)" />
       </Transition>
     </nav>
     <main class="scrollbar-style-1">
@@ -139,7 +155,9 @@ button:hover {
   background-color: rgba(78, 69, 69, 0.3);
 }
 .nav-title {
-  flex-grow: 1;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
   color: rgb(210, 203, 208);
