@@ -8,9 +8,10 @@ import ShowTable from '@/components/TablePage.vue'
 import uploadButton from '@/components/UploadButton.vue'
 import SelectSkill from '@/components/SelectSkill.vue'
 import AxleName from '@/components/AxleName.vue'
+import { getAssetsFile } from '@/scripts/util'
 
 const buttons = [
-  { key: 'table', tooltip: 'table', icon: 'src/assets/custom_icon/table.svg', component: ShowTable },
+  { key: 'table', tooltip: 'table', icon: getAssetsFile('custom_icon/table.svg'), component: ShowTable },
 ]
 
 const activeModal = ref(null)
