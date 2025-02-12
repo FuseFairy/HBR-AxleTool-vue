@@ -7,3 +7,4 @@ declare module 'piexifjs' {
 }
 
 declare module 'lodash/cloneDeep'
+declare module 'lodash/find'

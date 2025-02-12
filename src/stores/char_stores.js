@@ -17,7 +17,7 @@ export const useCharStore = defineStore(
                 rank: null,
                 flower: false,
                 passiveSkill: [],
-                commandSkill: null,
+                commandSkill: [],
                 earring: null,
                 skill: [],
                 img: null

@@ -16,7 +16,17 @@ const settingStore = useSettingStore()
 const odOptions = ['OD1', 'OD2', 'OD3']
 
 const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`)
-const turnOptions = ['Switch', '追加回合', ...options]
+const formattedOptions = options.map(option => {
+  return {
+    value: option,
+    names: option
+  };
+});
+const turnOptions = [
+  { 'value': 'Switch', names: 'Switch' }, 
+  { 'value': '追加回合', 'names': { 'zh-TW': '追加回合', 'jp': '追加ターン' } }, 
+  ...formattedOptions
+]
 
 const activeComponent = ref({ row: null, buttonKey: null })
 const handleBoxClick = (row, key) => {
@@ -137,16 +147,18 @@ function handleTurnChange(value, index) {
         v-model="skillStore.turns[i - 1].turn"
         placeholder="Turn"
         :options="turnOptions"
+        label="names"
+        track-by="value"
+        :locale = "settingStore.lang"
+        fallback-locale = "zh-TW"
         @update:model-value="(value) => handleTurnChange(value, i)"
-      >
-      </Multiselect>
+      />
       <Multiselect
         v-if="skillStore.turns[i - 1].turn !== 'Switch'"
         v-model="skillStore.turns[i - 1].od"
         placeholder="OD"
         :options="odOptions"
-      >
-      </Multiselect>
+      />
     </div>
     <div class="column" v-if="skillStore.turns[i - 1].turn !== 'Switch'" v-for="n in 3" :key="n">
       <button
@@ -188,8 +200,7 @@ function handleTurnChange(value, index) {
         v-model="skillStore.skills[i - 1][n - 1].target"
         placeholder="Target"
         :options="targetOptions(i - 1, n - 1)"
-      >
-      </Multiselect>
+      />
     </div>
   </div>
   <Transition name="modal">

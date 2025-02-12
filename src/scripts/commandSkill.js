@@ -8,7 +8,7 @@ export async function fetchCommandSkill(characterName, team, styleName) {
     const response = await axios.get(getAssetsFile(`char_data/${team}.json`));
     const data = response.data;
     const characterData = data[characterName];
-    const defaultCommandSkill = [{ "value": "普攻", "names": { "zh-TW": "普攻" }, "sp": 0 }];
+    const defaultCommandSkill = [{ "value": "普攻", "names": { "zh-TW": "普通攻擊", "jp": "通常攻撃" }, "sp": 0 }];
 
     if (!characterData || !characterData.style) {
       throw new Error('Character data or styles not found');
