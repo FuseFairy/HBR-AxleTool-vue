@@ -7,7 +7,6 @@ import { getAssetsFile } from '@/scripts/util'
 import { fetchSkillOptions } from '@/scripts/skillOptions'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
-import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
 import { fetchCommandSkill } from '@/scripts/commandSkill'
 
 const charStore = useCharStore()
