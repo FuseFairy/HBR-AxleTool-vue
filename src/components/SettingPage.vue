@@ -6,7 +6,7 @@ import Multiselect from '@vueform/multiselect'
 
 const langOptions = [
   { "value": "zh-TW", "name": "繁體中文" },
-  { "value": "JP", "name": "日本語" },
+  { "value": "jp", "name": "日本語" },
 ]
 const settingStore = useSettingStore()
 
