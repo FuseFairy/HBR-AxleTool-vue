@@ -4,14 +4,16 @@ import './assets/main.css'
 import AddRows from '@/components/AddRows.vue'
 import SelectBoxes from '@/components/SelectBoxes.vue'
 import SelectRows from '@/components/SelectRows.vue'
-import ShowTable from '@/components/TablePage.vue'
+import TablePage from '@/components/TablePage.vue'
+import SettingPage from './components/SettingPage.vue'
 import uploadButton from '@/components/UploadButton.vue'
 import SelectSkill from '@/components/SelectSkill.vue'
 import AxleName from '@/components/AxleName.vue'
 import { getAssetsFile } from '@/scripts/util'
 
 const buttons = [
-  { key: 'table', tooltip: 'table', icon: getAssetsFile('custom_icon/table.svg'), component: ShowTable },
+  { key: 'table', tooltip: 'table', icon: getAssetsFile('custom_icon/table.svg'), component: TablePage },
+  { key: 'setting', tooltip: 'setting', icon: getAssetsFile('custom_icon/setting.svg'), component: SettingPage }
 ]
 
 const activeModal = ref(null)
