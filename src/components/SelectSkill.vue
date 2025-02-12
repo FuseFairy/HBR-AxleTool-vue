@@ -7,7 +7,7 @@ import { useSettingStore } from '@/stores/setting_stores'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from './SelectAxleChar.vue'
 import { getAssetsFile } from '@/scripts/util'
-import _ from 'lodash'
+import _cloneDeep from 'lodash/cloneDeep'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
@@ -35,7 +35,7 @@ const getFilteredSkills = (row, key) => {
     const selections = Object.values(charStore.selections[selectedTab])
 
     const currentSelection = selections.find((selection) => selection.style === currentStyle);
-    const skillOptions = _.cloneDeep(currentSelection.skill);
+    const skillOptions = _cloneDeep(currentSelection.skill);
     const commandSkillRaw = toRaw(currentSelection.commandSkill);
 
     if (Array.isArray(commandSkillRaw)) {
@@ -81,8 +81,8 @@ const deleteRow = (index) => {
 
 const copyRow = (index) => {
   sliderStore.rows += 1
-  const copiedTurn = _.cloneDeep(skillStore.turns[index]);
-  const copiedSkill = _.cloneDeep(skillStore.skills[index]);
+  const copiedTurn = _cloneDeep(skillStore.turns[index]);
+  const copiedSkill = _cloneDeep(skillStore.skills[index]);
   skillStore.turns.splice(index + 1, 0, copiedTurn)
   skillStore.skills.splice(index + 1, 0, copiedSkill)
 

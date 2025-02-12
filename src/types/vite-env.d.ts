@@ -5,4 +5,5 @@ declare module 'piexifjs' {
   export const dump: (exifObj: any) => any
   export const insert: (exifBytes: any, dataUrl: string) => string
 }
-  
+
+declare module 'lodash/cloneDeep'
