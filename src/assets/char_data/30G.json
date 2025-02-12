@@ -1,47 +1,47 @@
 {
   "白河 結奈": {
     "value": "白河 結奈",
-    "names": { "zh-TW": "白河 結奈" },
+    "names": { "zh-TW": "白河 結奈", "jp": "白河 ユイナ" },
     "english name": "Yuina_Shirakawa",
     "style": {
       "Ally": { 
         "value": "Ally", 
-        "names": { "zh-TW": "Ally" }, 
+        "names": { "zh-TW": "Ally", "jp": "Ally" }, 
         "id": "001" 
       },
       "Sign": { 
         "value": "Sign", 
-        "names": { "zh-TW": "Sign" }, 
+        "names": { "zh-TW": "Sign", "jp": "Sign" }, 
         "id": "002" 
       },
       "只要有妳在": { 
         "value": "只要有妳在", 
-        "names": { "zh-TW": "只要有妳在" }, 
+        "names": { "zh-TW": "只要有妳在", "jp": "君がいるだけで"}, 
         "id": "003" 
       },
       "Awakening Iris": { 
         "value": "Awakening Iris", 
-        "names": { "zh-TW": "Awakening Iris" },
+        "names": { "zh-TW": "Awakening Iris", "jp": "Awakening Iris" },
         "id": "004" 
       },
       "Infernal Sanctuary": { 
         "value": "Infernal Sanctuary", 
-        "names": { "zh-TW": "Infernal Sanctuary" }, 
+        "names": { "zh-TW": "Infernal Sanctuary", "jp": "Infernal Sanctuary"}, 
         "id": "005" 
       },
       "盛夏的前衛峰憲兵": { 
         "value": "盛夏的前衛峰憲兵", 
-        "names": { "zh-TW": "盛夏的前衛峰憲兵" }, 
+        "names": { "zh-TW": "盛夏的前衛峰憲兵", "jp": "真夏のジャンダルム"}, 
         "id": "006" 
       },
       "美麗月色": { 
         "value": "美麗月色", 
-        "names": { "zh-TW": "美麗月色" }, 
+        "names": { "zh-TW": "美麗月色", "jp": "月が綺麗"}, 
         "id": "007" 
       },
       "黃昏綻放的角宿一": { 
         "value": "黃昏綻放的角宿一", 
-        "names": { "zh-TW": "黃昏綻放的角宿一" }, 
+        "names": { "zh-TW": "黃昏綻放的角宿一", "jp": "黄昏に咲くスピカ" }, 
         "id": "008" 
       }
     },
@@ -49,106 +49,244 @@
       "common": {
         "英勇之劍": { 
           "value": "英勇之劍", 
-          "names": { "zh-TW": "英勇之劍" }, 
+          "names": { "zh-TW": "英勇之劍", "jp": "ブレイブソード" }, 
           "sp": 6 
         },
         "引導的號令": { 
           "value": "引導的號令", 
-          "names": { "zh-TW": "引導的號令" }, 
+          "names": { "zh-TW": "引導的號令", "jp": "導きの号令" }, 
           "sp": 8 
         },
         "英勇靈魂": { 
           "value": "英勇靈魂", 
-          "names": { "zh-TW": "英勇靈魂" }, 
+          "names": { "zh-TW": "英勇靈魂", "jp": "ブレイブソウル" }, 
           "sp": 6 
         },
         "嚴明": { 
           "value": "嚴明", 
-          "names": { "zh-TW": "嚴明" }, 
+          "names": { "zh-TW": "嚴明", "jp": "粛正" }, 
           "sp": 8 
         },
         "天降聖光": { 
           "value": "天降聖光", 
-          "names": { "zh-TW": "天降聖光" }, 
+          "names": { "zh-TW": "天降聖光", "jp": "セイントフォール" }, 
           "sp": 15 
         },
         "雷鳴": { 
           "value": "雷鳴", 
-          "names": { "zh-TW": "雷鳴" }, 
+          "names": { "zh-TW": "雷鳴", "jp": "雷鳴" }, 
           "sp": 10 
         },
         "紅臉烙印": { 
           "value": "紅臉烙印", 
-          "names": { "zh-TW": "紅臉烙印" }, 
+          "names": { "zh-TW": "紅臉烙印", "jp": "赤面スティグマ" }, 
           "sp": 5 
         },
         "夜醒": { 
           "value": "夜醒", 
-          "names": { "zh-TW": "夜醒" }, 
+          "names": { "zh-TW": "夜醒", "jp": "夜醒" }, 
           "sp": 7 
         },
         "明星": { 
           "value": "明星", 
-          "names": { "zh-TW": "明星" }, 
+          "names": { "zh-TW": "明星", "jp": "明星" }, 
           "sp": 5 
         }
       },
       "Infernal Sanctuary": {
         "閃電審判": { 
           "value": "閃電審判", 
-          "names": { "zh-TW": "閃電審判" }, 
+          "names": { "zh-TW": "閃電審判", "jp": "ライトニングジャッジメント" }, 
           "sp": 15 
         }
       },
       "盛夏的前衛峰憲兵": {
         "海灘狂戰士": { 
           "value": "海灘狂戰士", 
-          "names": { "zh-TW": "海灘狂戰士" }, 
+          "names": { "zh-TW": "海灘狂戰士", "jp": "シーサイドベルセルク" }, 
           "sp": 15 
         }
       },
       "美麗月色": {
         "蒼焰迷宮": { 
           "value": "蒼焰迷宮", 
-          "names": { "zh-TW": "蒼焰迷宮"}, 
+          "names": { "zh-TW": "蒼焰迷宮", "jp": "蒼焔ノ迷宮"}, 
           "sp": 15 
         },
         "蒼焰螺旋": { 
           "value": "蒼焰螺旋", 
-          "names": { "zh-TW": "蒼焰螺旋"}, 
+          "names": { "zh-TW": "蒼焰螺旋", "jp": "蒼焔ノ螺旋"}, 
           "sp": 14 
         }
       },
       "黃昏綻放的角宿一": {
         "蒼星的虹彩": { 
           "value": "蒼星的虹彩", 
-          "names": { "zh-TW": "蒼星的虹彩"}, 
+          "names": { "zh-TW": "蒼星的虹彩", "jp": "蒼星のイリデッセンス"}, 
           "sp": 16 
-        },
-        "command action": { 
-          "指揮行動": {
-            "value": "指揮行動",
-            "names": { "zh-TW": "指揮行動" }, 
-            "sp": 0 
-          }
-        },
-        "passive skill": {
-          "戰聲雷動": { 
-            "value": "戰聲雷動", 
-            "names": { "zh-TW": "戰聲雷動" }
-          },
-          "1": { 
-            "value": "1", 
-            "names": { "zh-TW": "1" }
-          }
         }
       }
     },
-    "passive skill": {
-      "戰聲雷": { 
-        "value": "戰聲雷", 
-        "names": { "zh-TW": "戰聲雷" }
+    "passive skill": {}
+  },
+  "月城 最中": {
+    "value": "月城 最中",
+    "names": { "zh-TW": "月城 最中", "jp": "月城 最中" },
+    "english name": "Monaka_Tsukishiro",
+    "style": {
+      "禪定，有備無患": { 
+        "value": "禪定，有備無患", 
+        "names": { "zh-TW":"禪定，有備無患",  "jp": "禅定、憂い無し"}, 
+        "id": "001" 
+      },
+      "黃昏，久遠之夢": { 
+        "value": "黃昏，久遠之夢", 
+        "names": { "zh-TW": "黃昏，久遠之夢", "jp": "黄昏、久遠の夢"}, 
+        "id": "002" 
+      },
+      "揮別迷惘，一閃心靜": { 
+        "value": "揮別迷惘，一閃心靜", 
+        "names": { "zh-TW": "揮別迷惘，一閃心靜", "jp": "真宵晴るれば、一閃心静"}, 
+        "id": "003"
+      },
+      "不為人知的空暇": { 
+        "value": "不為人知的空暇", 
+        "names": { "zh-TW": "不為人知的空暇", "jp": "掩蔽された暇" }, 
+        "id": "004" 
       }
-    }
+    },
+    "skill": {
+      "common": {
+        "斷": { 
+          "value": "斷", 
+          "names": { "zh-TW": "斷", "jp": "断" }, 
+          "sp": 5 
+        },
+        "空": { 
+          "value": "空", 
+          "names": { "zh-TW": "空", "jp": "空" }, 
+          "sp": 5
+         },
+        "烈": { 
+          "value": "烈", 
+          "names": { "zh-TW": "烈", "jp": "烈" }, 
+          "sp": 10 
+        },
+        "羅剎": { 
+          "value": "羅剎", 
+          "names": { "zh-TW": "羅剎", "jp": "羅刹" }, 
+          "sp": 13 
+        },
+        "朧": { 
+          "value": "朧", 
+          "names": { "zh-TW": "朧", "jp": "朧" }, 
+          "sp": 8 
+        }
+      },
+      "不為人知的空暇": {
+        "輝神": { 
+          "value": "輝神", 
+          "names": { "zh-TW": "輝神", "jp": "輝神" }, 
+          "sp": 11 
+        }
+      }
+    },
+    "passive skill": {}
+  },
+  "桐生 美也": {
+    "value": "桐生 美也",
+    "names": { "zh-TW": "桐生 美也", "jp": "桐生 美也"},
+    "english name": "Miya_Kiryu",
+    "style": {
+      "幽雅深邃，惹人憐愛": { 
+        "value": "幽雅深邃，惹人憐愛", 
+        "names": { "zh-TW": "幽雅深邃，惹人憐愛", "jp": "幽幻閑寂いとらうたし" }, 
+        "id": "001" 
+      },
+      "神祠拜望，如夢似幻": { 
+        "value": "神祠拜望，如夢似幻", 
+        "names": { "zh-TW": "神祠拜望，如夢似幻", "jp": "神祠見舞う儚さかな"}, 
+        "id": "002" 
+      },
+      "閑日高照暖世間，此時雖春日": { 
+        "value": "閑日高照暖世間，此時雖春日", 
+        "names": { "zh-TW": "閑日高照暖世間，此時雖春日", "jp": "光のどけき春の日に" }, 
+        "id": "006" 
+      },
+      "星密如林，箭雨留人": { 
+        "value": "星密如林，箭雨留人", 
+        "names": { "zh-TW": "星密如林，箭雨留人", "jp": "星林遣らずの雨" }, 
+        "id": "003" 
+      },
+      "豐樂之神秘": { 
+        "value": "豐樂之神秘", 
+        "names": { "zh-TW": "豐樂之神秘", "jp": "豊楽ノ神秘" }, 
+        "id": "004" 
+      },
+      "轉瞬，一夜夢火": { 
+        "value": "轉瞬，一夜夢火", 
+        "names": { "zh-TW": "轉瞬，一夜夢火", "jp": "たまゆら、一夜の夢火" }, 
+        "id": "005" 
+      }
+    },
+    "skill": {
+      "common": {
+        "咒怨之箭": { 
+          "value": "咒怨之箭", 
+          "names": { "zh-TW": "咒怨之箭", "jp": "呪怨の矢"}, 
+          "sp": 5 
+        },
+        "薙矢": { 
+          "value": "薙矢", 
+          "names": { "zh-TW": "薙矢", "jp": "薙の矢" }, 
+          "sp": 7 
+        },
+        "神妙": { 
+          "value": "神妙", 
+          "names": { "zh-TW": "神妙", "jp":"神妙" }, 
+          "sp": 8 
+        },
+        "光芒一閃": { 
+          "value": "光芒一閃", 
+          "names": { "zh-TW": "光芒一閃", "jp": "光芒一閃" }, 
+          "sp": 12
+        },
+        "光芒一閃+": { 
+          "value": "光芒一閃+", 
+          "names": { "zh-TW": "光芒一閃+", "jp": "光芒一閃+" }, 
+          "sp": 12 
+        },
+        "變天之相": { 
+          "value": "變天之相", 
+          "names": { "zh-TW": "變天之相", "jp": "天変の相" }, 
+          "sp": 5 
+        },
+        "落櫻紛飛": { 
+          "value": "落櫻紛飛", 
+          "names": { "zh-TW": "落櫻紛飛", "jp": "ひらり落桜" }, 
+          "sp": 5 
+        },
+        "愁帶哀思散儚華": { 
+          "value": "愁帶哀思散儚華", 
+          "names": { "zh-TW": "愁帶哀思散儚華", "jp": "花の散るらむ" }, 
+          "sp": 8 
+        }
+      },
+      "豐樂之神秘": {
+        "御稻荷神話": { 
+          "value": "御稻荷神話", 
+          "names": { "zh-TW": "御稻荷神話", "jp": "御稲荷神話" }, 
+          "sp": 14 
+        }
+      },
+      "轉瞬，一夜夢火": {
+        "冰華，千射萬箭": { 
+          "value": "冰華，千射萬箭", 
+          "names": { "zh-TW": "冰華，千射萬箭", "jp": "氷華、千射万箭" }, 
+          "sp": 15 
+        }
+      }
+    },
+    "passive skill": {}
   }
 }
