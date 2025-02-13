@@ -10,6 +10,7 @@ import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
 import { getAssetsFile } from '@/scripts/util'
 import { fetchCommandSkill } from '@/scripts/commandSkill'
 import { useSettingStore } from '@/stores/setting_stores'
+import _find from 'lodash/find'
 
 const charStore = useCharStore()
 const sliderStore = useSliderStore()
@@ -106,14 +107,12 @@ watch(selectedTeam, async (newTeam) => {
   charStore.setSelection(props.buttonKey, 'team', newTeam, props.selectedTab)
   if (newTeam) {
     characterOptions.value = await fetchCharacterOptions(newTeam)
-    charStore.setSelection(props.buttonKey, 'character_options', characterOptions.value, props.selectedTab)
     selectedCharacter.value = null
     selectedStyle.value = null
   } else {
     characterOptions.value = []
     selectedCharacter.value = null
     selectedStyle.value = null
-    charStore.setSelection(props.buttonKey, 'character_options', [], props.selectedTab)
   }
 })
 
@@ -148,6 +147,9 @@ watch(selectedStyle, async (newStyle) => {
       charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
       charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
 
+      const findCharInfo = _find(characterOptions.value, { value: selectedCharacter.value })
+      charStore.setSelection(props.buttonKey, 'character_info', findCharInfo, props.selectedTab)
+
       selectedPassiveSkill.value = []
     }
   } else {
@@ -160,6 +162,7 @@ watch(selectedStyle, async (newStyle) => {
     charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
     charStore.setSelection(props.buttonKey, 'passiveSkill_value', [], props.selectedTab)
     charStore.setSelection(props.buttonKey, 'skill', [], props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'character_info', {}, props.selectedTab)
 
     selectedRank.value = null
     selectedPassiveSkill.value = []

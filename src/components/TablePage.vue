@@ -151,20 +151,13 @@ const displayPassiveSkillName = (tab, skillValue, style) => {
   return skillName
 }
 
-const displayTargetSkillName = (tab, target, style) => {
+const displayTargetSkillName = (tab, target) => {
   let targetName = ""
 
   const team = charStore.selections[tab]
-  const foundTeamObject = _find(team, { style });
-  const charOptions = foundTeamObject["character_options"]
-  const foundTargetObject = _find(charOptions, { value: target });
-
-  if (foundTargetObject) {
-    targetName = foundTargetObject.names[settingStore.lang]
-  } else {
-      // 找不到技能物件
-      targetName = ""
-  }
+  const foundTargetObject = _find(team, { character: target })
+  const charInfo = foundTargetObject["character_info"]
+  targetName = charInfo.names[settingStore.lang]
 
   return targetName
 }
@@ -392,7 +385,7 @@ const closeTable = () => {
                         <span
                           v-if="skillStore.skills[row - 1][col - 2].target !== null"
                           class="axle-text"
-                          ><br />（{{ displayTargetSkillName(skillStore.skills[row - 1][col - 2].selectedTab, skillStore.skills[row - 1][col - 2].target, skillStore.skills[row - 1][col - 2].style ) }}）</span
+                          ><br />（{{ displayTargetSkillName(skillStore.skills[row - 1][col - 2].selectedTab, skillStore.skills[row - 1][col - 2].target) }}）</span
                         >
                       </div>
                     </span>

@@ -78,15 +78,11 @@ const targetOptions = (row, key) => {
   if (currentSkill && style != null) {
     const selectedTab = currentSkill["selectedTab"];
     const team = charStore.selections[`${selectedTab}`];
-    const foundTeamObject = _.find(team, { style });
-    const options = _.get(foundTeamObject, 'character_options', []);
 
-    const usedChar = _(Object.values(charStore.selections[selectedTab]))
-      .filter(selection => selection.character != null && selection.style != null)
-      .map('character')
+    const charOptions = _(Object.values(team))
+      .map((teamObject) => teamObject.character_info)
+      .filter((characterInfo) => !_.isEmpty(characterInfo))
       .value();
-
-    const charOptions = _.filter(options, option => _.includes(usedChar, option.value));
 
     return charOptions;
   } else {

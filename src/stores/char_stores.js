@@ -13,7 +13,7 @@ export const useCharStore = defineStore(
               j + 1,
               {
                 character: null,
-                character_options: [],
+                character_info: {},
                 style: null,
                 rank: null,
                 flower: false,
