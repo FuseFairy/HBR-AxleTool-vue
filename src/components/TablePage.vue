@@ -129,6 +129,46 @@ const displayUsedSkillName = (tab, skillValue, style) => {
   return skillName
 }
 
+const displayPassiveSkillName = (tab, skillValue, style) => {
+  let skillName = ""
+
+  const charInfo = charStore.selections[tab]
+  const styleInfo = _find(charInfo, (characterData) => {
+    return characterData.style === style;
+  });
+
+  const skills= styleInfo['passiveSkill_value']
+
+  const foundSkillObject = _find(skills, skillObj => skillObj.value === skillValue);
+
+  if (foundSkillObject) {
+      skillName = foundSkillObject.names[settingStore.lang]
+  } else {
+      // 找不到技能物件
+      skillName = ""
+  }
+
+  return skillName
+}
+
+const displayTargetSkillName = (tab, target, style) => {
+  let targetName = ""
+
+  const team = charStore.selections[tab]
+  const foundTeamObject = _find(team, { style });
+  const charOptions = foundTeamObject["character_options"]
+  const foundTargetObject = _find(charOptions, { value: target });
+
+  if (foundTargetObject) {
+    targetName = foundTargetObject.names[settingStore.lang]
+  } else {
+      // 找不到技能物件
+      targetName = ""
+  }
+
+  return targetName
+}
+
 const displaySkillName = (row, col) => {
   let skillName = ""
   const skillInfo = skillStore.skills[row][col]
@@ -270,7 +310,7 @@ const closeTable = () => {
                     v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill"
                     class="passive-skill"
                   >
-                    {{ skill }}
+                    {{ displayPassiveSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
                   </span>
                 </div>
               </div>
@@ -352,7 +392,7 @@ const closeTable = () => {
                         <span
                           v-if="skillStore.skills[row - 1][col - 2].target !== null"
                           class="axle-text"
-                          ><br />（{{ skillStore.skills[row - 1][col - 2].target }}）</span
+                          ><br />（{{ displayTargetSkillName(skillStore.skills[row - 1][col - 2].selectedTab, skillStore.skills[row - 1][col - 2].target, skillStore.skills[row - 1][col - 2].style ) }}）</span
                         >
                       </div>
                     </span>

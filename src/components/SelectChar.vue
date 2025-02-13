@@ -94,6 +94,7 @@ const initializeOptions = async () => {
       selectedTeam.value,
       selectedStyle.value
     )
+    charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
   }
 }
 
@@ -105,12 +106,14 @@ watch(selectedTeam, async (newTeam) => {
   charStore.setSelection(props.buttonKey, 'team', newTeam, props.selectedTab)
   if (newTeam) {
     characterOptions.value = await fetchCharacterOptions(newTeam)
+    charStore.setSelection(props.buttonKey, 'character_options', characterOptions.value, props.selectedTab)
     selectedCharacter.value = null
     selectedStyle.value = null
   } else {
     characterOptions.value = []
     selectedCharacter.value = null
     selectedStyle.value = null
+    charStore.setSelection(props.buttonKey, 'character_options', [], props.selectedTab)
   }
 })
 
@@ -143,6 +146,7 @@ watch(selectedStyle, async (newStyle) => {
       charStore.setSelection(props.buttonKey, 'style', newStyle, props.selectedTab)
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon, props.selectedTab)
       charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
+      charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
 
       selectedPassiveSkill.value = []
     }
@@ -154,6 +158,7 @@ watch(selectedStyle, async (newStyle) => {
     charStore.setSelection(props.buttonKey, 'earring', null, props.selectedTab)
     charStore.setSelection(props.buttonKey, 'commandSkill', null, props.selectedTab)
     charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'passiveSkill_value', [], props.selectedTab)
     charStore.setSelection(props.buttonKey, 'skill', [], props.selectedTab)
 
     selectedRank.value = null

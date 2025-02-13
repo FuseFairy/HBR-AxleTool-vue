@@ -7,7 +7,7 @@ import { useSettingStore } from '@/stores/setting_stores'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from './SelectAxleChar.vue'
 import { getAssetsFile } from '@/scripts/util'
-import _cloneDeep from 'lodash/cloneDeep'
+import _ from 'lodash'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
@@ -45,7 +45,7 @@ const getFilteredSkills = (row, key) => {
     const selections = Object.values(charStore.selections[selectedTab])
 
     const currentSelection = selections.find((selection) => selection.style === currentStyle);
-    const skillOptions = _cloneDeep(currentSelection.skill);
+    const skillOptions = _.cloneDeep(currentSelection.skill);
     const commandSkillRaw = toRaw(currentSelection.commandSkill);
 
     if (Array.isArray(commandSkillRaw)) {
@@ -72,16 +72,27 @@ const getFilteredSkills = (row, key) => {
 }
 
 const targetOptions = (row, key) => {
-  const currentSkill = skillStore.skills[row][key]
-  if (currentSkill && currentSkill.style != null) {
-    const selectedTab = currentSkill.selectedTab
-    return Object.values(charStore.selections[selectedTab])
-      .filter((selection) => selection.character !== null && selection.style !== null)
-      .map((selection) => selection.character)
+  const currentSkill = skillStore.skills[row][key];
+  const style = _.get(currentSkill, 'style');
+
+  if (currentSkill && style != null) {
+    const selectedTab = currentSkill["selectedTab"];
+    const team = charStore.selections[`${selectedTab}`];
+    const foundTeamObject = _.find(team, { style });
+    const options = _.get(foundTeamObject, 'character_options', []);
+
+    const usedChar = _(Object.values(charStore.selections[selectedTab]))
+      .filter(selection => selection.character != null && selection.style != null)
+      .map('character')
+      .value();
+
+    const charOptions = _.filter(options, option => _.includes(usedChar, option.value));
+
+    return charOptions;
   } else {
-    return []
+    return [];
   }
-}
+};
 
 const deleteRow = (index) => {
   sliderStore.rows -= 1
@@ -91,8 +102,8 @@ const deleteRow = (index) => {
 
 const copyRow = (index) => {
   sliderStore.rows += 1
-  const copiedTurn = _cloneDeep(skillStore.turns[index]);
-  const copiedSkill = _cloneDeep(skillStore.skills[index]);
+  const copiedTurn = _.cloneDeep(skillStore.turns[index]);
+  const copiedSkill = _.cloneDeep(skillStore.skills[index]);
   skillStore.turns.splice(index + 1, 0, copiedTurn)
   skillStore.skills.splice(index + 1, 0, copiedSkill)
 
@@ -199,6 +210,10 @@ function handleTurnChange(value, index) {
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].target"
         placeholder="Target"
+        label="names"
+        track-by="value"
+        :locale = "settingStore.lang"
+        fallback-locale = "zh-TW"
         :options="targetOptions(i - 1, n - 1)"
       />
     </div>
