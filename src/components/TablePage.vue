@@ -151,15 +151,15 @@ const displayPassiveSkillName = (tab, skillValue, style) => {
   return skillName
 }
 
-const displayTargetSkillName = (tab, target) => {
-  let targetName = ""
+const getTargetImg = (tab, target) => {
+  let targetImg = ""
 
   const team = charStore.selections[tab]
   const foundTargetObject = _find(team, { character: target })
   const charInfo = foundTargetObject["character_info"]
-  targetName = charInfo.names[settingStore.lang]
+  targetImg = charInfo.icon || ""
 
-  return targetName
+  return targetImg
 }
 
 const displaySkillName = (row, col) => {
@@ -382,11 +382,12 @@ const closeTable = () => {
                       </div>
                       <div class="txt">
                         <span class="axle-text">{{ displaySkillName(row-1, col-2) }}</span>
-                        <span
+                        <img
                           v-if="skillStore.skills[row - 1][col - 2].target !== null"
-                          class="axle-text"
-                          ><br />（{{ displayTargetSkillName(skillStore.skills[row - 1][col - 2].selectedTab, skillStore.skills[row - 1][col - 2].target) }}）</span
-                        >
+                          :src="getAssetsFile(getTargetImg(skillStore.skills[row - 1][col - 2].selectedTab, skillStore.skills[row - 1][col - 2].target))"
+                          class="axle-target-img"
+
+                        />
                       </div>
                     </span>
                   </div>
@@ -520,6 +521,14 @@ image {
   height: 40px;
   width: 40px;
   vertical-align: middle;
+}
+.axle-target-img {
+  margin-left: 5px;
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
 }
 .red-line {
   display: flex;
