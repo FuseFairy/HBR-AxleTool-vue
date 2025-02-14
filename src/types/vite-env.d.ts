@@ -8,3 +8,7 @@ declare module 'piexifjs' {
 
 declare module 'lodash/cloneDeep'
 declare module 'lodash/find'
+declare module 'lodash/get'
+declare module 'lodash/isEmpty'
+declare module 'lodash/filter'
+declare module 'lodash/map'

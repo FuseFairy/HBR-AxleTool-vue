@@ -7,7 +7,11 @@ import { useSettingStore } from '@/stores/setting_stores'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from './SelectAxleChar.vue'
 import { getAssetsFile } from '@/scripts/util'
-import _ from 'lodash'
+import _cloneDeep from 'lodash/cloneDeep'
+import _get from 'lodash/get'
+import _isEmpty from 'lodash/isEmpty'
+import _filter from 'lodash/filter'
+import _map from 'lodash/map'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
@@ -45,7 +49,7 @@ const getFilteredSkills = (row, key) => {
     const selections = Object.values(charStore.selections[selectedTab])
 
     const currentSelection = selections.find((selection) => selection.style === currentStyle);
-    const skillOptions = _.cloneDeep(currentSelection.skill);
+    const skillOptions = _cloneDeep(currentSelection.skill);
     const commandSkillRaw = toRaw(currentSelection.commandSkill);
 
     if (Array.isArray(commandSkillRaw)) {
@@ -73,16 +77,16 @@ const getFilteredSkills = (row, key) => {
 
 const targetOptions = (row, key) => {
   const currentSkill = skillStore.skills[row][key];
-  const style = _.get(currentSkill, 'style');
+  const style = _get(currentSkill, 'style');
 
   if (currentSkill && style != null) {
     const selectedTab = currentSkill["selectedTab"];
     const team = charStore.selections[`${selectedTab}`];
 
-    const charOptions = _(Object.values(team))
-      .map((teamObject) => teamObject.character_info)
-      .filter((characterInfo) => !_.isEmpty(characterInfo))
-      .value();
+    const charOptions = _filter(
+      _map(Object.values(team), (teamObject) => teamObject.character_info),
+      (characterInfo) => !_isEmpty(characterInfo)
+    );
 
     return charOptions;
   } else {
@@ -98,8 +102,8 @@ const deleteRow = (index) => {
 
 const copyRow = (index) => {
   sliderStore.rows += 1
-  const copiedTurn = _.cloneDeep(skillStore.turns[index]);
-  const copiedSkill = _.cloneDeep(skillStore.skills[index]);
+  const copiedTurn = _cloneDeep(skillStore.turns[index]);
+  const copiedSkill = _cloneDeep(skillStore.skills[index]);
   skillStore.turns.splice(index + 1, 0, copiedTurn)
   skillStore.skills.splice(index + 1, 0, copiedSkill)
 
