@@ -208,8 +208,6 @@ function handleTurnChange(value, index) {
         placeholder="Target"
         label="names"
         track-by="value"
-        :locale = "settingStore.lang"
-        fallback-locale = "zh-TW"
         :options="targetOptions(i - 1, n - 1)"
       >
         <template v-slot:singlelabel="{ value }">

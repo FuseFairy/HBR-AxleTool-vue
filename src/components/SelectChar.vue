@@ -233,8 +233,6 @@ const closeContainer = async () => {
             :options="characterOptions"
             label="names"
             track-by="value"
-            :locale = "settingStore.lang"
-            fallback-locale = "zh-TW"
           >
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
@@ -259,8 +257,6 @@ const closeContainer = async () => {
             :options="styleOptions"
             label="names"
             track-by="value"
-            :locale = "settingStore.lang"
-            fallback-locale = "zh-TW"
           >
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
@@ -315,8 +311,6 @@ const closeContainer = async () => {
             :options="earringOptions"
             label="names"
             track-by="value"
-            :locale = "settingStore.lang"
-            fallback-locale = "zh-TW"
           >
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
