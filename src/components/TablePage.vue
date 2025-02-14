@@ -213,7 +213,7 @@ const displaySkillName = (row, col) => {
 
 const getStyle = computed(() => (row) => ({
   "background-color": getBackgroundColor(row),
-  ...(skillStore.turns[row - 1]?.turn === "追加回合" ? { padding: "3px" } : {}),
+  ...(skillStore.turns[row - 1]?.turn === "追加回合" ? { padding: "3px 0px" } : {}),
 }));
 
 const emit = defineEmits(['close'])
