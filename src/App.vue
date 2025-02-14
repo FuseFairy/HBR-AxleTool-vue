@@ -13,9 +13,10 @@ import { getAssetsFile } from '@/scripts/util'
 
 const buttons = [
   { key: 'table', tooltip: 'table', icon: getAssetsFile('custom_icon/table.svg'), component: TablePage },
-  { key: 'setting', tooltip: 'setting', icon: getAssetsFile('custom_icon/setting.svg'), component: SettingPage }
+  { key: 'setting', tooltip: 'setting', icon: getAssetsFile('custom_icon/setting.svg'), component: SettingPage },
+  { key: 'bug_report', tooltip: 'bug report', icon: getAssetsFile('custom_icon/bug_report.svg') },
 ]
-
+const bugReportURL = "https://github.com/FuseFairy/HBR-AxleTool-vue/issues/new";
 const activeModal = ref(null)
 
 const activeComponent = computed(() => {
@@ -26,6 +27,14 @@ const activeComponent = computed(() => {
 const toggleModal = (key) => {
   activeModal.value = activeModal.value === key ? null : key
 }
+
+const handleButtonClick = (key) => {
+  if (key === 'table' || key === 'setting') {
+    toggleModal(key);
+  } else if (key === 'bug_report') {
+    window.open(bugReportURL, '_blank');
+  }
+};
 </script>
 
 <template>
@@ -37,12 +46,12 @@ const toggleModal = (key) => {
         <button
           v-for="btn in buttons"
           :key="btn.key"
-          @click="toggleModal(btn.key)"
+          @click="handleButtonClick(btn.key)"
           v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
           :class="{ 'setting-icon-button': btn.key === 'setting' }"
         >
-          <img :src="btn.icon" :alt="btn.key" />
-        </button>
+        <img :src="btn.icon" :alt="btn.key" />
+      </button>
       </div>
       <Transition name="modal">
         <component :is="activeComponent" v-if="activeComponent" @close="toggleModal(null)" />
@@ -277,6 +286,9 @@ main {
   .left-column {
     flex: unset;
     width: 100%;
+  }
+  .nav-title {
+    display: none;
   }
 }
 </style>
