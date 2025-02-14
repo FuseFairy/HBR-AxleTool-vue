@@ -188,8 +188,6 @@ function handleTurnChange(value, index) {
         placeholder="Skill"
         label="names"
         track-by="value"
-        :locale = "settingStore.lang"
-        fallback-locale = "zh-TW"
         :searchable="true"
         :options="getFilteredSkills(i - 1, n - 1)"
       >
