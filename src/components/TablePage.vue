@@ -139,7 +139,7 @@ const displayPassiveSkillName = (tab, skillValue, style) => {
 
   const skills= styleInfo['passiveSkill_value']
 
-  const foundSkillObject = _find(skills, skillObj => skillObj.value === skillValue);
+  const foundSkillObject = _find(skills, { value: skillValue });
 
   if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
@@ -162,6 +162,30 @@ const getTargetImg = (tab, target) => {
   return targetImg
 }
 
+const checkCommandSkill = (row, col) => {
+  let isCommandSkill = false
+  const skillInfo = skillStore.skills[row][col]
+  const skillValue = skillInfo.skill
+  const tab = skillInfo.selectedTab
+  const style = skillInfo.style
+
+  const charInfo = charStore.selections[tab]
+  const styleInfo = _find(charInfo, (characterData) => {
+    return characterData.style === style;
+  });
+
+  const commandSkill = styleInfo['commandSkill']
+  const foundSkillObject = _find(commandSkill, { value: skillValue });
+
+  if (foundSkillObject) {
+      isCommandSkill = true
+  } else {
+      isCommandSkill = false
+  }
+
+  return isCommandSkill
+}
+
 const displaySkillName = (row, col) => {
   let skillName = ""
   const skillInfo = skillStore.skills[row][col]
@@ -178,7 +202,7 @@ const displaySkillName = (row, col) => {
   const skill= styleInfo['skill']
   const mergedSkills = [...commandSkill, ...skill]
 
-  const foundSkillObject = _find(mergedSkills, skillObj => skillObj.value === skillValue);
+  const foundSkillObject = _find(mergedSkills, { value: skillValue });
 
   if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
@@ -381,7 +405,12 @@ const closeTable = () => {
                         />
                       </div>
                       <div class="txt">
-                        <span class="axle-text">{{ displaySkillName(row-1, col-2) }}</span>
+                        <span
+                          class="axle-text"
+                          :style="{ opacity: checkCommandSkill(row - 1, col - 2) ? '0.6' : '1' }"
+                        >
+                          {{ displaySkillName(row - 1, col - 2) }}
+                        </span>
                         <img
                           v-if="skillStore.skills[row - 1][col - 2].target !== null"
                           :src="getAssetsFile(getTargetImg(skillStore.skills[row - 1][col - 2].selectedTab, skillStore.skills[row - 1][col - 2].target))"
