@@ -66,7 +66,7 @@ const downloadTable = async () => {
     await convertElementToJpg('show-axle')
   } catch (error) {
     console.error('Error during download:', error)
-    toast("下載發生錯誤，請盡量使用Chrome、Edge瀏覽器進行下載", {
+    toast("Download error occurred, please use Chrome, Edge browser to download as much as possible.", {
       "theme": "colored",
       "type": "error",
       "position": "top-right",
@@ -122,7 +122,6 @@ const displayUsedSkillName = (tab, skillValue, style) => {
   if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
   } else {
-      // 找不到技能物件
       skillName = ""
   }
 
@@ -144,7 +143,6 @@ const displayPassiveSkillName = (tab, skillValue, style) => {
   if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
   } else {
-      // 找不到技能物件
       skillName = ""
   }
 
@@ -207,7 +205,6 @@ const displaySkillName = (row, col) => {
   if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
   } else {
-      // 找不到技能物件
       skillName = ""
   }
 
@@ -243,7 +240,7 @@ const closeTable = () => {
             <img src="@/assets/custom_icon/download.svg" alt="Download" />
           </button>
         </div>
-        <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
+        <p class="mobile-warning">Horizontal device for a better experience!</p>
         <button @click="closeTable" class="close">
           <img src="@/assets/custom_icon/close.svg" alt="Close" />
         </button>

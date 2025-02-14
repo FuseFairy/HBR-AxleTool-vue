@@ -74,7 +74,7 @@ async function refreshData() {
     }
   }
 
-  toast("技能選項成功刷新!", {
+  toast("Skill options successfully refreshed!", {
     "theme": "colored",
     "type": "success",
     "position": "bottom-right",
@@ -108,7 +108,7 @@ async function refreshData() {
   </div>
 
   <div class="tool-container">
-    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: '刷新技能選項', placement: 'bottom', disabled: isSpinning}">
+    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom', disabled: isSpinning}">
       <img src="@/assets/custom_icon/update.svg" alt="refresh" :class="{ spin: isSpinning }" />
     </button>
   </div>
