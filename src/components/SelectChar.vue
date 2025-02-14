@@ -42,22 +42,22 @@ const teamOptions = [
 const earringOptions = [
   { 
     value: 'BREAK耳環', 
-    names: { 'zh-TW': 'BREAK耳環' }, 
+    names: { 'zh-TW': 'BREAK耳環', "jp": 'ブレイクピアス' }, 
     icon: 'earring_icon/break.webp' 
   },
   { 
     value: '進攻耳環', 
-    names: { 'zh-TW': '進攻耳環' }, 
+    names: { 'zh-TW': '進攻耳環', 'jp': 'アタックピアス' }, 
     icon: 'earring_icon/attach.webp' 
   },
   { 
     value: 'DRIVE耳環', 
-    names: { 'zh-TW': 'DRIVE耳環' }, 
+    names: { 'zh-TW': 'DRIVE耳環', 'jp': 'ドライブピアス' }, 
     icon: 'earring_icon/drive.webp' 
   },
   { 
     value: '爆破耳環', 
-    names: { 'zh-TW': '爆破耳環' }, 
+    names: { 'zh-TW': '爆破耳環', 'jp': 'ブラストピアス' }, 
     icon: 'earring_icon/explosion.webp' 
   }
 ]
