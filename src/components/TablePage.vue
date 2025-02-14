@@ -544,14 +544,14 @@ image {
 }
 .axle-img {
   margin-right: 5px;
-  height: 40px;
-  width: 40px;
+  height: 45px;
+  width: 45px;
   vertical-align: middle;
 }
 .axle-target-img {
   margin-left: 5px;
-  height: 30px;
-  width: 30px;
+  height: 32px;
+  width: 32px;
   vertical-align: middle;
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
   border-radius: 50%;
