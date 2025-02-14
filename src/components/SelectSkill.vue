@@ -195,12 +195,12 @@ function handleTurnChange(value, index) {
       >
         <template v-slot:singlelabel="{ value }">
           <div class="multiselect-single-label">
-            <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}SP</span>
+            <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
           </div>
         </template>
 
         <template v-slot:option="{ option }">
-          <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}/{{ option.sp }}SP</span>
+          <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span>
         </template>
       </Multiselect>
       <Multiselect
