@@ -211,7 +211,19 @@ function handleTurnChange(value, index) {
         :locale = "settingStore.lang"
         fallback-locale = "zh-TW"
         :options="targetOptions(i - 1, n - 1)"
-      />
+      >
+        <template v-slot:singlelabel="{ value }">
+          <div class="multiselect-single-label">
+            <img class="label-icon" :src="getAssetsFile(value.icon)" />
+            <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+          </div>
+        </template>
+
+        <template v-slot:option="{ option }">
+          <img class="option-icon" :src="getAssetsFile(option.icon)" />
+          <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+        </template>
+      </Multiselect>
     </div>
   </div>
   <Transition name="modal">
@@ -362,7 +374,13 @@ div.empty-2 {
   width: 50px;
   height: 50px;
 }
-:deep(.multiselect-option) {
+.option-icon,
+.label-icon {
+  width: 32px;
+  height: 32px;
+}
+:deep(.multiselect-option),
+.multiselect-single-label {
   display: flex;
   gap: 0.5rem;
 }
