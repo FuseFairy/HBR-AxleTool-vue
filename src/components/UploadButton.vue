@@ -5,6 +5,7 @@ import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useLastTabStore } from '@/stores/lastTab_stores'
+import { useSettingStore } from '@/stores/setting_stores'
 import { fetchSkillOptions } from '@/scripts/skillOptions'
 import { fetchCharacterOptions } from '@/scripts/charData'
 import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
@@ -69,6 +70,7 @@ const onFileChange = async (event) => {
         const jpegDataUrl = e.target.result
         const exifObj = piexif.load(jpegDataUrl)
         const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || ''
+        const settingStore = useSettingStore()
 
         if (!customData) {
           throw new Error('Custom metadata not found.')
@@ -84,6 +86,7 @@ const onFileChange = async (event) => {
           turns: decodedData.turns
         })
         sliderStore.rows = decodedData.rows
+        settingStore.lang = decodedData.language ?? settingStore.lang
       } catch (error) {
         console.error('Error reading image or parsing metadata:', error)
         alert('Invalid JPEG file format or failed to parse metadata. Please check the file integrity and format.')

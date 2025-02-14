@@ -2,6 +2,7 @@ import piexif from 'piexifjs'
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
+import { useSettingStore } from '@/stores/setting_stores'
 import { compressToBase64 } from 'lz-string'
 import { getUsedTeams } from '@/scripts/getUsedTeams'
 import domtoimage from 'dom-to-image-more'
@@ -16,6 +17,7 @@ export async function convertElementToJpg(elementId) {
   const charStore = useCharStore()
   const skillStore = useSkillStore()
   const sliderStore = useSliderStore()
+  const settingStore = useSettingStore()
   const usedTeams = getUsedTeams()
 
   const usedCharStore = usedTeams.reduce((result, team) => {
@@ -61,7 +63,8 @@ export async function convertElementToJpg(elementId) {
       axleName: axleName,
       skills: skillStore.skills,
       turns: skillStore.turns,
-      rows: sliderStore.rows
+      rows: sliderStore.rows,
+      language: settingStore.lang
     }
 
     const jsonString = JSON.stringify(customData)
