@@ -19,18 +19,18 @@ export async function convertElementToJpg(elementId) {
   const usedTeams = getUsedTeams()
 
   const usedCharStore = usedTeams.reduce((result, team) => {
-    const characters = charStore.selections[team]
+    const characters = charStore.selections[team];
     if (characters) {
       result[team] = Object.fromEntries(
-        Object.entries(characters).map(([charName, charData]) => [
-          charName,
-          { ...charData, skill: [] }
-        ])
-      )
+        Object.entries(characters).map(([charName, charData]) => {
+          const { skill, passiveSkill_value, character_info, commandSkill, ...restCharData } = charData;
+          return [charName, restCharData];
+        })
+      );
     }
-    return result
-  }, {})
-
+    return result;
+  }, {});
+  console.log(usedCharStore)
   const axleName = skillStore.axleName.trim()
 
   const images = element.getElementsByTagName('img')

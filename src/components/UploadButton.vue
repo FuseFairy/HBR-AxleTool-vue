@@ -6,8 +6,12 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useLastTabStore } from '@/stores/lastTab_stores'
 import { fetchSkillOptions } from '@/scripts/skillOptions'
+import { fetchCharacterOptions } from '@/scripts/charData'
+import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
+import { fetchCommandSkill } from '@/scripts/commandSkill'
 import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
+import _find from 'lodash/find'
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -34,6 +38,15 @@ const updateSelections = async (decodedDataChar) => {
           lastTabAssigned = true
         }
         team[charKey]['skill'] = await fetchSkillOptions(character, teamName, style)
+
+        const charOptios = await fetchCharacterOptions(teamName)
+        team[charKey]['character_info'] = _find(charOptios, { value: character })
+
+        const passiveSkillOptions = await fetchPassiveSkillOptions(character, teamName, style)
+        team[charKey]['passiveSkill_value'] = passiveSkillOptions || []
+        
+        const commandSkill = await fetchCommandSkill(character, teamName, style)
+        team[charKey]['commandSkill'] = commandSkill || [];
       }
     }
   }
