@@ -32,7 +32,6 @@ export async function convertElementToJpg(elementId) {
     }
     return result;
   }, {});
-  console.log(usedCharStore)
   const axleName = skillStore.axleName.trim()
 
   const images = element.getElementsByTagName('img')
