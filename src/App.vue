@@ -39,6 +39,7 @@ const toggleModal = (key) => {
           :key="btn.key"
           @click="toggleModal(btn.key)"
           v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
+          :class="{ 'setting-icon-button': btn.key === 'setting' }"
         >
           <img :src="btn.icon" :alt="btn.key" />
         </button>
@@ -72,9 +73,13 @@ const toggleModal = (key) => {
 </template>
 
 <style scoped>
-/* .box_container, .axle, .footer {
-  border: 1px solid red;
-} */
+.setting-icon-button {
+  transition: transform 0.5s ease-in-out;
+}
+.setting-icon-button:hover {
+  background-color: transparent;
+  transform: rotate(45deg);
+}
 .form-row {
   display: flex;
   align-items: center;
