@@ -108,7 +108,7 @@ label {
 }
 :deep(.multiselect) {
   background-color: black;
-  border: 1px solid rgb(64, 68, 141);
+  border: 2px solid rgb(178, 180, 222);
   margin-top: 2px;
   width: 100%;
 }
@@ -117,7 +117,7 @@ label {
 }
 :deep(.multiselect-dropdown) {
   background-color: black;
-  border: 1px solid rgb(64, 68, 141);
+  border: 2px solid rgb(178, 180, 222);
   max-height: 15rem;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
