@@ -1,6 +1,4 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { getAssetsFile } from '@/scripts/util'
 import { useSettingStore } from '@/stores/setting_stores'
 import Multiselect from '@vueform/multiselect'
 
