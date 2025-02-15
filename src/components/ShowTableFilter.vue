@@ -13,7 +13,9 @@ import filterOnIcon from '@/assets/custom_icon/filter-on.svg'
 const charStore = useCharStore()
 const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
-showTeamStore.showTeam = getUsedTeams()
+const usedTeam = getUsedTeams()
+
+showTeamStore.showTeam = usedTeam
 
 const showOptions = [
   { value: 'rank', name: 'Rank' },
@@ -22,14 +24,7 @@ const showOptions = [
   { value: 'skill', name: 'Skill' },
   { value: 'axle', name: 'Axle' }
 ]
-const showTeams = [
-  { value: 1, name: 'Team 1' },
-  { value: 2, name: 'Team 2' },
-  { value: 3, name: 'Team 3' },
-  { value: 4, name: 'Team 4' },
-  { value: 5, name: 'Team 5' },
-  { value: 6, name: 'Team 6' }
-]
+const showTeams = usedTeam.map(teamValue => ({ value: teamValue, name: `Team ${teamValue}` }));
 
 const show = ref(false)
 const filterRef = ref(null)

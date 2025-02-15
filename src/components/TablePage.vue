@@ -9,7 +9,6 @@ import { useSettingStore } from '@/stores/setting_stores'
 import { convertElementToJpg } from '@/scripts/domToImage'
 import { getAssetsFile } from '@/scripts/util'
 import { getUsedSkills } from '@/scripts/getUsedSkills'
-import { getUsedTeams } from '@/scripts/getUsedTeams'
 import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ShowTableFilter.vue'
 import { toast } from "vue3-toastify"
@@ -31,7 +30,6 @@ const earringDict = {
   '爆破耳環':'earring_icon/explosion.webp'
 }
 const additionalTurn = { 'zh-TW': '追加回合', 'jp': '追加ターン' }
-
 const axleName = skillStore.axleName.trim()
 
 const hasRank = (selectedTab) => {
@@ -85,7 +83,7 @@ const downloadTable = async () => {
 }
 
 function hasTeam(selectedTab) {
-  const usedTeams = getUsedTeams()
+  const usedTeams = showTeamStore.showTeam
   return usedTeams.includes(selectedTab)
 }
 
