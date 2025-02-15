@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeMount } from 'vue'
 import './assets/main.css'
 import AddRows from '@/components/AddRows.vue'
 import SelectBoxes from '@/components/SelectBoxes.vue'
@@ -9,6 +9,7 @@ import SettingPage from './components/SettingPage.vue'
 import uploadButton from '@/components/UploadButton.vue'
 import SelectSkill from '@/components/SelectSkill.vue'
 import AxleName from '@/components/AxleName.vue'
+import { runIPGeolocation } from '@/scripts/ipGeolocation'
 import { getAssetsFile } from '@/scripts/util'
 
 const buttons = [
@@ -35,6 +36,8 @@ const handleButtonClick = (key) => {
     window.open(bugReportURL, '_blank');
   }
 };
+
+onBeforeMount(runIPGeolocation);
 </script>
 
 <template>

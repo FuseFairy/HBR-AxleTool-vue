@@ -4,7 +4,7 @@ import { ref } from 'vue'
 export const useSettingStore = defineStore(
   'setting',
   () => {
-    const lang = ref("zh-TW")
+    const lang = ref(null)
 
     return {
       lang
