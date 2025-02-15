@@ -13,11 +13,13 @@ export const useCharStore = defineStore(
               j + 1,
               {
                 character: null,
+                character_info: {},
                 style: null,
                 rank: null,
                 flower: false,
                 passiveSkill: [],
-                commandSkill: null,
+                passiveSkill_value: [],
+                commandSkill: [],
                 earring: null,
                 skill: [],
                 img: null

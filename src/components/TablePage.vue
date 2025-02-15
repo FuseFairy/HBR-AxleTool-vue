@@ -5,6 +5,7 @@ import { useSkillStore } from '@/stores/skill_stores'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useShowRowStore } from '@/stores/showRow_stores.js'
 import { useShowTeamStore } from '@/stores/showTeam_stores'
+import { useSettingStore } from '@/stores/setting_stores'
 import { convertElementToJpg } from '@/scripts/domToImage'
 import { getAssetsFile } from '@/scripts/util'
 import { getUsedSkills } from '@/scripts/getUsedSkills'
@@ -12,6 +13,7 @@ import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ShowTableFilter.vue'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
+import _find from 'lodash/find'
 
 const isDownloading = ref(false)
 const fullPage = ref(true)
@@ -20,12 +22,14 @@ const skillStore = useSkillStore()
 const sliderStore = useSliderStore()
 const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
+const settingStore = useSettingStore()
 const earringDict = {
   'BREAK耳環':'earring_icon/break.webp',
   '進攻耳環':'earring_icon/attach.webp',
   'DRIVE耳環':'earring_icon/drive.webp',
   '爆破耳環':'earring_icon/explosion.webp'
 }
+const additionalTurn = { 'zh-TW': '追加回合', 'jp': '追加ターン' }
 
 const axleName = skillStore.axleName.trim()
 
@@ -62,7 +66,7 @@ const downloadTable = async () => {
     await convertElementToJpg('show-axle')
   } catch (error) {
     console.error('Error during download:', error)
-    toast("下載發生錯誤，請盡量使用Chrome、Edge瀏覽器進行下載", {
+    toast("Download error occurred, please use Chrome, Edge browser to download as much as possible.", {
       "theme": "colored",
       "type": "error",
       "position": "top-right",
@@ -103,9 +107,113 @@ const getBackgroundColor = (row) => {
   return row % 2 === 0 ? "rgba(33, 33, 33, 0.9)" : "transparent";
 };
 
+const displayUsedSkillName = (tab, skillValue, style) => {
+  let skillName = ""
+
+  const charInfo = charStore.selections[tab]
+  const styleInfo = _find(charInfo, (characterData) => {
+    return characterData.style === style;
+  });
+
+  const skills= styleInfo['skill']
+
+  const foundSkillObject = _find(skills, skillObj => skillObj.value === skillValue);
+
+  if (foundSkillObject) {
+      skillName = foundSkillObject.names[settingStore.lang]
+  } else {
+      skillName = ""
+  }
+
+  return skillName
+}
+
+const displayPassiveSkillName = (tab, skillValue, style) => {
+  let skillName = ""
+
+  const charInfo = charStore.selections[tab]
+  const styleInfo = _find(charInfo, (characterData) => {
+    return characterData.style === style;
+  });
+
+  const skills= styleInfo['passiveSkill_value']
+
+  const foundSkillObject = _find(skills, { value: skillValue });
+
+  if (foundSkillObject) {
+      skillName = foundSkillObject.names[settingStore.lang]
+  } else {
+      skillName = ""
+  }
+
+  return skillName
+}
+
+const getTargetImg = (tab, target) => {
+  let targetImg = ""
+
+  const team = charStore.selections[tab]
+  const foundTargetObject = _find(team, { character: target })
+  const charInfo = foundTargetObject["character_info"]
+  targetImg = charInfo.icon || ""
+
+  return targetImg
+}
+
+const checkCommandSkill = (row, col) => {
+  let isCommandSkill = false
+  const skillInfo = skillStore.skills[row][col]
+  const skillValue = skillInfo.skill
+  const tab = skillInfo.selectedTab
+  const style = skillInfo.style
+
+  const charInfo = charStore.selections[tab]
+  const styleInfo = _find(charInfo, (characterData) => {
+    return characterData.style === style;
+  });
+
+  const commandSkill = styleInfo['commandSkill']
+  const foundSkillObject = _find(commandSkill, { value: skillValue });
+
+  if (foundSkillObject) {
+      isCommandSkill = true
+  } else {
+      isCommandSkill = false
+  }
+
+  return isCommandSkill
+}
+
+const displaySkillName = (row, col) => {
+  let skillName = ""
+  const skillInfo = skillStore.skills[row][col]
+  const skillValue = skillInfo.skill
+  const tab = skillInfo.selectedTab
+  const style = skillInfo.style
+
+  const charInfo = charStore.selections[tab]
+  const styleInfo = _find(charInfo, (characterData) => {
+    return characterData.style === style;
+  });
+
+  const commandSkill = styleInfo['commandSkill']
+  const skill= styleInfo['skill']
+  const mergedSkills = [...commandSkill, ...skill]
+
+  const foundSkillObject = _find(mergedSkills, { value: skillValue });
+
+  if (foundSkillObject) {
+      skillName = foundSkillObject.names[settingStore.lang]
+  } else {
+      skillName = ""
+  }
+
+  return skillName
+}
+
 const getStyle = computed(() => (row) => ({
   "background-color": getBackgroundColor(row),
-  ...(skillStore.turns[row - 1]?.turn === "追加回合" ? { padding: "3px" } : {}),
+  ...(skillStore.turns[row - 1]?.turn === "追加回合" ? { padding: "3px 0px" } : {}),
 }));
 
 const emit = defineEmits(['close'])
@@ -132,7 +240,7 @@ const closeTable = () => {
             <img src="@/assets/custom_icon/download.svg" alt="Download" />
           </button>
         </div>
-        <p class="mobile-warning">如覺得畫面太擠，可橫置裝置獲得更好的體驗!</p>
+        <p class="mobile-warning">Horizontal device for a better experience!</p>
         <button @click="closeTable" class="close">
           <img src="@/assets/custom_icon/close.svg" alt="Close" />
         </button>
@@ -216,7 +324,7 @@ const closeTable = () => {
                     v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill"
                     class="passive-skill"
                   >
-                    {{ skill }}
+                    {{ displayPassiveSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
                   </span>
                 </div>
               </div>
@@ -239,7 +347,7 @@ const closeTable = () => {
                     )"
                     class="used-skill"
                   >
-                    {{ skill }}
+                    {{ displayUsedSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
                   </span>
                 </div>
               </div>
@@ -255,7 +363,6 @@ const closeTable = () => {
               <div class="red-line"></div>
             </div>
             <div
-              v-if="sliderStore.rows > 0"
               v-for="row in sliderStore.rows"
               :class="
                 skillStore.turns[row - 1].turn !== 'Switch'
@@ -264,44 +371,54 @@ const closeTable = () => {
               "
               :style="getStyle(row)"
             >
-              <div
-                v-if="skillStore.turns[row - 1].turn !== 'Switch'"
-                v-for="col in 4"
-                class="axle-table-column"
-              >
-                <div v-if="col === 1" class="label">
-                  <span
-                    v-if="
-                      skillStore.turns[row - 1].turn !== null &&
-                      skillStore.turns[row - 1].od !== null
-                    "
-                  >
-                    {{ skillStore.turns[row - 1].turn }} / {{ skillStore.turns[row - 1].od }}
-                  </span>
-                  <span v-else-if="skillStore.turns[row - 1].turn !== null">{{
-                    skillStore.turns[row - 1].turn
-                  }}</span>
+              <template v-if="skillStore.turns[row - 1].turn !== 'Switch'">
+                <div
+                  v-for="col in 4"
+                  class="axle-table-column"
+                >
+                  <div v-if="col === 1" class="label">
+                    <span
+                      v-if="
+                        skillStore.turns[row - 1].turn !== null &&
+                        skillStore.turns[row - 1].od !== null
+                      "
+                    >
+                      {{ skillStore.turns[row - 1].turn }} / {{ skillStore.turns[row - 1].od }}
+                    </span>
+                    <span v-else-if="skillStore.turns[row - 1].turn === '追加回合'">{{
+                      additionalTurn[settingStore.lang]
+                    }}</span>
+                    <span v-else-if="skillStore.turns[row - 1].turn !== null">{{
+                      skillStore.turns[row - 1].turn
+                    }}</span>
+                  </div>
+                  <div v-else>
+                    <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
+                      <div class="image">
+                        <img
+                          :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
+                          :alt="skillStore.skills[row - 1][col - 2].style"
+                          class="axle-img"
+                        />
+                      </div>
+                      <div class="txt">
+                        <span
+                          class="axle-text"
+                          :style="{ opacity: checkCommandSkill(row - 1, col - 2) ? '0.6' : '1' }"
+                        >
+                          {{ displaySkillName(row - 1, col - 2) }}
+                        </span>
+                        <img
+                          v-if="skillStore.skills[row - 1][col - 2].target !== null"
+                          :src="getAssetsFile(getTargetImg(skillStore.skills[row - 1][col - 2].selectedTab, skillStore.skills[row - 1][col - 2].target))"
+                          class="axle-target-img"
+
+                        />
+                      </div>
+                    </span>
+                  </div>
                 </div>
-                <div v-else>
-                  <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
-                    <div class="image">
-                      <img
-                        :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
-                        :alt="skillStore.skills[row - 1][col - 2].style"
-                        class="axle-img"
-                      />
-                    </div>
-                    <div class="txt">
-                      <span class="axle-text">{{ skillStore.skills[row - 1][col - 2].skill }}</span>
-                      <span
-                        v-if="skillStore.skills[row - 1][col - 2].target !== null"
-                        class="axle-text"
-                        ><br />（{{ skillStore.skills[row - 1][col - 2].target }}）</span
-                      >
-                    </div>
-                  </span>
-                </div>
-              </div>
+              </template>
               <div v-else>
                 <span class="switch-turn">{{ skillStore.turns[row - 1].turn }}</span>
               </div>
@@ -312,6 +429,7 @@ const closeTable = () => {
     </div>
   </div>
 </template>
+
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
@@ -426,9 +544,17 @@ image {
 }
 .axle-img {
   margin-right: 5px;
-  height: 40px;
-  width: 40px;
+  height: 45px;
+  width: 45px;
   vertical-align: middle;
+}
+.axle-target-img {
+  margin-left: 5px;
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
 }
 .red-line {
   display: flex;

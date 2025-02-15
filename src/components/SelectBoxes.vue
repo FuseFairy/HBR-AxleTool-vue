@@ -7,6 +7,7 @@ import { getAssetsFile } from '@/scripts/util'
 import { fetchSkillOptions } from '@/scripts/skillOptions'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
+import { fetchCommandSkill } from '@/scripts/commandSkill'
 
 const charStore = useCharStore()
 const lastTabStore = useLastTabStore()
@@ -67,10 +68,13 @@ async function refreshData() {
     if (style) {
       const skillOptions = await fetchSkillOptions(character, team, style);
       charStore.selections[currentTab][charKey]['skill'] = skillOptions;
+
+      const commandSkill = await fetchCommandSkill(character, team, style);
+      charStore.selections[currentTab][charKey]['commandSkill'] = commandSkill;
     }
   }
 
-  toast("技能選項成功刷新!", {
+  toast("Skill options successfully refreshed!", {
     "theme": "colored",
     "type": "success",
     "position": "bottom-right",
@@ -104,7 +108,7 @@ async function refreshData() {
   </div>
 
   <div class="tool-container">
-    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: '刷新技能選項', placement: 'bottom', disabled: isSpinning}">
+    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom', disabled: isSpinning}">
       <img src="@/assets/custom_icon/update.svg" alt="refresh" :class="{ spin: isSpinning }" />
     </button>
   </div>
