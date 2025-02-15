@@ -30,6 +30,8 @@ const closeContainer = () => {
           label="name"
           track-by="value"
           :options="langOptions"
+          :canClear="false"
+          :canDeselect="false"
         />
       </div>
     </div>
@@ -119,7 +121,7 @@ label {
   max-height: 15rem;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
-  width: 5px;
+  width: 0;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar-track),
 :deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
