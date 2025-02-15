@@ -46,9 +46,9 @@ export default {
             "backgroundColor": "rgb(232, 178, 104)",
           }
         });
-      } else { //  <--  第一次訪問 (storedVersion 為 null) 的情況
+      } else {
         console.warn('[Version Control] First visit detected, initializing Pinia Storage version.');
-        localStorage.setItem('piniaStorageVersion', currentStorageVersion); //  仍然設定版本號，但跳過清除和 Toast
+        localStorage.setItem('piniaStorageVersion', currentStorageVersion);
       }
     }
   }
