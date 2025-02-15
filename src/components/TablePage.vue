@@ -9,6 +9,7 @@ import { useSettingStore } from '@/stores/setting_stores'
 import { convertElementToJpg } from '@/scripts/domToImage'
 import { getAssetsFile } from '@/scripts/util'
 import { getUsedSkills } from '@/scripts/getUsedSkills'
+import { getUsedTeams } from '@/scripts/getUsedTeams'
 import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ShowTableFilter.vue'
 import { toast } from "vue3-toastify"
@@ -84,10 +85,8 @@ const downloadTable = async () => {
 }
 
 function hasTeam(selectedTab) {
-  const usedSkills = getUsedSkills(selectedTab)
-  return (
-    Object.keys(usedSkills).length > 0 && Object.values(usedSkills).some((set) => set.size !== 0)
-  )
+  const usedTeams = getUsedTeams()
+  return usedTeams.includes(selectedTab)
 }
 
 const getBackgroundColor = (row) => {
