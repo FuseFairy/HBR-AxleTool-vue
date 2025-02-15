@@ -13,32 +13,33 @@ export function runIPGeolocation() {
     'JP': 'jp',
   };
 
-  let targetLang = 'jp'; // defaut language is JP
+  let targetLang = 'jp';
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 600);
+  const timeoutId = setTimeout(() => controller.abort(), 800);
 
-  fetch('http://ip-api.com/json', { signal: controller.signal })
+  fetch(`https://ipinfo.io/json?token=${import.meta.env.VITE_IPINFO_TOKEN}`, { signal: controller.signal })
     .then(response => {
       clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       return response.json();
     })
     .then(data => {
-      if (data.status === 'success') {
-        const countryCode = data.countryCode;
-        targetLang = countryLangMap[countryCode] || 'jp';
-      } else {
-        console.error('IP Geolocation API request failed:', data.message);
-      }
+      const countryCode = data.country;
+      targetLang = countryLangMap[countryCode] || 'jp';
       settingStore.lang = targetLang;
     })
     .catch(error => {
       clearTimeout(timeoutId);
 
       if (error.name === 'AbortError') {
-        console.error('IP Geolocation API request timeout: Request aborted after 3 seconds.');
+        console.error('IP Geolocation API request timeout.');
       } else {
-        console.error('IP Geolocation API request error:', error);
+        console.error('IP Geolocation API request error:', error.message);
       }
       settingStore.lang = 'jp';
     });
