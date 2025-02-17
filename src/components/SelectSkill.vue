@@ -132,6 +132,27 @@ function handleTurnChange(value, index) {
     ];
   }
 }
+
+const exchange = (row, direction) => {
+  const currentRow = skillStore.skills[row];
+  let swapIndex;
+  let directionModifier = 0;
+
+  if (direction === 'up') {
+    directionModifier = -1;
+  } else {
+    directionModifier = 1;
+  }
+
+  if (skillStore.turns[row + directionModifier].turn === 'Switch') {
+    swapIndex = row + directionModifier * 2;
+  } else {
+    swapIndex = row + directionModifier;
+  }
+
+  const swapRow = skillStore.skills[swapIndex];
+  [skillStore.skills[row], skillStore.skills[swapIndex]] = [swapRow, currentRow];
+}
 </script>
 
 <template>
@@ -153,7 +174,16 @@ function handleTurnChange(value, index) {
       <img src="@/assets/custom_icon/copy.svg" alt="copy" />
     </button>
     <div class="column">
-      <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]"></div>
+      <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]">
+        <template v-if="skillStore.turns[i - 1].turn !== 'Switch'">
+          <button class="arrow-button" :disabled="i === 1" @click="exchange(i - 1, 'up')" v-tooltip="{ content: 'up', placement: 'top' }">
+            <svg xmlns="http://www.w3.org/2000/svg" height="21px" weight="21px" fill-opacity="0.85" viewBox="280 -600 400 200"><path d="m280-400 200-200 200 200H280Z"/></svg>
+          </button>
+          <button class="arrow-button" :disabled="sliderStore.rows === i" @click="exchange(i - 1, 'down')" v-tooltip="{ content: 'down', placement: 'bottom' }">
+            <svg xmlns="http://www.w3.org/2000/svg" height="21px" weight="21px" fill-opacity="0.85" viewBox="280 -560 400 200"><path d="M480-360 280-560h400L480-360Z"/></svg>
+          </button>
+        </template>
+      </div>
       <Multiselect
         v-model="skillStore.turns[i - 1].turn"
         placeholder="Turn"
@@ -288,8 +318,10 @@ span {
   width: 80px;
   height: 80px;
   overflow: hidden;
+  row-gap: 10px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-content: center;
   justify-content: center;
 }
 div.empty-2 {
@@ -346,14 +378,21 @@ div.empty-2 {
 .copy-button:hover img {
   filter: brightness(1.2);
 }
-.fixed-button svg {
-  width: 24px;
-  height: 24px;
-  fill: #ffffff;
-  transition: fill 0.3s ease;
+.arrow-button {
+  background-color: transparent;
+  cursor: pointer;
+  align-content: center;
+  justify-content: center;
+  border: none;
+  fill: #d3d3d3;
 }
-.fixed-button:hover svg {
-  fill: #ea3323;
+.arrow-button:hover svg {
+  filter: brightness(2);
+}
+.arrow-button:disabled svg {
+  cursor: not-allowed;
+  opacity: 0.4;
+  filter: none;
 }
 .char-img {
   transition: transform 0.3s ease;
