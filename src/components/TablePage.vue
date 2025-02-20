@@ -215,20 +215,21 @@ const getStyle = computed(() => (row) => ({
 
 const emit = defineEmits(['close'])
 const closeTable = () => {
+  if (isDownloading.value) return
   emit('close')
 }
 </script>
 
 <template>
-  <loading
-    v-model:active="isDownloading"
-    :can-cancel="false"
-    :is-full-page="fullPage"
-    :lock-scroll="true"
-    background-color="#54504b"
-    color="#79d1cb"
-  />
   <div @click="closeTable" class="overlay">
+    <loading
+      v-model:active="isDownloading"
+      :can-cancel="false"
+      :is-full-page="fullPage"
+      :lock-scroll="true"
+      background-color="#54504b"
+      color="#79d1cb"
+    />
     <div @click.stop class="container">
       <div class="button-group">
         <div class="left-button-group" >
