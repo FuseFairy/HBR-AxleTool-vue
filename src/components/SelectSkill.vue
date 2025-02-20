@@ -1,5 +1,5 @@
 <script setup>
-import { ref, nextTick, toRaw } from 'vue'
+import { ref, nextTick, toRaw, onMounted, onBeforeUnmount } from 'vue'
 import { useSliderStore } from '@/stores/slider_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useCharStore } from '@/stores/char_stores'
@@ -12,6 +12,7 @@ import _get from 'lodash/get'
 import _isEmpty from 'lodash/isEmpty'
 import _filter from 'lodash/filter'
 import _map from 'lodash/map'
+import { useIntersectionObserver } from '@vueuse/core'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
@@ -153,108 +154,149 @@ const exchange = (row, direction) => {
   const swapRow = skillStore.skills[swapIndex];
   [skillStore.skills[row], skillStore.skills[swapIndex]] = [swapRow, currentRow];
 }
+
+const itemRefs = ref([])
+const setItemRef = (index) => (el) => {
+  if (el) {
+    itemRefs.value[index] = el
+  }
+}
+
+const visibleItems = ref(new Set())
+let observerStop = null
+onMounted(() => {
+  const { stop } = useIntersectionObserver(
+    itemRefs,
+    (entries) => {
+      entries.forEach((entry) => {
+        const index = itemRefs.value.indexOf(entry.target)
+        if (entry.isIntersecting) {
+          visibleItems.value.add(index)
+        }
+      })
+    },
+    {
+      threshold: 0,
+      rootMargin: '0px 0px 50% 0px'
+    }
+  )
+  observerStop = stop
+})
+
+onBeforeUnmount(() => {
+  if (observerStop) {
+    observerStop()
+  }
+})
 </script>
 
 <template>
-  <div v-for="i in sliderStore.rows" :key="i" :class="['container row-item', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]">
-    <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="24px"
-        viewBox="0 -960 960 960"
-        width="24px"
-        fill="#e8eaed"
-      >
-        <path
-          d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"
-        />
-      </svg>
-    </button>
-    <button class="copy-button" @click="copyRow(i - 1)" v-tooltip="{ content: 'copy', placement: 'bottom' }">
-      <img src="@/assets/custom_icon/copy.svg" alt="copy" />
-    </button>
-    <div class="column">
-      <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]">
-        <template v-if="skillStore.turns[i - 1].turn !== 'Switch'">
-          <button class="arrow-button" :disabled="i === 1" @click="exchange(i - 1, 'up')" v-tooltip="{ content: 'up', placement: 'top' }">
-            <svg xmlns="http://www.w3.org/2000/svg" height="21px" weight="21px" fill-opacity="0.85" viewBox="280 -600 400 200"><path d="m280-400 200-200 200 200H280Z"/></svg>
-          </button>
-          <button class="arrow-button" :disabled="sliderStore.rows === i" @click="exchange(i - 1, 'down')" v-tooltip="{ content: 'down', placement: 'bottom' }">
-            <svg xmlns="http://www.w3.org/2000/svg" height="21px" weight="21px" fill-opacity="0.85" viewBox="280 -560 400 200"><path d="M480-360 280-560h400L480-360Z"/></svg>
-          </button>
-        </template>
-      </div>
-      <Multiselect
-        v-model="skillStore.turns[i - 1].turn"
-        placeholder="Turn"
-        :options="turnOptions"
-        label="names"
-        track-by="value"
-        :locale = "settingStore.lang"
-        fallback-locale = "zh-TW"
-        @update:model-value="(value) => handleTurnChange(value, i)"
-      />
-      <Multiselect
-        v-if="skillStore.turns[i - 1].turn !== 'Switch'"
-        v-model="skillStore.turns[i - 1].od"
-        placeholder="OD"
-        :options="odOptions"
-      />
-    </div>
-    <div class="column" v-if="skillStore.turns[i - 1].turn !== 'Switch'" v-for="n in 3" :key="n">
-      <button
-        @click="handleBoxClick(i - 1, n - 1)"
-        :class="{
-          'circle-button selected-button': skillStore.skills[i - 1][n - 1].style_img !== null,
-          'circle-button add-button': skillStore.skills[i - 1][n - 1].style_img === null
-        }"
-      >
-        <img
-          v-if="skillStore.skills[i - 1][n - 1].style_img !== null"
-          class="char-img"
-          :src="getAssetsFile(skillStore.skills[i - 1][n - 1].style_img)"
-          :alt="skillStore.skills[i - 1][n - 1].style"
-        />
-        <img v-else class="icon-img" src="@/assets/custom_icon/add.svg" alt="Add" />
+  <div 
+    v-for="i in sliderStore.rows"
+    :key="i" 
+    :class="['container row-item', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]"
+    :ref="setItemRef(i)"
+  >
+    <template v-if="i <= 35 || visibleItems.has(i)">
+      <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#e8eaed"
+        >
+          <path
+            d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"
+          />
+        </svg>
       </button>
-      <Multiselect
-        v-model="skillStore.skills[i - 1][n - 1].skill"
-        placeholder="Skill"
-        label="names"
-        track-by="value"
-        :searchable="true"
-        :options="getFilteredSkills(i - 1, n - 1)"
-      >
-        <template v-slot:singlelabel="{ value }">
-          <div class="multiselect-single-label">
-            <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
-          </div>
-        </template>
+      <button class="copy-button" @click="copyRow(i - 1)" v-tooltip="{ content: 'copy', placement: 'bottom' }">
+        <img src="@/assets/custom_icon/copy.svg" alt="copy" />
+      </button>
+      <div class="column">
+        <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]">
+          <template v-if="skillStore.turns[i - 1].turn !== 'Switch'">
+            <button class="arrow-button" :disabled="i === 1" @click="exchange(i - 1, 'up')" v-tooltip="{ content: 'up', placement: 'top' }">
+              <svg xmlns="http://www.w3.org/2000/svg" height="21px" weight="21px" fill-opacity="0.85" viewBox="280 -600 400 200"><path d="m280-400 200-200 200 200H280Z"/></svg>
+            </button>
+            <button class="arrow-button" :disabled="sliderStore.rows === i" @click="exchange(i - 1, 'down')" v-tooltip="{ content: 'down', placement: 'bottom' }">
+              <svg xmlns="http://www.w3.org/2000/svg" height="21px" weight="21px" fill-opacity="0.85" viewBox="280 -560 400 200"><path d="M480-360 280-560h400L480-360Z"/></svg>
+            </button>
+          </template>
+        </div>
+        <Multiselect
+          v-model="skillStore.turns[i - 1].turn"
+          placeholder="Turn"
+          :options="turnOptions"
+          label="names"
+          track-by="value"
+          :locale = "settingStore.lang"
+          fallback-locale = "zh-TW"
+          @update:model-value="(value) => handleTurnChange(value, i)"
+        />
+        <Multiselect
+          v-if="skillStore.turns[i - 1].turn !== 'Switch'"
+          v-model="skillStore.turns[i - 1].od"
+          placeholder="OD"
+          :options="odOptions"
+        />
+      </div>
+      <div class="column" v-if="skillStore.turns[i - 1].turn !== 'Switch'" v-for="n in 3" :key="n">
+        <button
+          @click="handleBoxClick(i - 1, n - 1)"
+          :class="{
+            'circle-button selected-button': skillStore.skills[i - 1][n - 1].style_img !== null,
+            'circle-button add-button': skillStore.skills[i - 1][n - 1].style_img === null
+          }"
+        >
+          <img
+            v-if="skillStore.skills[i - 1][n - 1].style_img !== null"
+            class="char-img"
+            :src="getAssetsFile(skillStore.skills[i - 1][n - 1].style_img)"
+            :alt="skillStore.skills[i - 1][n - 1].style"
+          />
+          <img v-else class="icon-img" src="@/assets/custom_icon/add.svg" alt="Add" />
+        </button>
+        <Multiselect
+          v-model="skillStore.skills[i - 1][n - 1].skill"
+          placeholder="Skill"
+          label="names"
+          track-by="value"
+          :searchable="true"
+          :options="getFilteredSkills(i - 1, n - 1)"
+        >
+          <template v-slot:singlelabel="{ value }">
+            <div class="multiselect-single-label">
+              <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
+            </div>
+          </template>
 
-        <template v-slot:option="{ option }">
-          <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span>
-        </template>
-      </Multiselect>
-      <Multiselect
-        v-model="skillStore.skills[i - 1][n - 1].target"
-        placeholder="Target"
-        label="names"
-        track-by="value"
-        :options="targetOptions(i - 1, n - 1)"
-      >
-        <template v-slot:singlelabel="{ value }">
-          <div class="multiselect-single-label">
-            <img class="label-icon" :src="getAssetsFile(value.icon)" />
-            <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
-          </div>
-        </template>
+          <template v-slot:option="{ option }">
+            <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span>
+          </template>
+        </Multiselect>
+        <Multiselect
+          v-model="skillStore.skills[i - 1][n - 1].target"
+          placeholder="Target"
+          label="names"
+          track-by="value"
+          :options="targetOptions(i - 1, n - 1)"
+        >
+          <template v-slot:singlelabel="{ value }">
+            <div class="multiselect-single-label">
+              <img class="label-icon" :src="getAssetsFile(value.icon)" />
+              <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+            </div>
+          </template>
 
-        <template v-slot:option="{ option }">
-          <img class="option-icon" :src="getAssetsFile(option.icon)" />
-          <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
-        </template>
-      </Multiselect>
-    </div>
+          <template v-slot:option="{ option }">
+            <img class="option-icon" :src="getAssetsFile(option.icon)" />
+            <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+          </template>
+        </Multiselect>
+      </div>
+    </template>
   </div>
   <Transition name="modal">
     <SelectAxleChar
