@@ -33,6 +33,11 @@
         "value": "Daydream Believer",
         "names": { "zh-TW": "Daydream Believer", "jp": "Daydream Believer" },
         "id": "006"
+      },
+      "撥雲見日": {
+        "value": "撥雲見日",
+        "names": { "zh-TW": "撥雲見日", "jp": "雲外蒼天" },
+        "id": "007"
       }
     },
     "skill": {
@@ -76,6 +81,11 @@
           "value": "夢的邊際",
           "names": { "zh-TW": "夢的邊際", "jp": "夢の際" },
           "sp": 6
+        },
+        "士風": {
+          "value": "士風",
+          "names": { "zh-TW": "士風", "jp": "モラール" },
+          "sp": 6
         }
       },
       "Holy Knight": {
@@ -90,6 +100,13 @@
           "value": "覺醒的思維",
           "names": { "zh-TW": "覺醒的思維", "jp": "醒めたる思い" },
           "sp": 15
+        }
+      },
+      "撥雲見日": {
+        "信念之鐮": {
+          "value": "信念之鐮",
+          "names": { "zh-TW": "信念之鐮", "jp": "ヴォリション・サイス" },
+          "sp": 17
         }
       }
     },
