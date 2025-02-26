@@ -85,11 +85,10 @@ onBeforeMount(runIPGeolocation);
 </template>
 
 <style scoped>
-.setting-icon-button {
+.setting-icon-button img {
   transition: transform 0.5s ease-in-out;
 }
-.setting-icon-button:hover {
-  background-color: transparent;
+.setting-icon-button:hover img {
   transform: rotate(45deg);
 }
 .form-row {

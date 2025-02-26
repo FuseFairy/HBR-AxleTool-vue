@@ -135,13 +135,13 @@ const onFileChange = async (event) => {
   height: 36px;
   width: 36px;
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s;
 }
 .upload-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(78, 69, 69, 0.3);
 }
 </style>
