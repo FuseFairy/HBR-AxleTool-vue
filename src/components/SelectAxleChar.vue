@@ -147,7 +147,6 @@ button.tab:hover {
   flex-direction: column;
   align-items: center;
 }
-
 .close {
   background-color: transparent;
   padding: 1px;
@@ -163,12 +162,10 @@ button.tab:hover {
   right: 10px;
   cursor: pointer;
 }
-
 .close img {
   height: 100%;
   width: 100%;
 }
-
 .overlay {
   position: fixed;
   top: 0;
@@ -181,7 +178,6 @@ button.tab:hover {
   z-index: 1100;
   backdrop-filter: blur(5px);
 }
-
 .button-container {
   display: flex;
   flex-wrap: wrap;
@@ -190,7 +186,6 @@ button.tab:hover {
   gap: 1rem;
   margin-top: 1rem;
 }
-
 .circle-button {
   border-radius: 50%;
   width: 80px;
@@ -205,31 +200,22 @@ button.tab:hover {
   background-color: rgba(79, 74, 74, 0.5);
   position: relative;
 }
-
 .selected-button {
   border: none;
   transition: transform 0.3s ease;
   box-shadow: 0 0 10px rgba(188, 115, 194, 0.8);
 }
-
 .selected-button:hover {
   box-shadow: 0 0 15px rgba(188, 115, 194, 0.8);
 }
-
 .selected-button:hover .char-img {
   transform: scale(1.1);
 }
-
 .char-img {
   transition: transform 0.3s ease;
   width: 100%;
   height: 100%;
 }
-
-/* .selected {
-  border: 2px solid #ffffff;
-} */
-
 .overlay-text {
   position: absolute;
   top: 0;
@@ -243,5 +229,6 @@ button.tab:hover {
   justify-content: center;
   font-size: 14px;
   pointer-events: none;
+  font-family: 'Kose', 'Noto Sans TC', sans-serif;
 }
 </style>
