@@ -238,7 +238,6 @@ const closeTable = () => {
             <img src="@/assets/custom_icon/download.svg" alt="Download" />
           </button>
         </div>
-        <p class="mobile-warning">Horizontal device for a better experience!</p>
         <button @click="closeTable" class="close">
           <img src="@/assets/custom_icon/close.svg" alt="Close" />
         </button>
@@ -753,9 +752,6 @@ image {
     width: 100%;
     height: 100%;
     max-width: none;
-  }
-  .mobile-warning {
-    display: block;
   }
 }
 </style>
