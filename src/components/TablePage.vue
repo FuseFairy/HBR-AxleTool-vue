@@ -730,22 +730,7 @@ image {
   overflow-x: auto;
 }
 .scrollbar-style-1::-webkit-scrollbar {
-  width: 5px;
-  height: 0;
-}
-.scrollbar-style-1::-webkit-scrollbar-track,
-.scrollbar-style-1::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-.scrollbar-style-1::-webkit-scrollbar-thumb {
-  background-color: #555;
-}
-.mobile-warning {
   display: none;
-  color: rgb(162, 87, 87);
-  margin-left: 10px;
-  font-size: 18px;
 }
 @media (max-width: 950px) {
   .container {

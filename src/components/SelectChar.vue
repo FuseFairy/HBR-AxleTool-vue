@@ -437,15 +437,7 @@ span {
   max-height: 81%;
 }
 .scrollbar-style-1::-webkit-scrollbar {
-  width: 5px;
-}
-.scrollbar-style-1::-webkit-scrollbar-track,
-.scrollbar-style-1::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-.scrollbar-style-1::-webkit-scrollbar-thumb {
-  background-color: #555;
+  display: none;
 }
 label {
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
