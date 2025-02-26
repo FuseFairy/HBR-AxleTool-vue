@@ -726,9 +726,6 @@ image {
   overflow-x: hidden;
   box-sizing: border-box;
 }
-.scrollbar-style-1 {
-  overflow-x: auto;
-}
 .scrollbar-style-1::-webkit-scrollbar {
   display: none;
 }
