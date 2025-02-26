@@ -55,53 +55,60 @@ const updateSelections = async (decodedDataChar) => {
 }
 
 const onFileChange = async (event) => {
-  const file = event.target.files[0]
+  const file = event.target.files[0];
   if (!file || !['image/jpeg', 'image/jpg'].includes(file.type)) {
-    alert('Please upload a JPEG image file!')
-    return
+    alert('Please upload a JPEG image file!');
+    return;
   }
 
   try {
-    isLoading.value = true
-    const reader = new FileReader()
-    
+    isLoading.value = true;
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+
     reader.onload = async (e) => {
       try {
-        const jpegDataUrl = e.target.result
-        const exifObj = piexif.load(jpegDataUrl)
-        const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || ''
-        const settingStore = useSettingStore()
+        const arrayBuffer = e.target.result;
 
-        if (!customData) {
-          throw new Error('Custom metadata not found.')
+        let binaryString = '';
+        const bytes = new Uint8Array(arrayBuffer);
+        const length = bytes.byteLength;
+        for (let i = 0; i < length; i++) {
+          binaryString += String.fromCharCode(bytes[i]);
         }
 
-        const decodedData = JSON.parse(decompressFromBase64(customData))
-        const updatedSelections = await updateSelections(decodedData.char)
+        const exifObj = piexif.load(binaryString);
+        const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || '';
+        const settingStore = useSettingStore();
 
-        Object.assign(charStore.selections, updatedSelections)
+        if (!customData) {
+          throw new Error('Custom metadata not found.');
+        }
+
+        const decodedData = JSON.parse(decompressFromBase64(customData));
+        const updatedSelections = await updateSelections(decodedData.char);
+
+        Object.assign(charStore.selections, updatedSelections);
         Object.assign(skillStore, {
           axleName: decodedData.axleName ?? skillStore.axleName,
           skills: decodedData.skills,
-          turns: decodedData.turns
-        })
-        sliderStore.rows = decodedData.rows
-        settingStore.lang = decodedData.language ?? settingStore.lang
+          turns: decodedData.turns,
+        });
+        sliderStore.rows = decodedData.rows;
+        settingStore.lang = decodedData.language ?? settingStore.lang;
       } catch (error) {
-        console.error('Error reading image or parsing metadata:', error)
-        alert('Invalid JPEG file format or failed to parse metadata. Please check the file integrity and format.')
+        console.error('Error reading image or parsing metadata:', error);
+        alert('Invalid JPEG file format or failed to parse metadata. Please check the file integrity and format.');
       } finally {
-        event.target.value = ''
-        isLoading.value = false
+        event.target.value = '';
+        isLoading.value = false;
       }
-    }
-
-    reader.readAsDataURL(file)
+    };
   } catch (error) {
-    console.error('Error reading file:', error)
-    alert('Failed to read the file. Please try again.')
+    console.error('Error reading file:', error);
+    alert('Failed to read the file. Please try again.');
   }
-}
+};
 </script>
 
 <template>
