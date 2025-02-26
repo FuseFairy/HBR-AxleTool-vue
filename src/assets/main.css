@@ -1,15 +1,3 @@
-@font-face {
-  font-family: 'Gugi';
-  src: url('@/assets/font/Gugi.woff') format('woff');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Kose';
-  src: url('@/assets/font/XiaolaiMonoSC-Regular.woff') format('woff');
-  font-display: swap;
-}
-
 * {
   margin: 0;
   padding: 0;
