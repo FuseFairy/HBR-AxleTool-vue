@@ -1,12 +1,12 @@
 @charset "UTF-8";
 @font-face {
-    font-family: 'Gugi';
-    src: url('@/assets/font/Gugi.woff2') format('woff2');
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: 'Kose';
-    src: url('@/assets/font/XiaolaiMonoSC-Regular.woff2') format('woff2');
-    font-display: swap;
-  }
+  font-family: 'Gugi';
+  src: url('@/assets/font/Gugi.woff2') format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kose';
+  src: url('@/assets/font/XiaolaiMonoSC-Regular.woff2') format('woff2');
+  font-display: swap;
+}
