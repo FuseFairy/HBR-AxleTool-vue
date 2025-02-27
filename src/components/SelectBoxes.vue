@@ -52,45 +52,103 @@ const closeContainer = () => {
   activeComponent.value = null
 }
 
-const isSpinning = ref(false)
+const isRefreshing = ref(false)
 async function refreshData() {
+  if (isRefreshing.value) return;
+  
   const currentTab = lastTabStore.box_lastTab;
   const Team = charStore.selections[currentTab];
-  isSpinning.value = true
 
-  setTimeout(() => {
-    isSpinning.value = false
-  }, 200)
-    
-  for (const charKey in Team) {
-    const { character, team, style } = Team[charKey];
+  const refreshPromise = async () => {
+    isRefreshing.value = true
+    try {
+      const allCharacterPromises = [];
+      for (const charKey in Team) {
+        const { character, team, style } = Team[charKey];
 
-    if (style) {
-      const skillOptions = await fetchSkillOptions(character, team, style);
-      charStore.selections[currentTab][charKey]['skill'] = skillOptions;
+        if (style) {
+          const skillPromise = fetchSkillOptions(character, team, style);
+          const commandSkillPromise = fetchCommandSkill(character, team, style);
 
-      const commandSkill = await fetchCommandSkill(character, team, style);
-      charStore.selections[currentTab][charKey]['commandSkill'] = commandSkill;
+          allCharacterPromises.push(
+            Promise.all([skillPromise, commandSkillPromise])
+              .then(([skillOptions, commandSkill]) => {
+                charStore.selections[currentTab][charKey]['skill'] = skillOptions;
+                charStore.selections[currentTab][charKey]['commandSkill'] = commandSkill;
+              })
+              .catch(error => {
+                console.error(`Error fetching data for ${character} in team ${team} with style ${style}:`, error);
+                throw error;
+              })
+          );
+        }
+      }
+
+      await Promise.all(allCharacterPromises);
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    } finally {
+      isRefreshing.value = false
     }
-  }
+  };
 
-  toast("Skill options successfully refreshed!", {
-    "theme": "colored",
-    "type": "success",
-    "position": "bottom-right",
-    "autoClose": 1500,
-    "dangerouslyHTMLString": true,
-    "newestOnTop": true,
-    "limit": 1,
-    "toastStyle": {
-      "backgroundColor": "rgba(22, 21, 24, 0.9)",
-      "font-family": "LXGW WenKai Mono TC",
-      "color": "rgb(248, 216, 251)"
+
+  toast.promise(
+    refreshPromise,
+    {
+      pending: 'Refreshing Skill Options...',
+      success: {
+        render() {
+          return `Skill options successfully refreshed!`;
+        },
+        icon: "🚀",
+        theme: "colored",
+        type: "success",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1500,
+        dangerouslyHTMLString: true,
+        newestOnTop: true,
+        toastStyle: {
+          "backgroundColor": "rgba(22, 21, 24, 0.9)",
+          "font-family": "LXGW WenKai Mono TC",
+          "color": "rgb(248, 216, 251)"
+        },
+        progressStyle: {
+          "backgroundColor": "rgb(180, 68, 191)",
+        }
+      },
+      error: {
+        render() {
+          return "Skill options refresh failed!";
+        },
+        icon: "🔥",
+        theme: "colored",
+        type: "error",
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+        dangerouslyHTMLString: true,
+        newestOnTop: true,
+        toastStyle: {
+          "backgroundColor": "rgba(22, 21, 24, 0.9)",
+          "font-family": "LXGW WenKai Mono TC",
+          "color": "rgb(248, 216, 251)"
+        },
+        progressStyle: {
+          "backgroundColor": "rgb(255, 88, 88)",
+        }
+      }
     },
-    "progressStyle": {
-      "backgroundColor": "rgb(180, 68, 191)",
-    }
-  })
+    {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      theme: "colored",
+      toastStyle: {
+        "backgroundColor": "rgba(22, 21, 24, 0.9)",
+        "font-family": "LXGW WenKai Mono TC",
+        "color": "rgb(248, 216, 251)"
+      }
+    },
+  );
 }
 </script>
 
@@ -108,8 +166,8 @@ async function refreshData() {
   </div>
 
   <div class="tool-container">
-    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom', disabled: isSpinning}">
-      <img src="@/assets/custom_icon/update.svg" alt="refresh" :class="{ spin: isSpinning }" />
+    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom'}">
+      <img src="@/assets/custom_icon/update.svg" alt="refresh" :class="{ spin: isRefreshing }" />
     </button>
   </div>
   <div class="button-container">
@@ -253,6 +311,10 @@ button.tab:hover {
 .icon-img {
   width: 50px;
   height: 50px;
+}
+:global(:root) {
+  --toastify-spinner-color: #9d49ce;
+  --toastify-spinner-color-empty-area: transparent;
 }
 
 @keyframes spin {
