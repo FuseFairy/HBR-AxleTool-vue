@@ -47,12 +47,15 @@ export async function convertElementToJpg(elementId) {
   })
 
   try {
-    await Promise.all(imageLoadPromises)
+    const imageLoadTimeout = 5000;
+    await Promise.race([
+      Promise.all(imageLoadPromises),
+      new Promise(resolve => setTimeout(resolve, imageLoadTimeout))
+    ]);
 
     const dataUrl = await domtoimage.toJpeg(element, {
       quality: 1.0,
       backgroundColor: 'black',
-      cacheBust: true,
       width: element.scrollWidth,
       height: element.scrollHeight,
     })
