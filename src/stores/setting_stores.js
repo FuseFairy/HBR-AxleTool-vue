@@ -12,7 +12,7 @@ export const useSettingStore = defineStore(
   },
   {
     persist: {
-      storage: sessionStorage
+      storage: localStorage
     }
   }
 )

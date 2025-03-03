@@ -36,7 +36,7 @@ export const useSkillStore = defineStore(
   },
   {
     persist: {
-      storage: sessionStorage
+      storage: localStorage
     }
   }
 )

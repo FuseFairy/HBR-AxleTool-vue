@@ -14,7 +14,7 @@ export const useLastTabStore = defineStore(
   },
   {
     persist: {
-      storage: sessionStorage
+      storage: localStorage
     }
   }
 )
