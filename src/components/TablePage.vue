@@ -492,6 +492,7 @@ image {
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-width: 720px;
   padding: 0.5rem 0;
 }
 .table-container {
@@ -723,11 +724,14 @@ image {
   height: 100%;
   width: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   box-sizing: border-box;
 }
 .scrollbar-style-1::-webkit-scrollbar {
   display: none;
+}
+.scrollbar-style-1 {
+    scrollbar-width: none; /* Firefox */
 }
 @media (max-width: 950px) {
   .container {

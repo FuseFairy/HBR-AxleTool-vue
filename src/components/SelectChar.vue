@@ -439,6 +439,9 @@ span {
 .scrollbar-style-1::-webkit-scrollbar {
   display: none;
 }
+.scrollbar-style-1 {
+    scrollbar-width: none; /* Firefox */
+}
 label {
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
 }
