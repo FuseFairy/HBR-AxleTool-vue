@@ -61,6 +61,13 @@ const earringOptions = [
     icon: 'earring_icon/explosion.webp' 
   }
 ]
+const spiritualOptions = [
+  { value: '1', name: '+1' },
+  { value: '2', name: '+2' },
+  { value: '3', name: '+3' },
+  { value: '4', name: '+4' },
+  { value: '5', name: '+5' }
+] 
 const rankOptions = Array.from({ length: 10 }, (_, i) => i + 1)
 const characterOptions = ref([])
 const styleOptions = ref([])
@@ -163,6 +170,7 @@ watch(selectedStyle, async (newStyle) => {
     charStore.setSelection(props.buttonKey, 'passiveSkill_value', [], props.selectedTab)
     charStore.setSelection(props.buttonKey, 'skill', [], props.selectedTab)
     charStore.setSelection(props.buttonKey, 'character_info', {}, props.selectedTab)
+    charStore.setSelection(props.buttonKey, 'spiritual', null, props.selectedTab)
 
     selectedRank.value = null
     selectedPassiveSkill.value = []
@@ -339,6 +347,18 @@ const closeContainer = async () => {
             track-by="value"
             :locale = "settingStore.lang"
             fallback-locale = "zh-TW"
+          />
+        </div>
+
+        <div class="section">
+          <label>Spiritual Rupture (optional)</label>
+          <Multiselect
+            v-model="charStore.selections[props.selectedTab][props.buttonKey]['spiritual']"
+            placeholder="Select Spiritual level"
+            :disabled="isOtherDisable"
+            :options="spiritualOptions"
+            label="name"
+            track-by="value"
           />
         </div>
       </div>
