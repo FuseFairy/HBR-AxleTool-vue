@@ -13,7 +13,7 @@ import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ShowTableFilter.vue'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
-import _find from 'lodash/find'
+import _find from 'lodash-es/find'
 
 const isDownloading = ref(false)
 const fullPage = ref(true)

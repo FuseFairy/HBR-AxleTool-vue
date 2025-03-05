@@ -12,8 +12,8 @@ import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
 import { fetchCommandSkill } from '@/scripts/commandSkill'
 import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
-import _find from 'lodash/find'
-import _merge from 'lodash/merge'
+import _find from 'lodash-es/find'
+import _merge from 'lodash-es/merge'
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()

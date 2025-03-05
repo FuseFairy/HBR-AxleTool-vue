@@ -10,7 +10,7 @@ import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
 import { getAssetsFile } from '@/scripts/util'
 import { fetchCommandSkill } from '@/scripts/commandSkill'
 import { useSettingStore } from '@/stores/setting_stores'
-import _find from 'lodash/find'
+import _find from 'lodash-es/find'
 
 const charStore = useCharStore()
 const sliderStore = useSliderStore()

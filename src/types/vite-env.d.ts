@@ -6,9 +6,4 @@ declare module 'piexifjs' {
   export const insert: (exifBytes: any, dataUrl: string) => string
 }
 
-declare module 'lodash/cloneDeep'
-declare module 'lodash/find'
-declare module 'lodash/get'
-declare module 'lodash/isEmpty'
-declare module 'lodash/filter'
-declare module 'lodash/map'
+declare module 'lodash-es'
