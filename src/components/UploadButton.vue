@@ -13,6 +13,7 @@ import { fetchCommandSkill } from '@/scripts/commandSkill'
 import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
 import _find from 'lodash/find'
+import _merge from 'lodash/merge'
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -88,7 +89,7 @@ const onFileChange = async (event) => {
         const decodedData = JSON.parse(decompressFromBase64(customData));
         const updatedSelections = await updateSelections(decodedData.char);
 
-        Object.assign(charStore.selections, updatedSelections);
+        _merge(charStore.selections, updatedSelections);
         Object.assign(skillStore, {
           axleName: decodedData.axleName ?? skillStore.axleName,
           skills: decodedData.skills,
