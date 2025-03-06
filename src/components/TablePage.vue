@@ -13,7 +13,7 @@ import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ShowTableFilter.vue'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
-import _find from 'lodash/find'
+import _find from 'lodash-es/find'
 
 const isDownloading = ref(false)
 const fullPage = ref(true)
@@ -32,22 +32,22 @@ const earringDict = {
 const additionalTurn = { 'zh-TW': '追加回合', 'jp': '追加ターン' }
 const axleName = skillStore.axleName.trim()
 
-const hasRank = (selectedTab) => {
+const hasRank = () => {
   const rankInShowRow = showRowStore.showRow.includes('rank')
-  const hasValidRankSelection = Object.values(charStore.selections[selectedTab]).some(
-    (selection) => selection?.rank !== null || selection?.flower
-  )
 
-  return rankInShowRow && hasValidRankSelection
+  return rankInShowRow
 }
 
-const hasEarring = (selectedTab) => {
+const hasEarring = () => {
   const earringInShowRow = showRowStore.showRow.includes('earring')
-  const hasValidEarringSelection = Object.values(charStore.selections[selectedTab]).some(
-    (selection) => selection?.earring !== null
-  )
 
-  return earringInShowRow && hasValidEarringSelection
+  return earringInShowRow
+}
+
+const hasSpiritual = () => {
+  const spiritualInShowRow = showRowStore.showRow.includes('spiritual')
+
+  return spiritualInShowRow
 }
 
 const hasPassiveSkill = (selectedTab) => {
@@ -270,14 +270,14 @@ const closeTable = () => {
 
                     <!-- Rank -->
                     <div
-                      v-if="hasRank(selectedTab) && charStore.selections[selectedTab][i - 1].rank !== null"
+                      v-if="hasRank() && charStore.selections[selectedTab][i - 1].rank !== null"
                       class="rank-text"
                     >
                       {{ charStore.selections[selectedTab][i - 1].rank }}
                     </div>
                     <div
                       v-else-if="
-                        hasRank(selectedTab) &&
+                        hasRank() &&
                         charStore.selections[selectedTab][i - 1].rank === null &&
                         charStore.selections[selectedTab][i - 1].style !== null
                       "
@@ -286,15 +286,23 @@ const closeTable = () => {
                       <span>0</span>
                     </div>
                     <img
-                      v-if="hasRank(selectedTab) && charStore.selections[selectedTab][i - 1].flower"
+                      v-if="hasRank() && charStore.selections[selectedTab][i - 1].flower"
                       src="/src/assets/flower.webp"
                       alt="flower"
                       class="flower-img"
                     />
 
+                    <!-- Spiritual -->
+                    <div
+                      v-if="hasSpiritual() && charStore.selections[selectedTab][i - 1].spiritual !== null"
+                      class="spiritual-text"
+                    >
+                      {{ charStore.selections[selectedTab][i - 1].spiritual }}
+                    </div>
+
                     <!-- Earring -->
                     <img
-                      v-if="hasEarring(selectedTab) && charStore.selections[selectedTab][i - 1].earring !== null"
+                      v-if="hasEarring() && charStore.selections[selectedTab][i - 1].earring !== null"
                       :src="getAssetsFile(earringDict[charStore.selections[selectedTab][i - 1].earring])"
                       :alt="charStore.selections[selectedTab][i - 1].earring"
                       class="earring-icon"
@@ -610,6 +618,29 @@ image {
   align-items: center;
   box-shadow: 0 0 8px 4px rgba(201, 198, 200, 0.8);
   text-shadow: 0 0 4px rgb(0, 0, 0), 0 0 8px rgb(0, 0, 0), 0 0 16px rgb(0, 0, 0);
+}
+.spiritual-text {
+  position: absolute;
+  bottom: -12px;
+  right: 35px;
+  background-color: transparent;
+  background-image: url(@/assets/soul.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Kose', 'Noto Sans TC', sans-serif;
+  color: rgb(249, 228, 244);
+  width: 29px;
+  height: 29px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0 0 4px rgb(0, 0, 0), 0 0 8px rgb(0, 0, 0), 0 0 16px rgb(0, 0, 0);
+  filter: drop-shadow(0 0 12px rgb(234, 120, 124));
 }
 .used-skill {
   margin: 3px;

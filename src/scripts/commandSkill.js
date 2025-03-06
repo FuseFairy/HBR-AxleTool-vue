@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getAssetsFile } from './util'
-import _isObject from 'lodash/isObject'
-import _values from 'lodash/values'
+import _isObject from 'lodash-es/isObject'
+import _values from 'lodash-es/values'
 
 export async function fetchCommandSkill(characterName, team, styleName) {
   try {

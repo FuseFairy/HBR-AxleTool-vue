@@ -12,7 +12,7 @@ import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
 import { fetchCommandSkill } from '@/scripts/commandSkill'
 import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
-import _find from 'lodash/find'
+import _find from 'lodash-es/find'
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -54,6 +54,14 @@ const updateSelections = async (decodedDataChar) => {
   return decodedDataChar
 }
 
+function mergeSelections(charStoreSelections, updatedSelections) {
+  Object.entries(charStoreSelections).forEach(([teamKey, teamValue]) => {
+    Object.entries(teamValue).forEach(([charKey, charValue]) => {
+      Object.assign(charValue, updatedSelections?.[teamKey]?.[charKey] ?? {});
+    });
+  });
+}
+
 const onFileChange = async (event) => {
   const file = event.target.files[0];
   if (!file || !['image/jpeg', 'image/jpg'].includes(file.type)) {
@@ -88,7 +96,7 @@ const onFileChange = async (event) => {
         const decodedData = JSON.parse(decompressFromBase64(customData));
         const updatedSelections = await updateSelections(decodedData.char);
 
-        Object.assign(charStore.selections, updatedSelections);
+        mergeSelections(charStore.selections, updatedSelections);
         Object.assign(skillStore, {
           axleName: decodedData.axleName ?? skillStore.axleName,
           skills: decodedData.skills,

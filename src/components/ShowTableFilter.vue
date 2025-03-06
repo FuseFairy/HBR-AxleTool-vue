@@ -22,7 +22,8 @@ const showOptions = [
   { value: 'earring', name: 'Earring' },
   { value: 'passive skill', name: 'Passive Skill' },
   { value: 'skill', name: 'Skill' },
-  { value: 'axle', name: 'Axle' }
+  { value: 'axle', name: 'Axle' },
+  { value: 'spiritual', name: 'Spiritual' }
 ]
 const showTeams = usedTeam.map(teamValue => ({ value: teamValue, name: `Team ${teamValue}` }));
 

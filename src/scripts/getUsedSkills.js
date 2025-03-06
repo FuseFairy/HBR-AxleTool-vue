@@ -1,7 +1,7 @@
 import { useCharStore } from '@/stores/char_stores'
 import { useSkillStore } from '@/stores/skill_stores'
 import { useSettingStore } from '@/stores/setting_stores'
-import _find from 'lodash/find'
+import _find from 'lodash-es/find'
 
 export function getUsedSkills(selectedTab) {
   const skillsDictionary = {}

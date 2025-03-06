@@ -7,11 +7,11 @@ import { useSettingStore } from '@/stores/setting_stores'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from './SelectAxleChar.vue'
 import { getAssetsFile } from '@/scripts/util'
-import _cloneDeep from 'lodash/cloneDeep'
-import _get from 'lodash/get'
-import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
-import _map from 'lodash/map'
+import _cloneDeep from 'lodash-es/cloneDeep'
+import _get from 'lodash-es/get'
+import _isEmpty from 'lodash-es/isEmpty'
+import _filter from 'lodash-es/filter'
+import _map from 'lodash-es/map'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
