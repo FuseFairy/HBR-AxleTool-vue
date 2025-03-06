@@ -215,15 +215,16 @@
           "value": "一心一意",
           "names": { "zh-TW": "一心一意", "jp": "一途" },
           "sp": 0
+        },
+        "passive skill": {
+          "曙光": {
+            "value": "曙光",
+            "names": { "zh-TW": "曙光", "jp": "曙" }
+          }
         }
       }
     },
-    "passive skill": {
-      "曙光": {
-        "value": "曙光",
-        "names": { "zh-TW": "曙光", "jp": "曙" }
-      }
-    }
+    "passive skill": {}
   },
   "桐生 美也": {
     "value": "桐生 美也",
