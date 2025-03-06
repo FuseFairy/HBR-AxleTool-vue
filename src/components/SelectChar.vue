@@ -10,6 +10,7 @@ import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
 import { getAssetsFile } from '@/scripts/util'
 import { fetchCommandSkill } from '@/scripts/commandSkill'
 import { useSettingStore } from '@/stores/setting_stores'
+import { Collapse } from 'vue-collapsed'
 import _find from 'lodash-es/find'
 
 const charStore = useCharStore()
@@ -72,6 +73,7 @@ const rankOptions = Array.from({ length: 10 }, (_, i) => i + 1)
 const characterOptions = ref([])
 const styleOptions = ref([])
 const passiveSkillOptions = ref([])
+const isExpandedCollapse = ref(false)
 
 const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team', props.selectedTab))
 const selectedCharacter = ref(
@@ -281,85 +283,94 @@ const closeContainer = async () => {
         </div>
 
         <div class="section">
-          <label>Rank (optional)</label>
-          <Multiselect
-            v-model="selectedRank"
-            placeholder="Select Rank"
-            :disabled="isOtherDisable"
-            :options="rankOptions"
-            @change="
-              (value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)
-            "
-          />
-          <div class="flower-container">
-            <input
-              type="checkbox"
-              v-model="selectedFlower"
-              :disabled="isOtherDisable"
-              @change="
-                charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)
-              "
-            />
-            <img
-              src="/src/assets/flower.webp"
-              alt="Is Flower"
-              :class="['flower-icon', { 'flower-icon-disabled': isOtherDisable }]"
-              draggable="false"
-              @click="toggleCheckbox"
-            />
-          </div>
-        </div>
-
-        <div class="section">
-          <label>Earring (optional)</label>
-          <Multiselect
-            v-model="charStore.selections[props.selectedTab][props.buttonKey]['earring']"
-            placeholder="Select earring"
-            :disabled="isOtherDisable"
-            :options="earringOptions"
-            label="names"
-            track-by="value"
-          >
-            <template v-slot:singlelabel="{ value }">
-              <div class="multiselect-single-label">
-                <img class="label-icon" :src="getAssetsFile(value.icon)" />
-                <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+          <button class="collapse_btn" :class="{ 'collapse_btn_active': isExpandedCollapse }" @click="isExpandedCollapse = !isExpandedCollapse">
+            <svg class="collapse_arrow" :class="{ 'rotate': isExpandedCollapse }" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="m280-400 200-200 200 200H280Z"/></svg>
+            <!-- <svg  class="collapse_arrow" :class="{ 'rotate': isExpandedCollapse }" xmlns="http://www.w3.org/2000/svg" height="7px" weight="14px" fill-opacity="0.85" viewBox="280 -600 400 200"><path d="m280-400 200-200 200 200H280Z"/></svg> -->
+            <label style="font-size: 24px;">Others</label>
+          </button>
+          <Collapse :when="isExpandedCollapse">
+            <div class="section">
+              <label>Rank</label>
+              <Multiselect
+                v-model="selectedRank"
+                placeholder="Select Rank"
+                :disabled="isOtherDisable"
+                :options="rankOptions"
+                @change="
+                  (value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)
+                "
+              />
+              <div class="flower-container">
+                <input
+                  type="checkbox"
+                  v-model="selectedFlower"
+                  :disabled="isOtherDisable"
+                  @change="
+                    charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)
+                  "
+                />
+                <img
+                  src="/src/assets/flower.webp"
+                  alt="Is Flower"
+                  :class="['flower-icon', { 'flower-icon-disabled': isOtherDisable }]"
+                  draggable="false"
+                  @click="toggleCheckbox"
+                />
               </div>
-            </template>
+            </div>
 
-            <template v-slot:option="{ option }">
-              <img class="option-icon" :src="getAssetsFile(option.icon)" />
-              <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
-            </template>
-          </Multiselect>
-        </div>
+            <div class="section">
+              <label>Earring</label>
+              <Multiselect
+                v-model="charStore.selections[props.selectedTab][props.buttonKey]['earring']"
+                placeholder="Select earring"
+                :disabled="isOtherDisable"
+                :options="earringOptions"
+                label="names"
+                track-by="value"
+              >
+                <template v-slot:singlelabel="{ value }">
+                  <div class="multiselect-single-label">
+                    <img class="label-icon" :src="getAssetsFile(value.icon)" />
+                    <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+                  </div>
+                </template>
 
-        <div class="section">
-          <label>Passive Skill (optional)</label>
-          <Multiselect
-            v-model="charStore.selections[props.selectedTab][props.buttonKey]['passiveSkill']"
-            mode="tags"
-            placeholder="Select passive skill"
-            :close-on-select="false"
-            :disabled="isOtherDisable"
-            :options="passiveSkillOptions"
-            label="names"
-            track-by="value"
-            :locale = "settingStore.lang"
-            fallback-locale = "zh-TW"
-          />
-        </div>
+                <template v-slot:option="{ option }">
+                  <img class="option-icon" :src="getAssetsFile(option.icon)" />
+                  <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+                </template>
+              </Multiselect>
+            </div>
 
-        <div class="section">
-          <label>Spiritual Rupture (optional)</label>
-          <Multiselect
-            v-model="charStore.selections[props.selectedTab][props.buttonKey]['spiritual']"
-            placeholder="Select Spiritual level"
-            :disabled="isOtherDisable"
-            :options="spiritualOptions"
-            label="name"
-            track-by="value"
-          />
+            <div class="section">
+              <label>Passive Skill</label>
+              <Multiselect
+                v-model="charStore.selections[props.selectedTab][props.buttonKey]['passiveSkill']"
+                mode="tags"
+                placeholder="Select passive skill"
+                :close-on-select="false"
+                :disabled="isOtherDisable"
+                :options="passiveSkillOptions"
+                label="names"
+                track-by="value"
+                :locale = "settingStore.lang"
+                fallback-locale = "zh-TW"
+              />
+            </div>
+
+            <div class="section">
+              <label>Spiritual Rupture</label>
+              <Multiselect
+                v-model="charStore.selections[props.selectedTab][props.buttonKey]['spiritual']"
+                placeholder="Select Spiritual level"
+                :disabled="isOtherDisable"
+                :options="spiritualOptions"
+                label="name"
+                track-by="value"
+              />
+            </div>
+          </Collapse>
         </div>
       </div>
     </div>
@@ -368,6 +379,27 @@ const closeContainer = async () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+.collapse_arrow {
+  transition: transform 0.3s ease-in-out;
+  transform: rotate(90deg);
+  fill: #b4f9f9;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.collapse_btn {
+  display: flex;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: #74ebe3;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+}
+.collapse_btn_active {
+  border-bottom: 2px solid #a2fff9;
+}
 .close {
   background-color: transparent;
   padding: 1px;
@@ -438,17 +470,18 @@ span {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgb(19, 18, 18);
-  height: 70%;
+  max-height: 70%;
   width: 31%;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding: 1rem;
 }
 .button-group {
   display: flex;
   justify-content: flex-end;
-  padding: 1rem 1rem 0 1rem;
+  padding: 0 1rem 0 1rem;
 }
 .selectboxes {
   flex-grow: 1;
@@ -461,6 +494,7 @@ span {
 }
 .scrollbar-style-1 {
     scrollbar-width: none; /* Firefox */
+    padding: 0px;
 }
 label {
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
