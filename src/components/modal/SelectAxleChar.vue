@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { useCharStore } from '@/stores/char_stores'
-import { useSkillStore } from '@/stores/skill_stores'
-import { useLastTabStore } from '@/stores/lastTab_stores'
-import { getAssetsFile } from '@/scripts/util'
+import { useCharStore } from '@/store/char'
+import { useSkillStore } from '@/store/axle'
+import { useLastTabStore } from '@/store/tab'
+import { getAssetsFile } from '@/utils/getAssetsFile'
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -77,7 +77,7 @@ const closeContainer = () => {
   <div @click="closeContainer" class="overlay">
     <div @click.stop class="container">
       <button @click="closeContainer" class="close">
-        <img src="@/assets/custom_icon/close.svg" alt="Close" />
+        <img src="@/assets/custom-icon/close.svg" alt="Close" />
       </button>
       <div class="tabs">
         <button

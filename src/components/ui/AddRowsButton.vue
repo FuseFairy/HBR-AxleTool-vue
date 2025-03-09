@@ -5,16 +5,16 @@
       class="circle-button add-button"
       :disabled="sliderStore.rows === 80 || (sliderStore.rows === 0 && !hasChar)"
     >
-      <img class="icon-img" src="@/assets/custom_icon/add_circle.svg" alt="Add a row" />
+      <img class="icon-img" src="@/assets/custom-icon/add_circle.svg" alt="Add a row" />
     </button>
   </div>
 </template>
 
 <script setup>
 import { computed, nextTick } from 'vue'
-import { useSliderStore } from '@/stores/slider_stores'
-import { useSkillStore } from '@/stores/skill_stores'
-import { useCharStore } from '@/stores/char_stores'
+import { useSliderStore } from '@/store/slider'
+import { useSkillStore } from '@/store/axle'
+import { useCharStore } from '@/store/char'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()

@@ -1,15 +1,15 @@
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue'
 import Multiselect from '@vueform/multiselect'
-import { useCharStore } from '@/stores/char_stores'
-import { useSliderStore } from '@/stores/slider_stores'
-import { fetchCharacterOptions } from '@/scripts/charData'
-import { fetchStyleOptions } from '@/scripts/styleData'
-import { fetchSkillOptions } from '@/scripts/skillOptions'
-import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
-import { getAssetsFile } from '@/scripts/util'
-import { fetchCommandSkill } from '@/scripts/commandSkill'
-import { useSettingStore } from '@/stores/setting_stores'
+import { useCharStore } from '@/store/char'
+import { useSliderStore } from '@/store/slider'
+import { fetchCharacterOptions } from '@/utils/fetchCharacterOptions'
+import { fetchStyleOptions } from '@/utils/fetchStyleOptions'
+import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
+import { fetchPassiveSkillOptions } from '@/utils/fetchPassiveSkillOptions'
+import { getAssetsFile } from '@/utils/getAssetsFile'
+import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
+import { useSettingStore } from '@/store/setting'
 import { Collapse } from 'vue-collapsed'
 import _find from 'lodash-es/find'
 
@@ -29,37 +29,37 @@ const props = defineProps({
 })
 
 const teamOptions = [
-  { value: '30G', name: '30G', icon: 'team_icon/30G.webp' },
-  { value: '31A', name: '31A', icon: 'team_icon/31A.webp' },
-  { value: '31B', name: '31B', icon: 'team_icon/31B.webp' },
-  { value: '31C', name: '31C', icon: 'team_icon/31C.webp' },
-  { value: '31D', name: '31D', icon: 'team_icon/31D.webp' },
-  { value: '31E', name: '31E', icon: 'team_icon/31E.webp' },
-  { value: '31F', name: '31F', icon: 'team_icon/31F.webp' },
-  { value: '31X', name: '31X', icon: 'team_icon/31X.webp' },
-  { value: '31AB', name: 'Angel Beats!', icon: 'team_icon/Angel Beats.webp' },
-  { value: 'Command', name: '司令部', icon: 'team_icon/Command.webp' }
+  { value: '30G', name: '30G', icon: 'team-icon/30G.webp' },
+  { value: '31A', name: '31A', icon: 'team-icon/31A.webp' },
+  { value: '31B', name: '31B', icon: 'team-icon/31B.webp' },
+  { value: '31C', name: '31C', icon: 'team-icon/31C.webp' },
+  { value: '31D', name: '31D', icon: 'team-icon/31D.webp' },
+  { value: '31E', name: '31E', icon: 'team-icon/31E.webp' },
+  { value: '31F', name: '31F', icon: 'team-icon/31F.webp' },
+  { value: '31X', name: '31X', icon: 'team-icon/31X.webp' },
+  { value: '31AB', name: 'Angel Beats!', icon: 'team-icon/Angel Beats.webp' },
+  { value: 'Command', name: '司令部', icon: 'team-icon/Command.webp' }
 ]
 const earringOptions = [
   { 
     value: 'BREAK耳環', 
     names: { 'zh-TW': 'BREAK耳環', "jp": 'ブレイクピアス' }, 
-    icon: 'earring_icon/break.webp' 
+    icon: 'earring-icon/break.webp' 
   },
   { 
     value: '進攻耳環', 
     names: { 'zh-TW': '進攻耳環', 'jp': 'アタックピアス' }, 
-    icon: 'earring_icon/attach.webp' 
+    icon: 'earring-icon/attach.webp' 
   },
   { 
     value: 'DRIVE耳環', 
     names: { 'zh-TW': 'DRIVE耳環', 'jp': 'ドライブピアス' }, 
-    icon: 'earring_icon/drive.webp' 
+    icon: 'earring-icon/drive.webp' 
   },
   { 
     value: '爆破耳環', 
     names: { 'zh-TW': '爆破耳環', 'jp': 'ブラストピアス' }, 
-    icon: 'earring_icon/explosion.webp' 
+    icon: 'earring-icon/explosion.webp' 
   }
 ]
 const spiritualOptions = [
@@ -207,7 +207,7 @@ const closeContainer = async () => {
     <div @click.stop class="container">
       <div class="button-group">
         <button @click="closeContainer" class="close">
-          <img src="@/assets/custom_icon/close.svg" alt="Close" />
+          <img src="@/assets/custom-icon/close.svg" alt="Close" />
         </button>
       </div>
       <div class="selectboxes scrollbar-style-1">
@@ -310,7 +310,7 @@ const closeContainer = async () => {
                   "
                 />
                 <img
-                  src="/src/assets/flower.webp"
+                  src="/src/assets/common/flower.webp"
                   alt="Is Flower"
                   :class="['flower-icon', { 'flower-icon-disabled': isOtherDisable }]"
                   draggable="false"

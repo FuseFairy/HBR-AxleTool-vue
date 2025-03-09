@@ -1,4 +1,4 @@
-import { useSkillStore } from '@/stores/skill_stores'
+import { useSkillStore } from '@/store/axle'
 
 export function getUsedTeams() {
 	const teamsList = []

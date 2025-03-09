@@ -1,15 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 import piexif from 'piexifjs'
-import { useCharStore } from '@/stores/char_stores'
-import { useSkillStore } from '@/stores/skill_stores'
-import { useSliderStore } from '@/stores/slider_stores'
-import { useLastTabStore } from '@/stores/lastTab_stores'
-import { useSettingStore } from '@/stores/setting_stores'
-import { fetchSkillOptions } from '@/scripts/skillOptions'
-import { fetchCharacterOptions } from '@/scripts/charData'
-import { fetchPassiveSkillOptions } from '@/scripts/passiveSkillOptions'
-import { fetchCommandSkill } from '@/scripts/commandSkill'
+import { useCharStore } from '@/store/char'
+import { useSkillStore } from '@/store/axle'
+import { useSliderStore } from '@/store/slider'
+import { useLastTabStore } from '@/store/tab'
+import { useSettingStore } from '@/store/setting'
+import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
+import { fetchCharacterOptions } from '@/utils/fetchCharacterOptions'
+import { fetchPassiveSkillOptions } from '@/utils/fetchPassiveSkillOptions'
+import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
 import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
 import _find from 'lodash-es/find'
@@ -54,14 +54,6 @@ const updateSelections = async (decodedDataChar) => {
   return decodedDataChar
 }
 
-function mergeSelections(charStoreSelections, updatedSelections) {
-  Object.entries(charStoreSelections).forEach(([teamKey, teamValue]) => {
-    Object.entries(teamValue).forEach(([charKey, charValue]) => {
-      Object.assign(charValue, updatedSelections?.[teamKey]?.[charKey] ?? {});
-    });
-  });
-}
-
 const onFileChange = async (event) => {
   const file = event.target.files[0];
   if (!file || !['image/jpeg', 'image/jpg'].includes(file.type)) {
@@ -96,7 +88,7 @@ const onFileChange = async (event) => {
         const decodedData = JSON.parse(decompressFromBase64(customData));
         const updatedSelections = await updateSelections(decodedData.char);
 
-        mergeSelections(charStore.selections, updatedSelections);
+        Object.assign(charStore.selections, updatedSelections);
         Object.assign(skillStore, {
           axleName: decodedData.axleName ?? skillStore.axleName,
           skills: decodedData.skills,
@@ -130,7 +122,7 @@ const onFileChange = async (event) => {
     color="#79d1cb"
   />
   <button @click="triggerFileInput" class="upload-button" v-tooltip="{ content: 'Upload', placement: 'bottom' }">
-    <img src="@/assets/custom_icon/upload.svg" alt="Upload" />
+    <img src="@/assets/custom-icon/upload.svg" alt="Upload" />
   </button>
   <input type="file" ref="fileInput" @change="onFileChange" accept=".jpg,.jpeg" style="display: none" />
 </template>

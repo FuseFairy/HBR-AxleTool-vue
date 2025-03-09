@@ -1,6 +1,6 @@
-import { useCharStore } from '@/stores/char_stores'
-import { useSkillStore } from '@/stores/skill_stores'
-import { useSettingStore } from '@/stores/setting_stores'
+import { useCharStore } from '@/store/char'
+import { useSkillStore } from '@/store/axle'
+import { useSettingStore } from '@/store/setting'
 import _find from 'lodash-es/find'
 
 export function getUsedSkills(selectedTab) {

@@ -1,6 +1,6 @@
 import { toast } from 'vue3-toastify';
 
-const currentStorageVersion = '1.0.2';
+const currentStorageVersion = '1.0.3';
 const storedVersion = localStorage.getItem('piniaStorageVersion');
 
 const piniaStoreIds = [

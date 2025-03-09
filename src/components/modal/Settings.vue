@@ -1,5 +1,5 @@
 <script setup>
-import { useSettingStore } from '@/stores/setting_stores'
+import { useSettingStore } from '@/store/setting'
 import Multiselect from '@vueform/multiselect'
 
 const langOptions = [
@@ -18,7 +18,7 @@ const closeContainer = () => {
   <div @click="closeContainer" class="overlay">
     <div @click.stop class="container">
       <button @click="closeContainer" class="close">
-        <img src="@/assets/custom_icon/close.svg" alt="Close" />
+        <img src="@/assets/custom-icon/close.svg" alt="Close" />
       </button>
       <div class="section" style="padding-top: 15px;">
         <label>Language</label>
@@ -38,6 +38,10 @@ const closeContainer = () => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+label {
+  color: rgb(209, 228, 222);
+  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+}
 .section {
   display: flex;
   position: relative;
@@ -45,9 +49,6 @@ const closeContainer = () => {
   align-items: center;
   gap: 3rem;
   width: 100%;
-}
-label {
-  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
 }
 .close {
   background-color: transparent;
@@ -96,13 +97,8 @@ label {
   align-items: center;
 }
 :deep(.multiselect-option),
-.multiselect-single-label {
-  display: flex;
-  gap: 0.5rem;
-}
-:deep(.multiselect-tags-search) {
-  background-color: black;
-  color: white;
+:deep(.multiselect-single-label-text) {
+  color: #fff;
 }
 :deep(.multiselect) {
   background-color: black;
@@ -119,15 +115,7 @@ label {
   max-height: 15rem;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
-  width: 0;
-}
-:deep(.multiselect-dropdown::-webkit-scrollbar-track),
-:deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-:deep(.multiselect-dropdown::-webkit-scrollbar-thumb) {
-  background-color: #555;
+  display: none;
 }
 :deep(.multiselect-option.is-selected) {
   background-color: rgb(60, 57, 57);
@@ -136,29 +124,7 @@ label {
   background-color: rgb(160, 160, 167);
   color: rgb(0, 0, 0);
 }
-:deep(.multiselect-caret) {
-  margin-left: 14px;
-}
-:deep(.multiselect-clear) {
-  padding: 0;
-}
-:deep(.multiselect-clear-icon:hover),
-:deep(.multiselect-clear-icon:active),
-:deep(.multiselect-clear-icon:focus) {
-  background-color: #999;
-}
-:deep(.multiselect-clear-icon) {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
-  font-size: 0;
-}
-:deep(.multiselect-tag) {
-  background-color: #663fba;
-}
-@media (max-width: 950px) {
+@media (max-width: 800px) {
   .container {
     width: 100%;
   }

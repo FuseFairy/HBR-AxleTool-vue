@@ -1,10 +1,10 @@
 import piexif from 'piexifjs'
-import { useCharStore } from '@/stores/char_stores'
-import { useSkillStore } from '@/stores/skill_stores'
-import { useSliderStore } from '@/stores/slider_stores'
-import { useSettingStore } from '@/stores/setting_stores'
+import { useCharStore } from '@/store/char'
+import { useSkillStore } from '@/store/axle'
+import { useSliderStore } from '@/store/slider'
+import { useSettingStore } from '@/store/setting'
 import { compressToBase64 } from 'lz-string'
-import { getUsedTeams } from '@/scripts/getUsedTeams'
+import { getUsedTeams } from '@/utils/getUsedTeams'
 import domtoimage from 'dom-to-image-more'
 
 export async function convertElementToJpg(elementId) {

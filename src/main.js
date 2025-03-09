@@ -6,7 +6,7 @@ import { LoadingPlugin } from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 import FloatingVue from 'floating-vue'
 import 'floating-vue/dist/style.css'
-import versionControlPlugin from '@/plugins/versionControlPlugin'
+import versionControlPlugin from '@/plugins/storeVersionControl'
 import "vue3-toastify/dist/index.css"
 
 

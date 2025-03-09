@@ -1,16 +1,16 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { useCharStore } from '@/stores/char_stores'
-import { useSkillStore } from '@/stores/skill_stores'
-import { useSliderStore } from '@/stores/slider_stores'
-import { useShowRowStore } from '@/stores/showRow_stores.js'
-import { useShowTeamStore } from '@/stores/showTeam_stores'
-import { useSettingStore } from '@/stores/setting_stores'
-import { convertElementToJpg } from '@/scripts/domToImage'
-import { getAssetsFile } from '@/scripts/util'
-import { getUsedSkills } from '@/scripts/getUsedSkills'
+import { useCharStore } from '@/store/char'
+import { useSkillStore } from '@/store/axle'
+import { useSliderStore } from '@/store/slider'
+import { useShowRowStore } from '@/store/showRow'
+import { useShowTeamStore } from '@/store/showTeam'
+import { useSettingStore } from '@/store/setting'
+import { convertElementToJpg } from '@/utils/domToImage'
+import { getAssetsFile } from '@/utils/getAssetsFile'
+import { getUsedSkills } from '@/utils/getUsedSkills'
 import loading from 'vue-loading-overlay'
-import ShowTableFilter from '@/components/ShowTableFilter.vue'
+import ShowTableFilter from '@/components/filter/ShowTableFilter.vue'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
 import _find from 'lodash-es/find'
@@ -24,10 +24,10 @@ const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
 const settingStore = useSettingStore()
 const earringDict = {
-  'BREAK耳環':'earring_icon/break.webp',
-  '進攻耳環':'earring_icon/attach.webp',
-  'DRIVE耳環':'earring_icon/drive.webp',
-  '爆破耳環':'earring_icon/explosion.webp'
+  'BREAK耳環':'earring-icon/break.webp',
+  '進攻耳環':'earring-icon/attach.webp',
+  'DRIVE耳環':'earring-icon/drive.webp',
+  '爆破耳環':'earring-icon/explosion.webp'
 }
 const additionalTurn = { 'zh-TW': '追加回合', 'jp': '追加ターン' }
 const axleName = skillStore.axleName.trim()
@@ -235,16 +235,16 @@ const closeTable = () => {
         <div class="left-button-group" >
           <ShowTableFilter />
           <button @click="downloadTable" class="download">
-            <img src="@/assets/custom_icon/download.svg" alt="Download" />
+            <img src="@/assets/custom-icon/download.svg" alt="Download" />
           </button>
         </div>
         <button @click="closeTable" class="close">
-          <img src="@/assets/custom_icon/close.svg" alt="Close" />
+          <img src="@/assets/custom-icon/close.svg" alt="Close" />
         </button>
       </div>
       <div class="table scrollbar-style-1">
         <div v-if="sliderStore.rows <= 0" class="sleeping-image">
-          <img src="/src/assets/sleeping.webp" />
+          <img src="/src/assets/common/sleeping.webp" />
         </div>
         <div v-else id="show-axle" class="table-wrapper">
           <span v-if="axleName.length > 0" class="axle-name">{{ axleName }}</span>
@@ -287,7 +287,7 @@ const closeTable = () => {
                     </div>
                     <img
                       v-if="hasRank() && charStore.selections[selectedTab][i - 1].flower"
-                      src="/src/assets/flower.webp"
+                      src="/src/assets/common/flower.webp"
                       alt="flower"
                       class="flower-img"
                     />
@@ -512,6 +512,7 @@ image {
 .Used-skill {
   background: rgba(113, 108, 122, 0.3);
   border-radius: 10px;
+  color: #fff;
 }
 .table-container-2 {
   display: grid;
@@ -624,7 +625,7 @@ image {
   bottom: -12px;
   right: 35px;
   background-color: transparent;
-  background-image: url(@/assets/soul.webp);
+  background-image: url(@/assets/common/soul.webp);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -656,6 +657,7 @@ image {
   margin: 3px;
   padding: 2px 8px;
   background-color: #2d3851;
+  color: #fff;
   border-radius: 4px;
   word-wrap: break-word;
   word-break: break-word;
@@ -666,6 +668,7 @@ image {
   font-weight: normal;
   height: 100%;
   vertical-align: middle;
+  color: #fff;
 }
 .flower-img {
   position: absolute;

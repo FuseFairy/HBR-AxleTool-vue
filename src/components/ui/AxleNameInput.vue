@@ -1,5 +1,5 @@
 <script setup>
-import { useSkillStore } from '@/stores/skill_stores'
+import { useSkillStore } from '@/store/axle'
 
 const skillStore = useSkillStore()
 const maxlength = 35

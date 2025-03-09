@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from 'vue'
-import { useCharStore } from '@/stores/char_stores'
-import { useShowRowStore } from '@/stores/showRow_stores.js'
-import { useShowTeamStore } from '@/stores/showTeam_stores'
-import { getAssetsFile } from '@/scripts/util'
+import { useCharStore } from '@/store/char'
+import { useShowRowStore } from '@/store/showRow.js'
+import { useShowTeamStore } from '@/store/showTeam'
+import { getAssetsFile } from '@/utils/getAssetsFile'
 import { onClickOutside } from '@vueuse/core'
-import { getUsedTeams } from '@/scripts/getUsedTeams'
+import { getUsedTeams } from '@/utils/getUsedTeams'
 import Multiselect from '@vueform/multiselect'
-import filterOffIcon from '@/assets/custom_icon/filter-off.svg'
-import filterOnIcon from '@/assets/custom_icon/filter-on.svg'
+import filterOffIcon from '@/assets/custom-icon/filter-off.svg'
+import filterOnIcon from '@/assets/custom-icon/filter-on.svg'
 
 const charStore = useCharStore()
 const showRowStore = useShowRowStore()

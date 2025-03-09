@@ -11,7 +11,7 @@
       >
         <img
           :class="['icon', { 'disabled-icon': sliderStore.rows === 0}]"
-          src="/src/assets/custom_icon/remove_w7g2.svg" alt="button - remove a row" />
+          src="/src/assets/custom-icon/remove_w7g2.svg" alt="button - remove a row" />
       </button>
       <button 
         @click="increaseValue" 
@@ -20,7 +20,7 @@
       >
         <img
           :class="['icon', { 'disabled-icon': sliderStore.rows === 50 || !hasChar}]"
-          src="/src/assets/custom_icon/add_w7g2.svg" alt="button - add a row" />
+          src="/src/assets/custom-icon/add_w7g2.svg" alt="button - add a row" />
       </button> -->
       </div>
     </div>
@@ -42,11 +42,11 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useSliderStore } from '@/stores/slider_stores'
-import { useSkillStore } from '@/stores/skill_stores'
-import { useCharStore } from '@/stores/char_stores'
+import { useSliderStore } from '@/store/slider'
+import { useSkillStore } from '@/store/axle'
+import { useCharStore } from '@/store/char'
 import VueSlider from 'vue-slider-component'
-import '/styles/themes/slider.css'
+import '@/style/slider.css'
 
 const title = 'Number Of Rows'
 const sliderStore = useSliderStore()

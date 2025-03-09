@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { useCharStore } from '@/stores/char_stores'
-import { useLastTabStore } from '@/stores/lastTab_stores'
-import SelectChar from '@/components/SelectChar.vue'
-import { getAssetsFile } from '@/scripts/util'
-import { fetchSkillOptions } from '@/scripts/skillOptions'
+import { useCharStore } from '@/store/char'
+import { useLastTabStore } from '@/store/tab'
+import SelectChar from '@/components/modal/SelectChar.vue'
+import { getAssetsFile } from '@/utils/getAssetsFile'
+import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
-import { fetchCommandSkill } from '@/scripts/commandSkill'
+import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
 
 const charStore = useCharStore()
 const lastTabStore = useLastTabStore()
@@ -167,7 +167,7 @@ async function refreshData() {
 
   <div class="tool-container">
     <button @click="refreshData" class="refresh-button" v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom'}">
-      <img src="@/assets/custom_icon/update.svg" alt="refresh" :class="{ spin: isRefreshing }" />
+      <img src="@/assets/custom-icon/update.svg" alt="refresh" :class="{ spin: isRefreshing }" />
     </button>
   </div>
   <div class="button-container">
@@ -186,7 +186,7 @@ async function refreshData() {
         :src="getAssetsFile(charStore.selections[selectedTab][button.key].img)"
         :alt="charStore.selections[selectedTab][button.key].style"
       />
-      <img v-else class="icon-img" src="@/assets/custom_icon/add.svg" alt="Add" />
+      <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
     </button>
   </div>
   <Transition name="modal">

@@ -1,12 +1,12 @@
 <script setup>
 import { ref, nextTick, toRaw } from 'vue'
-import { useSliderStore } from '@/stores/slider_stores'
-import { useSkillStore } from '@/stores/skill_stores'
-import { useCharStore } from '@/stores/char_stores'
-import { useSettingStore } from '@/stores/setting_stores'
+import { useSliderStore } from '@/store/slider'
+import { useSkillStore } from '@/store/axle'
+import { useCharStore } from '@/store/char'
+import { useSettingStore } from '@/store/setting'
 import Multiselect from '@vueform/multiselect'
-import SelectAxleChar from './SelectAxleChar.vue'
-import { getAssetsFile } from '@/scripts/util'
+import SelectAxleChar from './modal/SelectAxleChar.vue'
+import { getAssetsFile } from '@/utils/getAssetsFile'
 import _cloneDeep from 'lodash-es/cloneDeep'
 import _get from 'lodash-es/get'
 import _isEmpty from 'lodash-es/isEmpty'
@@ -175,7 +175,7 @@ const exchange = (row, direction) => {
       </svg>
     </button>
     <button class="copy-button" @click="copyRow(i - 1)" v-tooltip="{ content: 'copy', placement: 'bottom' }">
-      <img src="@/assets/custom_icon/copy.svg" alt="copy" />
+      <img src="@/assets/custom-icon/copy.svg" alt="copy" />
     </button>
     <div class="column">
       <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]">
@@ -219,7 +219,7 @@ const exchange = (row, direction) => {
           :src="getAssetsFile(skillStore.skills[i - 1][n - 1].style_img)"
           :alt="skillStore.skills[i - 1][n - 1].style"
         />
-        <img v-else class="icon-img" src="@/assets/custom_icon/add.svg" alt="Add" />
+        <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
       </button>
       <Multiselect
         v-model="skillStore.skills[i - 1][n - 1].skill"
