@@ -5,7 +5,7 @@ import { useSkillStore } from '@/store/axle'
 import { useCharStore } from '@/store/char'
 import { useSettingStore } from '@/store/setting'
 import Multiselect from '@vueform/multiselect'
-import SelectAxleChar from './modal/SelectAxleChar.vue'
+import SelectAxleChar from '@/components/modal/SelectAxleChar.vue'
 import { getAssetsFile } from '@/utils/getAssetsFile'
 import _cloneDeep from 'lodash-es/cloneDeep'
 import _get from 'lodash-es/get'
@@ -441,7 +441,7 @@ div.empty-2 {
 :deep(.multiselect-dropdown) {
   background-color: black;
   border: 1px solid rgb(64, 68, 141);
-  max-height: 15rem;
+  max-height: 12rem;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
   width: 5px;

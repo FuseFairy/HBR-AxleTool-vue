@@ -105,6 +105,7 @@ onClickOutside(
 }
 label {
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+  color: rgb(182, 208, 226);
 }
 .option-icon {
   width: 34px;
@@ -139,6 +140,7 @@ label {
 :deep(.multiselect-option),
 .multiselect-single-label {
   display: flex;
+  color: white;
 }
 :deep(.multiselect) {
   background-color: rgba(50, 48, 50, 0.8);

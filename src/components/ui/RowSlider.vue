@@ -46,7 +46,7 @@ import { useSliderStore } from '@/store/slider'
 import { useSkillStore } from '@/store/axle'
 import { useCharStore } from '@/store/char'
 import VueSlider from 'vue-slider-component'
-import '@/style/slider.css'
+import '@/style/slider/slider.css'
 
 const title = 'Number Of Rows'
 const sliderStore = useSliderStore()

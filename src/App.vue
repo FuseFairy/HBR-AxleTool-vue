@@ -1,13 +1,11 @@
 <script setup>
-import { ref, computed, onBeforeMount } from 'vue'
-import './assets/main.css'
-import AddRows from '@/components/ui/AddRowsButton.vue'
-import TeamComposition from '@/components/TeamComposition.vue'
-import RowSlider from '@/components/ui/RowSlider.vue'
-import TurnSkillSelection from '@/components/TurnSkillSelection.vue'
-import AxleName from '@/components/ui/AxleNameInput.vue'
-import Navbar from '@/components/Navbar.vue'
+import { onBeforeMount } from 'vue'
 import { runIPGeolocation } from '@/utils/ipGeolocation'
+import TeamComposition from '@/layouts/TeamComposition.vue'
+import Navbar from '@/layouts/Navbar.vue'
+import AppFooter from '@/layouts/Footer.vue'
+import AxleSection from '@/layouts/AxleSection.vue'
+import '@/style/main.css'
 
 onBeforeMount(runIPGeolocation);
 </script>
@@ -17,42 +15,13 @@ onBeforeMount(runIPGeolocation);
     <Navbar />
     <main class="scrollbar-style-1">
       <div class="box_container"><TeamComposition /></div>
-      <div class="axle">
-        <div class="form-row">
-          <div class="left-column"><AxleName /></div>
-          <div class="right-column"><RowSlider /></div>
-        </div>
-        <TurnSkillSelection />
-        <AddRows />
-      </div>
-      <div class="footer">
-        <div class="footer-content">
-          <a href="https://github.com/FuseFairy/HBR-AxleTool-vue" target="_blank">
-            <img src="@/assets/custom-icon/github.svg" alt="GitHub" class="github-icon" />
-          </a>
-          <div class="footer-text">
-            Developed by <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a> & <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
-          </div>
-        </div>
-      </div>
+      <div class="axle"><AxleSection /></div>
+      <div class="footer"><AppFooter /></div>
     </main>
   </div>
 </template>
 
 <style scoped>
-.form-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 10px 20px 0 20px;
-}
-.left-column {
-  flex: 1;
-}
-.right-column {
-  flex: 3;
-}
 .page-layout {
   min-height: 100vh;
   display: grid;
@@ -123,34 +92,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-}
-.footer-content {
-  padding: 10px;
-  font-size: 0.8rem;
-  color: #808080;
-  display: flex;
-  align-items: center;
-}
-.footer-content a {
-  color: #808080;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  height: 20px;
-}
-.footer-content a:hover {
-  text-decoration: underline;
-  color: #606060;
-}
-.footer-text > p,
-.footer-text > a {
-  display: inline;
-}
-.github-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 4px;
-  filter: invert(1) brightness(0.5);
 }
 .box_container {
   grid-area: box_container;

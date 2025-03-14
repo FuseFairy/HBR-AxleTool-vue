@@ -10,7 +10,7 @@ import { convertElementToJpg } from '@/utils/domToImage'
 import { getAssetsFile } from '@/utils/getAssetsFile'
 import { getUsedSkills } from '@/utils/getUsedSkills'
 import loading from 'vue-loading-overlay'
-import ShowTableFilter from '@/components/filter/ShowTableFilter.vue'
+import ShowTableFilter from '@/components/ui/ShowTableFilter.vue'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
 import _find from 'lodash-es/find'
