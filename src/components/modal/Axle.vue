@@ -765,7 +765,7 @@ image {
   display: none;
 }
 .scrollbar-style-1 {
-    scrollbar-width: none; /* Firefox */
+  scrollbar-width: none; /* Firefox */
 }
 @media (max-width: 950px) {
   .container {

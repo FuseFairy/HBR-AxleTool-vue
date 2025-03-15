@@ -524,7 +524,7 @@ label {
 :deep(.multiselect-dropdown) {
   background-color: black;
   border: 1px solid rgb(64, 68, 141);
-  max-height: 15rem;
+  max-height: 12rem;
 }
 :deep(.multiselect-dropdown::-webkit-scrollbar) {
   width: 5px;
