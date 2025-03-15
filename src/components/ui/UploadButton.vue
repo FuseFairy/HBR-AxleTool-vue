@@ -86,6 +86,11 @@ const onFileChange = async (event) => {
         }
 
         const decodedData = JSON.parse(decompressFromBase64(customData));
+
+        if (decodedData?.version != "1.0.0") {
+          throw new Error('Old image not supported!');
+        }
+
         const updatedSelections = await updateSelections(decodedData.char);
 
         Object.assign(charStore.selections, updatedSelections);
@@ -97,15 +102,13 @@ const onFileChange = async (event) => {
         sliderStore.rows = decodedData.rows;
         settingStore.lang = decodedData.language ?? settingStore.lang;
       } catch (error) {
-        console.error('Error reading image or parsing metadata:', error);
-        alert('Invalid JPEG file format or failed to parse metadata. Please check the file integrity and format.');
+        alert(error);
       } finally {
         event.target.value = '';
         isLoading.value = false;
       }
     };
   } catch (error) {
-    console.error('Error reading file:', error);
     alert('Failed to read the file. Please try again.');
   }
 };

@@ -61,6 +61,7 @@ export async function convertElementToJpg(elementId) {
     })
 
     const customData = {
+      version: "1.0.0", // version of the save file format
       char: usedCharStore,
       axleName: axleName,
       skills: skillStore.skills,
