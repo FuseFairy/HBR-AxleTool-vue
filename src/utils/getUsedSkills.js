@@ -1,7 +1,7 @@
 import { useCharStore } from '@/store/char'
 import { useSkillStore } from '@/store/axle'
 import { useSettingStore } from '@/store/setting'
-import _find from 'lodash-es/find'
+import { find } from 'lodash-es'
 
 export function getUsedSkills(selectedTab) {
   const skillsDictionary = {}
@@ -19,7 +19,7 @@ export function getUsedSkills(selectedTab) {
         group.forEach((skillEntry) => {
           if (skillEntry.style === style && skillEntry.selectedTab === selectedTab) {
             const { skill } = skillEntry;
-            const foundCommandSkill = _find(selection['commandSkill'], { value: skill });
+            const foundCommandSkill = find(selection['commandSkill'], { value: skill });
             if (skill && !skillsDictionary[style].has(skill) && !foundCommandSkill) {
               skillsDictionary[style].add(skill);
             }

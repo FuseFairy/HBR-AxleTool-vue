@@ -13,7 +13,7 @@ import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ui/ShowTableFilter.vue'
 import { toast } from "vue3-toastify"
 import "vue3-toastify/dist/index.css"
-import _find from 'lodash-es/find'
+import { find } from 'lodash-es'
 
 const isDownloading = ref(false)
 const fullPage = ref(true)
@@ -108,13 +108,13 @@ const displayUsedSkillName = (tab, skillValue, style) => {
   let skillName = ""
 
   const charInfo = charStore.selections[tab]
-  const styleInfo = _find(charInfo, (characterData) => {
+  const styleInfo = find(charInfo, (characterData) => {
     return characterData.style === style;
   });
 
   const skills= styleInfo['skill']
 
-  const foundSkillObject = _find(skills, skillObj => skillObj.value === skillValue);
+  const foundSkillObject = find(skills, skillObj => skillObj.value === skillValue);
 
   if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
@@ -129,13 +129,13 @@ const displayPassiveSkillName = (tab, skillValue, style) => {
   let skillName = ""
 
   const charInfo = charStore.selections[tab]
-  const styleInfo = _find(charInfo, (characterData) => {
+  const styleInfo = find(charInfo, (characterData) => {
     return characterData.style === style;
   });
 
   const skills= styleInfo['passiveSkill_value']
 
-  const foundSkillObject = _find(skills, { value: skillValue });
+  const foundSkillObject = find(skills, { value: skillValue });
 
   if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
@@ -150,7 +150,7 @@ const getTargetImg = (tab, target) => {
   let targetImg = ""
 
   const team = charStore.selections[tab]
-  const foundTargetObject = _find(team, { character: target })
+  const foundTargetObject = find(team, { character: target })
   const charInfo = foundTargetObject["character_info"]
   targetImg = charInfo.icon || ""
 
@@ -165,12 +165,12 @@ const checkCommandSkill = (row, col) => {
   const style = skillInfo.style
 
   const charInfo = charStore.selections[tab]
-  const styleInfo = _find(charInfo, (characterData) => {
+  const styleInfo = find(charInfo, (characterData) => {
     return characterData.style === style;
   });
 
   const commandSkill = styleInfo['commandSkill']
-  const foundSkillObject = _find(commandSkill, { value: skillValue });
+  const foundSkillObject = find(commandSkill, { value: skillValue });
 
   if (foundSkillObject) {
       isCommandSkill = true
@@ -189,7 +189,7 @@ const displaySkillName = (row, col) => {
   const style = skillInfo.style
 
   const charInfo = charStore.selections[tab]
-  const styleInfo = _find(charInfo, (characterData) => {
+  const styleInfo = find(charInfo, (characterData) => {
     return characterData.style === style;
   });
 
@@ -197,7 +197,7 @@ const displaySkillName = (row, col) => {
   const skill= styleInfo['skill']
   const mergedSkills = [...commandSkill, ...skill]
 
-  const foundSkillObject = _find(mergedSkills, { value: skillValue });
+  const foundSkillObject = find(mergedSkills, { value: skillValue });
 
   if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]

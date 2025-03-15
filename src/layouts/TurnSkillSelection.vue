@@ -7,11 +7,7 @@ import { useSettingStore } from '@/store/setting'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from '@/components/modal/SelectAxleChar.vue'
 import { getAssetsFile } from '@/utils/getAssetsFile'
-import _cloneDeep from 'lodash-es/cloneDeep'
-import _get from 'lodash-es/get'
-import _isEmpty from 'lodash-es/isEmpty'
-import _filter from 'lodash-es/filter'
-import _map from 'lodash-es/map'
+import { cloneDeep, get, isEmpty, filter, map} from 'lodash-es'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
@@ -49,7 +45,7 @@ const getFilteredSkills = (row, key) => {
     const selections = Object.values(charStore.selections[selectedTab])
 
     const currentSelection = selections.find((selection) => selection.style === currentStyle);
-    const skillOptions = _cloneDeep(currentSelection.skill);
+    const skillOptions = cloneDeep(currentSelection.skill);
     const commandSkillRaw = toRaw(currentSelection.commandSkill);
 
     if (Array.isArray(commandSkillRaw)) {
@@ -77,15 +73,15 @@ const getFilteredSkills = (row, key) => {
 
 const targetOptions = (row, key) => {
   const currentSkill = skillStore.skills[row][key];
-  const style = _get(currentSkill, 'style');
+  const style = get(currentSkill, 'style');
 
   if (currentSkill && style != null) {
     const selectedTab = currentSkill["selectedTab"];
     const team = charStore.selections[`${selectedTab}`];
 
-    const charOptions = _filter(
-      _map(Object.values(team), (teamObject) => teamObject.character_info),
-      (characterInfo) => !_isEmpty(characterInfo)
+    const charOptions = filter(
+      map(Object.values(team), (teamObject) => teamObject.character_info),
+      (characterInfo) => !isEmpty(characterInfo)
     );
 
     return charOptions;

@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { getAssetsFile } from './getAssetsFile'
-import _isObject from 'lodash-es/isObject'
-import _values from 'lodash-es/values'
+import { isObject, values } from 'lodash-es'
 
 export async function fetchCommandSkill(characterName, team, styleName) {
   try {
@@ -17,8 +16,8 @@ export async function fetchCommandSkill(characterName, team, styleName) {
     const commandActionObject = characterData.skill[styleName]?.['command action'];
     let commandSkills = [];
 
-    if (commandActionObject && _isObject(commandActionObject)) {
-      commandSkills = _values(commandActionObject);
+    if (commandActionObject && isObject(commandActionObject)) {
+      commandSkills = values(commandActionObject);
     } else {
       commandSkills = defaultCommandSkill;
     }

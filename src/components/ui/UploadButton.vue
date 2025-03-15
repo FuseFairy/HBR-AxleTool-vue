@@ -12,7 +12,7 @@ import { fetchPassiveSkillOptions } from '@/utils/fetchPassiveSkillOptions'
 import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
 import { decompressFromBase64 } from 'lz-string'
 import loading from 'vue-loading-overlay'
-import _find from 'lodash-es/find'
+import { find } from 'lodash-es'
 
 const charStore = useCharStore()
 const skillStore = useSkillStore()
@@ -41,7 +41,7 @@ const updateSelections = async (decodedDataChar) => {
         team[charKey]['skill'] = await fetchSkillOptions(character, teamName, style)
 
         const charOptios = await fetchCharacterOptions(teamName)
-        team[charKey]['character_info'] = _find(charOptios, { value: character })
+        team[charKey]['character_info'] = find(charOptios, { value: character })
 
         const passiveSkillOptions = await fetchPassiveSkillOptions(character, teamName, style)
         team[charKey]['passiveSkill_value'] = passiveSkillOptions || []

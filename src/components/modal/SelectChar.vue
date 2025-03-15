@@ -11,7 +11,7 @@ import { getAssetsFile } from '@/utils/getAssetsFile'
 import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
 import { useSettingStore } from '@/store/setting'
 import { Collapse } from 'vue-collapsed'
-import _find from 'lodash-es/find'
+import { find } from 'lodash-es'
 
 const charStore = useCharStore()
 const sliderStore = useSliderStore()
@@ -156,7 +156,7 @@ watch(selectedStyle, async (newStyle) => {
       charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
       charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
 
-      const findCharInfo = _find(characterOptions.value, { value: selectedCharacter.value })
+      const findCharInfo = find(characterOptions.value, { value: selectedCharacter.value })
       charStore.setSelection(props.buttonKey, 'character_info', findCharInfo, props.selectedTab)
 
       selectedPassiveSkill.value = []
