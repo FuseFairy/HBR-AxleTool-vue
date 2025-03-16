@@ -21,22 +21,23 @@ export async function convertElementToJpg(elementId) {
   const usedTeams = getUsedTeams()
 
   const usedCharStore = usedTeams.reduce((result, team) => {
-    const characters = charStore.selections[team];
+    const characters = charStore.selections[team]
     if (characters) {
       result[team] = Object.fromEntries(
         Object.entries(characters).map(([charName, charData]) => {
-          const { skill, passiveSkill_value, character_info, commandSkill, ...restCharData } = charData;
-          return [charName, restCharData];
+          const { skill, passiveSkill_value, character_info, commandSkill, ...restCharData } =
+            charData
+          return [charName, restCharData]
         })
-      );
+      )
     }
-    return result;
-  }, {});
+    return result
+  }, {})
   const axleName = skillStore.axleName.trim()
 
   const images = element.getElementsByTagName('img')
-  const imageLoadPromises = Array.from(images).map(img => {
-    return new Promise(resolve => {
+  const imageLoadPromises = Array.from(images).map((img) => {
+    return new Promise((resolve) => {
       if (img.complete) {
         resolve()
       } else {
@@ -47,21 +48,21 @@ export async function convertElementToJpg(elementId) {
   })
 
   try {
-    const imageLoadTimeout = 5000;
+    const imageLoadTimeout = 5000
     await Promise.race([
       Promise.all(imageLoadPromises),
-      new Promise(resolve => setTimeout(resolve, imageLoadTimeout))
-    ]);
+      new Promise((resolve) => setTimeout(resolve, imageLoadTimeout))
+    ])
 
     const dataUrl = await domtoimage.toJpeg(element, {
       quality: 1.0,
       backgroundColor: 'black',
       width: element.scrollWidth,
-      height: element.scrollHeight,
+      height: element.scrollHeight
     })
 
     const customData = {
-      version: "1.0.0", // version of the save file format
+      version: '1.0.0', // version of the save file format
       char: usedCharStore,
       axleName: axleName,
       skills: skillStore.skills,
@@ -73,7 +74,7 @@ export async function convertElementToJpg(elementId) {
     const jsonString = JSON.stringify(customData)
     const compressedData = compressToBase64(jsonString)
     const exif = {
-      [piexif.ExifIFD.UserComment]: compressedData,
+      [piexif.ExifIFD.UserComment]: compressedData
     }
 
     const exifObj = { Exif: exif }
@@ -84,8 +85,7 @@ export async function convertElementToJpg(elementId) {
     link.href = jpegWithExifData
     link.download = `${axleName || 'hbr_axle'}.jpg`
     link.click()
-
   } catch (error) {
-    throw error;
+    throw error
   }
 }

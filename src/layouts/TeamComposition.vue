@@ -5,8 +5,8 @@ import { useLastTabStore } from '@/store/tab'
 import SelectChar from '@/components/modal/SelectChar.vue'
 import { getAssetsFile } from '@/utils/getAssetsFile'
 import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
-import { toast } from "vue3-toastify"
-import "vue3-toastify/dist/index.css"
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
 
 const charStore = useCharStore()
@@ -34,15 +34,15 @@ const activeComponent = ref(null)
 
 const selectedTab = computed({
   get() {
-    return lastTabStore.box_lastTab || 1;
+    return lastTabStore.box_lastTab || 1
   },
   set(key) {
-    lastTabStore.box_lastTab = key;
+    lastTabStore.box_lastTab = key
   }
-});
+})
 const selectTab = (key) => {
-  selectedTab.value = key;
-};
+  selectedTab.value = key
+}
 
 const handleBoxClick = (key) => {
   activeComponent.value = key
@@ -54,45 +54,47 @@ const closeContainer = () => {
 
 const isRefreshing = ref(false)
 async function refreshData() {
-  if (isRefreshing.value) return;
-  
-  const currentTab = lastTabStore.box_lastTab;
-  const Team = charStore.selections[currentTab];
+  if (isRefreshing.value) return
+
+  const currentTab = lastTabStore.box_lastTab
+  const Team = charStore.selections[currentTab]
 
   const refreshPromise = async () => {
     isRefreshing.value = true
     try {
-      const allCharacterPromises = [];
+      const allCharacterPromises = []
       for (const charKey in Team) {
-        const { character, team, style } = Team[charKey];
+        const { character, team, style } = Team[charKey]
 
         if (style) {
-          const skillPromise = fetchSkillOptions(character, team, style);
-          const commandSkillPromise = fetchCommandSkill(character, team, style);
+          const skillPromise = fetchSkillOptions(character, team, style)
+          const commandSkillPromise = fetchCommandSkill(character, team, style)
 
           allCharacterPromises.push(
             Promise.all([skillPromise, commandSkillPromise])
               .then(([skillOptions, commandSkill]) => {
-                charStore.selections[currentTab][charKey]['skill'] = skillOptions;
-                charStore.selections[currentTab][charKey]['commandSkill'] = commandSkill;
+                charStore.selections[currentTab][charKey]['skill'] = skillOptions
+                charStore.selections[currentTab][charKey]['commandSkill'] = commandSkill
               })
-              .catch(error => {
-                console.error(`Error fetching data for ${character} in team ${team} with style ${style}:`, error);
-                throw error;
+              .catch((error) => {
+                console.error(
+                  `Error fetching data for ${character} in team ${team} with style ${style}:`,
+                  error
+                )
+                throw error
               })
-          );
+          )
         }
       }
 
-      await Promise.all(allCharacterPromises);
-      return Promise.resolve();
+      await Promise.all(allCharacterPromises)
+      return Promise.resolve()
     } catch (error) {
-      return Promise.reject(error);
+      return Promise.reject(error)
     } finally {
       isRefreshing.value = false
     }
-  };
-
+  }
 
   toast.promise(
     refreshPromise,
@@ -100,55 +102,55 @@ async function refreshData() {
       pending: 'Refreshing Skill Options...',
       success: {
         render() {
-          return `Skill options successfully refreshed!`;
+          return `Skill options successfully refreshed!`
         },
-        icon: "🚀",
-        theme: "colored",
-        type: "success",
+        icon: '🚀',
+        theme: 'colored',
+        type: 'success',
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 1500,
         dangerouslyHTMLString: true,
         newestOnTop: true,
         toastStyle: {
-          "backgroundColor": "rgba(22, 21, 24, 0.9)",
-          "font-family": "LXGW WenKai Mono TC",
-          "color": "rgb(248, 216, 251)"
+          backgroundColor: 'rgba(22, 21, 24, 0.9)',
+          'font-family': 'LXGW WenKai Mono TC',
+          color: 'rgb(248, 216, 251)'
         },
         progressStyle: {
-          "backgroundColor": "rgb(180, 68, 191)",
+          backgroundColor: 'rgb(180, 68, 191)'
         }
       },
       error: {
         render() {
-          return "Skill options refresh failed!";
+          return 'Skill options refresh failed!'
         },
-        icon: "🔥",
-        theme: "colored",
-        type: "error",
+        icon: '🔥',
+        theme: 'colored',
+        type: 'error',
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 3000,
         dangerouslyHTMLString: true,
         newestOnTop: true,
         toastStyle: {
-          "backgroundColor": "rgba(22, 21, 24, 0.9)",
-          "font-family": "LXGW WenKai Mono TC",
-          "color": "rgb(248, 216, 251)"
+          backgroundColor: 'rgba(22, 21, 24, 0.9)',
+          'font-family': 'LXGW WenKai Mono TC',
+          color: 'rgb(248, 216, 251)'
         },
         progressStyle: {
-          "backgroundColor": "rgb(255, 88, 88)",
+          backgroundColor: 'rgb(255, 88, 88)'
         }
       }
     },
     {
       position: toast.POSITION.BOTTOM_RIGHT,
-      theme: "colored",
+      theme: 'colored',
       toastStyle: {
-        "backgroundColor": "rgba(22, 21, 24, 0.9)",
-        "font-family": "LXGW WenKai Mono TC",
-        "color": "rgb(248, 216, 251)"
+        backgroundColor: 'rgba(22, 21, 24, 0.9)',
+        'font-family': 'LXGW WenKai Mono TC',
+        color: 'rgb(248, 216, 251)'
       }
-    },
-  );
+    }
+  )
 }
 </script>
 
@@ -166,7 +168,11 @@ async function refreshData() {
   </div>
 
   <div class="tool-container">
-    <button @click="refreshData" class="refresh-button" v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom'}">
+    <button
+      @click="refreshData"
+      class="refresh-button"
+      v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom' }"
+    >
       <img src="@/assets/custom-icon/update.svg" alt="refresh" :class="{ spin: isRefreshing }" />
     </button>
   </div>
@@ -318,8 +324,12 @@ button.tab:hover {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .spin {
   animation: spin 0.2s ease-in-out;

@@ -7,15 +7,14 @@ import 'vue-loading-overlay/dist/css/index.css'
 import FloatingVue from 'floating-vue'
 import 'floating-vue/dist/style.css'
 import versionControlPlugin from '@/plugins/storeVersionControl'
-import "vue3-toastify/dist/index.css"
-
+import 'vue3-toastify/dist/index.css'
 
 const app = createApp(App)
 const pinia = createPinia()
 
 pinia.use(piniaPluginPersistedstate)
 
-app.use(versionControlPlugin);
+app.use(versionControlPlugin)
 app.use(pinia)
 app.use(LoadingPlugin)
 app.use(FloatingVue)

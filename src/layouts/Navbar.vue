@@ -7,14 +7,19 @@ import Settings from '@/components/modal/Settings.vue'
 
 const buttons = [
   { key: 'table', tooltip: 'table', icon: getAssetsFile('custom-icon/table.svg'), component: Axle },
-  { key: 'setting', tooltip: 'setting', icon: getAssetsFile('custom-icon/setting.svg'), component: Settings },
-  { key: 'bug_report', tooltip: 'bug report', icon: getAssetsFile('custom-icon/bug_report.svg') },
+  {
+    key: 'setting',
+    tooltip: 'setting',
+    icon: getAssetsFile('custom-icon/setting.svg'),
+    component: Settings
+  },
+  { key: 'bug_report', tooltip: 'bug report', icon: getAssetsFile('custom-icon/bug_report.svg') }
 ]
-const bugReportURL = "https://github.com/FuseFairy/HBR-AxleTool-vue/issues/new";
+const bugReportURL = 'https://github.com/FuseFairy/HBR-AxleTool-vue/issues/new'
 const activeModal = ref(null)
 
 const activeComponent = computed(() => {
-  const btn = buttons.find(b => b.key === activeModal.value)
+  const btn = buttons.find((b) => b.key === activeModal.value)
   return btn ? btn.component : null
 })
 
@@ -24,11 +29,11 @@ const toggleModal = (key) => {
 
 const handleButtonClick = (key) => {
   if (key === 'table' || key === 'setting') {
-    toggleModal(key);
+    toggleModal(key)
   } else if (key === 'bug_report') {
-    window.open(bugReportURL, '_blank');
+    window.open(bugReportURL, '_blank')
   }
-};
+}
 </script>
 
 <template>
@@ -43,8 +48,8 @@ const handleButtonClick = (key) => {
         v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
         :class="{ 'setting-icon-button': btn.key === 'setting' }"
       >
-      <img :src="btn.icon" :alt="btn.key" />
-    </button>
+        <img :src="btn.icon" :alt="btn.key" />
+      </button>
     </div>
   </nav>
   <Transition name="modal">

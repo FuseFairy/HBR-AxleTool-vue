@@ -3,8 +3,8 @@ import { useSettingStore } from '@/store/setting'
 import Multiselect from '@vueform/multiselect'
 
 const langOptions = [
-  { "value": "zh-TW", "name": "繁體中文" },
-  { "value": "jp", "name": "日本語" },
+  { value: 'zh-TW', name: '繁體中文' },
+  { value: 'jp', name: '日本語' }
 ]
 const settingStore = useSettingStore()
 
@@ -20,7 +20,7 @@ const closeContainer = () => {
       <button @click="closeContainer" class="close">
         <img src="@/assets/custom-icon/close.svg" alt="Close" />
       </button>
-      <div class="section" style="padding-top: 15px;">
+      <div class="section" style="padding-top: 15px">
         <label>Language</label>
         <Multiselect
           v-model="settingStore.lang"

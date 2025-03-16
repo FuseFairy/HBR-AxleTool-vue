@@ -4,10 +4,10 @@
     "names": { "zh-TW": "茅森 月歌", "jp": "茅森 月歌" },
     "english name": "Ruka_Kayamori",
     "style": {
-      "Attack or Music": { 
+      "Attack or Music": {
         "value": "Attack or Music",
-        "names": { "zh-TW": "Attack or Music", "jp": "Attack or Music"},
-        "id":"001"
+        "names": { "zh-TW": "Attack or Music", "jp": "Attack or Music" },
+        "id": "001"
       },
       "戰場的品位": {
         "value": "戰場的品位",
@@ -75,7 +75,7 @@
         "迴旋斬": {
           "value": "迴旋斬",
           "names": { "zh-TW": "迴旋斬", "jp": "スピニングスラッシュ" },
-          "sp" : 7
+          "sp": 7
         },
         "貴族之楔": {
           "value": "貴族之楔",
@@ -792,7 +792,7 @@
         "稜鏡特攻": {
           "value": "稜鏡特攻",
           "names": { "zh-TW": "稜鏡特攻", "jp": "プリズムアタック" },
-          "sp" : 9
+          "sp": 9
         },
         "忠誠": {
           "value": "忠誠",

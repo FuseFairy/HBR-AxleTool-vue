@@ -7,8 +7,8 @@ const maxlength = 35
 
 <template>
   <p class="form-label">Axle Name</p>
-  <input 
-    type="text" 
+  <input
+    type="text"
     placeholder="Enter your axle name"
     class="form-input"
     v-model="skillStore.axleName"

@@ -163,7 +163,10 @@
     "style": {
       "Finally found our silver lining": {
         "value": "Finally found our silver lining",
-        "names": { "zh-TW": "Finally found our silver lining", "jp": "Finally found our silver lining" },
+        "names": {
+          "zh-TW": "Finally found our silver lining",
+          "jp": "Finally found our silver lining"
+        },
         "id": "001"
       }
     },

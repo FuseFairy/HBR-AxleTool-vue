@@ -7,7 +7,7 @@ import AppFooter from '@/layouts/Footer.vue'
 import AxleSection from '@/layouts/AxleSection.vue'
 import '@/style/main.css'
 
-onBeforeMount(runIPGeolocation);
+onBeforeMount(runIPGeolocation)
 </script>
 
 <template>

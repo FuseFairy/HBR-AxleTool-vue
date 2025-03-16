@@ -7,7 +7,7 @@ import { useSettingStore } from '@/store/setting'
 import Multiselect from '@vueform/multiselect'
 import SelectAxleChar from '@/components/modal/SelectAxleChar.vue'
 import { getAssetsFile } from '@/utils/getAssetsFile'
-import { cloneDeep, get, isEmpty, filter, map} from 'lodash-es'
+import { cloneDeep, get, isEmpty, filter, map } from 'lodash-es'
 
 const sliderStore = useSliderStore()
 const skillStore = useSkillStore()
@@ -16,15 +16,15 @@ const settingStore = useSettingStore()
 const odOptions = ['OD1', 'OD2', 'OD3']
 
 const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`)
-const formattedOptions = options.map(option => {
+const formattedOptions = options.map((option) => {
   return {
     value: option,
     names: option
-  };
-});
+  }
+})
 const turnOptions = [
-  { 'value': 'Switch', names: 'Switch' }, 
-  { 'value': '追加回合', 'names': { 'zh-TW': '追加回合', 'jp': '追加ターン' } }, 
+  { value: 'Switch', names: 'Switch' },
+  { value: '追加回合', names: { 'zh-TW': '追加回合', jp: '追加ターン' } },
   ...formattedOptions
 ]
 
@@ -44,16 +44,16 @@ const getFilteredSkills = (row, key) => {
     const selectedTab = currentSkill.selectedTab
     const selections = Object.values(charStore.selections[selectedTab])
 
-    const currentSelection = selections.find((selection) => selection.style === currentStyle);
-    const skillOptions = cloneDeep(currentSelection.skill);
-    const commandSkillRaw = toRaw(currentSelection.commandSkill);
+    const currentSelection = selections.find((selection) => selection.style === currentStyle)
+    const skillOptions = cloneDeep(currentSelection.skill)
+    const commandSkillRaw = toRaw(currentSelection.commandSkill)
 
     if (Array.isArray(commandSkillRaw)) {
-      commandSkillRaw.forEach(skill => {
-        skillOptions.unshift(skill);
-      });
+      commandSkillRaw.forEach((skill) => {
+        skillOptions.unshift(skill)
+      })
     } else if (commandSkillRaw) {
-      skillOptions.unshift(commandSkillRaw);
+      skillOptions.unshift(commandSkillRaw)
     }
 
     const foundSkill = skillOptions.some(
@@ -72,23 +72,23 @@ const getFilteredSkills = (row, key) => {
 }
 
 const targetOptions = (row, key) => {
-  const currentSkill = skillStore.skills[row][key];
-  const style = get(currentSkill, 'style');
+  const currentSkill = skillStore.skills[row][key]
+  const style = get(currentSkill, 'style')
 
   if (currentSkill && style != null) {
-    const selectedTab = currentSkill["selectedTab"];
-    const team = charStore.selections[`${selectedTab}`];
+    const selectedTab = currentSkill['selectedTab']
+    const team = charStore.selections[`${selectedTab}`]
 
     const charOptions = filter(
       map(Object.values(team), (teamObject) => teamObject.character_info),
       (characterInfo) => !isEmpty(characterInfo)
-    );
+    )
 
-    return charOptions;
+    return charOptions
   } else {
-    return [];
+    return []
   }
-};
+}
 
 const deleteRow = (index) => {
   sliderStore.rows -= 1
@@ -98,8 +98,8 @@ const deleteRow = (index) => {
 
 const copyRow = (index) => {
   sliderStore.rows += 1
-  const copiedTurn = _cloneDeep(skillStore.turns[index]);
-  const copiedSkill = _cloneDeep(skillStore.skills[index]);
+  const copiedTurn = _cloneDeep(skillStore.turns[index])
+  const copiedSkill = _cloneDeep(skillStore.skills[index])
   skillStore.turns.splice(index + 1, 0, copiedTurn)
   skillStore.skills.splice(index + 1, 0, copiedSkill)
 
@@ -120,44 +120,48 @@ const scrollToCopiedRow = (targetIndex) => {
 }
 
 function handleTurnChange(value, index) {
-  if (value === "Switch") {
+  if (value === 'Switch') {
     skillStore.skills[index - 1] = [
       { selectedTab: null, style: null, style_img: null, skill: null, target: null },
       { selectedTab: null, style: null, style_img: null, skill: null, target: null },
       { selectedTab: null, style: null, style_img: null, skill: null, target: null }
-    ];
+    ]
   }
 }
 
 const exchange = (row, direction) => {
-  const currentRow = skillStore.skills[row];
-  let swapIndex;
-  let directionModifier = 0;
+  const currentRow = skillStore.skills[row]
+  let swapIndex
+  let directionModifier = 0
 
   if (direction === 'up') {
-    directionModifier = -1;
+    directionModifier = -1
   } else {
-    directionModifier = 1;
+    directionModifier = 1
   }
 
   if (skillStore.turns[row + directionModifier].turn === 'Switch') {
-    swapIndex = row + directionModifier * 2;
+    swapIndex = row + directionModifier * 2
   } else {
-    swapIndex = row + directionModifier;
+    swapIndex = row + directionModifier
   }
 
-  const swapRow = skillStore.skills[swapIndex];
-  [skillStore.skills[row], skillStore.skills[swapIndex]] = [swapRow, currentRow];
+  const swapRow = skillStore.skills[swapIndex]
+  ;[skillStore.skills[row], skillStore.skills[swapIndex]] = [swapRow, currentRow]
 }
 </script>
 
 <template>
-  <div 
+  <div
     v-for="i in sliderStore.rows"
-    :key="i" 
+    :key="i"
     :class="['container row-item', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]"
   >
-    <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
+    <button
+      class="delete-button"
+      @click="deleteRow(i - 1)"
+      v-tooltip="{ content: 'delete', placement: 'bottom' }"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24px"
@@ -170,17 +174,47 @@ const exchange = (row, direction) => {
         />
       </svg>
     </button>
-    <button class="copy-button" @click="copyRow(i - 1)" v-tooltip="{ content: 'copy', placement: 'bottom' }">
+    <button
+      class="copy-button"
+      @click="copyRow(i - 1)"
+      v-tooltip="{ content: 'copy', placement: 'bottom' }"
+    >
       <img src="@/assets/custom-icon/copy.svg" alt="copy" />
     </button>
     <div class="column">
       <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]">
         <template v-if="skillStore.turns[i - 1].turn !== 'Switch'">
-          <button class="arrow-button" :disabled="i === 1" @click="exchange(i - 1, 'up')" v-tooltip="{ content: 'up', placement: 'top' }">
-            <svg xmlns="http://www.w3.org/2000/svg" height="21px" weight="21px" fill-opacity="0.85" viewBox="280 -600 400 200"><path d="m280-400 200-200 200 200H280Z"/></svg>
+          <button
+            class="arrow-button"
+            :disabled="i === 1"
+            @click="exchange(i - 1, 'up')"
+            v-tooltip="{ content: 'up', placement: 'top' }"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="21px"
+              weight="21px"
+              fill-opacity="0.85"
+              viewBox="280 -600 400 200"
+            >
+              <path d="m280-400 200-200 200 200H280Z" />
+            </svg>
           </button>
-          <button class="arrow-button" :disabled="sliderStore.rows === i" @click="exchange(i - 1, 'down')" v-tooltip="{ content: 'down', placement: 'bottom' }">
-            <svg xmlns="http://www.w3.org/2000/svg" height="21px" weight="21px" fill-opacity="0.85" viewBox="280 -560 400 200"><path d="M480-360 280-560h400L480-360Z"/></svg>
+          <button
+            class="arrow-button"
+            :disabled="sliderStore.rows === i"
+            @click="exchange(i - 1, 'down')"
+            v-tooltip="{ content: 'down', placement: 'bottom' }"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="21px"
+              weight="21px"
+              fill-opacity="0.85"
+              viewBox="280 -560 400 200"
+            >
+              <path d="M480-360 280-560h400L480-360Z" />
+            </svg>
           </button>
         </template>
       </div>
@@ -190,8 +224,8 @@ const exchange = (row, direction) => {
         :options="turnOptions"
         label="names"
         track-by="value"
-        :locale = "settingStore.lang"
-        fallback-locale = "zh-TW"
+        :locale="settingStore.lang"
+        fallback-locale="zh-TW"
         @update:model-value="(value) => handleTurnChange(value, i)"
       />
       <Multiselect
@@ -227,12 +261,16 @@ const exchange = (row, direction) => {
       >
         <template v-slot:singlelabel="{ value }">
           <div class="multiselect-single-label">
-            <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
+            <span :title="value.names[settingStore.lang]"
+              >{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span
+            >
           </div>
         </template>
 
         <template v-slot:option="{ option }">
-          <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span>
+          <span :title="option.names[settingStore.lang]"
+            >{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span
+          >
         </template>
       </Multiselect>
       <Multiselect
@@ -245,13 +283,17 @@ const exchange = (row, direction) => {
         <template v-slot:singlelabel="{ value }">
           <div class="multiselect-single-label">
             <img class="label-icon" :src="getAssetsFile(value.icon)" />
-            <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+            <span :title="value.names[settingStore.lang]">{{
+              value.names[settingStore.lang]
+            }}</span>
           </div>
         </template>
 
         <template v-slot:option="{ option }">
           <img class="option-icon" :src="getAssetsFile(option.icon)" />
-          <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+          <span :title="option.names[settingStore.lang]">{{
+            option.names[settingStore.lang]
+          }}</span>
         </template>
       </Multiselect>
     </div>

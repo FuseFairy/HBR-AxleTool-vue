@@ -41,25 +41,25 @@ const teamOptions = [
   { value: 'Command', name: '司令部', icon: 'team-icon/Command.webp' }
 ]
 const earringOptions = [
-  { 
-    value: 'BREAK耳環', 
-    names: { 'zh-TW': 'BREAK耳環', "jp": 'ブレイクピアス' }, 
-    icon: 'earring-icon/break.webp' 
+  {
+    value: 'BREAK耳環',
+    names: { 'zh-TW': 'BREAK耳環', jp: 'ブレイクピアス' },
+    icon: 'earring-icon/break.webp'
   },
-  { 
-    value: '進攻耳環', 
-    names: { 'zh-TW': '進攻耳環', 'jp': 'アタックピアス' }, 
-    icon: 'earring-icon/attach.webp' 
+  {
+    value: '進攻耳環',
+    names: { 'zh-TW': '進攻耳環', jp: 'アタックピアス' },
+    icon: 'earring-icon/attach.webp'
   },
-  { 
-    value: 'DRIVE耳環', 
-    names: { 'zh-TW': 'DRIVE耳環', 'jp': 'ドライブピアス' }, 
-    icon: 'earring-icon/drive.webp' 
+  {
+    value: 'DRIVE耳環',
+    names: { 'zh-TW': 'DRIVE耳環', jp: 'ドライブピアス' },
+    icon: 'earring-icon/drive.webp'
   },
-  { 
-    value: '爆破耳環', 
-    names: { 'zh-TW': '爆破耳環', 'jp': 'ブラストピアス' }, 
-    icon: 'earring-icon/explosion.webp' 
+  {
+    value: '爆破耳環',
+    names: { 'zh-TW': '爆破耳環', jp: 'ブラストピアス' },
+    icon: 'earring-icon/explosion.webp'
   }
 ]
 const spiritualOptions = [
@@ -68,7 +68,7 @@ const spiritualOptions = [
   { value: '3', name: '+3' },
   { value: '4', name: '+4' },
   { value: '5', name: '+5' }
-] 
+]
 const rankOptions = Array.from({ length: 10 }, (_, i) => i + 1)
 const characterOptions = ref([])
 const styleOptions = ref([])
@@ -104,7 +104,12 @@ const initializeOptions = async () => {
       selectedTeam.value,
       selectedStyle.value
     )
-    charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
+    charStore.setSelection(
+      props.buttonKey,
+      'passiveSkill_value',
+      passiveSkillOptions.value,
+      props.selectedTab
+    )
   }
 }
 
@@ -154,7 +159,12 @@ watch(selectedStyle, async (newStyle) => {
       charStore.setSelection(props.buttonKey, 'style', newStyle, props.selectedTab)
       charStore.setSelection(props.buttonKey, 'img', selectedOption.icon, props.selectedTab)
       charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
-      charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
+      charStore.setSelection(
+        props.buttonKey,
+        'passiveSkill_value',
+        passiveSkillOptions.value,
+        props.selectedTab
+      )
 
       const findCharInfo = find(characterOptions.value, { value: selectedCharacter.value })
       charStore.setSelection(props.buttonKey, 'character_info', findCharInfo, props.selectedTab)
@@ -247,13 +257,17 @@ const closeContainer = async () => {
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
                 <img class="label-icon" :src="getAssetsFile(value.icon)" />
-                <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+                <span :title="value.names[settingStore.lang]">{{
+                  value.names[settingStore.lang]
+                }}</span>
               </div>
             </template>
 
             <template v-slot:option="{ option }">
               <img class="option-icon" :src="getAssetsFile(option.icon)" />
-              <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+              <span :title="option.names[settingStore.lang]">{{
+                option.names[settingStore.lang]
+              }}</span>
             </template>
           </Multiselect>
         </div>
@@ -271,22 +285,40 @@ const closeContainer = async () => {
             <template v-slot:singlelabel="{ value }">
               <div class="multiselect-single-label">
                 <img class="label-icon" :src="getAssetsFile(value.icon)" />
-                <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+                <span :title="value.names[settingStore.lang]">{{
+                  value.names[settingStore.lang]
+                }}</span>
               </div>
             </template>
 
             <template v-slot:option="{ option }">
               <img class="option-icon" :src="getAssetsFile(option.icon)" />
-              <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+              <span :title="option.names[settingStore.lang]">{{
+                option.names[settingStore.lang]
+              }}</span>
             </template>
           </Multiselect>
         </div>
 
         <div class="section">
-          <button class="collapse_btn" :class="{ 'collapse_btn_active': isExpandedCollapse }" @click="isExpandedCollapse = !isExpandedCollapse">
-            <svg class="collapse_arrow" :class="{ 'rotate': isExpandedCollapse }" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="m280-400 200-200 200 200H280Z"/></svg>
+          <button
+            class="collapse_btn"
+            :class="{ collapse_btn_active: isExpandedCollapse }"
+            @click="isExpandedCollapse = !isExpandedCollapse"
+          >
+            <svg
+              class="collapse_arrow"
+              :class="{ rotate: isExpandedCollapse }"
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#FFFFFF"
+            >
+              <path d="m280-400 200-200 200 200H280Z" />
+            </svg>
             <!-- <svg  class="collapse_arrow" :class="{ 'rotate': isExpandedCollapse }" xmlns="http://www.w3.org/2000/svg" height="7px" weight="14px" fill-opacity="0.85" viewBox="280 -600 400 200"><path d="m280-400 200-200 200 200H280Z"/></svg> -->
-            <label style="font-size: 24px;">Others</label>
+            <label style="font-size: 24px">Others</label>
           </button>
           <Collapse :when="isExpandedCollapse">
             <div class="section">
@@ -297,7 +329,8 @@ const closeContainer = async () => {
                 :disabled="isOtherDisable"
                 :options="rankOptions"
                 @change="
-                  (value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)
+                  (value) =>
+                    charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)
                 "
               />
               <div class="flower-container">
@@ -306,7 +339,12 @@ const closeContainer = async () => {
                   v-model="selectedFlower"
                   :disabled="isOtherDisable"
                   @change="
-                    charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)
+                    charStore.setSelection(
+                      props.buttonKey,
+                      'flower',
+                      selectedFlower,
+                      props.selectedTab
+                    )
                   "
                 />
                 <img
@@ -332,13 +370,17 @@ const closeContainer = async () => {
                 <template v-slot:singlelabel="{ value }">
                   <div class="multiselect-single-label">
                     <img class="label-icon" :src="getAssetsFile(value.icon)" />
-                    <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+                    <span :title="value.names[settingStore.lang]">{{
+                      value.names[settingStore.lang]
+                    }}</span>
                   </div>
                 </template>
 
                 <template v-slot:option="{ option }">
                   <img class="option-icon" :src="getAssetsFile(option.icon)" />
-                  <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+                  <span :title="option.names[settingStore.lang]">{{
+                    option.names[settingStore.lang]
+                  }}</span>
                 </template>
               </Multiselect>
             </div>
@@ -354,8 +396,8 @@ const closeContainer = async () => {
                 :options="passiveSkillOptions"
                 label="names"
                 track-by="value"
-                :locale = "settingStore.lang"
-                fallback-locale = "zh-TW"
+                :locale="settingStore.lang"
+                fallback-locale="zh-TW"
               />
             </div>
 
@@ -493,8 +535,8 @@ span {
   display: none;
 }
 .scrollbar-style-1 {
-    scrollbar-width: none; /* Firefox */
-    padding: 0px;
+  scrollbar-width: none; /* Firefox */
+  padding: 0px;
 }
 label {
   font-family: 'Gugi', 'Noto Sans TC', sans-serif;

@@ -25,77 +25,71 @@ const showOptions = [
   { value: 'axle', name: 'Axle' },
   { value: 'spiritual', name: 'Spiritual' }
 ]
-const showTeams = usedTeam.map(teamValue => ({ value: teamValue, name: `Team ${teamValue}` }));
+const showTeams = usedTeam.map((teamValue) => ({ value: teamValue, name: `Team ${teamValue}` }))
 
 const show = ref(false)
 const filterRef = ref(null)
-onClickOutside(
-  filterRef,
-  (event) => {
-    show.value = false
-  },
-)
+onClickOutside(filterRef, (event) => {
+  show.value = false
+})
 </script>
 
 <template>
-<div ref="filterRef">
-	<button @click="show = !show" class="filter">
-    <img
-      :src="show ? filterOffIcon : filterOnIcon"
-      alt="Filter"
-    />
-	</button>
-	<div v-if="show" class="filter-content">
-		<label>Teams</label>
-		<Multiselect
-			v-model="showTeamStore.showTeam"
-			mode="tags"
-			placeholder="Display Team"
-			label="name"
-			:close-on-select="false"
-			:options="showTeams"
-			@change="(value) => showTeamStore.setShowTeam(value)"
-			style="margin-left: 5px"
-		>
-			<template v-slot:option="{ option }">
-			<div class="option-container">
-				<span :title="option.name">{{ option.name }}</span>
-				<div class="option-images">
-					<div v-for="i in 7">
-						<img
-						v-if="i !== 1 && charStore.selections[option.value][i - 1].img"
-						:src="getAssetsFile(charStore.selections[option.value][i - 1].img)"
-						:alt="charStore.selections[option.value][i - 1].style"
-						class="option-icon"
-						/>
-					</div>
-				</div>
-			</div>
-			</template>
-		</Multiselect>
+  <div ref="filterRef">
+    <button @click="show = !show" class="filter">
+      <img :src="show ? filterOffIcon : filterOnIcon" alt="Filter" />
+    </button>
+    <div v-if="show" class="filter-content">
+      <label>Teams</label>
+      <Multiselect
+        v-model="showTeamStore.showTeam"
+        mode="tags"
+        placeholder="Display Team"
+        label="name"
+        :close-on-select="false"
+        :options="showTeams"
+        @change="(value) => showTeamStore.setShowTeam(value)"
+        style="margin-left: 5px"
+      >
+        <template v-slot:option="{ option }">
+          <div class="option-container">
+            <span :title="option.name">{{ option.name }}</span>
+            <div class="option-images">
+              <div v-for="i in 7">
+                <img
+                  v-if="i !== 1 && charStore.selections[option.value][i - 1].img"
+                  :src="getAssetsFile(charStore.selections[option.value][i - 1].img)"
+                  :alt="charStore.selections[option.value][i - 1].style"
+                  class="option-icon"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
+      </Multiselect>
 
-		<label style="margin-top: 10px;">Others</label>
-		<Multiselect
-			v-if="show"
-			v-model="showRowStore.showRow"
-			mode="tags"
-			placeholder="Display Row"
-			label="name"
-			:close-on-select="false"
-			:options="showOptions"
-			@change="(value) => showRowStore.setShowRow(value)"
-			style="margin-left: 5px"
-		/>
-	</div>
-</div>
+      <label style="margin-top: 10px">Others</label>
+      <Multiselect
+        v-if="show"
+        v-model="showRowStore.showRow"
+        mode="tags"
+        placeholder="Display Row"
+        label="name"
+        :close-on-select="false"
+        :options="showOptions"
+        @change="(value) => showRowStore.setShowRow(value)"
+        style="margin-left: 5px"
+      />
+    </div>
+  </div>
 </template>
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
 .filter-content {
   position: absolute;
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
   background-color: rgba(18, 9, 9, 0.95);
   border-radius: 15px;
   width: 30vw;

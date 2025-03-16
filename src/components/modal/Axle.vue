@@ -11,8 +11,8 @@ import { getAssetsFile } from '@/utils/getAssetsFile'
 import { getUsedSkills } from '@/utils/getUsedSkills'
 import loading from 'vue-loading-overlay'
 import ShowTableFilter from '@/components/ui/ShowTableFilter.vue'
-import { toast } from "vue3-toastify"
-import "vue3-toastify/dist/index.css"
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 import { find } from 'lodash-es'
 
 const isDownloading = ref(false)
@@ -24,12 +24,12 @@ const showRowStore = useShowRowStore()
 const showTeamStore = useShowTeamStore()
 const settingStore = useSettingStore()
 const earringDict = {
-  'BREAK耳環':'earring-icon/break.webp',
-  '進攻耳環':'earring-icon/attach.webp',
-  'DRIVE耳環':'earring-icon/drive.webp',
-  '爆破耳環':'earring-icon/explosion.webp'
+  BREAK耳環: 'earring-icon/break.webp',
+  進攻耳環: 'earring-icon/attach.webp',
+  DRIVE耳環: 'earring-icon/drive.webp',
+  爆破耳環: 'earring-icon/explosion.webp'
 }
-const additionalTurn = { 'zh-TW': '追加回合', 'jp': '追加ターン' }
+const additionalTurn = { 'zh-TW': '追加回合', jp: '追加ターン' }
 const axleName = skillStore.axleName.trim()
 
 const hasRank = () => {
@@ -65,18 +65,21 @@ const downloadTable = async () => {
     await convertElementToJpg('show-axle')
   } catch (error) {
     console.error('Error during download:', error)
-    toast("Download error occurred, please use Chrome, Edge browser to download as much as possible.", {
-      "theme": "colored",
-      "type": "error",
-      "position": "top-right",
-      "autoClose": 3000,
-      "dangerouslyHTMLString": true,
-      "newestOnTop": true,
-      "limit": 1,
-      "toastStyle": {
-        "font-family": "LXGW WenKai Mono TC",
-      },
-    })
+    toast(
+      'Download error occurred, please use Chrome, Edge browser to download as much as possible.',
+      {
+        theme: 'colored',
+        type: 'error',
+        position: 'top-right',
+        autoClose: 3000,
+        dangerouslyHTMLString: true,
+        newestOnTop: true,
+        limit: 1,
+        toastStyle: {
+          'font-family': 'LXGW WenKai Mono TC'
+        }
+      }
+    )
   } finally {
     isDownloading.value = false
   }
@@ -88,71 +91,71 @@ function hasTeam(selectedTab) {
 }
 
 const getBackgroundColor = (row) => {
-  const turnData = skillStore.turns[row - 1];
-  if (!turnData) return "transparent";
+  const turnData = skillStore.turns[row - 1]
+  if (!turnData) return 'transparent'
 
-  if (turnData.turn === "Switch") return "rgba(26, 26, 26, 0.9)";
+  if (turnData.turn === 'Switch') return 'rgba(26, 26, 26, 0.9)'
 
   const odColors = {
-    OD1: "rgba(229, 131, 207, 0.25)",
-    OD2: "rgba(189, 247, 211, 0.25)",
-    OD3: "rgba(237, 225, 108, 0.25)",
-  };
+    OD1: 'rgba(229, 131, 207, 0.25)',
+    OD2: 'rgba(189, 247, 211, 0.25)',
+    OD3: 'rgba(237, 225, 108, 0.25)'
+  }
 
-  if (turnData.od in odColors) return odColors[turnData.od];
+  if (turnData.od in odColors) return odColors[turnData.od]
 
-  return row % 2 === 0 ? "rgba(33, 33, 33, 0.9)" : "transparent";
-};
+  return row % 2 === 0 ? 'rgba(33, 33, 33, 0.9)' : 'transparent'
+}
 
 const displayUsedSkillName = (tab, skillValue, style) => {
-  let skillName = ""
+  let skillName = ''
 
   const charInfo = charStore.selections[tab]
   const styleInfo = find(charInfo, (characterData) => {
-    return characterData.style === style;
-  });
+    return characterData.style === style
+  })
 
-  const skills= styleInfo['skill']
+  const skills = styleInfo['skill']
 
-  const foundSkillObject = find(skills, skillObj => skillObj.value === skillValue);
+  const foundSkillObject = find(skills, (skillObj) => skillObj.value === skillValue)
 
   if (foundSkillObject) {
-      skillName = foundSkillObject.names[settingStore.lang]
+    skillName = foundSkillObject.names[settingStore.lang]
   } else {
-      skillName = ""
+    skillName = ''
   }
 
   return skillName
 }
 
 const displayPassiveSkillName = (tab, skillValue, style) => {
-  let skillName = ""
+  let skillName = ''
 
   const charInfo = charStore.selections[tab]
   const styleInfo = find(charInfo, (characterData) => {
-    return characterData.style === style;
-  });
+    return characterData.style === style
+  })
 
-  const skills= styleInfo['passiveSkill_value']
+  const skills = styleInfo['passiveSkill_value']
 
-  const foundSkillObject = find(skills, { value: skillValue });
+  const foundSkillObject = find(skills, { value: skillValue })
 
   if (foundSkillObject) {
-      skillName = foundSkillObject.names[settingStore.lang]
+    skillName = foundSkillObject.names[settingStore.lang]
   } else {
-      skillName = ""
+    skillName = ''
   }
 
   return skillName
 }
 
 const getTargetImg = (tab, target) => {
-  let targetImg = ""
+  let targetImg = ''
 
   const team = charStore.selections[tab]
   const foundTargetObject = find(team, { character: target })
-  const charInfo = foundTargetObject["character_info"]
-  targetImg = charInfo.icon || ""
+  const charInfo = foundTargetObject['character_info']
+  targetImg = charInfo.icon || ''
 
   return targetImg
 }
@@ -166,23 +169,23 @@ const checkCommandSkill = (row, col) => {
 
   const charInfo = charStore.selections[tab]
   const styleInfo = find(charInfo, (characterData) => {
-    return characterData.style === style;
-  });
+    return characterData.style === style
+  })
 
   const commandSkill = styleInfo['commandSkill']
-  const foundSkillObject = find(commandSkill, { value: skillValue });
+  const foundSkillObject = find(commandSkill, { value: skillValue })
 
   if (foundSkillObject) {
-      isCommandSkill = true
+    isCommandSkill = true
   } else {
-      isCommandSkill = false
+    isCommandSkill = false
   }
 
   return isCommandSkill
 }
 
 const displaySkillName = (row, col) => {
-  let skillName = ""
+  let skillName = ''
   const skillInfo = skillStore.skills[row][col]
   const skillValue = skillInfo.skill
   const tab = skillInfo.selectedTab
@@ -190,28 +193,28 @@ const displaySkillName = (row, col) => {
 
   const charInfo = charStore.selections[tab]
   const styleInfo = find(charInfo, (characterData) => {
-    return characterData.style === style;
-  });
+    return characterData.style === style
+  })
 
   const commandSkill = styleInfo['commandSkill']
-  const skill= styleInfo['skill']
+  const skill = styleInfo['skill']
   const mergedSkills = [...commandSkill, ...skill]
 
-  const foundSkillObject = find(mergedSkills, { value: skillValue });
+  const foundSkillObject = find(mergedSkills, { value: skillValue })
 
   if (foundSkillObject) {
-      skillName = foundSkillObject.names[settingStore.lang]
+    skillName = foundSkillObject.names[settingStore.lang]
   } else {
-      skillName = ""
+    skillName = ''
   }
 
   return skillName
 }
 
 const getStyle = computed(() => (row) => ({
-  "background-color": getBackgroundColor(row),
-  ...(skillStore.turns[row - 1]?.turn === "追加回合" ? { padding: "3px 0px" } : {}),
-}));
+  'background-color': getBackgroundColor(row),
+  ...(skillStore.turns[row - 1]?.turn === '追加回合' ? { padding: '3px 0px' } : {})
+}))
 
 const emit = defineEmits(['close'])
 const closeTable = () => {
@@ -232,7 +235,7 @@ const closeTable = () => {
     />
     <div @click.stop class="container">
       <div class="button-group">
-        <div class="left-button-group" >
+        <div class="left-button-group">
           <ShowTableFilter />
           <button @click="downloadTable" class="download">
             <img src="@/assets/custom-icon/download.svg" alt="Download" />
@@ -294,7 +297,10 @@ const closeTable = () => {
 
                     <!-- Spiritual -->
                     <div
-                      v-if="hasSpiritual() && charStore.selections[selectedTab][i - 1].spiritual !== null"
+                      v-if="
+                        hasSpiritual() &&
+                        charStore.selections[selectedTab][i - 1].spiritual !== null
+                      "
                       class="spiritual-text"
                     >
                       {{ charStore.selections[selectedTab][i - 1].spiritual }}
@@ -302,8 +308,12 @@ const closeTable = () => {
 
                     <!-- Earring -->
                     <img
-                      v-if="hasEarring() && charStore.selections[selectedTab][i - 1].earring !== null"
-                      :src="getAssetsFile(earringDict[charStore.selections[selectedTab][i - 1].earring])"
+                      v-if="
+                        hasEarring() && charStore.selections[selectedTab][i - 1].earring !== null
+                      "
+                      :src="
+                        getAssetsFile(earringDict[charStore.selections[selectedTab][i - 1].earring])
+                      "
                       :alt="charStore.selections[selectedTab][i - 1].earring"
                       class="earring-icon"
                     />
@@ -329,7 +339,13 @@ const closeTable = () => {
                     v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill"
                     class="passive-skill"
                   >
-                    {{ displayPassiveSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
+                    {{
+                      displayPassiveSkillName(
+                        selectedTab,
+                        skill,
+                        charStore.selections[selectedTab][i - 1].style
+                      )
+                    }}
                   </span>
                 </div>
               </div>
@@ -352,7 +368,13 @@ const closeTable = () => {
                     )"
                     class="used-skill"
                   >
-                    {{ displayUsedSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
+                    {{
+                      displayUsedSkillName(
+                        selectedTab,
+                        skill,
+                        charStore.selections[selectedTab][i - 1].style
+                      )
+                    }}
                   </span>
                 </div>
               </div>
@@ -377,10 +399,7 @@ const closeTable = () => {
               :style="getStyle(row)"
             >
               <template v-if="skillStore.turns[row - 1].turn !== 'Switch'">
-                <div
-                  v-for="col in 4"
-                  class="axle-table-column"
-                >
+                <div v-for="col in 4" class="axle-table-column">
                   <div v-if="col === 1" class="label">
                     <span
                       v-if="
@@ -398,7 +417,10 @@ const closeTable = () => {
                     }}</span>
                   </div>
                   <div v-else>
-                    <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
+                    <span
+                      v-if="skillStore.skills[row - 1][col - 2].skill !== null"
+                      class="axle-item"
+                    >
                       <div class="image">
                         <img
                           :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
@@ -415,9 +437,15 @@ const closeTable = () => {
                         </span>
                         <img
                           v-if="skillStore.skills[row - 1][col - 2].target !== null"
-                          :src="getAssetsFile(getTargetImg(skillStore.skills[row - 1][col - 2].selectedTab, skillStore.skills[row - 1][col - 2].target))"
+                          :src="
+                            getAssetsFile(
+                              getTargetImg(
+                                skillStore.skills[row - 1][col - 2].selectedTab,
+                                skillStore.skills[row - 1][col - 2].target
+                              )
+                            )
+                          "
                           class="axle-target-img"
-
                         />
                       </div>
                     </span>
@@ -434,7 +462,6 @@ const closeTable = () => {
     </div>
   </div>
 </template>
-
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
@@ -618,7 +645,10 @@ image {
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 8px 4px rgba(201, 198, 200, 0.8);
-  text-shadow: 0 0 4px rgb(0, 0, 0), 0 0 8px rgb(0, 0, 0), 0 0 16px rgb(0, 0, 0);
+  text-shadow:
+    0 0 4px rgb(0, 0, 0),
+    0 0 8px rgb(0, 0, 0),
+    0 0 16px rgb(0, 0, 0);
 }
 .spiritual-text {
   position: absolute;
@@ -640,7 +670,10 @@ image {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-shadow: 0 0 4px rgb(0, 0, 0), 0 0 8px rgb(0, 0, 0), 0 0 16px rgb(0, 0, 0);
+  text-shadow:
+    0 0 4px rgb(0, 0, 0),
+    0 0 8px rgb(0, 0, 0),
+    0 0 16px rgb(0, 0, 0);
   filter: drop-shadow(0 0 12px rgb(234, 120, 124));
 }
 .used-skill {

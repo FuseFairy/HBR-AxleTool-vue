@@ -20,7 +20,8 @@
 .vue-slider-mark {
   z-index: 4;
 }
-.vue-slider-mark:first-child .vue-slider-mark-step, .vue-slider-mark:last-child .vue-slider-mark-step {
+.vue-slider-mark:first-child .vue-slider-mark-step,
+.vue-slider-mark:last-child .vue-slider-mark-step {
   display: none;
 }
 .vue-slider-mark-step {
@@ -65,7 +66,7 @@
   box-sizing: content-box;
 }
 .vue-slider-dot-tooltip-inner::after {
-  content: "";
+  content: '';
   position: absolute;
 }
 .vue-slider-dot-tooltip-inner-top::after {

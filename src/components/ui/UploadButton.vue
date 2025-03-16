@@ -45,9 +45,9 @@ const updateSelections = async (decodedDataChar) => {
 
         const passiveSkillOptions = await fetchPassiveSkillOptions(character, teamName, style)
         team[charKey]['passiveSkill_value'] = passiveSkillOptions || []
-        
+
         const commandSkill = await fetchCommandSkill(character, teamName, style)
-        team[charKey]['commandSkill'] = commandSkill || [];
+        team[charKey]['commandSkill'] = commandSkill || []
       }
     }
   }
@@ -55,63 +55,63 @@ const updateSelections = async (decodedDataChar) => {
 }
 
 const onFileChange = async (event) => {
-  const file = event.target.files[0];
+  const file = event.target.files[0]
   if (!file || !['image/jpeg', 'image/jpg'].includes(file.type)) {
-    alert('Please upload a JPEG image file!');
-    return;
+    alert('Please upload a JPEG image file!')
+    return
   }
 
   try {
-    isLoading.value = true;
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
+    isLoading.value = true
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(file)
 
     reader.onload = async (e) => {
       try {
-        const arrayBuffer = e.target.result;
+        const arrayBuffer = e.target.result
 
-        let binaryString = '';
-        const bytes = new Uint8Array(arrayBuffer);
-        const length = bytes.byteLength;
+        let binaryString = ''
+        const bytes = new Uint8Array(arrayBuffer)
+        const length = bytes.byteLength
         for (let i = 0; i < length; i++) {
-          binaryString += String.fromCharCode(bytes[i]);
+          binaryString += String.fromCharCode(bytes[i])
         }
 
-        const exifObj = piexif.load(binaryString);
-        const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || '';
-        const settingStore = useSettingStore();
+        const exifObj = piexif.load(binaryString)
+        const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || ''
+        const settingStore = useSettingStore()
 
         if (!customData) {
-          throw new Error('Custom metadata not found.');
+          throw new Error('Custom metadata not found.')
         }
 
-        const decodedData = JSON.parse(decompressFromBase64(customData));
+        const decodedData = JSON.parse(decompressFromBase64(customData))
 
-        if (decodedData?.version != "1.0.0") {
-          throw new Error('Old image not supported!');
+        if (decodedData?.version != '1.0.0') {
+          throw new Error('Old image not supported!')
         }
 
-        const updatedSelections = await updateSelections(decodedData.char);
+        const updatedSelections = await updateSelections(decodedData.char)
 
-        Object.assign(charStore.selections, updatedSelections);
+        Object.assign(charStore.selections, updatedSelections)
         Object.assign(skillStore, {
           axleName: decodedData.axleName ?? skillStore.axleName,
           skills: decodedData.skills,
-          turns: decodedData.turns,
-        });
-        sliderStore.rows = decodedData.rows;
-        settingStore.lang = decodedData.language ?? settingStore.lang;
+          turns: decodedData.turns
+        })
+        sliderStore.rows = decodedData.rows
+        settingStore.lang = decodedData.language ?? settingStore.lang
       } catch (error) {
-        alert(error);
+        alert(error)
       } finally {
-        event.target.value = '';
-        isLoading.value = false;
+        event.target.value = ''
+        isLoading.value = false
       }
-    };
+    }
   } catch (error) {
-    alert('Failed to read the file. Please try again.');
+    alert('Failed to read the file. Please try again.')
   }
-};
+}
 </script>
 
 <template>
@@ -124,10 +124,20 @@ const onFileChange = async (event) => {
     loader="dots"
     color="#79d1cb"
   />
-  <button @click="triggerFileInput" class="upload-button" v-tooltip="{ content: 'Upload', placement: 'bottom' }">
+  <button
+    @click="triggerFileInput"
+    class="upload-button"
+    v-tooltip="{ content: 'Upload', placement: 'bottom' }"
+  >
     <img src="@/assets/custom-icon/upload.svg" alt="Upload" />
   </button>
-  <input type="file" ref="fileInput" @change="onFileChange" accept=".jpg,.jpeg" style="display: none" />
+  <input
+    type="file"
+    ref="fileInput"
+    @change="onFileChange"
+    accept=".jpg,.jpeg"
+    style="display: none"
+  />
 </template>
 
 <style scoped>
