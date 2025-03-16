@@ -11,12 +11,11 @@ import "vue3-toastify/dist/index.css"
 
 
 const app = createApp(App)
-app.use(versionControlPlugin);
-
 const pinia = createPinia()
 
 pinia.use(piniaPluginPersistedstate)
 
+app.use(versionControlPlugin);
 app.use(pinia)
 app.use(LoadingPlugin)
 app.use(FloatingVue)
