@@ -7,12 +7,12 @@ export const useSettingStore = defineStore(
     const lang = ref(null)
 
     return {
-      lang
+      lang,
     }
   },
   {
     persist: {
-      storage: localStorage
-    }
+      storage: localStorage,
+    },
   }
 )

@@ -3,7 +3,10 @@
   "semi": false,
   "tabWidth": 2,
   "singleQuote": true,
-  "printWidth": 100,
-  "trailingComma": "none",
-  "endOfLine": "crlf"
+  "printWidth": 120,
+  "trailingComma": "es5",
+  "endOfLine": "crlf",
+  "vueIndentScriptAndStyle": true,
+  "bracketSpacing": true,
+  "arrowParens": "always"
 }

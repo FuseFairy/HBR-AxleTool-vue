@@ -10,7 +10,7 @@ export function runIPGeolocation() {
 
   const countryLangMap = {
     TW: 'zh-TW',
-    JP: 'jp'
+    JP: 'jp',
   }
 
   let targetLang = 'jp'
@@ -19,7 +19,7 @@ export function runIPGeolocation() {
   const timeoutId = setTimeout(() => controller.abort(), 800)
 
   fetch(`https://ipinfo.io/json?token=${import.meta.env.VITE_IPINFO_TOKEN}`, {
-    signal: controller.signal
+    signal: controller.signal,
   })
     .then((response) => {
       clearTimeout(timeoutId)

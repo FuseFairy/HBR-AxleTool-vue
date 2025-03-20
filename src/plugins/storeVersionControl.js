@@ -3,15 +3,7 @@ import { toast } from 'vue3-toastify'
 const currentStorageVersion = '1.0.3'
 const storedVersion = localStorage.getItem('piniaStorageVersion')
 
-const piniaStoreIds = [
-  'characterSelect',
-  'lastTab',
-  'setting',
-  'showRow',
-  'showTeam',
-  'skill',
-  'slider'
-]
+const piniaStoreIds = ['characterSelect', 'lastTab', 'setting', 'showRow', 'showTeam', 'skill', 'slider']
 
 export default {
   install: () => {
@@ -42,16 +34,16 @@ export default {
           toastStyle: {
             backgroundColor: 'rgba(22, 21, 24, 0.9)',
             'font-family': 'LXGW WenKai Mono TC',
-            color: 'rgb(250, 130, 78)'
+            color: 'rgb(250, 130, 78)',
           },
           progressStyle: {
-            backgroundColor: 'rgb(232, 178, 104)'
-          }
+            backgroundColor: 'rgb(232, 178, 104)',
+          },
         })
       } else {
         console.warn('[Version Control] First visit detected, initializing Pinia Storage version.')
         localStorage.setItem('piniaStorageVersion', currentStorageVersion)
       }
     }
-  }
+  },
 }

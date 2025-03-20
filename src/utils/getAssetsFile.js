@@ -8,10 +8,7 @@ export function getAssetsFile(path) {
     case 3:
       return new URL(`/src/assets/${pathArr[0]}/${pathArr[1]}/${pathArr[2]}`, import.meta.url).href
     case 4:
-      return new URL(
-        `/src/assets/${pathArr[0]}/${pathArr[1]}/${pathArr[2]}/${pathArr[3]}`,
-        import.meta.url
-      ).href
+      return new URL(`/src/assets/${pathArr[0]}/${pathArr[1]}/${pathArr[2]}/${pathArr[3]}`, import.meta.url).href
     case 5:
       return new URL(
         `/src/assets/${pathArr[0]}/${pathArr[1]}/${pathArr[2]}/${pathArr[3]}/${pathArr[4]}`,

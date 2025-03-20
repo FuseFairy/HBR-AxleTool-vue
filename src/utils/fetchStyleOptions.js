@@ -17,7 +17,7 @@ export async function fetchStyleOptions(characterName, team) {
     return Object.entries(styles).map(([_, info]) => ({
       value: info.value,
       names: info.names,
-      icon: `char-images/${team}/${englishName}/${info.id}.webp`
+      icon: `char-images/${team}/${englishName}/${info.id}.webp`,
     }))
   } catch (error) {
     console.error('Error fetching style options:', error)

@@ -12,12 +12,12 @@ export const useShowRowStore = defineStore(
 
     return {
       showRow,
-      setShowRow
+      setShowRow,
     }
   },
   {
     persist: {
-      storage: localStorage
-    }
+      storage: localStorage,
+    },
   }
 )

@@ -15,7 +15,7 @@ export const useSkillStore = defineStore(
         const newSkills = Array.from({ length: difference }, () => [
           { selectedTab: null, style: null, style_img: null, skill: null, target: null },
           { selectedTab: null, style: null, style_img: null, skill: null, target: null },
-          { selectedTab: null, style: null, style_img: null, skill: null, target: null }
+          { selectedTab: null, style: null, style_img: null, skill: null, target: null },
         ])
         skills.value.push(...newSkills)
 
@@ -31,12 +31,12 @@ export const useSkillStore = defineStore(
       axleName,
       skills,
       turns,
-      adjustSkills
+      adjustSkills,
     }
   },
   {
     persist: {
-      storage: localStorage
-    }
+      storage: localStorage,
+    },
   }
 )

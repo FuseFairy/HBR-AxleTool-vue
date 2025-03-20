@@ -23,10 +23,10 @@ export const useCharStore = defineStore(
                 earring: null,
                 skill: [],
                 img: null,
-                spiritual: null
-              }
+                spiritual: null,
+              },
             ])
-          )
+          ),
         ])
       )
     )
@@ -43,7 +43,7 @@ export const useCharStore = defineStore(
           earring: null,
           skill: [],
           img: null,
-          spiritual: null
+          spiritual: null,
         }
       }
       selections.value[selectedTab][buttonKey][type] = value === undefined ? null : value
@@ -56,12 +56,12 @@ export const useCharStore = defineStore(
     return {
       selections,
       setSelection,
-      getSelection
+      getSelection,
     }
   },
   {
     persist: {
-      storage: localStorage
-    }
+      storage: localStorage,
+    },
   }
 )

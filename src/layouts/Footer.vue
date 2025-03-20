@@ -11,32 +11,32 @@
 </template>
 
 <style scoped>
-.footer-content {
-  padding: 10px;
-  font-size: 0.8rem;
-  color: #808080;
-  display: flex;
-  align-items: center;
-}
-.footer-content a {
-  color: #808080;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  height: 20px;
-}
-.footer-content a:hover {
-  text-decoration: underline;
-  color: #606060;
-}
-.footer-text > p,
-.footer-text > a {
-  display: inline;
-}
-.github-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 4px;
-  filter: invert(1) brightness(0.5);
-}
+  .footer-content {
+    padding: 10px;
+    font-size: 0.8rem;
+    color: #808080;
+    display: flex;
+    align-items: center;
+  }
+  .footer-content a {
+    color: #808080;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    height: 20px;
+  }
+  .footer-content a:hover {
+    text-decoration: underline;
+    color: #606060;
+  }
+  .footer-text > p,
+  .footer-text > a {
+    display: inline;
+  }
+  .github-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+    filter: invert(1) brightness(0.5);
+  }
 </style>

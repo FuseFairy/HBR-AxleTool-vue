@@ -9,12 +9,12 @@ export const useLastTabStore = defineStore(
 
     return {
       axle_lastTab,
-      box_lastTab
+      box_lastTab,
     }
   },
   {
     persist: {
-      storage: localStorage
-    }
+      storage: localStorage,
+    },
   }
 )

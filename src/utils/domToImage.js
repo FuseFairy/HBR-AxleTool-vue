@@ -25,8 +25,7 @@ export async function convertElementToJpg(elementId) {
     if (characters) {
       result[team] = Object.fromEntries(
         Object.entries(characters).map(([charName, charData]) => {
-          const { skill, passiveSkill_value, character_info, commandSkill, ...restCharData } =
-            charData
+          const { skill, passiveSkill_value, character_info, commandSkill, ...restCharData } = charData
           return [charName, restCharData]
         })
       )
@@ -51,14 +50,14 @@ export async function convertElementToJpg(elementId) {
     const imageLoadTimeout = 5000
     await Promise.race([
       Promise.all(imageLoadPromises),
-      new Promise((resolve) => setTimeout(resolve, imageLoadTimeout))
+      new Promise((resolve) => setTimeout(resolve, imageLoadTimeout)),
     ])
 
     const dataUrl = await domtoimage.toJpeg(element, {
       quality: 1.0,
       backgroundColor: 'black',
       width: element.scrollWidth,
-      height: element.scrollHeight
+      height: element.scrollHeight,
     })
 
     const customData = {
@@ -68,13 +67,13 @@ export async function convertElementToJpg(elementId) {
       skills: skillStore.skills,
       turns: skillStore.turns,
       rows: sliderStore.rows,
-      language: settingStore.lang
+      language: settingStore.lang,
     }
 
     const jsonString = JSON.stringify(customData)
     const compressedData = compressToBase64(jsonString)
     const exif = {
-      [piexif.ExifIFD.UserComment]: compressedData
+      [piexif.ExifIFD.UserComment]: compressedData,
     }
 
     const exifObj = { Exif: exif }

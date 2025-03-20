@@ -1,37 +1,37 @@
 <script setup>
-import { ref } from 'vue'
-import { useCharStore } from '@/store/char'
-import { useShowRowStore } from '@/store/showRow.js'
-import { useShowTeamStore } from '@/store/showTeam'
-import { getAssetsFile } from '@/utils/getAssetsFile'
-import { onClickOutside } from '@vueuse/core'
-import { getUsedTeams } from '@/utils/getUsedTeams'
-import Multiselect from '@vueform/multiselect'
-import filterOffIcon from '@/assets/custom-icon/filter-off.svg'
-import filterOnIcon from '@/assets/custom-icon/filter-on.svg'
+  import { ref } from 'vue'
+  import { useCharStore } from '@/store/char'
+  import { useShowRowStore } from '@/store/showRow.js'
+  import { useShowTeamStore } from '@/store/showTeam'
+  import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { onClickOutside } from '@vueuse/core'
+  import { getUsedTeams } from '@/utils/getUsedTeams'
+  import Multiselect from '@vueform/multiselect'
+  import filterOffIcon from '@/assets/custom-icon/filter-off.svg'
+  import filterOnIcon from '@/assets/custom-icon/filter-on.svg'
 
-const charStore = useCharStore()
-const showRowStore = useShowRowStore()
-const showTeamStore = useShowTeamStore()
-const usedTeam = getUsedTeams()
+  const charStore = useCharStore()
+  const showRowStore = useShowRowStore()
+  const showTeamStore = useShowTeamStore()
+  const usedTeam = getUsedTeams()
 
-showTeamStore.showTeam = usedTeam
+  showTeamStore.showTeam = usedTeam
 
-const showOptions = [
-  { value: 'rank', name: 'Rank' },
-  { value: 'earring', name: 'Earring' },
-  { value: 'passive skill', name: 'Passive Skill' },
-  { value: 'skill', name: 'Skill' },
-  { value: 'axle', name: 'Axle' },
-  { value: 'spiritual', name: 'Spiritual' }
-]
-const showTeams = usedTeam.map((teamValue) => ({ value: teamValue, name: `Team ${teamValue}` }))
+  const showOptions = [
+    { value: 'rank', name: 'Rank' },
+    { value: 'earring', name: 'Earring' },
+    { value: 'passive skill', name: 'Passive Skill' },
+    { value: 'skill', name: 'Skill' },
+    { value: 'axle', name: 'Axle' },
+    { value: 'spiritual', name: 'Spiritual' },
+  ]
+  const showTeams = usedTeam.map((teamValue) => ({ value: teamValue, name: `Team ${teamValue}` }))
 
-const show = ref(false)
-const filterRef = ref(null)
-onClickOutside(filterRef, (event) => {
-  show.value = false
-})
+  const show = ref(false)
+  const filterRef = ref(null)
+  onClickOutside(filterRef, (event) => {
+    show.value = false
+  })
 </script>
 
 <template>
@@ -86,115 +86,115 @@ onClickOutside(filterRef, (event) => {
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
-.filter-content {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(18, 9, 9, 0.95);
-  border-radius: 15px;
-  width: 30vw;
-  max-width: 35vw;
-  padding: 15px;
-  z-index: 1500;
-}
-label {
-  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
-  color: rgb(182, 208, 226);
-}
-.option-icon {
-  width: 34px;
-  height: 34px;
-  padding-right: 7px;
-}
-.option-container {
-  display: flex;
-  flex-direction: column;
-}
-.option-images {
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 1px;
-}
-.filter {
-  background-color: transparent;
-  padding: 1px;
-  border: none;
-  box-sizing: border-box;
-  height: 32px;
-  width: 32px;
-  cursor: pointer;
-  border-radius: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.filter:hover {
-  background-color: rgba(78, 69, 69, 0.3);
-}
-:deep(.multiselect-option),
-.multiselect-single-label {
-  display: flex;
-  color: white;
-}
-:deep(.multiselect) {
-  background-color: rgba(50, 48, 50, 0.8);
-  border: 2px solid rgba(50, 48, 50, 0.8);
-  margin-top: 2px;
-  border-radius: 20px;
-  width: 100%;
-}
-:deep(.multiselect.is-active) {
-  box-shadow: none;
-}
-:deep(.multiselect-dropdown) {
-  background-color: rgba(50, 48, 50, 0.8);
-  border: 2px solid rgba(50, 48, 50, 0.8);
-  border-radius: 20px;
-}
-:deep(.multiselect-dropdown::-webkit-scrollbar) {
-  width: 0px;
-}
-:deep(.multiselect-option.is-selected) {
-  background-color: rgb(38, 37, 37);
-}
-:deep(.multiselect-option.is-pointed) {
-  background-color: rgb(160, 160, 167);
-  color: rgb(0, 0, 0);
-}
-:deep(.multiselect-caret) {
-  margin-left: 14px;
-}
-:deep(.multiselect-clear) {
-  padding: 0;
-}
-:deep(.multiselect-clear-icon:hover),
-:deep(.multiselect-clear-icon:active),
-:deep(.multiselect-clear-icon:focus) {
-  background-color: #999;
-}
-:deep(.multiselect-clear-icon) {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
-  font-size: 0;
-}
-:deep(.multiselect-tag) {
-  background-color: rgb(89, 85, 89);
-  border-radius: 20px;
-}
-:deep(.multiselect-wrapper) {
-  margin: 0;
-  width: 100%;
-}
-@media (max-width: 950px) {
   .filter-content {
-    width: 45vw;
-    max-width: 50vw;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(18, 9, 9, 0.95);
+    border-radius: 15px;
+    width: 30vw;
+    max-width: 35vw;
+    padding: 15px;
+    z-index: 1500;
+  }
+  label {
+    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+    color: rgb(182, 208, 226);
+  }
+  .option-icon {
+    width: 34px;
+    height: 34px;
+    padding-right: 7px;
+  }
+  .option-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .option-images {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 1px;
+  }
+  .filter {
+    background-color: transparent;
+    padding: 1px;
+    border: none;
+    box-sizing: border-box;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    border-radius: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .filter:hover {
+    background-color: rgba(78, 69, 69, 0.3);
+  }
+  :deep(.multiselect-option),
+  .multiselect-single-label {
+    display: flex;
+    color: white;
+  }
+  :deep(.multiselect) {
+    background-color: rgba(50, 48, 50, 0.8);
+    border: 2px solid rgba(50, 48, 50, 0.8);
+    margin-top: 2px;
+    border-radius: 20px;
+    width: 100%;
+  }
+  :deep(.multiselect.is-active) {
+    box-shadow: none;
   }
   :deep(.multiselect-dropdown) {
-    max-height: 33vh;
+    background-color: rgba(50, 48, 50, 0.8);
+    border: 2px solid rgba(50, 48, 50, 0.8);
+    border-radius: 20px;
   }
-}
+  :deep(.multiselect-dropdown::-webkit-scrollbar) {
+    width: 0px;
+  }
+  :deep(.multiselect-option.is-selected) {
+    background-color: rgb(38, 37, 37);
+  }
+  :deep(.multiselect-option.is-pointed) {
+    background-color: rgb(160, 160, 167);
+    color: rgb(0, 0, 0);
+  }
+  :deep(.multiselect-caret) {
+    margin-left: 14px;
+  }
+  :deep(.multiselect-clear) {
+    padding: 0;
+  }
+  :deep(.multiselect-clear-icon:hover),
+  :deep(.multiselect-clear-icon:active),
+  :deep(.multiselect-clear-icon:focus) {
+    background-color: #999;
+  }
+  :deep(.multiselect-clear-icon) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+    font-size: 0;
+  }
+  :deep(.multiselect-tag) {
+    background-color: rgb(89, 85, 89);
+    border-radius: 20px;
+  }
+  :deep(.multiselect-wrapper) {
+    margin: 0;
+    width: 100%;
+  }
+  @media (max-width: 950px) {
+    .filter-content {
+      width: 45vw;
+      max-width: 50vw;
+    }
+    :deep(.multiselect-dropdown) {
+      max-height: 33vh;
+    }
+  }
 </style>

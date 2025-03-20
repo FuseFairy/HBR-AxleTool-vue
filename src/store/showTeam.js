@@ -12,12 +12,12 @@ export const useShowTeamStore = defineStore(
 
     return {
       showTeam,
-      setShowTeam
+      setShowTeam,
     }
   },
   {
     persist: {
-      storage: localStorage
-    }
+      storage: localStorage,
+    },
   }
 )

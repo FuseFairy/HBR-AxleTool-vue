@@ -11,88 +11,86 @@
 </template>
 
 <script setup>
-import { computed, nextTick } from 'vue'
-import { useSliderStore } from '@/store/slider'
-import { useSkillStore } from '@/store/axle'
-import { useCharStore } from '@/store/char'
+  import { computed, nextTick } from 'vue'
+  import { useSliderStore } from '@/store/slider'
+  import { useSkillStore } from '@/store/axle'
+  import { useCharStore } from '@/store/char'
 
-const sliderStore = useSliderStore()
-const skillStore = useSkillStore()
-const charStore = useCharStore()
+  const sliderStore = useSliderStore()
+  const skillStore = useSkillStore()
+  const charStore = useCharStore()
 
-const addRow = () => {
-  if (sliderStore.rows < 80) {
-    sliderStore.rows++
-    skillStore.adjustSkills(sliderStore.rows)
-    nextTick(async () => {
-      await nextTick()
-      scrollToBottom()
-    })
+  const addRow = () => {
+    if (sliderStore.rows < 80) {
+      sliderStore.rows++
+      skillStore.adjustSkills(sliderStore.rows)
+      nextTick(async () => {
+        await nextTick()
+        scrollToBottom()
+      })
+    }
   }
-}
 
-const hasChar = computed(() => {
-  return Object.values(charStore.selections).some((group) =>
-    Object.values(group).some(
-      (selection) => selection.character !== null && selection.style !== null
+  const hasChar = computed(() => {
+    return Object.values(charStore.selections).some((group) =>
+      Object.values(group).some((selection) => selection.character !== null && selection.style !== null)
     )
-  )
-})
+  })
 
-const scrollToBottom = () => {
-  const mainElement = document.querySelector('main.scrollbar-style-1')
-  if (mainElement) {
-    mainElement.scrollTo({
-      top: mainElement.scrollHeight,
-      behavior: 'smooth'
-    })
+  const scrollToBottom = () => {
+    const mainElement = document.querySelector('main.scrollbar-style-1')
+    if (mainElement) {
+      mainElement.scrollTo({
+        top: mainElement.scrollHeight,
+        behavior: 'smooth',
+      })
+    }
   }
-}
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-}
-.circle-button {
-  margin-top: 20px;
-  width: 80px;
-  height: 80px;
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-}
-.add-button {
-  border: none;
-}
-.add-button:hover .icon-img {
-  filter: brightness(1.5);
-  transform: scale(1.1);
-  transition: 0.3s ease;
-}
-.icon-img {
-  transition: 0.3s ease;
-  transform-origin: center;
-  width: 80px;
-  height: 80px;
-}
-button:disabled {
-  display: none;
-}
-@media (max-width: 800px) {
   .container {
-    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
   }
   .circle-button {
-    width: 60px;
-    height: 60px;
-    font-size: 14px;
+    margin-top: 20px;
+    width: 80px;
+    height: 80px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
   }
-}
+  .add-button {
+    border: none;
+  }
+  .add-button:hover .icon-img {
+    filter: brightness(1.5);
+    transform: scale(1.1);
+    transition: 0.3s ease;
+  }
+  .icon-img {
+    transition: 0.3s ease;
+    transform-origin: center;
+    width: 80px;
+    height: 80px;
+  }
+  button:disabled {
+    display: none;
+  }
+  @media (max-width: 800px) {
+    .container {
+      width: auto;
+    }
+    .circle-button {
+      width: 60px;
+      height: 60px;
+      font-size: 14px;
+    }
+  }
 </style>

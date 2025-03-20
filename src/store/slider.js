@@ -12,12 +12,12 @@ export const useSliderStore = defineStore(
 
     return {
       rows,
-      setValue
+      setValue,
     }
   },
   {
     persist: {
-      storage: localStorage
-    }
+      storage: localStorage,
+    },
   }
 )

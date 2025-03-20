@@ -25,7 +25,7 @@ export async function fetchPassiveSkillOptions(characterName, team, styleName) {
 
     const formattedPassiveSkills = passiveSkills.map((skill) => ({
       value: skill.value,
-      names: skill.names
+      names: skill.names,
     }))
 
     return formattedPassiveSkills
