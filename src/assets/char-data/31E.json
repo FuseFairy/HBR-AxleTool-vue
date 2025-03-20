@@ -28,6 +28,11 @@
         "value": "Sweet Phantasy",
         "names": { "zh-TW": "Sweet Phantasy", "jp": "Sweet Phantasy" },
         "id": "004"
+      },
+      "指引的光輝": {
+        "value": "指引的光輝",
+        "names": { "zh-TW": "指引的光輝", "jp": "導きのルーセント" },
+        "id": "006"
       }
     },
     "skill": {
@@ -56,6 +61,11 @@
           "value": "下定決心的夜晚",
           "names": { "zh-TW": "下定決心的夜晚", "jp": "決意の夜" },
           "sp": 3
+        },
+        "光之路標": {
+          "value": "光之路標",
+          "names": { "zh-TW": "光之路標", "jp": "光の標" },
+          "sp": 0
         }
       },
       "Sweet Phantasy": {
@@ -63,6 +73,13 @@
           "value": "送上誓言的證明吧！",
           "names": { "zh-TW": "送上誓言的證明吧！", "jp": "とどけ！ 誓いのしるし" },
           "sp": 16
+        }
+      },
+      "指引的光輝": {
+        "無限光暈": {
+          "value": "無限光暈",
+          "names": { "zh-TW": "無限光暈", "jp": "インフィニティ・ハレーション" },
+          "sp": 18
         }
       }
     },
@@ -171,6 +188,11 @@
         "names": { "zh-TW": "飛毛腿送貨員", "jp": "韋駄天配達人" },
         "id": "002"
       },
+      "我的搭檔": {
+        "value": "我的搭檔",
+        "names": { "zh-TW": "我的搭檔", "jp": "ぼくの相棒" },
+        "id": "005"
+      },
       "Realize Your Mind": {
         "value": "Realize Your Mind",
         "names": { "zh-TW": "Realize Your Mind", "jp": "Realize Your Mind" },
@@ -223,7 +245,12 @@
         }
       }
     },
-    "passive skill": {}
+    "passive skill": {
+      "豚跳": {
+        "value": "豚跳",
+        "names": { "zh-TW": "豚跳", "jp": "オーリー" }
+      }
+    }
   },
   "大島 四葉草": {
     "value": "大島 四葉草",
