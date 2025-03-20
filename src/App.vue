@@ -1,121 +1,27 @@
 <script setup>
-import { ref, computed, onBeforeMount } from 'vue'
-import './assets/main.css'
-import AddRows from '@/components/AddRows.vue'
-import SelectBoxes from '@/components/SelectBoxes.vue'
-import SelectRows from '@/components/SelectRows.vue'
-import TablePage from '@/components/TablePage.vue'
-import SettingPage from './components/SettingPage.vue'
-import uploadButton from '@/components/UploadButton.vue'
-import SelectSkill from '@/components/SelectSkill.vue'
-import AxleName from '@/components/AxleName.vue'
-import { runIPGeolocation } from '@/scripts/ipGeolocation'
-import { getAssetsFile } from '@/scripts/util'
+import { onBeforeMount } from 'vue'
+import { runIPGeolocation } from '@/utils/ipGeolocation'
+import TeamComposition from '@/layouts/TeamComposition.vue'
+import Navbar from '@/layouts/Navbar.vue'
+import AppFooter from '@/layouts/Footer.vue'
+import AxleSection from '@/layouts/AxleSection.vue'
+import '@/style/main.css'
 
-const buttons = [
-  { key: 'table', tooltip: 'table', icon: getAssetsFile('custom_icon/table.svg'), component: TablePage },
-  { key: 'setting', tooltip: 'setting', icon: getAssetsFile('custom_icon/setting.svg'), component: SettingPage },
-  { key: 'bug_report', tooltip: 'bug report', icon: getAssetsFile('custom_icon/bug_report.svg') },
-]
-const bugReportURL = "https://github.com/FuseFairy/HBR-AxleTool-vue/issues/new";
-const activeModal = ref(null)
-
-const activeComponent = computed(() => {
-  const btn = buttons.find(b => b.key === activeModal.value)
-  return btn ? btn.component : null
-})
-
-const toggleModal = (key) => {
-  activeModal.value = activeModal.value === key ? null : key
-}
-
-const handleButtonClick = (key) => {
-  if (key === 'table' || key === 'setting') {
-    toggleModal(key);
-  } else if (key === 'bug_report') {
-    window.open(bugReportURL, '_blank');
-  }
-};
-
-onBeforeMount(runIPGeolocation);
+onBeforeMount(runIPGeolocation)
 </script>
 
 <template>
   <div class="page-layout">
-    <nav>
-      <uploadButton />
-      <h1 class="nav-title">HBR Axle Tool</h1>
-      <div style="display: flex; gap: 10px">
-        <button
-          v-for="btn in buttons"
-          :key="btn.key"
-          @click="handleButtonClick(btn.key)"
-          v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
-          :class="{ 'setting-icon-button': btn.key === 'setting' }"
-        >
-        <img :src="btn.icon" :alt="btn.key" />
-      </button>
-      </div>
-      <Transition name="modal">
-        <component :is="activeComponent" v-if="activeComponent" @close="toggleModal(null)" />
-      </Transition>
-    </nav>
+    <Navbar />
     <main class="scrollbar-style-1">
-      <div class="box_container"><SelectBoxes /></div>
-      <div class="axle">
-        <div class="form-row">
-          <div class="left-column"><AxleName /></div>
-          <div class="right-column"><SelectRows /></div>
-        </div>
-        <SelectSkill />
-        <AddRows />
-      </div>
-      <div class="footer">
-        <div class="footer-content">
-          <a href="https://github.com/FuseFairy/HBR-AxleTool-vue" target="_blank">
-            <img src="@/assets/custom_icon/github.svg" alt="GitHub" class="github-icon" />
-          </a>
-          <div class="footer-text">
-            Developed by <a href="https://github.com/FuseFairy" target="_blank">Zhuang</a> & <a href="https://github.com/Yuuzi261" target="_blank">Yuuzi</a>
-          </div>
-        </div>
-      </div>
+      <div class="box_container"><TeamComposition /></div>
+      <div class="axle"><AxleSection /></div>
+      <div class="footer"><AppFooter /></div>
     </main>
   </div>
 </template>
 
 <style scoped>
-.setting-icon-button img {
-  transition: transform 0.5s ease-in-out;
-}
-.setting-icon-button:hover img {
-  transform: rotate(45deg);
-}
-.form-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 10px 20px 0 20px;
-}
-.left-column {
-  flex: 1;
-}
-.right-column {
-  flex: 3;
-}
-.modal-enter-active,
-.modal-leave-active {
-  transition: all 0.3s ease;
-}
-.modal-enter-from {
-  transform: scale(0.8);
-  opacity: 0;
-}
-.modal-leave-to {
-  transform: scale(0.8);
-  opacity: 0;
-}
 .page-layout {
   min-height: 100vh;
   display: grid;
@@ -136,50 +42,12 @@ onBeforeMount(runIPGeolocation);
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url(@/assets/bg.webp);
+  background-image: url(@/assets/common/bg.webp);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   z-index: -1;
   pointer-events: none;
-}
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1001;
-  height: 3rem;
-  width: 100%;
-  padding: 1rem;
-  box-sizing: border-box;
-  position: fixed;
-  grid-area: navbar;
-  background-color: rgb(21, 21, 23);
-  color: white;
-}
-button {
-  background-color: transparent;
-  padding: 1px;
-  border: none;
-  box-sizing: border-box;
-  height: 32px;
-  width: 32px;
-  cursor: pointer;
-  border-radius: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-button:hover {
-  background-color: rgba(78, 69, 69, 0.3);
-}
-.nav-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  font-family: 'Gugi', 'Noto Sans TC', sans-serif;
-  color: rgb(210, 203, 208);
 }
 @keyframes slideIn {
   from {
@@ -225,34 +93,6 @@ main {
   justify-content: center;
   align-items: flex-end;
 }
-.footer-content {
-  padding: 10px;
-  font-size: 0.8rem;
-  color: #808080;
-  display: flex;
-  align-items: center;
-}
-.footer-content a {
-  color: #808080;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  height: 20px;
-}
-.footer-content a:hover {
-  text-decoration: underline;
-  color: #606060;
-}
-.footer-text > p,
-.footer-text > a {
-  display: inline;
-}
-.github-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 4px;
-  filter: invert(1) brightness(0.5);
-}
 .box_container {
   grid-area: box_container;
   margin: 10px;
@@ -288,9 +128,6 @@ main {
   .left-column {
     flex: unset;
     width: 100%;
-  }
-  .nav-title {
-    display: none;
   }
 }
 </style>
