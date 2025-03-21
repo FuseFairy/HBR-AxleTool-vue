@@ -96,8 +96,8 @@
 
   const copyRow = (index) => {
     sliderStore.rows += 1
-    const copiedTurn = _cloneDeep(skillStore.turns[index])
-    const copiedSkill = _cloneDeep(skillStore.skills[index])
+    const copiedTurn = cloneDeep(skillStore.turns[index])
+    const copiedSkill = cloneDeep(skillStore.skills[index])
     skillStore.turns.splice(index + 1, 0, copiedTurn)
     skillStore.skills.splice(index + 1, 0, copiedSkill)
 
