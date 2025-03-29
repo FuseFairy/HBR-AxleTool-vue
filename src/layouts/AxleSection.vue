@@ -28,4 +28,16 @@
   .right-column {
     flex: 3;
   }
+  @media (max-width: 800px) {
+    .form-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .left-column,
+    .right-column {
+      flex: unset;
+      width: 100%;
+    }
+  }
 </style>
