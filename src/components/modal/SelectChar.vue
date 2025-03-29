@@ -181,9 +181,9 @@
   }
 
   const isMobile = computed(() => {
-    const ua = navigator.userAgent.toLowerCase();
-    return /mobile|android|iphone|ipod|phone|ipad/i.test(ua);
-  });
+    const ua = navigator.userAgent.toLowerCase()
+    return /mobile|android|iphone|ipod|phone|ipad/i.test(ua)
+  })
 
   const emit = defineEmits(['close'])
   const closeContainer = async () => {
@@ -201,7 +201,11 @@
 
 <template>
   <div @click="closeContainer" class="overlay">
-    <div @click.stop class="container scrollbar-style-1" :style="{ overflow: isExpandedCollapse || isMobile ? 'scroll' : 'visible' }">
+    <div
+      @click.stop
+      class="container scrollbar-style-1"
+      :style="{ overflow: isExpandedCollapse || isMobile ? 'scroll' : 'visible' }"
+    >
       <div class="button-group">
         <button @click="closeContainer" class="close">
           <img src="@/assets/custom-icon/close.svg" alt="Close" />
