@@ -1,7 +1,7 @@
 {
   "茅森 月歌": {
     "value": "茅森 月歌",
-    "names": { "zh-TW": "茅森 月歌", "jp": "茅森 月歌", "zh-CN": "茅森 月歌"},
+    "names": { "zh-TW": "茅森 月歌", "jp": "茅森 月歌", "zh-CN": "茅森 月歌" },
     "english name": "Ruka_Kayamori",
     "style": {
       "Attack or Music": {
@@ -41,7 +41,11 @@
       },
       "The Feel of the Throne": {
         "value": "The Feel of the Throne",
-        "names": { "zh-TW": "The Feel of the Throne", "jp": "The Feel of the Throne", "zh-CN": "The Feel of the Throne" },
+        "names": {
+          "zh-TW": "The Feel of the Throne",
+          "jp": "The Feel of the Throne",
+          "zh-CN": "The Feel of the Throne"
+        },
         "id": "008"
       },
       "皎潔之華歌姬": {
@@ -130,7 +134,7 @@
       "The Feel of the Throne": {
         "黑曜君王-闇": {
           "value": "黑曜君王-闇",
-          "names": { "zh-TW": "黑曜君王-闇", "jp": " 黒曜のオーバーロード-闇", "zh-CN": "黑曜君王-暗"},
+          "names": { "zh-TW": "黑曜君王-闇", "jp": " 黒曜のオーバーロード-闇", "zh-CN": "黑曜君王-暗" },
           "sp": 14
         },
         "黑曜君王-火": {
@@ -181,7 +185,11 @@
       },
       "夏椿，光彩奪目的夜光星": {
         "value": "夏椿，光彩奪目的夜光星",
-        "names": { "zh-TW": "夏椿，光彩奪目的夜光星", "jp": "夏椿、けうらなる夜光星", "zh-CN": "夏椿，光彩夺目的夜光星" },
+        "names": {
+          "zh-TW": "夏椿，光彩奪目的夜光星",
+          "jp": "夏椿、けうらなる夜光星",
+          "zh-CN": "夏椿，光彩夺目的夜光星"
+        },
         "id": "005"
       },
       "夜間巡航服務員": {
@@ -201,7 +209,7 @@
       },
       "隨侍公主": {
         "value": "隨侍公主",
-        "names": { "zh-TW": "隨侍公主", "jp": "傍らのプリンセス", "zh-CN": "随侍公主"},
+        "names": { "zh-TW": "隨侍公主", "jp": "傍らのプリンセス", "zh-CN": "随侍公主" },
         "id": "009"
       }
     },
@@ -289,7 +297,7 @@
       "隨侍公主": {
         "代碼暗影-闇": {
           "value": "代碼暗影-闇",
-          "names": { "zh-TW": "代碼暗影-闇", "jp": "コードダクネス-闇", "zh-CN": "代码暗影-暗"},
+          "names": { "zh-TW": "代碼暗影-闇", "jp": "コードダクネス-闇", "zh-CN": "代码暗影-暗" },
           "sp": 15
         },
         "代碼暗影-火": {
@@ -473,7 +481,7 @@
       },
       "悲心的輓歌": {
         "value": "悲心的輓歌",
-        "names": { "zh-TW": "悲心的輓歌", "jp": "哀情のラメント", "zh-CN": "悲心的挽歌"},
+        "names": { "zh-TW": "悲心的輓歌", "jp": "哀情のラメント", "zh-CN": "悲心的挽歌" },
         "id": "008"
       }
     },
@@ -496,7 +504,7 @@
         },
         "勿忘你終有一死": {
           "value": "勿忘你終有一死",
-          "names": { "zh-TW": "勿忘你終有一死", "jp": "メメント・モリ", "zh-CN": "勿忘你终有一死"},
+          "names": { "zh-TW": "勿忘你終有一死", "jp": "メメント・モリ", "zh-CN": "勿忘你终有一死" },
           "sp": 12
         },
         "勿忘你終有一死+": {
@@ -563,7 +571,7 @@
   },
   "朝倉 可憐": {
     "value": "朝倉 可憐",
-    "names": { "zh-TW": "朝倉 可憐", "jp": "朝倉 可憐" , "zh-CN": "朝仓 可怜" },
+    "names": { "zh-TW": "朝倉 可憐", "jp": "朝倉 可憐", "zh-CN": "朝仓 可怜" },
     "english name": "Karen_Asakura",
     "style": {
       "Laugh or Cry": {
@@ -603,7 +611,7 @@
       },
       "Twinkle Eclosion": {
         "value": "Twinkle Eclosion",
-        "names": { "zh-TW": "Twinkle Eclosion", "jp": "Twinkle Eclosion", "zh-CN": "Twinkle Eclosion"},
+        "names": { "zh-TW": "Twinkle Eclosion", "jp": "Twinkle Eclosion", "zh-CN": "Twinkle Eclosion" },
         "id": "008"
       }
     },
@@ -631,7 +639,7 @@
         },
         "血腥之舞": {
           "value": "血腥之舞",
-          "names": { "zh-TW": "血腥之舞", "jp": "ブラッディ・ダンス", "zh-CN": "血腥之舞"},
+          "names": { "zh-TW": "血腥之舞", "jp": "ブラッディ・ダンス", "zh-CN": "血腥之舞" },
           "sp": 11
         },
         "血腥之舞+": {
@@ -703,7 +711,7 @@
   },
   "國見 玉": {
     "value": "國見 玉",
-    "names": { "zh-TW": "國見 玉", "jp": "國見 タマ", "zh-CN": "国见 玉"},
+    "names": { "zh-TW": "國見 玉", "jp": "國見 タマ", "zh-CN": "国见 玉" },
     "english name": "Tama_Kunimi",
     "style": {
       "Truth or Lies": {
@@ -748,7 +756,7 @@
       },
       "薄暮時分尋憶者": {
         "value": "薄暮時分尋憶者",
-        "names": { "zh-TW": "薄暮時分尋憶者", "jp": "トワイライト・メモリーズ", "zh-CN": "薄暮时分寻忆者"},
+        "names": { "zh-TW": "薄暮時分尋憶者", "jp": "トワイライト・メモリーズ", "zh-CN": "薄暮时分寻忆者" },
         "id": "009"
       }
     },

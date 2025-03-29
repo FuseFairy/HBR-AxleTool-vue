@@ -43,22 +43,22 @@
   const earringOptions = [
     {
       value: 'BREAK耳環',
-      names: { 'zh-TW': 'BREAK耳環', jp: 'ブレイクピアス', 'zh-CN': "BREAK耳环" },
+      names: { 'zh-TW': 'BREAK耳環', jp: 'ブレイクピアス', 'zh-CN': 'BREAK耳环' },
       icon: 'earring-icon/break.webp',
     },
     {
       value: '進攻耳環',
-      names: { 'zh-TW': '進攻耳環', jp: 'アタックピアス', 'zh-CN': "进攻耳环" },
+      names: { 'zh-TW': '進攻耳環', jp: 'アタックピアス', 'zh-CN': '进攻耳环' },
       icon: 'earring-icon/attach.webp',
     },
     {
       value: 'DRIVE耳環',
-      names: { 'zh-TW': 'DRIVE耳環', jp: 'ドライブピアス', 'zh-CN': "DRIVE耳环" },
+      names: { 'zh-TW': 'DRIVE耳環', jp: 'ドライブピアス', 'zh-CN': 'DRIVE耳环' },
       icon: 'earring-icon/drive.webp',
     },
     {
       value: '爆破耳環',
-      names: { 'zh-TW': '爆破耳環', jp: 'ブラストピアス', 'zh-CN': "爆破耳环" },
+      names: { 'zh-TW': '爆破耳環', jp: 'ブラストピアス', 'zh-CN': '爆破耳环' },
       icon: 'earring-icon/explosion.webp',
     },
   ]
