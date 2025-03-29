@@ -13,9 +13,9 @@
       icon: getAssetsFile('custom-icon/setting.svg'),
       component: Settings,
     },
-    { key: 'bug_report', tooltip: 'bug report', icon: getAssetsFile('custom-icon/bug_report.svg') },
+    { key: 'github', tooltip: 'github', icon: getAssetsFile('custom-icon/github.svg') },
   ]
-  const bugReportURL = 'https://github.com/FuseFairy/HBR-AxleTool-vue/issues/new'
+  const githubURL = 'https://github.com/FuseFairy/HBR-AxleTool-vue'
   const activeModal = ref(null)
 
   const activeComponent = computed(() => {
@@ -30,8 +30,8 @@
   const handleButtonClick = (key) => {
     if (key === 'table' || key === 'setting') {
       toggleModal(key)
-    } else if (key === 'bug_report') {
-      window.open(bugReportURL, '_blank')
+    } else if (key === 'github') {
+      window.open(githubURL, '_blank')
     }
   }
 </script>
@@ -46,7 +46,7 @@
         :key="btn.key"
         @click="handleButtonClick(btn.key)"
         v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
-        :class="{ 'setting-icon-button': btn.key === 'setting' }"
+        :class="{ 'setting-icon-button': btn.key === 'setting', 'github-icon-button': btn.key === 'github' }"
       >
         <img :src="btn.icon" :alt="btn.key" />
       </button>
@@ -92,6 +92,11 @@
   }
   .setting-icon-button:hover img {
     transform: rotate(45deg);
+  }
+  .github-icon-button img {
+    filter: invert(1);
+    width: 24px;
+    height: 24px;
   }
   .modal-enter-active,
   .modal-leave-active {

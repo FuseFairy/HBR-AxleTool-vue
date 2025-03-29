@@ -29,7 +29,7 @@
     DRIVE耳環: 'earring-icon/drive.webp',
     爆破耳環: 'earring-icon/explosion.webp',
   }
-  const additionalTurn = { 'zh-TW': '追加回合', jp: '追加ターン' }
+  const additionalTurn = { 'zh-TW': '追加回合', jp: '追加ターン', 'zh-CN': '追加回合' }
   const axleName = skillStore.axleName.trim()
 
   const hasRank = () => {
