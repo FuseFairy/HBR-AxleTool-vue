@@ -4,17 +4,17 @@ export function runIPGeolocation() {
   const settingStore = useSettingStore()
 
   if (settingStore.lang !== null) {
-    console.log('settingStore.lang is not null, skipping IP Geolocation API call.')
+    // console.log('settingStore.lang is not null, skipping IP Geolocation API call.')
     return
   }
 
   const countryLangMap = {
     TW: 'zh-TW',
     JP: 'jp',
+    CN: 'zh-CN',
   }
 
   let targetLang = 'jp'
-
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), 800)
 
