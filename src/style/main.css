@@ -4,6 +4,12 @@
   user-select: none;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'LXGW WenKai Mono TC', 'Noto Sans TC', sans-serif;
   font-weight: 400;
