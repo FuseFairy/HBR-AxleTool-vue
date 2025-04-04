@@ -54,7 +54,7 @@ export async function convertElementToJpg(elementId) {
       new Promise((resolve) => setTimeout(resolve, imageLoadTimeout)),
     ])
 
-    // trash ios! 
+    // trash ios!
     // more info: https://github.com/tsayen/dom-to-image/issues/343
     if (isIosMobile()) {
       await domtoimage.toJpeg(element, {

@@ -349,6 +349,7 @@
     }
     button.tab {
       border-radius: 10px;
+      padding: 5px;
       background-color: rgba(69, 65, 69, 0.8);
     }
   }
