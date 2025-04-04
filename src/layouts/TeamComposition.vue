@@ -340,5 +340,16 @@
       height: 80px;
       font-size: 12px;
     }
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 10px;
+      border-bottom: none;
+    }
+    button.tab {
+      border-radius: 10px;
+      background-color: rgba(69, 65, 69, 0.8);
+    }
   }
 </style>

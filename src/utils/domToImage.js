@@ -5,6 +5,7 @@ import { useSliderStore } from '@/store/slider'
 import { useSettingStore } from '@/store/setting'
 import { compressToBase64 } from 'lz-string'
 import { getUsedTeams } from '@/utils/getUsedTeams'
+import { isIosMobile } from './isMobile'
 import domtoimage from 'dom-to-image-more'
 
 export async function convertElementToJpg(elementId) {
@@ -53,6 +54,15 @@ export async function convertElementToJpg(elementId) {
       new Promise((resolve) => setTimeout(resolve, imageLoadTimeout)),
     ])
 
+    // trash ios! 
+    // more info: https://github.com/tsayen/dom-to-image/issues/343
+    if (isIosMobile()) {
+      await domtoimage.toJpeg(element, {
+        quality: 0.1,
+        width: 1,
+        height: 1,
+      })
+    }
     const dataUrl = await domtoimage.toJpeg(element, {
       quality: 1.0,
       backgroundColor: 'black',
