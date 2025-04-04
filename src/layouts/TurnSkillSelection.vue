@@ -154,6 +154,7 @@
     v-for="i in sliderStore.rows"
     :key="i"
     :class="['container row-item', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]"
+    v-slide-in
   >
     <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
