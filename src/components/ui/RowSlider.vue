@@ -58,8 +58,8 @@
   }
 
   const hasChar = computed(() => {
-    return Object.values(charStore.selections).some(
-      (selection) => selection.character !== null && selection.style !== null
+    return Object.values(charStore.selections).some((team) =>
+      Object.values(team).some((selection) => selection.character !== null && selection.style !== null)
     )
   })
 </script>
