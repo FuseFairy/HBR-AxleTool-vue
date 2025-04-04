@@ -7,6 +7,7 @@
   import Multiselect from '@vueform/multiselect'
   import SelectAxleChar from '@/components/modal/SelectAxleChar.vue'
   import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { isMobile } from '@/utils/isMobile'
   import { cloneDeep, get, isEmpty, filter, map } from 'lodash-es'
 
   const sliderStore = useSliderStore()
@@ -241,7 +242,7 @@
         placeholder="Skill"
         label="names"
         track-by="value"
-        :searchable="true"
+        :searchable="!isMobile()"
         :options="getFilteredSkills(i - 1, n - 1)"
       >
         <template v-slot:singlelabel="{ value }">
