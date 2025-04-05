@@ -55,7 +55,7 @@ export async function convertElementToJpg(elementId) {
     ])
 
     // trash ios!
-    // more info: https://github.com/tsayen/dom-to-image/issues/343
+    // more detail: https://github.com/tsayen/dom-to-image/issues/343
     if (isIosMobile()) {
       await domtoimage.toJpeg(element, {
         quality: 0.1,
