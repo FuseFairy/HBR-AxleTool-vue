@@ -313,6 +313,7 @@
     padding: 20px;
     border-radius: 20px;
     background: rgba(68, 65, 65, 0.3);
+    backdrop-filter: blur(2px);
     margin: 20px 20px 0 20px;
     grid-template-columns: 160px repeat(3, 1fr);
     align-items: center;
