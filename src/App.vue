@@ -49,27 +49,6 @@
     z-index: -1;
     pointer-events: none;
   }
-  @keyframes slideIn {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-  @keyframes slideOut {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-100%);
-    }
-  }
-  .show {
-    display: block;
-    transform: translateX(0);
-    animation: slideIn 0.3s ease forwards;
-  }
   main {
     grid-area: main;
     color: white;
