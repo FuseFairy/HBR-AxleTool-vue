@@ -310,7 +310,7 @@
             </div>
             <div v-if="hasPassiveSkill(selectedTab)" class="table-container" style="margin-top: 20px">
               <div v-for="i in 7" class="table-column">
-                <div v-if="i === 1" class="label">Passive<br />Skill</div>
+                <div v-if="i === 1" class="label text-wrap">Passive<br />Skill</div>
                 <div
                   v-else-if="
                     charStore.selections[selectedTab][i - 1].passiveSkill !== null &&
@@ -318,7 +318,7 @@
                   "
                   class="text"
                 >
-                  <span v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill" class="passive-skill">
+                  <span v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill" class="passive-skill text-wrap">
                     {{ displayPassiveSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
                   </span>
                 </div>
@@ -331,13 +331,13 @@
               style="margin-top: 20px"
             >
               <div v-for="i in 7" class="table-column">
-                <div v-if="i === 1" class="label">Skill</div>
+                <div v-if="i === 1" class="label text-wrap">Skill</div>
                 <div v-else-if="charStore.selections[selectedTab][i - 1].style !== null" class="text">
                   <span
                     v-for="skill in Array.from(
                       getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style]
                     )"
-                    class="used-skill"
+                    class="used-skill text-wrap"
                   >
                     {{ displayUsedSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
                   </span>
@@ -361,7 +361,7 @@
             >
               <template v-if="skillStore.turns[row - 1].turn !== 'Switch'">
                 <div v-for="col in 4" class="axle-table-column">
-                  <div v-if="col === 1" class="label">
+                  <div v-if="col === 1" class="label text-wrap">
                     <span v-if="skillStore.turns[row - 1].turn !== null && skillStore.turns[row - 1].od !== null">
                       {{ skillStore.turns[row - 1].turn }} / {{ skillStore.turns[row - 1].od }}
                     </span>
@@ -382,7 +382,7 @@
                         />
                       </div>
                       <div class="txt">
-                        <span class="axle-text" :style="{ opacity: checkCommandSkill(row - 1, col - 2) ? '0.6' : '1' }">
+                        <span class="axle-text text-wrap" :style="{ opacity: checkCommandSkill(row - 1, col - 2) ? '0.6' : '1' }">
                           {{ displaySkillName(row - 1, col - 2) }}
                         </span>
                         <img
@@ -428,7 +428,6 @@
   }
   .character-container {
     position: relative;
-    display: inline-block;
   }
   .axle-name {
     display: block;
@@ -563,6 +562,10 @@
     color: #ddb0b0;
     height: 100%;
   }
+  .text-wrap {
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
   .character-image {
     display: block;
     width: 80px;
@@ -631,9 +634,6 @@
     padding: 2px 8px;
     background-color: #312828;
     border-radius: 4px;
-    word-wrap: break-word;
-    word-break: break-word;
-    display: inline-block;
     border: 2px solid rgb(86, 64, 64);
   }
   .passive-skill {
@@ -642,9 +642,6 @@
     background-color: #2d3851;
     color: #fff;
     border-radius: 4px;
-    word-wrap: break-word;
-    word-break: break-word;
-    display: inline-block;
   }
   .axle-text {
     font-size: 18px;
