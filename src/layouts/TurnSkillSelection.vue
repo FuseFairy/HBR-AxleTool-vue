@@ -318,7 +318,7 @@
     align-items: center;
     transition: box-shadow 0.3s ease;
   }
-  .container::before {
+  .container::backdrop {
     content: "";
     position: absolute;
     inset: 0;
