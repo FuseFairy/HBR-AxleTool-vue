@@ -327,7 +327,7 @@
             <!-- Used skill row -->
             <div
               v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)"
-              class="Used-skill table-container"
+              class="used-skill-bg table-container"
               style="margin-top: 20px"
             >
               <div v-for="i in 7" class="table-column">
@@ -485,11 +485,6 @@
     margin: 0 10px;
     width: inherit;
   }
-  .Used-skill {
-    background: rgba(113, 108, 122, 0.3);
-    border-radius: 10px;
-    color: #fff;
-  }
   .table-container-2 {
     display: grid;
     grid-template-columns: 100px repeat(3, 1fr);
@@ -629,7 +624,13 @@
       0 0 16px rgb(0, 0, 0);
     filter: drop-shadow(0 0 12px rgb(234, 120, 124));
   }
+  .used-skill-bg {
+    background: rgba(113, 108, 122, 0.3);
+    border-radius: 10px;
+  }
+
   .used-skill {
+    color: #fff;
     margin: 3px;
     padding: 2px 8px;
     background-color: #312828;
@@ -642,6 +643,7 @@
     background-color: #2d3851;
     color: #fff;
     border-radius: 4px;
+    border: 2px solid rgb(54, 71, 122);
   }
   .axle-text {
     font-size: 18px;
