@@ -319,7 +319,7 @@
     transition: box-shadow 0.3s ease;
   }
   .container::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     backdrop-filter: blur(2px);

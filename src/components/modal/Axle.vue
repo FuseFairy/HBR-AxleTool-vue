@@ -318,7 +318,10 @@
                   "
                   class="text"
                 >
-                  <span v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill" class="passive-skill text-wrap">
+                  <span
+                    v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill"
+                    class="passive-skill text-wrap"
+                  >
                     {{ displayPassiveSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
                   </span>
                 </div>
@@ -382,7 +385,10 @@
                         />
                       </div>
                       <div class="txt">
-                        <span class="axle-text text-wrap" :style="{ opacity: checkCommandSkill(row - 1, col - 2) ? '0.6' : '1' }">
+                        <span
+                          class="axle-text text-wrap"
+                          :style="{ opacity: checkCommandSkill(row - 1, col - 2) ? '0.6' : '1' }"
+                        >
                           {{ displaySkillName(row - 1, col - 2) }}
                         </span>
                         <img
