@@ -38,7 +38,7 @@
 
 <template>
   <nav>
-    <UploadButton />
+    <div class="left-button-group"><UploadButton /></div>
     <h1 class="nav-title">HBR Axle Tool</h1>
     <div class="right-button-group">
       <button
@@ -60,7 +60,6 @@
 <style scoped>
   nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     z-index: 1001;
     height: 3rem;
@@ -80,9 +79,15 @@
     font-family: 'Gugi', 'Noto Sans TC', sans-serif;
     color: rgb(210, 203, 208);
   }
+  .left-button-group {
+    display: flex;
+    gap: 10px;
+    margin-right: auto;
+  }
   .right-button-group {
     display: flex;
     gap: 10px;
+    margin-left: auto;
   }
   .setting-icon-button {
     transition: transform 0.5s ease-in-out;
