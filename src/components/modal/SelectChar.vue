@@ -477,7 +477,7 @@
     background-color: rgb(19, 18, 18);
     height: auto;
     max-height: 70%;
-    width: 31%;
+    width: 50%;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -533,6 +533,10 @@
   .multiselect-single-label {
     display: flex;
     gap: 0.5rem;
+  }
+  .multiselect-single-label {
+    width: 100%;
+    justify-content: center;
   }
   :deep(.multiselect-tags-search) {
     background-color: black;
