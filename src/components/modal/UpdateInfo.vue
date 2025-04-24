@@ -63,7 +63,6 @@
 <style scoped>
   .button-group {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: auto;
     padding: 10px;
@@ -73,6 +72,7 @@
     font-family: 'Gugi', 'Noto Sans TC', sans-serif;
     font-size: 1.3rem;
     font-weight: bold;
+    margin: 0 auto;
   }
   .section {
     display: flex;
@@ -91,6 +91,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    flex-shrink: 0; 
   }
   .close img {
     height: 100%;
