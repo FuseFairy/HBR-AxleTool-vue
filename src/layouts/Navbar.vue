@@ -4,6 +4,7 @@
   import UploadButton from '@/components/ui/UploadButton.vue'
   import Axle from '@/components/modal/Axle.vue'
   import Settings from '@/components/modal/Settings.vue'
+  import UpdateInfo from '@/components/modal/UpdateInfo.vue'
 
   const buttons = [
     { key: 'table', tooltip: 'table', icon: getAssetsFile('custom-icon/table.svg'), component: Axle },
@@ -13,6 +14,7 @@
       icon: getAssetsFile('custom-icon/setting.svg'),
       component: Settings,
     },
+    { key: 'update_info', tooltip: 'update', icon: getAssetsFile('custom-icon/notifications.svg'), component: UpdateInfo, },
     { key: 'github', tooltip: 'github', icon: getAssetsFile('custom-icon/github.svg') },
   ]
   const githubURL = 'https://github.com/FuseFairy/HBR-AxleTool-vue'
@@ -28,10 +30,10 @@
   }
 
   const handleButtonClick = (key) => {
-    if (key === 'table' || key === 'setting') {
-      toggleModal(key)
-    } else if (key === 'github') {
+    if (key === 'github') {
       window.open(githubURL, '_blank')
+    } else {
+      toggleModal(key)
     }
   }
 </script>

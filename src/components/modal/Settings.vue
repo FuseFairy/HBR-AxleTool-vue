@@ -96,6 +96,7 @@
     border-radius: 20px;
     display: flex;
     align-items: center;
+    border: 3px solid rgb(31, 44, 52);
   }
   :deep(.multiselect-option),
   :deep(.multiselect-single-label-text) {

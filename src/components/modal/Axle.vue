@@ -740,6 +740,7 @@
     border-radius: 20px;
     display: flex;
     flex-direction: column;
+    border: 3px solid rgb(31, 44, 52);
   }
   .table {
     display: flex;
