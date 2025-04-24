@@ -143,7 +143,9 @@ watch(
       console.log('skillStore.skills before reset:', skillStore.skills)
       skillStore.skills.forEach((row, rowIndex) => {
         row.forEach((button, buttonIndex) => {
-          if (button.style === oldStyle) {
+          if (button.style === oldStyle && button.selectedTab === props.selectedTab) {
+            console.log(button.selectedTab)
+            console.log(props.selectedTab)
             skillStore.skills[rowIndex][buttonIndex] = {
               selectedTab: null,
               style: null,
@@ -157,7 +159,6 @@ watch(
       console.log('skillStore.skills after reset:', skillStore.skills)
     }
 
-    // 現有邏輯
     if (newStyle) {
       const selectedOption = styleOptions.value.find((option) => option.value === newStyle)
       if (selectedOption) {
