@@ -144,8 +144,6 @@ watch(
       skillStore.skills.forEach((row, rowIndex) => {
         row.forEach((button, buttonIndex) => {
           if (button.style === oldStyle && button.selectedTab === props.selectedTab) {
-            console.log(button.selectedTab)
-            console.log(props.selectedTab)
             skillStore.skills[rowIndex][buttonIndex] = {
               selectedTab: null,
               style: null,
