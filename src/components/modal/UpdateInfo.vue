@@ -2,10 +2,8 @@
   import { ref, onMounted } from 'vue'
   import { marked } from 'marked'
   import DOMPurify from 'dompurify'
-  // import { useSettingStore } from '@/store/setting'
   import { getAssetsFile } from '@/utils/getAssetsFile'
 
-  // const settingStore = useSettingStore()
   const emit = defineEmits(['close'])
   const closeContainer = () => {
     emit('close')
@@ -17,9 +15,23 @@
   const isLoading = ref(true)
   const errorMessage = ref('')
 
+  // marked 渲染器以處理圖片路徑
+  const renderer = new marked.Renderer()
+  renderer.image = (href, title, text) => {
+    const assetUrl = getAssetsFile(href.href)
+    console.log(assetUrl)
+    return `<img src="${assetUrl}" alt="${text}" ${title ? `title="${title}"` : ''} hight="80px" width="80px" loading="lazy">`
+  }
+
+  // 配置 marked 使用自訂渲染器
+  marked.setOptions({
+    renderer,
+    gfm: true,
+    breaks: true,
+  })
+
   onMounted(async () => {
     try {
-      // const lang = settingStore.lang || 'zh-TW'
       const lang = 'zh-TW'
       const assetUrl = getAssetsFile(`updates/updates-${lang}.md`)
       console.log('Asset URL:', assetUrl)
@@ -32,6 +44,7 @@
       }
       
       markdownContent.value = await response.text()
+      console.log('Markdown Content:', markdownContent.value.slice(0, 100))
       renderedContent.value = DOMPurify.sanitize(marked.parse(markdownContent.value))
     } catch (error) {
       console.error('Failed to load Markdown:', error)
@@ -74,12 +87,6 @@
     font-weight: bold;
     margin: 0 auto;
   }
-  .section {
-    display: flex;
-    position: relative;
-    width: 100%;
-    overflow: auto;
-  }
   .close {
     background-color: transparent;
     padding: 1px;
@@ -91,11 +98,17 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    flex-shrink: 0; 
+    flex-shrink: 0;
   }
   .close img {
     height: 100%;
     width: 100%;
+  }
+  .section {
+    display: flex;
+    position: relative;
+    width: 100%;
+    overflow: auto;
   }
   .overlay {
     position: fixed;
@@ -118,8 +131,7 @@
     height: auto;
     max-height: 70%;
     width: 60%;
-    box-sizing: border-box;
-    padding: 0;
+    padding: 1rem;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -135,7 +147,7 @@
     color: rgb(209, 228, 222);
     font-family: 'LXGW WenKai Mono TC', sans-serif;
     line-height: 1.6;
-    padding: 1rem;
+    height: 100%;
   }
   .markdown-content :deep(h1) {
     font-size: 1.8rem;
@@ -187,7 +199,13 @@
   .markdown-content :deep(hr) {
     border: none;
     border-top: 1px solid rgb(100, 100, 100);
-    margin: 1rem 0;
+    margin: 0;
+  }
+  .markdown-content :deep(img) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0.5rem 0;
   }
   .scrollbar-style-1::-webkit-scrollbar {
     display: none;
