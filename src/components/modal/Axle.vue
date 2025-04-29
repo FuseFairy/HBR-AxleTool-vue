@@ -555,7 +555,7 @@
   }
   .label {
     font-size: 18px;
-    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+    font-family: 'Gugi', 'LXGW WenKai Mono TC','Noto Sans TC', sans-serif;
     text-align: center;
     display: flex;
     justify-content: center;

@@ -124,6 +124,7 @@ function handleTurnChange(value, index) {
       { selectedTab: null, style: null, style_img: null, skill: null, target: null },
       { selectedTab: null, style: null, style_img: null, skill: null, target: null },
     ]
+    skillStore.turns[index - 1].od = null
   }
 }
 
@@ -300,7 +301,15 @@ function handleTouchStartWrapper(e) {
   <div
     v-for="i in sliderStore.rows"
     :key="i"
-    :class="['container row-item', { 'grid-disabled': skillStore.turns[i - 1].turn === 'Switch' }]"
+    :class="[
+      'container row-item',
+      { 
+        'grid-disabled': skillStore.turns[i - 1].turn === 'Switch',
+        'od1': skillStore.turns[i - 1].od === 'OD1',
+        'od2': skillStore.turns[i - 1].od === 'OD2',
+        'od3': skillStore.turns[i - 1].od === 'OD3'
+      }
+    ]"
     v-slide-in
   >
     <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
@@ -481,6 +490,18 @@ span {
 .grid-disabled {
   grid-template-columns: none !important;
   border-left: 2px solid rgba(255, 215, 0, 1);
+}
+.od1 {
+  border-left: 3px solid rgba(235, 173, 222, 0.9);
+  border-right: 3px solid rgba(235, 173, 222, 0.9);
+}
+.od2 {
+  border-left: 3px solid rgba(145, 225, 176, 0.9);
+  border-right: 3px solid rgba(145, 225, 176, 0.9);
+}
+.od3 {
+  border-left: 3px solid rgba(255, 246, 161, 0.9);
+  border-right: 3px solid rgba(255, 246, 161, 0.9);
 }
 .container:hover {
   box-shadow:
