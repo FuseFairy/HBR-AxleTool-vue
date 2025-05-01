@@ -19,7 +19,6 @@
   const renderer = new marked.Renderer()
   renderer.image = (href, title, text) => {
     const assetUrl = getAssetsFile(href.href)
-    console.log(assetUrl)
     return `<img src="${assetUrl}" alt="${text}" ${title ? `title="${title}"` : ''} hight="80px" width="80px" loading="lazy">`
   }
 
@@ -34,17 +33,14 @@
     try {
       const lang = 'zh-TW'
       const assetUrl = getAssetsFile(`updates/updates-${lang}.md`)
-      console.log('Asset URL:', assetUrl)
       
       const response = await fetch(assetUrl, { method: 'GET' })
-      console.log('Fetch Response:', { status: response.status, ok: response.ok })
       
       if (!response.ok) {
         throw new Error(`Failed to load updates-${lang}.md: ${response.status} ${response.statusText}`)
       }
       
       markdownContent.value = await response.text()
-      console.log('Markdown Content:', markdownContent.value.slice(0, 100))
       renderedContent.value = DOMPurify.sanitize(marked.parse(markdownContent.value))
     } catch (error) {
       console.error('Failed to load Markdown:', error)
@@ -213,6 +209,23 @@
   .scrollbar-style-1 {
     scrollbar-width: none; /* Firefox */
   }
+  .markdown-content :deep(table) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .markdown-content :deep(tr) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .markdown-content :deep(th),
+  .markdown-content :deep(td) {
+    min-width: 100px;
+    text-align: left;
+    color: rgb(209, 228, 222);
+  }
   @media (max-width: 800px) {
     .container {
       width: 90%;
@@ -229,6 +242,11 @@
     }
     .markdown-content :deep(h3) {
       font-size: 1rem;
+    }
+    .markdown-content :deep(th),
+    .markdown-content :deep(td) {
+      min-width: 80px;
+      padding: 0.3rem;
     }
   }
 </style>
