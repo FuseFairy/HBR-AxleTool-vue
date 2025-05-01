@@ -1,3 +1,12 @@
+## 2024-5-2
+---
+### New Additions
+- 新增戰術型態：
+  | ![圖片1](char-images/31C/Yayoi_Bungo/007.webp) | ![圖片2](char-images/31C/Miko_Tenne/006.webp) | ![圖片2](char-images/31C/Seira_Sakuraba/007.webp) |
+  |-|-|-|
+- 新增進化技能：
+  - 鑽石塵+
+
 ## 2024-4-26
 ---
 ### New Additions
