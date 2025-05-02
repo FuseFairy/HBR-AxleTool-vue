@@ -55,11 +55,14 @@
           <div class="option-container">
             <span :title="option.name">{{ option.name }}</span>
             <div class="option-images">
-              <div v-for="i in 7">
+              <div
+                v-for="(item, index) in charStore.selections[option.value]"
+                :key="index"
+              >
                 <img
-                  v-if="i !== 1 && charStore.selections[option.value][i - 1].img"
-                  :src="getAssetsFile(charStore.selections[option.value][i - 1].img)"
-                  :alt="charStore.selections[option.value][i - 1].style"
+                  v-if="item.img"
+                  :src="getAssetsFile(item.img)"
+                  :alt="item.style"
                   class="option-icon"
                 />
               </div>
@@ -104,7 +107,6 @@
   .option-icon {
     width: 34px;
     height: 34px;
-    padding-right: 7px;
   }
   .option-container {
     display: flex;
@@ -114,6 +116,7 @@
     display: flex;
     flex-wrap: wrap;
     padding-top: 1px;
+    gap: 8px;
   }
   .filter {
     background-color: transparent;
