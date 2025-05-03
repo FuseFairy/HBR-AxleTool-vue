@@ -34,19 +34,16 @@
 
   const hasRank = () => {
     const rankInShowRow = showRowStore.showRow.includes('rank')
-
     return rankInShowRow
   }
 
   const hasEarring = () => {
     const earringInShowRow = showRowStore.showRow.includes('earring')
-
     return earringInShowRow
   }
 
   const hasSpiritual = () => {
     const spiritualInShowRow = showRowStore.showRow.includes('spiritual')
-
     return spiritualInShowRow
   }
 
@@ -55,7 +52,6 @@
     const hasValidPassiveSkillSelection = Object.values(charStore.selections[selectedTab]).some(
       (selection) => selection?.passiveSkill !== null && selection?.passiveSkill.length > 0
     )
-
     return passiveSkillInShowRow && hasValidPassiveSkillSelection
   }
 
@@ -90,70 +86,54 @@
   const getBackgroundColor = (row) => {
     const turnData = skillStore.turns[row - 1]
     if (!turnData) return 'transparent'
-
     if (turnData.turn === 'Switch') return 'rgba(26, 26, 26, 0.9)'
-
     const odColors = {
       OD1: 'rgba(229, 131, 207, 0.25)',
       OD2: 'rgba(189, 247, 211, 0.25)',
       OD3: 'rgba(237, 225, 108, 0.25)',
     }
-
     if (turnData.od in odColors) return odColors[turnData.od]
-
     return row % 2 === 0 ? 'rgba(33, 33, 33, 0.9)' : 'transparent'
   }
 
   const displayUsedSkillName = (tab, skillValue, style) => {
     let skillName = ''
-
     const charInfo = charStore.selections[tab]
     const styleInfo = find(charInfo, (characterData) => {
       return characterData.style === style
     })
-
     const skills = styleInfo['skill']
-
     const foundSkillObject = find(skills, (skillObj) => skillObj.value === skillValue)
-
     if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
     } else {
       skillName = ''
     }
-
     return skillName
   }
 
   const displayPassiveSkillName = (tab, skillValue, style) => {
     let skillName = ''
-
     const charInfo = charStore.selections[tab]
     const styleInfo = find(charInfo, (characterData) => {
       return characterData.style === style
     })
-
     const skills = styleInfo['passiveSkill_value']
-
     const foundSkillObject = find(skills, { value: skillValue })
-
     if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
     } else {
       skillName = ''
     }
-
     return skillName
   }
 
   const getTargetImg = (tab, target) => {
     let targetImg = ''
-
     const team = charStore.selections[tab]
     const foundTargetObject = find(team, { character: target })
     const charInfo = foundTargetObject['character_info']
     targetImg = charInfo.icon || ''
-
     return targetImg
   }
 
@@ -163,21 +143,17 @@
     const skillValue = skillInfo.skill
     const tab = skillInfo.selectedTab
     const style = skillInfo.style
-
     const charInfo = charStore.selections[tab]
     const styleInfo = find(charInfo, (characterData) => {
       return characterData.style === style
     })
-
     const commandSkill = styleInfo['commandSkill']
     const foundSkillObject = find(commandSkill, { value: skillValue })
-
     if (foundSkillObject) {
       isCommandSkill = true
     } else {
       isCommandSkill = false
     }
-
     return isCommandSkill
   }
 
@@ -187,24 +163,19 @@
     const skillValue = skillInfo.skill
     const tab = skillInfo.selectedTab
     const style = skillInfo.style
-
     const charInfo = charStore.selections[tab]
     const styleInfo = find(charInfo, (characterData) => {
       return characterData.style === style
     })
-
     const commandSkill = styleInfo['commandSkill']
     const skill = styleInfo['skill']
     const mergedSkills = [...commandSkill, ...skill]
-
     const foundSkillObject = find(mergedSkills, { value: skillValue })
-
     if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
     } else {
       skillName = ''
     }
-
     return skillName
   }
 
@@ -247,7 +218,7 @@
           <img src="/src/assets/common/sleeping.webp" />
         </div>
         <div v-else id="show-axle" class="table-wrapper">
-          <span v-if="axleName.length > 0" class="axle-name">{{ axleName }}</span>
+          <span v-if="axleName.length > 0" class="axle-name text-wrap">{{ axleName }}</span>
           <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
             <div
               v-if="showTeamStore.showTeam.length > 1 && index > 0"
@@ -267,7 +238,6 @@
                       :alt="charStore.selections[selectedTab][i - 1].style"
                       class="character-image"
                     />
-
                     <!-- Rank -->
                     <div v-if="hasRank() && charStore.selections[selectedTab][i - 1].rank !== null" class="rank-text">
                       {{ charStore.selections[selectedTab][i - 1].rank }}
@@ -288,7 +258,6 @@
                       alt="flower"
                       class="flower-img"
                     />
-
                     <!-- Spiritual -->
                     <div
                       v-if="hasSpiritual() && charStore.selections[selectedTab][i - 1].spiritual !== null"
@@ -296,7 +265,6 @@
                     >
                       {{ charStore.selections[selectedTab][i - 1].spiritual }}
                     </div>
-
                     <!-- Earring -->
                     <img
                       v-if="hasEarring() && charStore.selections[selectedTab][i - 1].earring !== null"
@@ -393,14 +361,12 @@
                         </span>
                         <img
                           v-if="skillStore.skills[row - 1][col - 2].target !== null"
-                          :src="
-                            getAssetsFile(
-                              getTargetImg(
-                                skillStore.skills[row - 1][col - 2].selectedTab,
-                                skillStore.skills[row - 1][col - 2].target
-                              )
+                          :src="getAssetsFile(
+                            getTargetImg(
+                              skillStore.skills[row - 1][col - 2].selectedTab,
+                              skillStore.skills[row - 1][col - 2].target
                             )
-                          "
+                          )"
                           class="axle-target-img"
                         />
                       </div>
@@ -444,6 +410,10 @@
     font-family: 'Kose', 'Noto Sans TC', sans-serif;
     color: rgb(225, 230, 209);
     border-bottom: 4px solid rgb(110, 107, 102);
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
   }
   .option-icon {
     width: 34px;
@@ -471,7 +441,7 @@
     align-items: center;
     padding: 0 20px;
   }
-  image {
+  .image {
     grid-area: img;
   }
   .txt {
@@ -525,6 +495,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: 100%;
   }
   .axle-img {
     margin-right: 5px;
@@ -555,16 +526,22 @@
   }
   .label {
     font-size: 18px;
-    font-family: 'Gugi', 'LXGW WenKai Mono TC','Noto Sans TC', sans-serif;
+    font-family: 'Gugi', 'LXGW WenKai Mono TC', 'Noto Sans TC', sans-serif;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #ddb0b0;
     height: 100%;
+    max-width: 100px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 1.2;
   }
   .text-wrap {
     overflow-wrap: break-word;
+    word-break: break-word;
     white-space: normal;
   }
   .character-image {
@@ -634,7 +611,6 @@
     background: rgba(113, 108, 122, 0.3);
     border-radius: 10px;
   }
-
   .used-skill {
     color: #fff;
     margin: 3px;
