@@ -460,6 +460,7 @@
     grid-template-columns: 100px repeat(6, 1fr);
     margin: 0 10px;
     width: inherit;
+    padding: 2px 0;
   }
   .table-container-2 {
     display: grid;
