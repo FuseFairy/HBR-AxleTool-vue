@@ -20,7 +20,7 @@
     "hbr-axletool-vue": "file:",
     "lodash-es": "^4.17.21",
     "lz-string": "^1.5.0",
-    "marked": "^15.0.10",
+    "marked": "^15.0.11",
     "piexifjs": "^1.0.4",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
