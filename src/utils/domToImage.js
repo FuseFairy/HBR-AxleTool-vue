@@ -90,10 +90,31 @@ export async function convertElementToJpg(elementId) {
     const exifBytes = piexif.dump(exifObj)
     const jpegWithExifData = piexif.insert(exifBytes, dataUrl)
 
+    // 使用 Blob 和 URL.createObjectURL 替代直接的 Base64 字串
+    const byteString = atob(jpegWithExifData.split(',')[1])
+    const mimeString = jpegWithExifData.split(',')[0].split(':')[1].split(';')[0]
+    const ab = new ArrayBuffer(byteString.length)
+    const ia = new Uint8Array(ab)
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i)
+    }
+    const blob = new Blob([ab], { type: mimeString })
+    const url = URL.createObjectURL(blob)
+
+    // 創建下載鏈接並觸發下載
     const link = document.createElement('a')
-    link.href = jpegWithExifData
+    link.href = url
     link.download = `${axleName || 'hbr_axle'}.jpg`
+    document.body.appendChild(link)
     link.click()
+
+    // 清理 DOM 和記憶體
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+
+    // 顯式釋放大型變量
+    delete window.dataUrl
+    delete window.jpegWithExifData
   } catch (error) {
     throw error
   }
