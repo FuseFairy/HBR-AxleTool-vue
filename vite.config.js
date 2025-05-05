@@ -26,6 +26,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      external: ['vue', 'axios', 'marked', 'dompurify'],
       output: {
         manualChunks(id) {
           const extensions = ['.js', '.ts', '.mjs'];
@@ -34,11 +35,12 @@ export default defineConfig({
           }
         }
       },
-      external: ['vue', 'axios'],
       plugins: [ 
         externalGlobals({
           vue: "Vue",
           axios: 'axios',
+          marked: 'marked',
+          dompurify: 'DOMPurify'
         })
       ],
     },
