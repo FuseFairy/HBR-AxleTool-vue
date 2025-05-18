@@ -42,6 +42,8 @@ export async function convertElementToJpg(elementId) {
   }
 
   try {
+    let dataUrl = ''
+
     // trash ios!
     // more detail: https://github.com/tsayen/dom-to-image/issues/343
     if (isIosMobile()) {
@@ -50,16 +52,23 @@ export async function convertElementToJpg(elementId) {
         width: 1,
         height: 1,
       })
+      dataUrl = await domtoimage.toJpeg(element, {
+        quality: 1.0,
+        backgroundColor: 'black',
+        width: element.scrollWidth,
+        height: element.scrollHeight,
+      })
     }
-    const pixelRatio = window.devicePixelRatio || 1
-    const dataUrl = await domtoimage.toJpeg(element, {
-      quality: 1.0,
-      backgroundColor: 'black',
-      width: element.scrollWidth,
-      height: element.scrollHeight,
-      scale: pixelRatio
-    })
-
+    else {
+      const pixelRatio = window.devicePixelRatio || 1
+      dataUrl = await domtoimage.toJpeg(element, {
+        quality: 1.0,
+        backgroundColor: 'black',
+        width: element.scrollWidth,
+        height: element.scrollHeight,
+        scale: pixelRatio
+      })
+    }
     const customData = {
       version: DATA_VERSION, // version of the save file format
       char: usedCharStore,
@@ -70,7 +79,7 @@ export async function convertElementToJpg(elementId) {
       language: settingStore.lang,
     }
 
-        const jsonString = JSON.stringify(customData)
+    const jsonString = JSON.stringify(customData)
     const compressedData = compressToBase64(jsonString)
     const exif = {
       [piexif.ExifIFD.UserComment]: compressedData,
