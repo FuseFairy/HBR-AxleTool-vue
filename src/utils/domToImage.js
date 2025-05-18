@@ -8,6 +8,8 @@ import { getUsedTeams } from '@/utils/getUsedTeams'
 import { isIosMobile } from './isMobile'
 import domtoimage from 'dom-to-image-more'
 
+const DATA_VERSION = '1.0.0'
+
 export async function convertElementToJpg(elementId) {
   const element = document.getElementById(elementId)
   if (!element) {
@@ -20,40 +22,26 @@ export async function convertElementToJpg(elementId) {
   const sliderStore = useSliderStore()
   const settingStore = useSettingStore()
   const usedTeams = getUsedTeams()
+  const axleName = skillStore.axleName.trim()
+  const usedCharStore = {}
 
-  const usedCharStore = usedTeams.reduce((result, team) => {
+  for (const team of usedTeams) {
     const characters = charStore.selections[team]
     if (characters) {
-      result[team] = Object.fromEntries(
-        Object.entries(characters).map(([charName, charData]) => {
-          const { skill, passiveSkill_value, character_info, commandSkill, ...restCharData } = charData
-          return [charName, restCharData]
-        })
-      )
-    }
-    return result
-  }, {})
-  const axleName = skillStore.axleName.trim()
-
-  const images = element.getElementsByTagName('img')
-  const imageLoadPromises = Array.from(images).map((img) => {
-    return new Promise((resolve) => {
-      if (img.complete) {
-        resolve()
-      } else {
-        img.onload = resolve
-        img.onerror = resolve
+      const teamData = {}
+      for (const [charName, charData] of Object.entries(characters)) {
+        const filteredData = { ...charData }
+        delete filteredData.skill
+        delete filteredData.passiveSkill_value
+        delete filteredData.character_info
+        delete filteredData.commandSkill
+        teamData[charName] = filteredData
       }
-    })
-  })
+      usedCharStore[team] = teamData
+    }
+  }
 
   try {
-    const imageLoadTimeout = 5000
-    await Promise.race([
-      Promise.all(imageLoadPromises),
-      new Promise((resolve) => setTimeout(resolve, imageLoadTimeout)),
-    ])
-
     // trash ios!
     // more detail: https://github.com/tsayen/dom-to-image/issues/343
     if (isIosMobile()) {
@@ -63,15 +51,17 @@ export async function convertElementToJpg(elementId) {
         height: 1,
       })
     }
+    const pixelRatio = window.devicePixelRatio || 1
     const dataUrl = await domtoimage.toJpeg(element, {
       quality: 1.0,
       backgroundColor: 'black',
       width: element.scrollWidth,
       height: element.scrollHeight,
+      scale: pixelRatio
     })
 
     const customData = {
-      version: '1.0.0', // version of the save file format
+      version: DATA_VERSION, // version of the save file format
       char: usedCharStore,
       axleName: axleName,
       skills: skillStore.skills,
@@ -80,7 +70,7 @@ export async function convertElementToJpg(elementId) {
       language: settingStore.lang,
     }
 
-    const jsonString = JSON.stringify(customData)
+        const jsonString = JSON.stringify(customData)
     const compressedData = compressToBase64(jsonString)
     const exif = {
       [piexif.ExifIFD.UserComment]: compressedData,
@@ -90,31 +80,11 @@ export async function convertElementToJpg(elementId) {
     const exifBytes = piexif.dump(exifObj)
     const jpegWithExifData = piexif.insert(exifBytes, dataUrl)
 
-    // 使用 Blob 和 URL.createObjectURL 替代直接的 Base64 字串
-    const byteString = atob(jpegWithExifData.split(',')[1])
-    const mimeString = jpegWithExifData.split(',')[0].split(':')[1].split(';')[0]
-    const ab = new ArrayBuffer(byteString.length)
-    const ia = new Uint8Array(ab)
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i)
-    }
-    const blob = new Blob([ab], { type: mimeString })
-    const url = URL.createObjectURL(blob)
-
-    // 創建下載鏈接並觸發下載
+    // Trigger download directly with Data URL
     const link = document.createElement('a')
-    link.href = url
-    link.download = `${axleName || 'hbr_axle'}.jpg`
-    document.body.appendChild(link)
+    link.href = jpegWithExifData
+    link.download = `${axleName || 'hbr axle'}.jpg`
     link.click()
-
-    // 清理 DOM 和記憶體
-    document.body.removeChild(link)
-    URL.revokeObjectURL(url)
-
-    // 顯式釋放大型變量
-    delete window.dataUrl
-    delete window.jpegWithExifData
   } catch (error) {
     throw error
   }
