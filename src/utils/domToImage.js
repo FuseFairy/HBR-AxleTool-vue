@@ -52,23 +52,23 @@ export async function convertElementToJpg(elementId) {
         width: 1,
         height: 1,
       })
-      dataUrl = await domtoimage.toJpeg(element, {
-        quality: 1.0,
-        backgroundColor: 'black',
-        width: element.scrollWidth,
-        height: element.scrollHeight,
-      })
     }
-    else {
-      const pixelRatio = window.devicePixelRatio || 1
-      dataUrl = await domtoimage.toJpeg(element, {
-        quality: 1.0,
-        backgroundColor: 'black',
-        width: element.scrollWidth,
-        height: element.scrollHeight,
-        scale: pixelRatio
-      })
-    }
+    dataUrl = await domtoimage.toJpeg(element, {
+      quality: 1.0,
+      backgroundColor: 'black',
+      width: element.scrollWidth,
+      height: element.scrollHeight,
+    })
+    // else {
+    //   const pixelRatio = window.devicePixelRatio || 1
+    //   dataUrl = await domtoimage.toJpeg(element, {
+    //     quality: 1.0,
+    //     backgroundColor: 'black',
+    //     width: element.scrollWidth,
+    //     height: element.scrollHeight,
+    //     scale: pixelRatio
+    //   })
+    // }
     const customData = {
       version: DATA_VERSION, // version of the save file format
       char: usedCharStore,
