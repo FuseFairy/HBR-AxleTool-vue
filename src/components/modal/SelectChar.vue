@@ -10,7 +10,7 @@
   import { fetchPassiveSkillOptions } from '@/utils/fetchPassiveSkillOptions'
   import { getAssetsFile } from '@/utils/getAssetsFile'
   import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
-  import { isMobile } from '@/utils/isMobile'
+  import { isMobile } from '@tenrok/vue3-device-detect'
   import { useSettingStore } from '@/store/setting'
   import { Collapse } from 'vue-collapsed'
   import { find } from 'lodash-es'
@@ -225,7 +225,7 @@
     <div
       @click.stop
       class="container scrollbar-style-1"
-      :style="{ overflow: isExpandedCollapse || isMobile() ? 'scroll' : 'visible' }"
+      :style="{ overflow: isExpandedCollapse || isMobile ? 'scroll' : 'visible' }"
     >
       <div class="button-group">
         <button @click="closeContainer" class="close">
