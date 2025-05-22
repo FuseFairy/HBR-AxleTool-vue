@@ -1,5 +1,3 @@
-declare module 'dom-to-image-more'
-
 declare module 'piexifjs' {
   export const load: (dataUrl: string) => any
   export const dump: (exifObj: any) => any

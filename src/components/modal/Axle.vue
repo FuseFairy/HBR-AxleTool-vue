@@ -6,7 +6,7 @@
   import { useShowRowStore } from '@/store/showRow'
   import { useShowTeamStore } from '@/store/showTeam'
   import { useSettingStore } from '@/store/setting'
-  import { convertElementToJpg } from '@/utils/domToImage'
+  import { convertElementToJpgWebWorker, convertElementToJpg } from '@/utils/domToImage'
   import { getAssetsFile } from '@/utils/getAssetsFile'
   import { getUsedSkills } from '@/utils/getUsedSkills'
   import loading from 'vue-loading-overlay'
@@ -58,7 +58,11 @@
   const downloadTable = async () => {
     isDownloading.value = true
     try {
-      await convertElementToJpg('show-axle')
+      if (window.Worker) {
+        await convertElementToJpgWebWorker('show-axle')
+      } else {
+        await convertElementToJpg('show-axle')
+      }
     } catch (error) {
       console.error('Error during download:', error)
       toast('Download error occurred, please use Chrome, Edge browser to download as much as possible.', {
@@ -361,12 +365,14 @@
                         </span>
                         <img
                           v-if="skillStore.skills[row - 1][col - 2].target !== null"
-                          :src="getAssetsFile(
-                            getTargetImg(
-                              skillStore.skills[row - 1][col - 2].selectedTab,
-                              skillStore.skills[row - 1][col - 2].target
+                          :src="
+                            getAssetsFile(
+                              getTargetImg(
+                                skillStore.skills[row - 1][col - 2].selectedTab,
+                                skillStore.skills[row - 1][col - 2].target
+                              )
                             )
-                          )"
+                          "
                           class="axle-target-img"
                         />
                       </div>
