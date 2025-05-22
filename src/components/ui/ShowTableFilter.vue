@@ -55,16 +55,8 @@
           <div class="option-container">
             <span :title="option.name">{{ option.name }}</span>
             <div class="option-images">
-              <div
-                v-for="(item, index) in charStore.selections[option.value]"
-                :key="index"
-              >
-                <img
-                  v-if="item.img"
-                  :src="getAssetsFile(item.img)"
-                  :alt="item.style"
-                  class="option-icon"
-                />
+              <div v-for="(item, index) in charStore.selections[option.value]" :key="index">
+                <img v-if="item.img" :src="getAssetsFile(item.img)" :alt="item.style" class="option-icon" />
               </div>
             </div>
           </div>

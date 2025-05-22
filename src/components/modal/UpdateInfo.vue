@@ -33,13 +33,13 @@
     try {
       const lang = 'zh-TW'
       const assetUrl = getAssetsFile(`updates/updates-${lang}.md`)
-      
+
       const response = await fetch(assetUrl, { method: 'GET' })
-      
+
       if (!response.ok) {
         throw new Error(`Failed to load updates-${lang}.md: ${response.status} ${response.statusText}`)
       }
-      
+
       markdownContent.value = await response.text()
       renderedContent.value = DOMPurify.sanitize(marked.parse(markdownContent.value))
     } catch (error) {

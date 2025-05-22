@@ -14,7 +14,12 @@
       icon: getAssetsFile('custom-icon/setting.svg'),
       component: Settings,
     },
-    { key: 'update_info', tooltip: 'update', icon: getAssetsFile('custom-icon/notifications.svg'), component: UpdateInfo, },
+    {
+      key: 'update_info',
+      tooltip: 'update',
+      icon: getAssetsFile('custom-icon/notifications.svg'),
+      component: UpdateInfo,
+    },
     { key: 'github', tooltip: 'github', icon: getAssetsFile('custom-icon/github.svg') },
   ]
   const githubURL = 'https://github.com/FuseFairy/HBR-AxleTool-vue'
