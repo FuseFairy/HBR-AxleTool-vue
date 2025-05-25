@@ -8,6 +8,7 @@
   import { toast } from 'vue3-toastify'
   import 'vue3-toastify/dist/index.css'
   import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
+  import { useDraggable } from '@vueuse/core'
 
   const charStore = useCharStore()
   const lastTabStore = useLastTabStore()
@@ -53,94 +54,30 @@
     activeComponent.value = null
   }
 
-  // 拖曳和觸控相關邏輯
-  const mouseOnButton = ref(null)
-  const mouseDownButton = ref(null)
-  const touchElement = ref(null) // 影子元素
-  const touchOffset = ref({ x: 0, y: 0 })
-  const originalButton = ref(null) // 原始按鈕
+  // 拖曳相關邏輯
+  const buttonRefs = ref({}) // 儲存按鈕 DOM 引用
+  const draggables = ref({}) // 儲存 useDraggable 實例
+  const draggedKey = ref(null) // 當前拖曳的按鈕鍵值
+  const mouseOnButton = ref(null) // 起始按鈕鍵值
+  const mouseDownButton = ref(null) // 目標按鈕鍵值
+  const isDragging = ref(false) // 控制影子元素顯示
+  const shadowPosition = ref({ x: 0, y: 0 }) // 影子元素位置
+  const shadowContent = ref(null) // 影子元素內容
 
-  // HTML5 Drag and Drop 事件（滑鼠）
-  function handleDragStart(e, key) {
-    mouseOnButton.value = key
-    e.dataTransfer.effectAllowed = 'move'
-    e.target.classList.add('dragging')
-  }
-
-  function handleDragOver(e, key) {
-    e.preventDefault()
-    mouseDownButton.value = key
-  }
-
-  function handleDragEnd(e, key) {
-    e.target.classList.remove('dragging')
-    swapButtons()
-  }
-
-  // 觸控事件
-  function handleTouchStartWrapper(e) {
-    const button = e.target.closest('.circle-button')
-    if (button) {
-      const key = parseInt(button.dataset.key, 10)
-      if (key) {
-        const touch = e.touches[0]
-        // 創建影子元素
-        const clone = button.cloneNode(true)
-        clone.classList.add('drag-shadow')
-        document.body.appendChild(clone)
-        touchElement.value = clone
-        originalButton.value = button // 記錄原始按鈕
-        const rect = button.getBoundingClientRect()
-        touchOffset.value = {
-          x: touch.clientX - rect.left,
-          y: touch.clientY - rect.top,
-        }
-        button.classList.add('dragging') // 為原始按鈕添加拖曳樣式
-        document.body.style.overflow = 'hidden'
-        mouseOnButton.value = key
-      }
-    }
-  }
-
-  function handleTouchMove(e) {
-    if (!touchElement.value) return
-
-    const touch = e.touches[0]
-    // 移動影子元素
-    touchElement.value.style.position = 'fixed'
-    touchElement.value.style.left = `${touch.clientX - touchOffset.value.x}px`
-    touchElement.value.style.top = `${touch.clientY - touchOffset.value.y}px`
-    touchElement.value.style.zIndex = '1000'
-
-    // 碰撞檢測
-    touchElement.value.style.pointerEvents = 'none'
-    const target = document.elementFromPoint(touch.clientX, touch.clientY)
-    touchElement.value.style.pointerEvents = ''
-
-    const button = target?.closest('.circle-button')
-    if (button) {
-      const key = parseInt(button.dataset.key, 10)
-      if (key && key !== mouseOnButton.value) {
-        mouseDownButton.value = key
-      } else {
-        mouseDownButton.value = null
-      }
+  // 開始拖曳
+  function startDrag(key) {
+    const button = buttonRefs.value[key]
+    if (button && draggables.value[key]) {
+      const rect = button.getBoundingClientRect()
+      shadowPosition.value = { x: rect.left, y: rect.top }
+      shadowContent.value = charStore.selections[selectedTab.value][key]
+      isDragging.value = true
+      mouseOnButton.value = key
+      draggedKey.value = key
+      button.classList.add('dragging')
     } else {
-      mouseDownButton.value = null
+      console.error(`Draggable for key ${key} is not properly initialized`)
     }
-  }
-
-  function handleTouchEnd(e) {
-    document.body.style.overflow = ''
-    if (touchElement.value) {
-      touchElement.value.remove() // 移除影子元素
-      touchElement.value = null
-    }
-    if (originalButton.value) {
-      originalButton.value.classList.remove('dragging') // 恢復原始按鈕
-      originalButton.value = null
-    }
-    swapButtons()
   }
 
   // 交換按鈕數據
@@ -154,41 +91,77 @@
         mouseOnButton: mouseOnButton.value,
         mouseDownButton: mouseDownButton.value,
       })
-      mouseOnButton.value = null
-      mouseDownButton.value = null
-      return
+    } else {
+      console.log('Swapping:', {
+        source: mouseOnButton.value,
+        target: mouseDownButton.value,
+      })
+      const currentTab = selectedTab.value
+      const sourceKey = mouseOnButton.value
+      const targetKey = mouseDownButton.value
+      const temp = { ...charStore.selections[currentTab][sourceKey] }
+      charStore.selections[currentTab][sourceKey] = { ...charStore.selections[currentTab][targetKey] }
+      charStore.selections[currentTab][targetKey] = temp
     }
-
-    console.log('Swapping:', {
-      source: mouseOnButton.value,
-      target: mouseDownButton.value,
-    })
-
-    const currentTab = selectedTab.value
-    const sourceKey = mouseOnButton.value
-    const targetKey = mouseDownButton.value
-
-    const temp = { ...charStore.selections[currentTab][sourceKey] }
-    charStore.selections[currentTab][sourceKey] = { ...charStore.selections[currentTab][targetKey] }
-    charStore.selections[currentTab][targetKey] = temp
-
     mouseOnButton.value = null
     mouseDownButton.value = null
+    draggedKey.value = null
+    isDragging.value = false
+    document.body.style.overflow = ''
   }
 
-  // 動態添加事件監聽器
+  // 初始化 useDraggable
   onMounted(() => {
-    const container = document.querySelector('.button-container')
-    container.addEventListener('touchstart', handleTouchStartWrapper, { passive: false })
-    container.addEventListener('touchmove', handleTouchMove, { passive: false })
-    container.addEventListener('touchend', handleTouchEnd, { passive: false })
+    for (const button of buttons) {
+      const key = button.key
+      const ref = computed(() => buttonRefs.value[key])
+      if (ref.value) {
+        const rect = ref.value.getBoundingClientRect()
+        console.log(`Initializing draggable for key ${key} at position:`, rect)
+        draggables.value[key] = useDraggable(ref, {
+          initialValue: { x: rect.x, y: rect.y },
+          preventDefault: true,
+          applyStyle: false, // 防止移動原始按鈕
+          onStart: () => {
+            startDrag(key)
+          },
+          onMove: (position) => {
+            if (!isDragging.value) return
+            // 更新影子元素位置
+            shadowPosition.value = { x: position.x, y: position.y }
+            // 碰撞檢測
+            const target = document.elementFromPoint(position.x + 60, position.y + 60)
+            const button = target?.closest('.circle-button')
+            if (button) {
+              const targetKey = parseInt(button.dataset.key, 10)
+              if (targetKey && targetKey !== mouseOnButton.value) {
+                mouseDownButton.value = targetKey
+              } else {
+                mouseDownButton.value = null
+              }
+            } else {
+              mouseDownButton.value = null
+            }
+          },
+          onEnd: () => {
+            if (buttonRefs.value[mouseOnButton.value]) {
+              buttonRefs.value[mouseOnButton.value].classList.remove('dragging')
+            }
+            swapButtons()
+          },
+        })
+      } else {
+        console.error(`Button ref not found for key: ${key}`)
+      }
+    }
   })
 
   onUnmounted(() => {
-    const container = document.querySelector('.button-container')
-    container.removeEventListener('touchstart', handleTouchStartWrapper, { passive: false })
-    container.removeEventListener('touchmove', handleTouchMove, { passive: false })
-    container.removeEventListener('touchend', handleTouchEnd, { passive: false })
+    isDragging.value = false
+    mouseOnButton.value = null
+    mouseDownButton.value = null
+    draggedKey.value = null
+    document.body.style.overflow = ''
   })
 
   const isRefreshing = ref(false)
@@ -318,24 +291,37 @@
       v-for="button in buttons"
       :key="button.key"
       :data-key="button.key"
+      :ref="(el) => (buttonRefs[button.key] = el)"
       @click="handleBoxClick(button.key)"
       :class="{
-        'circle-button selected-button': charStore.selections[selectedTab][button.key].img !== null,
-        'circle-button add-button': charStore.selections[selectedTab][button.key].img === null,
+        'circle-button': true,
+        'selected-button': charStore.selections[selectedTab][button.key]?.img !== null,
+        'add-button': charStore.selections[selectedTab][button.key]?.img === null,
       }"
-      draggable="true"
-      @dragstart="handleDragStart($event, button.key)"
-      @dragover.prevent="handleDragOver($event, button.key)"
-      @dragend="handleDragEnd($event, button.key)"
+      @pointerdown="startDrag(button.key)"
     >
       <img
-        v-if="charStore.selections[selectedTab][button.key].img !== null"
+        v-if="charStore.selections[selectedTab][button.key]?.img !== null"
         class="char-img"
         :src="getAssetsFile(charStore.selections[selectedTab][button.key].img)"
-        :alt="charStore.selections[selectedTab][button.key].style"
+        :alt="charStore.selections[selectedTab][button.key]?.style"
       />
       <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
     </button>
+    <!-- 影子元素 -->
+    <div
+      v-if="isDragging"
+      class="drag-shadow"
+      :style="{ left: `${shadowPosition.x}px`, top: `${shadowPosition.y}px`, position: 'fixed', zIndex: 1000 }"
+    >
+      <img
+        v-if="shadowContent?.img !== null"
+        class="char-img"
+        :src="getAssetsFile(shadowContent?.img)"
+        :alt="shadowContent?.style"
+      />
+      <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
+    </div>
   </div>
 
   <Transition name="modal">
@@ -410,6 +396,7 @@
     align-items: center;
     height: auto;
     padding-top: 10px;
+    position: relative;
   }
   .tool-container {
     display: flex;
@@ -444,6 +431,10 @@
     height: 120px;
     border-radius: 50%;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(79, 74, 74, 0.5);
   }
   .selected-button {
     border: none;
