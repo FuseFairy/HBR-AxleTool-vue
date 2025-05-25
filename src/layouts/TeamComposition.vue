@@ -47,6 +47,7 @@
   }
 
   const handleBoxClick = (key) => {
+    if (isDragging.value) return
     activeComponent.value = key
   }
 
@@ -103,11 +104,13 @@
       charStore.selections[currentTab][sourceKey] = { ...charStore.selections[currentTab][targetKey] }
       charStore.selections[currentTab][targetKey] = temp
     }
-    mouseOnButton.value = null
-    mouseDownButton.value = null
-    draggedKey.value = null
-    isDragging.value = false
-    document.body.style.overflow = ''
+    setTimeout(() => {
+      mouseOnButton.value = null
+      mouseDownButton.value = null
+      draggedKey.value = null
+      isDragging.value = false;
+      document.body.style.overflow = ''
+    }, 100);
   }
 
   // 初始化 useDraggable
