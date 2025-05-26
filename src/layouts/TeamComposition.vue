@@ -47,7 +47,6 @@
   }
 
   const handleBoxClick = (key) => {
-    if (isDragging.value) return
     activeComponent.value = key
   }
 
@@ -59,6 +58,7 @@
   const buttonRefs = ref({}) // 儲存按鈕 DOM 引用
   const draggables = ref({}) // 儲存 useDraggable 實例
   const draggedKey = ref(null) // 當前拖曳的按鈕鍵值
+  const dragTimestamp = ref(0) // 拖曳開始的時間戳
   const mouseOnButton = ref(null) // 起始按鈕鍵值
   const mouseDownButton = ref(null) // 目標按鈕鍵值
   const isDragging = ref(false) // 控制影子元素顯示
@@ -83,6 +83,7 @@
 
   // 交換按鈕數據
   function swapButtons() {
+    let clickedKey = null
     if (
       mouseOnButton.value === null ||
       mouseDownButton.value === null ||
@@ -92,6 +93,9 @@
         mouseOnButton: mouseOnButton.value,
         mouseDownButton: mouseDownButton.value,
       })
+      // 短時位置不變的拖曳被認為是click事件
+      if (Date.now() - dragTimestamp.value < 200)
+        clickedKey = mouseOnButton.value
     } else {
       console.log('Swapping:', {
         source: mouseOnButton.value,
@@ -104,13 +108,13 @@
       charStore.selections[currentTab][sourceKey] = { ...charStore.selections[currentTab][targetKey] }
       charStore.selections[currentTab][targetKey] = temp
     }
-    setTimeout(() => {
-      mouseOnButton.value = null
-      mouseDownButton.value = null
-      draggedKey.value = null
-      isDragging.value = false;
-      document.body.style.overflow = ''
-    }, 100);
+    mouseOnButton.value = null
+    mouseDownButton.value = null
+    draggedKey.value = null
+    isDragging.value = false
+    document.body.style.overflow = ''
+    if (!!clickedKey)
+      handleBoxClick(clickedKey)
   }
 
   // 初始化 useDraggable
@@ -126,6 +130,7 @@
           preventDefault: true,
           applyStyle: false, // 防止移動原始按鈕
           onStart: () => {
+            dragTimestamp.value = Date.now()
             startDrag(key)
           },
           onMove: (position) => {
@@ -295,13 +300,11 @@
       :key="button.key"
       :data-key="button.key"
       :ref="(el) => (buttonRefs[button.key] = el)"
-      @click="handleBoxClick(button.key)"
       :class="{
         'circle-button': true,
         'selected-button': charStore.selections[selectedTab][button.key]?.img !== null,
         'add-button': charStore.selections[selectedTab][button.key]?.img === null,
       }"
-      @pointerdown="startDrag(button.key)"
     >
       <img
         v-if="charStore.selections[selectedTab][button.key]?.img !== null"
