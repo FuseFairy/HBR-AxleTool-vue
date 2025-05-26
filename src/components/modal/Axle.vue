@@ -6,7 +6,7 @@
   import { useShowRowStore } from '@/store/showRow'
   import { useShowTeamStore } from '@/store/showTeam'
   import { useSettingStore } from '@/store/setting'
-  import { convertElementToJpgWebWorker, convertElementToJpg } from '@/utils/domToImage'
+  import { convertElementToJpg } from '@/utils/domToImage'
   import { getAssetsFile } from '@/utils/getAssetsFile'
   import { getUsedSkills } from '@/utils/getUsedSkills'
   import loading from 'vue-loading-overlay'
@@ -58,10 +58,11 @@
   const downloadTable = async () => {
     isDownloading.value = true
     try {
+      const elementId = 'show-axle'
       if (window.Worker) {
-        await convertElementToJpgWebWorker('show-axle')
+        await convertElementToJpg(elementId, true)
       } else {
-        await convertElementToJpg('show-axle')
+        await convertElementToJpg(elementId, false)
       }
     } catch (error) {
       console.error('Error during download:', error)
