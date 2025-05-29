@@ -4,6 +4,7 @@
   import { useCharStore } from '@/store/char'
   import { useSliderStore } from '@/store/slider'
   import { useSkillStore } from '@/store/axle'
+  import { getTargetOptions } from '@/utils/getTargetOptions'
   import { fetchCharacterOptions } from '@/utils/fetchCharacterOptions'
   import { fetchStyleOptions } from '@/utils/fetchStyleOptions'
   import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
@@ -138,25 +139,6 @@
   watch(
     selectedStyle,
     async (newStyle, oldStyle) => {
-      // 初始化 skillStore.skills 中與舊 style 相關的項目
-      if (sliderStore.rows > 0 && oldStyle) {
-        console.log('skillStore.skills before reset:', skillStore.skills)
-        skillStore.skills.forEach((row, rowIndex) => {
-          row.forEach((button, buttonIndex) => {
-            if (button.style === oldStyle && button.selectedTab === props.selectedTab) {
-              skillStore.skills[rowIndex][buttonIndex] = {
-                selectedTab: null,
-                style: null,
-                style_img: null,
-                skill: null,
-                target: null,
-              }
-            }
-          })
-        })
-        console.log('skillStore.skills after reset:', skillStore.skills)
-      }
-
       if (newStyle) {
         const selectedOption = styleOptions.value.find((option) => option.value === newStyle)
         if (selectedOption) {
@@ -194,6 +176,29 @@
         selectedPassiveSkill.value = []
         selectedFlower.value = false
         selectedEarring.value = null
+      }
+
+      // 檢查是否需要重置各回合的內容
+      if (sliderStore.rows > 0 && oldStyle) {
+        console.log('skillStore.skills before reset:', skillStore.skills)
+
+        skillStore.skills.forEach((row, rowIndex) => {
+          row.forEach((button, buttonIndex) => {
+            if (button.selectedTab !== props.selectedTab) return
+            const targetList = getTargetOptions(rowIndex, buttonIndex)
+            const targetValues = targetList.map((item) => item.value)
+            const shouldResetAll = button.style === oldStyle
+            const shouldResetTarget = !targetValues.includes(button.target)
+
+            if (shouldResetAll || shouldResetTarget) {
+              skillStore.skills[rowIndex][buttonIndex] = shouldResetAll
+                ? { selectedTab: null, style: null, style_img: null, skill: null, target: null }
+                : { ...button, target: null }
+            }
+          })
+        })
+
+        console.log('skillStore.skills after reset:', skillStore.skills)
       }
     },
     { immediate: false }

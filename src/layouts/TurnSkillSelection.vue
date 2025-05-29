@@ -7,8 +7,9 @@
   import Multiselect from '@vueform/multiselect'
   import SelectAxleChar from '@/components/modal/SelectAxleChar.vue'
   import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { getTargetOptions } from '@/utils/getTargetOptions'
   import { isMobile } from '@tenrok/vue3-device-detect'
-  import { cloneDeep, get, isEmpty, filter, map } from 'lodash-es'
+  import { cloneDeep } from 'lodash-es'
 
   const sliderStore = useSliderStore()
   const skillStore = useSkillStore()
@@ -65,25 +66,6 @@
       return skillOptions
     } else {
       skillStore.skills[row][key].skill = null
-      return []
-    }
-  }
-
-  const targetOptions = (row, key) => {
-    const currentSkill = skillStore.skills[row][key]
-    const style = get(currentSkill, 'style')
-
-    if (currentSkill && style != null) {
-      const selectedTab = currentSkill['selectedTab']
-      const team = charStore.selections[`${selectedTab}`]
-
-      const charOptions = filter(
-        map(Object.values(team), (teamObject) => teamObject.character_info),
-        (characterInfo) => !isEmpty(characterInfo)
-      )
-
-      return charOptions
-    } else {
       return []
     }
   }
@@ -425,7 +407,7 @@
           placeholder="Target"
           label="names"
           track-by="value"
-          :options="targetOptions(i - 1, n - 1)"
+          :options="getTargetOptions(i - 1, n - 1)"
         >
           <template v-slot:singlelabel="{ value }">
             <div class="multiselect-single-label">
