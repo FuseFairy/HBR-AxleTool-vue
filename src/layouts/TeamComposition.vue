@@ -94,8 +94,7 @@
         mouseDownButton: mouseDownButton.value,
       })
       // 短時位置不變的拖曳被認為是click事件
-      if (Date.now() - dragTimestamp.value < 200)
-        clickedKey = mouseOnButton.value
+      if (Date.now() - dragTimestamp.value < 200) clickedKey = mouseOnButton.value
     } else {
       console.log('Swapping:', {
         source: mouseOnButton.value,
@@ -113,8 +112,7 @@
     draggedKey.value = null
     isDragging.value = false
     document.body.style.overflow = ''
-    if (!!clickedKey)
-      handleBoxClick(clickedKey)
+    if (!!clickedKey) handleBoxClick(clickedKey)
   }
 
   // 初始化 useDraggable

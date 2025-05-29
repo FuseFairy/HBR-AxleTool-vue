@@ -8,15 +8,15 @@ import { getUsedTeams } from '@/utils/getUsedTeams'
 const DATA_VERSION = '1.0.0'
 
 export function compressAxleData() {
-	const charStore = useCharStore()
-	const skillStore = useSkillStore()
-	const sliderStore = useSliderStore()
-	const settingStore = useSettingStore()
-	const usedTeams = getUsedTeams()
-	const axleName = skillStore.axleName.trim()
-	const usedCharStore = {}
+  const charStore = useCharStore()
+  const skillStore = useSkillStore()
+  const sliderStore = useSliderStore()
+  const settingStore = useSettingStore()
+  const usedTeams = getUsedTeams()
+  const axleName = skillStore.axleName.trim()
+  const usedCharStore = {}
 
-	for (const team of usedTeams) {
+  for (const team of usedTeams) {
     const characters = charStore.selections[team]
     if (characters) {
       const teamData = {}
@@ -32,18 +32,18 @@ export function compressAxleData() {
     }
   }
 
-	const customData = {
-		version: DATA_VERSION, // version of the save file format
-		char: usedCharStore,
-		axleName: axleName,
-		skills: skillStore.skills,
-		turns: skillStore.turns,
-		rows: sliderStore.rows,
-		language: settingStore.lang,
-	}
+  const customData = {
+    version: DATA_VERSION, // version of the save file format
+    char: usedCharStore,
+    axleName: axleName,
+    skills: skillStore.skills,
+    turns: skillStore.turns,
+    rows: sliderStore.rows,
+    language: settingStore.lang,
+  }
 
-	const jsonString = JSON.stringify(customData)
-	const compressedData = compressToBase64(jsonString)
+  const jsonString = JSON.stringify(customData)
+  const compressedData = compressToBase64(jsonString)
 
-	return compressedData
+  return compressedData
 }
