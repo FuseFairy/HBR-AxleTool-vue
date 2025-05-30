@@ -3,7 +3,7 @@
 <details>
 <summary></summary>
 
-### 🛠️Bug Fixed
+### 🛠️ Bug Fixed
 - 修正排軸時改動隊伍所造成的非預期行為。
 ### 📌 New Additions
 - 新增戰術型態：
