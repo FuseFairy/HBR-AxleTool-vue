@@ -547,6 +547,10 @@
     white-space: normal;
     line-height: 1.2;
   }
+  .label > span {
+    display: block;
+    width: 100%;
+  }
   .text-wrap {
     overflow-wrap: break-word;
     word-break: break-word;
