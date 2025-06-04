@@ -1,6 +1,8 @@
 <script setup>
-  import { onBeforeMount } from 'vue'
+  import { onBeforeMount, onMounted } from 'vue'
   import { runIPGeolocation } from '@/utils/ipGeolocation'
+  import { getData } from './utils/axleDataApi'
+  import { updateData } from '@/utils/decompressData'
   import TeamComposition from '@/layouts/TeamComposition.vue'
   import Navbar from '@/layouts/Navbar.vue'
   import AppFooter from '@/layouts/Footer.vue'
@@ -8,6 +10,21 @@
   import '@/style/main.css'
 
   onBeforeMount(runIPGeolocation)
+  onMounted(async () => {
+    const params = new URLSearchParams(window.location.search)
+    const axle_id = params.get('axle_id')
+    if (axle_id) {
+      try {
+        const response = await getData(axle_id)
+        const result = await response.json()
+        const { data } = result
+        await updateData(data)
+        window.history.replaceState({}, document.title, '/')
+      } catch (error) {
+        alert(error)
+      }
+    }
+  })
 </script>
 
 <template>

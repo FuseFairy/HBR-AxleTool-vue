@@ -1,58 +1,12 @@
 <script setup>
   import { ref } from 'vue'
   import piexif from 'piexifjs'
-  import { useCharStore } from '@/store/char'
-  import { useSkillStore } from '@/store/axle'
-  import { useSliderStore } from '@/store/slider'
-  import { useLastTabStore } from '@/store/tab'
-  import { useSettingStore } from '@/store/setting'
-  import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
-  import { fetchCharacterOptions } from '@/utils/fetchCharacterOptions'
-  import { fetchPassiveSkillOptions } from '@/utils/fetchPassiveSkillOptions'
-  import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
-  import { decompressFromBase64 } from 'lz-string'
   import loading from 'vue-loading-overlay'
-  import { find } from 'lodash-es'
+  import { updateData } from '@/utils/decompressData'
 
-  const charStore = useCharStore()
-  const skillStore = useSkillStore()
-  const sliderStore = useSliderStore()
-  const lastTabStore = useLastTabStore()
   const fileInput = ref(null)
   const isLoading = ref(false)
-  const fullPage = ref(true)
-
   const triggerFileInput = () => fileInput.value.click()
-
-  const updateSelections = async (decodedDataChar) => {
-    let lastTabAssigned = false
-
-    for (const teamKey in decodedDataChar) {
-      const team = decodedDataChar[teamKey]
-
-      for (const charKey in team) {
-        const { character, team: teamName, style } = team[charKey]
-
-        if (style) {
-          if (!lastTabAssigned) {
-            lastTabStore.box_lastTab = parseInt(teamKey, 10)
-            lastTabAssigned = true
-          }
-          team[charKey]['skill'] = await fetchSkillOptions(character, teamName, style)
-
-          const charOptios = await fetchCharacterOptions(teamName)
-          team[charKey]['character_info'] = find(charOptios, { value: character })
-
-          const passiveSkillOptions = await fetchPassiveSkillOptions(character, teamName, style)
-          team[charKey]['passiveSkill_value'] = passiveSkillOptions || []
-
-          const commandSkill = await fetchCommandSkill(character, teamName, style)
-          team[charKey]['commandSkill'] = commandSkill || []
-        }
-      }
-    }
-    return decodedDataChar
-  }
 
   const onFileChange = async (event) => {
     const file = event.target.files[0]
@@ -79,28 +33,12 @@
 
           const exifObj = piexif.load(binaryString)
           const customData = exifObj['Exif'][piexif.ExifIFD.UserComment] || ''
-          const settingStore = useSettingStore()
 
           if (!customData) {
             throw new Error('Custom metadata not found.')
           }
 
-          const decodedData = JSON.parse(decompressFromBase64(customData))
-
-          if (decodedData?.version != '1.0.0') {
-            throw new Error('Old image not supported!')
-          }
-
-          const updatedSelections = await updateSelections(decodedData.char)
-
-          Object.assign(charStore.selections, updatedSelections)
-          Object.assign(skillStore, {
-            axleName: decodedData.axleName ?? skillStore.axleName,
-            skills: decodedData.skills,
-            turns: decodedData.turns,
-          })
-          sliderStore.rows = decodedData.rows
-          settingStore.lang = decodedData.language ?? settingStore.lang
+          await updateData(customData)
         } catch (error) {
           alert(error)
         } finally {
@@ -118,7 +56,7 @@
   <loading
     v-model:active="isLoading"
     :can-cancel="false"
-    :is-full-page="fullPage"
+    :is-full-page="true"
     :lock-scroll="true"
     background-color="#54504b"
     loader="dots"
