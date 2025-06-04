@@ -1,3 +1,12 @@
+## 2024-6-4
+---
+<details>
+<summary></summary>
+
+### ✨ Feature
+- 能生成臨時的分享連結（有效期限7天）。
+</details>
+
 ## 2024-5-30
 ---
 <details>
