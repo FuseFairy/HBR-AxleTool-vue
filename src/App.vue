@@ -18,10 +18,8 @@
         const response = await getData(axle_id)
         const result = await response.json()
         const { data } = result
-        if (data != null || data != undefined)
-          await updateData(data)
-        else
-          alert('ERROR: Wrong Url!')
+        if (data != null || data != undefined) await updateData(data)
+        else alert('ERROR: Wrong Url!')
         window.history.replaceState({}, document.title, '/')
       } catch (error) {
         alert(error)

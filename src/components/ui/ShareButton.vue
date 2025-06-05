@@ -12,19 +12,19 @@
     try {
       const data = compressAxleData()
       const axle_id = uuidv5(data, MY_NAMESPACE)
-      
+
       const clipboardItemOut = new ClipboardItem({
-        "text/plain": uploadDate(axle_id, data).then(response => {
+        'text/plain': uploadDate(axle_id, data).then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`)
           }
           const shareUrl = `${window.location.href}?axle_id=${axle_id}`
           return new Blob([shareUrl], { type: 'text/plain' })
-        })
+        }),
       })
-      
+
       await navigator.clipboard.write([clipboardItemOut])
-      
+
       toast('Copy success!', {
         theme: 'dark',
         type: 'success',
