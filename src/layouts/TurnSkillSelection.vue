@@ -8,7 +8,7 @@
   import SelectAxleChar from '@/components/modal/SelectAxleChar.vue'
   import { getAssetsFile } from '@/utils/getAssetsFile'
   import { getTargetOptions } from '@/utils/getTargetOptions'
-  import { isMobile } from '@tenrok/vue3-device-detect'
+  import { isDesktop } from '@tenrok/vue3-device-detect'
   import { cloneDeep } from 'lodash-es'
 
   const sliderStore = useSliderStore()
@@ -388,7 +388,7 @@
           placeholder="Skill"
           label="names"
           track-by="value"
-          :searchable="!isMobile"
+          :searchable="!isDesktop"
           :options="getFilteredSkills(i - 1, n - 1)"
         >
           <template v-slot:singlelabel="{ value }">
