@@ -12,7 +12,6 @@
     try {
       const data = compressAxleData()
       const axle_id = uuidv5(data, MY_NAMESPACE)
-
       const clipboardItemOut = new ClipboardItem({
         'text/plain': uploadDate(axle_id, data).then((response) => {
           if (!response.ok) {
@@ -22,9 +21,7 @@
           return new Blob([shareUrl], { type: 'text/plain' })
         }),
       })
-
       await navigator.clipboard.write([clipboardItemOut])
-
       toast('Copy success!', {
         theme: 'dark',
         type: 'success',
@@ -48,8 +45,14 @@
 </script>
 
 <template>
-  <button @click="triggerShareLink" class="share-button" v-tooltip="{ content: 'Share', placement: 'bottom' }">
-    <img src="@/assets/custom-icon/share.svg" alt="Share" />
+  <button
+    @click="triggerShareLink"
+    class="share-button"
+    :disabled="isLoading"
+    v-tooltip="{ content: isLoading ? 'Uploading...' : 'Share', placement: 'bottom' }"
+  >
+    <div v-if="isLoading" class="loading-spinner"></div>
+    <img v-else src="@/assets/custom-icon/share.svg" alt="Share" />
   </button>
 </template>
 
@@ -66,8 +69,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.2s ease;
   }
-  .share-button:hover {
+  .share-button:hover:not(:disabled) {
     background-color: rgba(78, 69, 69, 0.3);
+  }
+  .share-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  .loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 </style>
