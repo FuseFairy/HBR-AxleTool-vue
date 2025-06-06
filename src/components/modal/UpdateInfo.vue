@@ -11,19 +11,9 @@
   const isLoading = ref(true)
   const errorMessage = ref('')
   const expandedSections = ref({})
-  const unreadUpdates = ref(new Set())
-
-  // Load viewed updates from localStorage
-  const viewedUpdates = ref(new Set(JSON.parse(localStorage.getItem('viewedUpdates') || '[]')))
 
   const toggleSection = (date) => {
     expandedSections.value[date] = !expandedSections.value[date]
-    // Mark as read when expanded
-    if (expandedSections.value[date]) {
-      unreadUpdates.value.delete(date)
-      viewedUpdates.value.add(date)
-      localStorage.setItem('viewedUpdates', JSON.stringify([...viewedUpdates.value]))
-    }
   }
 
   onMounted(async () => {
@@ -37,12 +27,9 @@
 
       updates.value = await response.json()
 
-      // Initialize expanded state and check for unread updates
+      // Initialize expanded state
       updates.value.forEach((update) => {
         expandedSections.value[update.date] = false
-        if (!viewedUpdates.value.has(update.date)) {
-          unreadUpdates.value.add(update.date)
-        }
       })
     } catch (error) {
       console.error('Failed to load updates:', error)
@@ -69,7 +56,6 @@
           <div v-for="update in updates" :key="update.date" class="update-item" :data-date="update.date">
             <div class="update-header" @click="toggleSection(update.date)">
               <span class="update-date">{{ update.date }}</span>
-              <span v-if="unreadUpdates.has(update.date)" class="unread-dot"></span>
               <span class="toggle-icon">{{ expandedSections[update.date] ? '−' : '+' }}</span>
             </div>
             <div class="update-content-wrapper" :class="{ expanded: expandedSections[update.date] }">
@@ -93,7 +79,7 @@
                       <span>{{ addition.text }}</span>
                       <div v-if="addition.images?.length" class="image-grid">
                         <img
-                          v-for="img in addition.images"
+                          v-for="img in update.additions.images"
                           :key="img"
                           :src="getAssetsFile(img)"
                           alt="Update image"
@@ -210,13 +196,6 @@
     color: rgb(255, 255, 255);
     flex-grow: 1;
   }
-  .unread-dot {
-    width: 10px;
-    height: 10px;
-    background-color: red;
-    border-radius: 50%;
-    margin-right: 0.5rem;
-  }
   .toggle-icon {
     font-size: 1.2rem;
     color: rgb(100, 181, 246);
@@ -261,18 +240,15 @@
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
   .update-content-wrapper.expanded {
     grid-template-rows: 1fr;
   }
-
   .update-content {
     padding: 0 1rem;
     overflow: hidden;
     opacity: 0;
     transition: opacity 0.2s ease;
   }
-
   .update-content-wrapper.expanded .update-content {
     opacity: 1;
     padding: 0.5rem 1rem;
@@ -280,7 +256,6 @@
       opacity 0.25s ease 0.1s,
       padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
   @media (max-width: 800px) {
     .container {
       width: 90%;
