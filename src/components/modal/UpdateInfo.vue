@@ -162,7 +162,22 @@
     display: flex;
     flex-direction: column;
     border: 3px solid rgb(31, 44, 52);
-    background: linear-gradient(135deg, #2d2c2c, #292727); 
+    position: relative;
+  }
+  .container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(@/assets/common/hug_navi.webp);
+    background-position: center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    opacity: 0.35;
+    border-radius: inherit;
+    z-index: -1;
   }
   .loading,
   .error {
