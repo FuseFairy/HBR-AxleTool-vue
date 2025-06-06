@@ -1,4 +1,4 @@
-const DISTANCE = 150
+const DISTANCE = 70
 const DURATION = 1000
 const animationMap = new WeakMap()
 
