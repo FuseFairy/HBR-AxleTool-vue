@@ -162,10 +162,7 @@
     display: flex;
     flex-direction: column;
     border: 3px solid rgb(31, 44, 52);
-    background-image: url(@/assets/common/bg.webp);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: linear-gradient(135deg, #2d2c2c, #292727); 
   }
   .loading,
   .error {
