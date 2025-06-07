@@ -373,7 +373,7 @@
     font-style: italic;
     font-weight: bold;
     color: rgb(255, 215, 0);
-    font-family: 'Kose', 'Noto Sans TC', sans-serif;
+    font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
   }
   .character-container {
     position: relative;
@@ -384,7 +384,7 @@
     text-align: center;
     margin: 0 auto 20px;
     padding: 0 24px;
-    font-family: 'Kose', 'Noto Sans TC', sans-serif;
+    font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
     color: rgb(225, 230, 209);
     border-bottom: 4px solid rgb(110, 107, 102);
     max-width: 100%;
@@ -546,7 +546,7 @@
     top: -1px;
     right: -6px;
     background-color: rgba(93, 80, 86, 0.7);
-    font-family: 'Kose', 'Noto Sans TC', sans-serif;
+    font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
     color: rgb(192, 229, 250);
     width: 25px;
     height: 25px;
@@ -572,7 +572,7 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    font-family: 'Kose', 'Noto Sans TC', sans-serif;
+    font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
     color: rgb(249, 228, 244);
     width: 29px;
     height: 29px;

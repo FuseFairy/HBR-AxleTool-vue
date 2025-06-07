@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { visualizer } from "rollup-plugin-visualizer";
 import externalGlobals from "rollup-plugin-external-globals";
+import webfontDownload from 'vite-plugin-webfont-dl';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,6 +21,10 @@ export default defineConfig({
   plugins: [
     vue(),
     vueDevTools(),
+    webfontDownload([
+      'https://fonts.googleapis.com/css2?family=LXGW+WenKai+Mono+TC&display=swap',
+      'https://fonts.googleapis.com/css2?family=Gugi&display=swap',
+    ]),
     visualizer({
       emitFile: true,
       filename: "stats.html",

@@ -227,6 +227,6 @@
     justify-content: center;
     font-size: 14px;
     pointer-events: none;
-    font-family: 'Kose', 'Noto Sans TC', sans-serif;
+    font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
   }
 </style>
