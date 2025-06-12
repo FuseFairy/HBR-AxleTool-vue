@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, watch, computed, onMounted } from 'vue'
+  import { ref, watch, computed, onMounted, nextTick } from 'vue'
   import Multiselect from '@vueform/multiselect'
   import { useCharStore } from '@/store/char'
   import { useSliderStore } from '@/store/slider'
@@ -78,6 +78,7 @@
   const styleOptions = ref([])
   const passiveSkillOptions = ref([])
   const isExpandedCollapse = ref(false)
+  const canCloseByOverlay = ref(false) // 新增：控制是否可以透過點擊遮罩關閉
 
   const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team', props.selectedTab))
   const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character', props.selectedTab))
@@ -110,6 +111,9 @@
 
   onMounted(async () => {
     await initializeOptions()
+    nextTick(() => {
+      canCloseByOverlay.value = true // DOM 更新後，才允許透過遮罩關閉
+    })
   })
 
   watch(selectedTeam, async (newTeam) => {
@@ -212,7 +216,11 @@
   }
 
   const emit = defineEmits(['close'])
-  const closeContainer = async () => {
+
+  const closeContainer = async (isOverlayClick = false) => {
+    if (isOverlayClick && !canCloseByOverlay.value) {
+      return
+    }
     if (selectedStyle.value) {
       charStore.setSelection(
         props.buttonKey,
@@ -226,14 +234,14 @@
 </script>
 
 <template>
-  <div @click="closeContainer" class="overlay">
+   <div @click="closeContainer(true)" class="overlay">
     <div
       @click.stop
       class="container scrollbar-style-1"
       :style="{ overflow: isExpandedCollapse || isMobile ? 'scroll' : 'visible' }"
     >
       <div class="button-group">
-        <button @click="closeContainer" class="close">
+        <button @click="closeContainer(false)" class="close">
           <img src="@/assets/custom-icon/close.svg" alt="Close" />
         </button>
       </div>

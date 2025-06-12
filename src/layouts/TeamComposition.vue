@@ -112,7 +112,7 @@
     draggedKey.value = null
     isDragging.value = false
     document.body.style.overflow = ''
-    if (!!clickedKey) handleBoxClick(clickedKey)
+    if (clickedKey) handleBoxClick(clickedKey)
   }
 
   // 初始化 useDraggable
@@ -126,6 +126,7 @@
         draggables.value[key] = useDraggable(ref, {
           initialValue: { x: rect.x, y: rect.y },
           preventDefault: true,
+          stopPropagation: true,
           applyStyle: false, // 防止移動原始按鈕
           onStart: () => {
             dragTimestamp.value = Date.now()
@@ -137,7 +138,7 @@
             shadowPosition.value = { x: position.x, y: position.y }
             // 碰撞檢測
             const target = document.elementFromPoint(position.x + 60, position.y + 60)
-            const button = target?.closest('.circle-button')
+            const button = target?.closest('.team-circle-button')
             if (button) {
               const targetKey = parseInt(button.dataset.key, 10)
               if (targetKey && targetKey !== mouseOnButton.value) {
@@ -299,7 +300,7 @@
       :data-key="button.key"
       :ref="(el) => (buttonRefs[button.key] = el)"
       :class="{
-        'circle-button': true,
+        'team-circle-button': true,
         'selected-button': charStore.selections[selectedTab][button.key]?.img !== null,
         'add-button': charStore.selections[selectedTab][button.key]?.img === null,
       }"
@@ -409,7 +410,7 @@
     justify-content: right;
     align-items: center;
   }
-  .circle-button {
+  .team-circle-button {
     border-radius: 50%;
     width: 120px;
     height: 120px;
@@ -423,7 +424,7 @@
     background-color: rgba(79, 74, 74, 0.5);
     touch-action: none;
   }
-  .circle-button.dragging {
+  .team-circle-button.dragging {
     opacity: 0.6;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
   }
@@ -490,7 +491,7 @@
     .button-container {
       grid-template-columns: repeat(3, 1fr);
     }
-    .circle-button {
+    .team-circle-button {
       width: 80px;
       height: 80px;
       font-size: 12px;
