@@ -79,7 +79,7 @@
                       <span>{{ addition.text }}</span>
                       <div v-if="addition.images?.length" class="image-grid">
                         <img
-                          v-for="img in update.additions.images"
+                          v-for="img in addition.images"
                           :key="img"
                           :src="getAssetsFile(img)"
                           alt="Update image"
