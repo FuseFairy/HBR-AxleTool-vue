@@ -19,7 +19,7 @@
     "hbr-axletool-vue": "file:",
     "lodash-es": "^4.17.21",
     "lz-string": "^1.5.0",
-    "modern-screenshot": "^4.6.0",
+    "modern-screenshot": "^4.6.4",
     "piexifjs": "^1.0.4",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
@@ -38,7 +38,6 @@
     "rollup-plugin-visualizer": "^5.14.0",
     "terser": "^5.39.0",
     "vite": "^6.3.4",
-    "vite-plugin-vue-devtools": "^7.3.1",
-    "vite-plugin-webfont-dl": "^3.10.5"
+    "vite-plugin-vue-devtools": "^7.3.1"
   }
 }
