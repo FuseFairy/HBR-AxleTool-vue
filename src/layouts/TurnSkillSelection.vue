@@ -388,7 +388,7 @@
           placeholder="Skill"
           label="names"
           track-by="value"
-          :searchable="!isDesktop"
+          :searchable="isDesktop"
           :options="getFilteredSkills(i - 1, n - 1)"
         >
           <template v-slot:singlelabel="{ value }">
