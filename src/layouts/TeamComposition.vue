@@ -268,6 +268,12 @@
       }
     )
   }
+
+  const handleTouchStart = (event, key) => {
+    event.stopPropagation();
+    event.preventDefault();
+    startDrag(key);
+  };
 </script>
 
 <template>
@@ -304,6 +310,7 @@
         'selected-button': charStore.selections[selectedTab][button.key]?.img !== null,
         'add-button': charStore.selections[selectedTab][button.key]?.img === null,
       }"
+      @touchstart.prevent.stop="handleTouchStart($event, button.key)"
     >
       <img
         v-if="charStore.selections[selectedTab][button.key]?.img !== null"
