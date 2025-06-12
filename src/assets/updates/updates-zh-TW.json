@@ -1,5 +1,14 @@
 [
   {
+    "date": "2024-6-12",
+    "additions": [
+      {
+        "text": "新增戰術型態：",
+        "images": ["char-images/31D/Iroha_Ishii/006.webp", "char-images/31X/Yingxia_Li/007.webp"]
+      }
+    ]
+  },
+  {
     "date": "2024-6-4",
     "features": ["能生成臨時的分享連結（有效期限7天）。"]
   },
