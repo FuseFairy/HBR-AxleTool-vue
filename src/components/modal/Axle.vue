@@ -379,7 +379,6 @@
     position: relative;
   }
   .axle-name {
-    display: block;
     font-size: 36px;
     text-align: center;
     margin: 0 auto 20px;
@@ -388,9 +387,6 @@
     color: rgb(225, 230, 209);
     border-bottom: 4px solid rgb(110, 107, 102);
     max-width: 100%;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    white-space: normal;
   }
   .option-icon {
     width: 34px;
