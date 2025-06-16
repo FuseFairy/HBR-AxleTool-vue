@@ -1,10 +1,10 @@
 <script setup>
   import { onBeforeMount, onMounted } from 'vue'
   import { runIPGeolocation } from '@/utils/ipGeolocation'
-  import { getData } from './utils/axleDataApi'
+  import { getData } from '@/utils/axleDataApi'
   import { updateData } from '@/utils/decompressData'
-  import { loadFontCSS } from './utils/loadFontCSS'
-  import { getAssetsFile } from './utils/getAssetsFile'
+  import { loadFontCSS } from '@/utils/loadFontCSS'
+  import { getAssetsFile } from '@/utils/getAssetsFile'
   import TeamComposition from '@/layouts/TeamComposition.vue'
   import Navbar from '@/layouts/Navbar.vue'
   import AppFooter from '@/layouts/Footer.vue'
