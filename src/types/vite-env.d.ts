@@ -5,3 +5,4 @@ declare module 'piexifjs' {
 }
 
 declare module 'lodash-es'
+declare module 'nprogress'

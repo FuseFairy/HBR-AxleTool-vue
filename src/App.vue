@@ -10,9 +10,13 @@
   import AppFooter from '@/layouts/Footer.vue'
   import AxleSection from '@/layouts/AxleSection.vue'
   import '@/style/main.css'
+  import NProgress from 'nprogress'
+  import '@/style/nprogress/nprogress.css'
 
   onBeforeMount(runIPGeolocation)
   onMounted(async () => {
+    NProgress.configure({ showSpinner: false });
+    NProgress.start();
     try {
       const fonts = [
         'fonts/LXGWWenKaiMonoTC-Regular/result.css',
@@ -27,17 +31,32 @@
     }
     const params = new URLSearchParams(window.location.search)
     const axle_id = params.get('axle_id')
+    const promisesToTrack = [];
+    
     if (axle_id) {
-      try {
-        const response = await getData(axle_id)
-        const result = await response.json()
-        const { data } = result
-        if (data != null || data != undefined) await updateData(data)
-        else alert('ERROR: Wrong Url!')
-        window.history.replaceState({}, document.title, '/')
-      } catch (error) {
-        alert(error)
-      }
+      promisesToTrack.push(
+        (async () => {
+          try {
+            const response = await getData(axle_id)
+            const result = await response.json()
+            const { data } = result
+            if (data != null || data != undefined) await updateData(data)
+            else alert('ERROR: Wrong Url!')
+            window.history.replaceState({}, document.title, '/')
+          } catch (error) {
+            alert(error)
+            throw error;
+          }
+        })()
+      );
+    }
+
+    try {
+      await Promise.all(promisesToTrack);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      NProgress.done();
     }
   })
 </script>
