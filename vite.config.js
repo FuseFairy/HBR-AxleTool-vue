@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import legacy from '@vitejs/plugin-legacy'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { visualizer } from "rollup-plugin-visualizer";
 import externalGlobals from "rollup-plugin-external-globals";
@@ -14,15 +15,15 @@ export default defineConfig({
   preview: {
     cors: true,
   },
-  optimizeDeps: {
-    include: ['lodash-es']
-  },
   plugins: [
     vue(),
     vueDevTools(),
     visualizer({
       emitFile: true,
       filename: "stats.html",
+    }),
+    legacy({
+      targets: ["defaults"]
     }),
   ],
   resolve: {
@@ -32,7 +33,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['vue', 'axios'],
+      external: ['vue'],
       output: {
         manualChunks(id) {
           const extensions = ['.js', '.ts', '.mjs'];
@@ -44,16 +45,15 @@ export default defineConfig({
       plugins: [ 
         externalGlobals({
           vue: "Vue",
-          axios: 'axios',
         })
       ],
     },
     minify: "terser",
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-        },
-    }
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+  }
   }
 })

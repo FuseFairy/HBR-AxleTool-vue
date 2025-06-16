@@ -1,10 +1,8 @@
-import axios from 'axios'
-import { getAssetsFile } from './getAssetsFile'
+import { getTeamData } from './getTeamData'
 
 export async function fetchStyleOptions(characterName, team) {
   try {
-    const response = await axios.get(getAssetsFile(`char-data/${team}.json`))
-    const data = response.data
+    const data = await getTeamData(team)
     const characterData = data[characterName]
 
     if (!characterData || !characterData.style) {

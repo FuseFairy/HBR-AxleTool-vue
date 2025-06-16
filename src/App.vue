@@ -3,6 +3,8 @@
   import { runIPGeolocation } from '@/utils/ipGeolocation'
   import { getData } from './utils/axleDataApi'
   import { updateData } from '@/utils/decompressData'
+  import { loadFontCSS } from './utils/loadFontCSS'
+  import { getAssetsFile } from './utils/getAssetsFile'
   import TeamComposition from '@/layouts/TeamComposition.vue'
   import Navbar from '@/layouts/Navbar.vue'
   import AppFooter from '@/layouts/Footer.vue'
@@ -11,6 +13,18 @@
 
   onBeforeMount(runIPGeolocation)
   onMounted(async () => {
+    try {
+      const fonts = [
+        'fonts/LXGWWenKaiMonoTC-Regular/result.css',
+        'fonts/Gugi-Regular/result.css'
+      ]
+
+      await Promise.all(
+        fonts.map(path => loadFontCSS(getAssetsFile(path)))
+      )
+    } catch (err) {
+      console.error('ERROR:', err)
+    }
     const params = new URLSearchParams(window.location.search)
     const axle_id = params.get('axle_id')
     if (axle_id) {
@@ -60,7 +74,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(@/assets/common/bg.webp);
+    background-image: url(@/assets/common/bg.webp), url(@/assets/common/bg_compress.webp);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

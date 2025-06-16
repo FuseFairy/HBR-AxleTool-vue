@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import { useCharStore } from '@/store/char'
   import { useSkillStore } from '@/store/axle'
   import { useSliderStore } from '@/store/slider'
@@ -8,12 +8,22 @@
   import { useSettingStore } from '@/store/setting'
   import { getAssetsFile } from '@/utils/getAssetsFile'
   import { getUsedSkills } from '@/utils/getUsedSkills'
+  import { loadFontCSS } from '@/utils/loadFontCSS'
   import ShowTableFilter from '@/components/ui/ShowTableFilter.vue'
   import shareButton from '@/components/ui/ShareButton.vue'
   import DownloadButton from '@/components/ui/DownloadButton.vue'
   import 'vue3-toastify/dist/index.css'
   import { find } from 'lodash-es'
   import loading from 'vue-loading-overlay'
+
+  onMounted(async () => {
+    try {
+      const href = getAssetsFile('fonts/Xiaolai-Regular/result.css')
+      await loadFontCSS(href)
+    } catch (err) {
+      console.error(err)
+    }
+  })
 
   const isLoading = ref(false)
   const charStore = useCharStore()

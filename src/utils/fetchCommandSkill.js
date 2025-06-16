@@ -1,11 +1,9 @@
-import axios from 'axios'
-import { getAssetsFile } from './getAssetsFile'
+import { getTeamData } from "./getTeamData"
 import { isObject, values } from 'lodash-es'
 
 export async function fetchCommandSkill(characterName, team, styleName) {
   try {
-    const response = await axios.get(getAssetsFile(`char-data/${team}.json`))
-    const data = response.data
+    const data = await getTeamData(team)
     const characterData = data[characterName]
     const defaultCommandSkill = [
       { value: '普攻', names: { 'zh-TW': '普通攻擊', jp: '通常攻撃', 'zh-CN': '普通攻击' }, sp: 0 },

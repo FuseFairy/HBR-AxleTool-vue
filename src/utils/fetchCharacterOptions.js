@@ -1,10 +1,9 @@
-import axios from 'axios'
-import { getAssetsFile } from './getAssetsFile'
+import { getTeamData } from "./getTeamData"
 
 export async function fetchCharacterOptions(team) {
   try {
-    const response = await axios.get(getAssetsFile(`char-data/${team}.json`))
-    const data = response.data
+    const data = await getTeamData(team)
+    
     return Object.entries(data).map(([_, info]) => ({
       value: info.value,
       names: info.names,
