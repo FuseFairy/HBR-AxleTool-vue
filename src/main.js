@@ -1,22 +1,31 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import App from './App.vue'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-import 'vue-loading-overlay/dist/css/index.css'
-import FloatingVue from 'floating-vue'
-import 'floating-vue/dist/style.css'
-import versionControlPlugin from '@/plugins/storeVersionControl'
-import 'vue3-toastify/dist/index.css'
-import directives from './directives'
+import { createApp } from 'vue';
+import App from './App.vue';
 
-const app = createApp(App)
-const pinia = createPinia()
+// Pinia state management imports
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import versionControlPlugin from '@/plugins/storeVersionControl';
 
-pinia.use(piniaPluginPersistedstate)
+// Third-party UI/utility library imports and their styles
+import FloatingVue from 'floating-vue';
+import 'floating-vue/dist/style.css';
 
-app.use(versionControlPlugin)
-app.use(pinia)
-app.use(FloatingVue)
-app.use(directives)
+import 'vue-loading-overlay/dist/css/index.css';
+import 'vue3-toastify/dist/index.css';
 
-app.mount('#app')
+// Custom directives import
+import directives from './directives';
+
+// --- Application Initialization ---
+const app = createApp(App);
+const pinia = createPinia();
+
+pinia.use(piniaPluginPersistedstate);
+
+app.use(pinia);
+app.use(versionControlPlugin);
+
+app.use(FloatingVue);
+app.use(directives);
+
+app.mount('#app');
