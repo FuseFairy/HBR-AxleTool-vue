@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
 export const useCharStore = defineStore(
   'characterSelect',
@@ -62,6 +63,16 @@ export const useCharStore = defineStore(
   {
     persist: {
       storage: localStorage,
-    },
+      serializer: {
+        serialize: (state) => {
+          const jsonString = JSON.stringify(state);
+          return compressToUTF16(jsonString);
+        },
+        deserialize: (compressedString) => {
+          const jsonString = decompressFromUTF16(compressedString);
+            return jsonString ? JSON.parse(jsonString) : {};
+        }
+      }
+    }
   }
 )
