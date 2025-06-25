@@ -423,30 +423,16 @@
       </div>
     </div>
   </div>
-  <Transition name="modal">
-    <SelectAxleChar
-      v-if="activeComponent.row !== null"
-      :row="activeComponent.row"
-      :buttonKey="activeComponent.buttonKey"
-      @close="closeContainer"
-    />
-  </Transition>
+  <SelectAxleChar
+    v-if="activeComponent.row !== null"
+    :row="activeComponent.row"
+    :buttonKey="activeComponent.buttonKey"
+    @close="closeContainer"
+  />
 </template>
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
-  .modal-enter-active,
-  .modal-leave-active {
-    transition: all 0.3s ease;
-  }
-  .modal-enter-from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  .modal-leave-to {
-    transform: scale(0.8);
-    opacity: 0;
-  }
   span {
     white-space: nowrap;
     overflow: hidden;

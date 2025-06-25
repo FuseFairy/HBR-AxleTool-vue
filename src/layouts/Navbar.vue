@@ -63,9 +63,7 @@
       </button>
     </div>
   </nav>
-  <Transition name="modal">
-    <component :is="activeComponent" v-if="activeComponent" @close="toggleModal(null)" />
-  </Transition>
+  <component :is="activeComponent" v-if="activeComponent" @close="toggleModal(null)" />
 </template>
 
 <style scoped>
@@ -113,18 +111,6 @@
     filter: invert(1);
     width: 24px;
     height: 24px;
-  }
-  .modal-enter-active,
-  .modal-leave-active {
-    transition: all 0.3s ease;
-  }
-  .modal-enter-from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  .modal-leave-to {
-    transform: scale(0.8);
-    opacity: 0;
   }
   button {
     background-color: transparent;
