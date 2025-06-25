@@ -16,7 +16,9 @@
   import { find } from 'lodash-es'
   import loading from 'vue-loading-overlay'
 
+  const isVisible = ref(false)
   onMounted(async () => {
+    isVisible.value = true
     try {
       const href = getAssetsFile('fonts/Xiaolai-Regular/result.css')
       await loadFontCSS(href)
@@ -172,14 +174,19 @@
 
   const emit = defineEmits(['close'])
   const closeTable = () => {
-    if (isLoading.value) return
-    emit('close')
+    if (isLoading.value) return;
+    isVisible.value = false;
+    setTimeout(() => {
+      emit('close');
+    }, 300);
   }
 </script>
 
 <template>
-  <div @click="closeTable" class="overlay">
-    <loading
+  <teleport to="body">
+    <transition name="modal-fade">
+      <div v-if="isVisible" @click="closeTable" class="overlay">
+        <loading
       v-model:active="isLoading"
       :can-cancel="false"
       :is-full-page="true"
@@ -187,8 +194,8 @@
       background-color="#54504b"
       color="#79d1cb"
     />
-    <div @click.stop class="container">
-      <div class="button-group">
+        <div @click.stop class="container">
+          <div class="button-group">
         <div class="left-button-group">
           <ShowTableFilter />
           <DownloadButton v-model:isLoading="isLoading" />
@@ -198,10 +205,10 @@
           <img src="@/assets/custom-icon/close.svg" alt="Close" />
         </button>
       </div>
-      <div class="table scrollbar-style-1">
-        <div v-if="sliderStore.rows <= 0" class="sleeping-image">
+          <div class="table scrollbar-style-1">
+            <div v-if="sliderStore.rows <= 0" class="sleeping-image">
           <img src="/src/assets/common/sleeping.webp" />
-        </div>
+            </div>
         <div v-else id="show-axle" class="table-wrapper">
           <span v-if="axleName.length > 0" class="axle-name text-wrap">{{ axleName }}</span>
           <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
@@ -367,13 +374,50 @@
             </div>
           </div>
         </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </transition>
+  </teleport>
 </template>
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-fade-enter-from,
+  .modal-fade-leave-to {
+    opacity: 0;
+  }
+  @keyframes modal-scale-in {
+    from {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes modal-scale-out {
+    from {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+  }
+  .modal-fade-enter-active .container {
+    animation: modal-scale-in 0.3s ease;
+  }
+  .modal-fade-leave-active .container {
+    animation: modal-scale-out 0.3s ease forwards;
+  }
   .sleeping-image {
     display: block;
     margin: auto;

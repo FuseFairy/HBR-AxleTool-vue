@@ -336,14 +336,12 @@
     </div>
   </div>
 
-  <Transition name="modal">
-    <SelectChar
-      v-if="activeComponent !== null"
-      :buttonKey="activeComponent"
-      :selectedTab="selectedTab"
-      @close="closeContainer"
-    />
-  </Transition>
+  <SelectChar
+    v-if="activeComponent !== null"
+    :buttonKey="activeComponent"
+    :selectedTab="selectedTab"
+    @close="closeContainer"
+  />
 </template>
 
 <style scoped>
@@ -387,18 +385,6 @@
   button.tab:hover {
     background-color: #a5a5a5;
     color: black;
-  }
-  .modal-enter-active,
-  .modal-leave-active {
-    transition: all 0.3s ease;
-  }
-  .modal-enter-from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  .modal-leave-to {
-    transform: scale(0.8);
-    opacity: 0;
   }
   .button-container {
     display: grid;

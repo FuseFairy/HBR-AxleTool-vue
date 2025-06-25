@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import { useCharStore } from '@/store/char'
   import { useSkillStore } from '@/store/axle'
   import { useLastTabStore } from '@/store/tab'
@@ -8,6 +8,11 @@
   const charStore = useCharStore()
   const skillStore = useSkillStore()
   const lastTabStore = useLastTabStore()
+
+  const isVisible = ref(false)
+  onMounted(() => {
+    isVisible.value = true
+  })
 
   const props = defineProps({
     row: {
@@ -67,17 +72,22 @@
 
   const emit = defineEmits(['close'])
   const closeContainer = () => {
-    emit('close')
+    isVisible.value = false
+    setTimeout(() => {
+      emit('close')
+    }, 300)
   }
 </script>
 
 <template>
-  <div @click="closeContainer" class="overlay">
-    <div @click.stop class="container">
-      <button @click="closeContainer" class="close">
+  <teleport to="body">
+    <transition name="modal-fade">
+      <div v-if="isVisible" @click="closeContainer" class="overlay">
+        <div @click.stop class="container">
+          <button @click="closeContainer" class="close">
         <img src="@/assets/custom-icon/close.svg" alt="Close" />
       </button>
-      <div class="tabs">
+          <div class="tabs">
         <button
           v-for="tab in tabs"
           :key="tab.key"
@@ -88,7 +98,7 @@
           {{ tab.label }}
         </button>
       </div>
-      <div class="button-container">
+          <div class="button-container">
         <button
           v-for="(item, key) in filteredSelections"
           :key="key"
@@ -99,11 +109,48 @@
           <div v-if="isSelected(key)" class="overlay-text">Selected</div>
         </button>
       </div>
-    </div>
-  </div>
+        </div>
+      </div>
+    </transition>
+  </teleport>
 </template>
 
 <style scoped>
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-fade-enter-from,
+  .modal-fade-leave-to {
+    opacity: 0;
+  }
+  @keyframes modal-scale-in {
+    from {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes modal-scale-out {
+    from {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+  }
+  .modal-fade-enter-active .container {
+    animation: modal-scale-in 0.3s ease;
+  }
+  .modal-fade-leave-active .container {
+    animation: modal-scale-out 0.3s ease forwards;
+  }
   .tabs {
     display: flex;
     gap: 0;

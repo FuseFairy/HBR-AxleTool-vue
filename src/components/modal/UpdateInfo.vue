@@ -3,8 +3,12 @@
   import { getAssetsFile } from '@/utils/getAssetsFile'
 
   const emit = defineEmits(['close'])
+  const isVisible = ref(false)
   const closeContainer = () => {
-    emit('close')
+    isVisible.value = false
+    setTimeout(() => {
+      emit('close')
+    }, 300)
   }
 
   const updates = ref([])
@@ -17,6 +21,7 @@
   }
 
   onMounted(async () => {
+    isVisible.value = true
     try {
       const assetUrl = getAssetsFile('updates/updates-zh-TW.json')
       const response = await fetch(assetUrl, { method: 'GET' })
@@ -41,15 +46,17 @@
 </script>
 
 <template>
-  <div @click="closeContainer" class="overlay">
-    <div @click.stop class="container">
-      <div class="button-group">
+  <teleport to="body">
+    <transition name="modal-fade">
+      <div v-if="isVisible" @click="closeContainer" class="overlay">
+        <div @click.stop class="container">
+          <div class="button-group">
         <span class="title">Update</span>
         <button @click="closeContainer" class="close">
           <img src="@/assets/custom-icon/close.svg" alt="Close" />
         </button>
       </div>
-      <div class="section scrollbar-style-1">
+          <div class="section scrollbar-style-1">
         <div v-if="isLoading" class="loading">Loading...</div>
         <div v-else-if="errorMessage" class="error">{{ errorMessage }}</div>
         <div v-else class="updates-content">
@@ -94,11 +101,48 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+        </div>
+      </div>
+    </transition>
+  </teleport>
 </template>
 
 <style scoped>
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-fade-enter-from,
+  .modal-fade-leave-to {
+    opacity: 0;
+  }
+  @keyframes modal-scale-in {
+    from {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes modal-scale-out {
+    from {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+  }
+  .modal-fade-enter-active .container {
+    animation: modal-scale-in 0.3s ease;
+  }
+  .modal-fade-leave-active .container {
+    animation: modal-scale-out 0.3s ease forwards;
+  }
   .button-group {
     display: flex;
     align-items: center;

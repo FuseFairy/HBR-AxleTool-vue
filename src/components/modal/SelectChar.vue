@@ -78,6 +78,7 @@
   const styleOptions = ref([])
   const passiveSkillOptions = ref([])
   const isExpandedCollapse = ref(false)
+  const isVisible = ref(false)
 
   const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team', props.selectedTab))
   const selectedCharacter = ref(charStore.getSelection(props.buttonKey, 'character', props.selectedTab))
@@ -109,6 +110,7 @@
   }
 
   onMounted(async () => {
+    isVisible.value = true
     await initializeOptions()
   })
 
@@ -213,31 +215,32 @@
 
   const emit = defineEmits(['close'])
   const closeContainer = async () => {
-    if (selectedStyle.value) {
-      charStore.setSelection(
-        props.buttonKey,
-        'skill',
-        await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value),
-        props.selectedTab
-      )
-    }
-    emit('close')
+    isVisible.value = false
+    setTimeout(async () => {
+      if (selectedStyle.value) {
+        const skills = await fetchSkillOptions(selectedCharacter.value, selectedTeam.value, selectedStyle.value)
+        charStore.setSelection(props.buttonKey, 'skill', skills, props.selectedTab)
+      }
+      emit('close')
+    }, 300)
   }
 </script>
 
 <template>
-  <div @click="closeContainer" class="overlay">
-    <div
+  <teleport to="body">
+    <transition name="modal-fade">
+      <div v-if="isVisible" @click="closeContainer" class="overlay">
+        <div
       @click.stop
       class="container scrollbar-style-1"
       :style="{ overflow: isExpandedCollapse || isMobile ? 'scroll' : 'visible' }"
     >
-      <div class="button-group">
+          <div class="button-group">
         <button @click="closeContainer" class="close">
           <img src="@/assets/custom-icon/close.svg" alt="Close" />
         </button>
       </div>
-      <div class="section" style="padding: 0">
+          <div class="section" style="padding: 0">
         <label>Team</label>
         <Multiselect v-model="selectedTeam" placeholder="Select team" label="name" :options="teamOptions">
           <template v-slot:singlelabel="{ value }">
@@ -252,7 +255,7 @@
           </template>
         </Multiselect>
       </div>
-      <div class="section">
+          <div class="section">
         <label>Character</label>
         <Multiselect
           v-model="selectedCharacter"
@@ -274,7 +277,7 @@
           </template>
         </Multiselect>
       </div>
-      <div class="section">
+          <div class="section">
         <label>Style</label>
         <Multiselect
           v-model="selectedStyle"
@@ -296,7 +299,7 @@
           </template>
         </Multiselect>
       </div>
-      <div class="section">
+          <div class="section">
         <button
           class="collapse_btn"
           :class="{ collapse_btn_active: isExpandedCollapse }"
@@ -313,7 +316,7 @@
           >
             <path d="m280-400 200-200 200 200H280Z" />
           </svg>
-          <label style="font-size: 24px">Others</label>
+          <label style="font-size: 24px; color: inherit;">Others</label>
         </button>
         <Collapse :when="isExpandedCollapse">
           <div class="section">
@@ -391,12 +394,49 @@
           </div>
         </Collapse>
       </div>
-    </div>
-  </div>
+        </div>
+      </div>
+    </transition>
+  </teleport>
 </template>
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-fade-enter-from,
+  .modal-fade-leave-to {
+    opacity: 0;
+  }
+  @keyframes modal-scale-in {
+    from {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes modal-scale-out {
+    from {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+  }
+  .modal-fade-enter-active .container {
+    animation: modal-scale-in 0.3s ease;
+  }
+  .modal-fade-leave-active .container {
+    animation: modal-scale-out 0.3s ease forwards;
+  }
   .collapse_arrow {
     transition: transform 0.3s ease-in-out;
     transform: rotate(90deg);
@@ -483,7 +523,7 @@
     backdrop-filter: blur(5px);
   }
   .container {
-    position: relative;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -536,11 +576,16 @@
   }
   label {
     font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+    color: white;
   }
   .option-icon,
   .label-icon {
     width: 32px;
     height: 32px;
+  }
+  :deep(.multiselect-single-label),
+  :deep(.multiselect-option) {
+    color: white;
   }
   :deep(.multiselect-option),
   .multiselect-single-label {

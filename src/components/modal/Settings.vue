@@ -1,5 +1,6 @@
 <script setup>
   import { useSettingStore } from '@/store/setting'
+  import { ref, onMounted } from 'vue'
   import Multiselect from '@vueform/multiselect'
 
   const langOptions = [
@@ -9,19 +10,29 @@
   ]
   const settingStore = useSettingStore()
 
+  const isVisible = ref(false)
+  onMounted(() => {
+    isVisible.value = true
+  })
+
   const emit = defineEmits(['close'])
   const closeContainer = () => {
-    emit('close')
+    isVisible.value = false
+    setTimeout(() => {
+      emit('close')
+    }, 300)
   }
 </script>
 
 <template>
-  <div @click="closeContainer" class="overlay">
-    <div @click.stop class="container">
-      <button @click="closeContainer" class="close">
+  <teleport to="body">
+    <transition name="modal-fade">
+      <div v-if="isVisible" @click="closeContainer" class="overlay">
+        <div @click.stop class="container">
+          <button @click="closeContainer" class="close">
         <img src="@/assets/custom-icon/close.svg" alt="Close" />
       </button>
-      <div class="section" style="padding-top: 15px">
+          <div class="section" style="padding-top: 15px">
         <label>Language</label>
         <Multiselect
           v-model="settingStore.lang"
@@ -33,12 +44,49 @@
           :canDeselect="false"
         />
       </div>
-    </div>
-  </div>
+        </div>
+      </div>
+    </transition>
+  </teleport>
 </template>
 
 <style src="@vueform/multiselect/themes/default.css" />
 <style scoped>
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-fade-enter-from,
+  .modal-fade-leave-to {
+    opacity: 0;
+  }
+  @keyframes modal-scale-in {
+    from {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes modal-scale-out {
+    from {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+    }
+  }
+  .modal-fade-enter-active .container {
+    animation: modal-scale-in 0.3s ease;
+  }
+  .modal-fade-leave-active .container {
+    animation: modal-scale-out 0.3s ease forwards;
+  }
   label {
     color: rgb(209, 228, 222);
     font-family: 'Gugi', 'Noto Sans TC', sans-serif;
