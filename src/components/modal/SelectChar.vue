@@ -473,6 +473,9 @@
     height: 100%;
     width: 100%;
   }
+  .close:hover {
+    cursor: pointer;
+  }
   .flower-container {
     display: flex;
     align-items: center;
