@@ -1,5 +1,21 @@
 [
   {
+    "date": "2024-6-26",
+    "additions": [
+      {
+        "text": "新增戰術型態：",
+        "images": [
+          "char-images/31B/Ichigo_Minase/006.webp", 
+          "char-images/31B/Kozue_Hiiragi/006.webp", 
+          "char-images/31B/Seika_Higuchi/007.webp"
+        ]
+      },
+      {
+        "text": "新增進化技能：野獸牢獄+"
+      }
+    ]
+  },
+  {
     "date": "2024-6-12",
     "bugFixes": ["修正移動裝置組隊選角時，選角介面未能正常顯示的問題。"],
     "additions": [
