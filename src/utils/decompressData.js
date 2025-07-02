@@ -55,6 +55,7 @@ export async function updateData(customData) {
     skills: decodedData.skills,
     turns: decodedData.turns,
   })
+  skillStore.ensureIds()
   sliderStore.rows = decodedData.rows
   settingStore.lang = decodedData.language ?? settingStore.lang
 }

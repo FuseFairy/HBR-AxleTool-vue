@@ -37,7 +37,8 @@ export function compressAxleData() {
     char: usedCharStore,
     axleName: axleName,
     skills: skillStore.skills,
-    turns: skillStore.turns,
+    // eslint-disable-next-line no-unused-vars
+    turns: skillStore.turns.map(({ id, ...rest }) => rest),
     rows: sliderStore.rows,
     language: settingStore.lang,
   }

@@ -1,6 +1,5 @@
 <script setup>
   import { onBeforeMount, onMounted } from 'vue'
-  import { useSkillStore } from '@/store/axle'
   import { runIPGeolocation } from '@/utils/ipGeolocation'
   import { getData } from '@/utils/axleDataApi'
   import { updateData } from '@/utils/decompressData'
@@ -13,9 +12,6 @@
   import '@/style/main.css'
   import NProgress from 'nprogress'
   import '@/style/nprogress/nprogress.css'
-
-  const skillStore = useSkillStore()
-  skillStore.ensureIds()
 
   onBeforeMount(runIPGeolocation)
   onMounted(async () => {
