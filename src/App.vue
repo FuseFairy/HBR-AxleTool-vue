@@ -5,6 +5,7 @@
   import { updateData } from '@/utils/decompressData'
   import { loadFontCSS } from '@/utils/loadFontCSS'
   import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { useSkillStore } from '@/store/axle'
   import TeamComposition from '@/layouts/TeamComposition.vue'
   import Navbar from '@/layouts/Navbar.vue'
   import AppFooter from '@/layouts/Footer.vue'
@@ -18,6 +19,9 @@
     NProgress.configure({ showSpinner: false })
     NProgress.start()
     try {
+      const skillStore = useSkillStore()
+      skillStore.ensureIds()
+
       const fonts = ['fonts/LXGWWenKaiMonoTC-Regular/result.css', 'fonts/Gugi-Regular/result.css']
 
       await Promise.all(fonts.map((path) => loadFontCSS(getAssetsFile(path))))
