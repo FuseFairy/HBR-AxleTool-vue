@@ -1,5 +1,3 @@
-![HBR-AxleTool-vue](https://socialify.git.ci/FuseFairy/HBR-AxleTool-vue/image?font=Raleway&language=1&name=1&owner=1&pattern=Overlapping%20Hexagons&theme=Dark)
-
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
