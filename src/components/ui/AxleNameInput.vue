@@ -8,10 +8,10 @@
 <template>
   <p class="form-label">Axle Name</p>
   <input
+    v-model="skillStore.axleName"
     type="text"
     placeholder="Enter your axle name"
     class="form-input"
-    v-model="skillStore.axleName"
     :maxlength="maxlength"
   />
   <p class="char-counter">{{ skillStore.axleName.length }} / {{ maxlength }}</p>

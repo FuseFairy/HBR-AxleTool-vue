@@ -49,15 +49,17 @@
 
 <template>
   <nav>
-    <div class="left-button-group"><UploadButton /></div>
+    <div class="left-button-group">
+      <UploadButton />
+    </div>
     <h1 class="nav-title">HBR Axle Tool</h1>
     <div class="right-button-group">
       <button
         v-for="btn in buttons"
         :key="btn.key"
-        @click="handleButtonClick(btn.key)"
         v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
         :class="{ 'setting-icon-button': btn.key === 'setting', 'github-icon-button': btn.key === 'github' }"
+        @click="handleButtonClick(btn.key)"
       >
         <img :src="btn.icon" :alt="btn.key" />
       </button>

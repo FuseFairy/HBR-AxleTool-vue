@@ -174,206 +174,208 @@
 
   const emit = defineEmits(['close'])
   const closeTable = () => {
-    if (isLoading.value) return;
-    isVisible.value = false;
+    if (isLoading.value) return
+    isVisible.value = false
     setTimeout(() => {
-      emit('close');
-    }, 300);
+      emit('close')
+    }, 300)
   }
 </script>
 
 <template>
   <teleport to="body">
     <transition name="modal-fade">
-      <div v-if="isVisible" @click="closeTable" class="overlay">
+      <div v-if="isVisible" class="overlay" @click="closeTable">
         <loading
-      v-model:active="isLoading"
-      :can-cancel="false"
-      :is-full-page="true"
-      :lock-scroll="true"
-      background-color="#54504b"
-      color="#79d1cb"
-    />
-        <div @click.stop class="container">
+          v-model:active="isLoading"
+          :can-cancel="false"
+          :is-full-page="true"
+          :lock-scroll="true"
+          background-color="#54504b"
+          color="#79d1cb"
+        />
+        <div class="container" @click.stop>
           <div class="button-group">
-        <div class="left-button-group">
-          <ShowTableFilter />
-          <DownloadButton v-model:isLoading="isLoading" />
-          <shareButton />
-        </div>
-        <button @click="closeTable" class="close">
-          <img src="@/assets/custom-icon/close.svg" alt="Close" />
-        </button>
-      </div>
+            <div class="left-button-group">
+              <ShowTableFilter />
+              <DownloadButton v-model:is-loading="isLoading" />
+              <shareButton />
+            </div>
+            <button class="close" @click="closeTable">
+              <img src="@/assets/custom-icon/close.svg" alt="Close" />
+            </button>
+          </div>
           <div class="table scrollbar-style-1">
             <div v-if="sliderStore.rows <= 0" class="sleeping-image">
-          <img src="/src/assets/common/sleeping.webp" />
+              <img src="/src/assets/common/sleeping.webp" />
             </div>
-        <div v-else id="show-axle" class="table-wrapper">
-          <span v-if="axleName.length > 0" class="axle-name text-wrap">{{ axleName }}</span>
-          <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
-            <div
-              v-if="showTeamStore.showTeam.length > 1 && index > 0"
-              class="axle-line-container"
-              style="margin-top: 20px"
-            >
-              <div class="blue-line"></div>
-            </div>
-            <div class="table-container">
-              <div v-for="i in 7" class="table-column">
-                <div class="character-container">
-                  <div v-if="i === 1"></div>
-                  <div v-else>
-                    <img
-                      v-if="charStore.selections[selectedTab][i - 1].img"
-                      :src="getAssetsFile(charStore.selections[selectedTab][i - 1].img)"
-                      :alt="charStore.selections[selectedTab][i - 1].style"
-                      class="character-image"
-                    />
-                    <!-- Rank -->
-                    <div v-if="hasRank() && charStore.selections[selectedTab][i - 1].rank !== null" class="rank-text">
-                      {{ charStore.selections[selectedTab][i - 1].rank }}
+            <div v-else id="show-axle" class="table-wrapper">
+              <span v-if="axleName.length > 0" class="axle-name text-wrap">{{ axleName }}</span>
+              <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
+                <div
+                  v-if="showTeamStore.showTeam.length > 1 && index > 0"
+                  class="axle-line-container"
+                  style="margin-top: 20px"
+                >
+                  <div class="blue-line" />
+                </div>
+                <div class="table-container">
+                  <div v-for="(i, colIndex) in 7" :key="colIndex" class="table-column">
+                    <div class="character-container">
+                      <div v-if="i === 1" />
+                      <div v-else>
+                        <img
+                          v-if="charStore.selections[selectedTab][i - 1].img"
+                          :src="getAssetsFile(charStore.selections[selectedTab][i - 1].img)"
+                          :alt="charStore.selections[selectedTab][i - 1].style"
+                          class="character-image"
+                        />
+                        <!-- Rank -->
+                        <div
+                          v-if="hasRank() && charStore.selections[selectedTab][i - 1].rank !== null"
+                          class="rank-text"
+                        >
+                          {{ charStore.selections[selectedTab][i - 1].rank }}
+                        </div>
+                        <div
+                          v-else-if="
+                            hasRank() &&
+                            charStore.selections[selectedTab][i - 1].rank === null &&
+                            charStore.selections[selectedTab][i - 1].style !== null
+                          "
+                          class="rank-text"
+                        >
+                          <span>0</span>
+                        </div>
+                        <img
+                          v-if="hasRank() && charStore.selections[selectedTab][i - 1].flower"
+                          src="/src/assets/common/flower.webp"
+                          alt="flower"
+                          class="flower-img"
+                        />
+                        <!-- Spiritual -->
+                        <div
+                          v-if="hasSpiritual() && charStore.selections[selectedTab][i - 1].spiritual !== null"
+                          class="spiritual-text"
+                        >
+                          {{ charStore.selections[selectedTab][i - 1].spiritual }}
+                        </div>
+                        <!-- Earring -->
+                        <img
+                          v-if="hasEarring() && charStore.selections[selectedTab][i - 1].earring !== null"
+                          :src="getAssetsFile(earringDict[charStore.selections[selectedTab][i - 1].earring])"
+                          :alt="charStore.selections[selectedTab][i - 1].earring"
+                          class="earring-icon"
+                        />
+                      </div>
                     </div>
+                  </div>
+                </div>
+                <div v-if="hasPassiveSkill(selectedTab)" class="table-container" style="margin-top: 20px">
+                  <div v-for="(i, colIndex) in 7" :key="colIndex" class="table-column">
+                    <div v-if="i === 1" class="label text-wrap">Passive<br />Skill</div>
                     <div
                       v-else-if="
-                        hasRank() &&
-                        charStore.selections[selectedTab][i - 1].rank === null &&
-                        charStore.selections[selectedTab][i - 1].style !== null
+                        charStore.selections[selectedTab][i - 1].passiveSkill !== null &&
+                        charStore.selections[selectedTab][i - 1].passiveSkill.length > 0
                       "
-                      class="rank-text"
+                      class="text"
                     >
-                      <span>0</span>
+                      <span
+                        v-for="(skill, skillIndex) in charStore.selections[selectedTab][i - 1].passiveSkill"
+                        :key="skillIndex"
+                        class="passive-skill text-wrap"
+                      >
+                        {{
+                          displayPassiveSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style)
+                        }}
+                      </span>
                     </div>
-                    <img
-                      v-if="hasRank() && charStore.selections[selectedTab][i - 1].flower"
-                      src="/src/assets/common/flower.webp"
-                      alt="flower"
-                      class="flower-img"
-                    />
-                    <!-- Spiritual -->
-                    <div
-                      v-if="hasSpiritual() && charStore.selections[selectedTab][i - 1].spiritual !== null"
-                      class="spiritual-text"
-                    >
-                      {{ charStore.selections[selectedTab][i - 1].spiritual }}
-                    </div>
-                    <!-- Earring -->
-                    <img
-                      v-if="hasEarring() && charStore.selections[selectedTab][i - 1].earring !== null"
-                      :src="getAssetsFile(earringDict[charStore.selections[selectedTab][i - 1].earring])"
-                      :alt="charStore.selections[selectedTab][i - 1].earring"
-                      class="earring-icon"
-                    />
                   </div>
                 </div>
-              </div>
-            </div>
-            <div v-if="hasPassiveSkill(selectedTab)" class="table-container" style="margin-top: 20px">
-              <div v-for="i in 7" class="table-column">
-                <div v-if="i === 1" class="label text-wrap">Passive<br />Skill</div>
+                <!-- Used skill row -->
                 <div
-                  v-else-if="
-                    charStore.selections[selectedTab][i - 1].passiveSkill !== null &&
-                    charStore.selections[selectedTab][i - 1].passiveSkill.length > 0
-                  "
-                  class="text"
+                  v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)"
+                  class="used-skill-bg table-container"
+                  style="margin-top: 20px"
                 >
-                  <span
-                    v-for="skill in charStore.selections[selectedTab][i - 1].passiveSkill"
-                    class="passive-skill text-wrap"
-                  >
-                    {{ displayPassiveSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <!-- Used skill row -->
-            <div
-              v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)"
-              class="used-skill-bg table-container"
-              style="margin-top: 20px"
-            >
-              <div v-for="i in 7" class="table-column">
-                <div v-if="i === 1" class="label text-wrap">Skill</div>
-                <div v-else-if="charStore.selections[selectedTab][i - 1].style !== null" class="text">
-                  <span
-                    v-for="skill in Array.from(
-                      getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style]
-                    )"
-                    class="used-skill text-wrap"
-                  >
-                    {{ displayUsedSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Axle -->
-          <div v-if="showRowStore.showRow.includes('axle')">
-            <div
-              v-if="sliderStore.rows > 0 && showTeamStore.showTeam.length > 0"
-              class="axle-line-container"
-              style="margin-top: 20px"
-            >
-              <div class="red-line"></div>
-            </div>
-            <div
-              v-for="row in sliderStore.rows"
-              :class="skillStore.turns[row - 1].turn !== 'Switch' ? 'table-container-2' : 'table-container-3'"
-              :style="getStyle(row)"
-            >
-              <template v-if="skillStore.turns[row - 1].turn !== 'Switch'">
-                <div v-for="col in 4" class="axle-table-column">
-                  <div v-if="col === 1" class="label text-wrap">
-                    <span v-if="skillStore.turns[row - 1].turn !== null && skillStore.turns[row - 1].od !== null">
-                      {{ skillStore.turns[row - 1].turn }} / {{ skillStore.turns[row - 1].od }}
-                    </span>
-                    <span v-else-if="skillStore.turns[row - 1].turn === '追加回合'">{{
-                      additionalTurn[settingStore.lang]
-                    }}</span>
-                    <span v-else-if="skillStore.turns[row - 1].turn !== null">{{
-                      skillStore.turns[row - 1].turn
-                    }}</span>
+                  <div v-for="(i, colIndex) in 7" :key="colIndex" class="table-column">
+                    <div v-if="i === 1" class="label text-wrap">Skill</div>
+                    <div v-else-if="charStore.selections[selectedTab][i - 1].style !== null" class="text">
+                      <span
+                        v-for="(skill, skillIndex) in Array.from(
+                          getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style]
+                        )"
+                        :key="skillIndex"
+                        class="used-skill text-wrap"
+                      >
+                        {{ displayUsedSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
+                      </span>
+                    </div>
                   </div>
-                  <div v-else>
-                    <span v-if="skillStore.skills[row - 1][col - 2].skill !== null" class="axle-item">
-                      <div class="image">
-                        <img
-                          :src="getAssetsFile(skillStore.skills[row - 1][col - 2].style_img)"
-                          :alt="skillStore.skills[row - 1][col - 2].style"
-                          class="axle-img"
-                        />
+                </div>
+              </div>
+              <!-- Axle -->
+              <div v-if="showRowStore.showRow.includes('axle')">
+                <div
+                  v-if="sliderStore.rows > 0 && showTeamStore.showTeam.length > 0"
+                  class="axle-line-container"
+                  style="margin-top: 20px"
+                >
+                  <div class="red-line"></div>
+                </div>
+                <div
+                  v-for="(turn, i) in skillStore.turns"
+                  :key="turn.id"
+                  :class="turn.turn !== 'Switch' ? 'table-container-2' : 'table-container-3'"
+                  :style="getStyle(i + 1)"
+                >
+                  <template v-if="turn.turn !== 'Switch'">
+                    <div v-for="(col, colIndex) in 4" :key="colIndex" class="axle-table-column">
+                      <div v-if="col === 1" class="label text-wrap">
+                        <span v-if="turn.turn !== null && turn.od !== null"> {{ turn.turn }} / {{ turn.od }} </span>
+                        <span v-else-if="turn.turn === '追加回合'">{{ additionalTurn[settingStore.lang] }}</span>
+                        <span v-else-if="turn.turn !== null">{{ turn.turn }}</span>
                       </div>
-                      <div class="txt">
-                        <span
-                          class="axle-text text-wrap"
-                          :style="{ opacity: checkCommandSkill(row - 1, col - 2) ? '0.6' : '1' }"
-                        >
-                          {{ displaySkillName(row - 1, col - 2) }}
+                      <div v-else>
+                        <span v-if="skillStore.skills[i][col - 2].skill !== null" class="axle-item">
+                          <div class="image">
+                            <img
+                              :src="getAssetsFile(skillStore.skills[i][col - 2].style_img)"
+                              :alt="skillStore.skills[i][col - 2].style"
+                              class="axle-img"
+                            />
+                          </div>
+                          <div class="txt">
+                            <span
+                              class="axle-text text-wrap"
+                              :style="{ opacity: checkCommandSkill(i, col - 2) ? '0.6' : '1' }"
+                            >
+                              {{ displaySkillName(i, col - 2) }}
+                            </span>
+                            <img
+                              v-if="skillStore.skills[i][col - 2].target !== null"
+                              :src="
+                                getAssetsFile(
+                                  getTargetImg(
+                                    skillStore.skills[i][col - 2].selectedTab,
+                                    skillStore.skills[i][col - 2].target
+                                  )
+                                )
+                              "
+                              class="axle-target-img"
+                            />
+                          </div>
                         </span>
-                        <img
-                          v-if="skillStore.skills[row - 1][col - 2].target !== null"
-                          :src="
-                            getAssetsFile(
-                              getTargetImg(
-                                skillStore.skills[row - 1][col - 2].selectedTab,
-                                skillStore.skills[row - 1][col - 2].target
-                              )
-                            )
-                          "
-                          class="axle-target-img"
-                        />
                       </div>
-                    </span>
+                    </div>
+                  </template>
+                  <div v-else>
+                    <span class="switch-turn">{{ turn.turn }}</span>
                   </div>
                 </div>
-              </template>
-              <div v-else>
-                <span class="switch-turn">{{ skillStore.turns[row - 1].turn }}</span>
               </div>
             </div>
-          </div>
-        </div>
           </div>
         </div>
       </div>

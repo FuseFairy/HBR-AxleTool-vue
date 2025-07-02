@@ -27,23 +27,23 @@
 <template>
   <teleport to="body">
     <transition name="modal-fade">
-      <div v-if="isVisible" @click="closeContainer" class="overlay">
-        <div @click.stop class="container">
-          <button @click="closeContainer" class="close">
-        <img src="@/assets/custom-icon/close.svg" alt="Close" />
-      </button>
+      <div v-if="isVisible" class="overlay" @click="closeContainer">
+        <div class="container" @click.stop>
+          <button class="close" @click="closeContainer">
+            <img src="@/assets/custom-icon/close.svg" alt="Close" />
+          </button>
           <div class="section" style="padding-top: 15px">
-        <label>Language</label>
-        <Multiselect
-          v-model="settingStore.lang"
-          placeholder="Language"
-          label="name"
-          track-by="value"
-          :options="langOptions"
-          :canClear="false"
-          :canDeselect="false"
-        />
-      </div>
+            <label>Language</label>
+            <Multiselect
+              v-model="settingStore.lang"
+              placeholder="Language"
+              label="name"
+              track-by="value"
+              :options="langOptions"
+              :can-clear="false"
+              :can-deselect="false"
+            />
+          </div>
         </div>
       </div>
     </transition>

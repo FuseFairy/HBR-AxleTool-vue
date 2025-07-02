@@ -1,4 +1,4 @@
-import { getTeamData } from "./getTeamData"
+import { getTeamData } from './getTeamData'
 
 export async function fetchSkillOptions(characterName, team, styleName) {
   try {
@@ -94,17 +94,17 @@ export async function fetchSkillOptions(characterName, team, styleName) {
     }
 
     const allSkills = [
-      ...Object.entries(specificSkills).map(([_, info]) => ({
+      ...Object.entries(specificSkills).map(([, info]) => ({
         value: info['value'],
         names: info['names'],
         sp: info['sp'],
       })),
-      ...Object.entries(commonSkills).map(([_, info]) => ({
+      ...Object.entries(commonSkills).map(([, info]) => ({
         value: info['value'],
         names: info['names'],
         sp: info['sp'],
       })),
-      ...Object.entries(universalSkills).map(([_, info]) => ({
+      ...Object.entries(universalSkills).map(([, info]) => ({
         value: info['value'],
         names: info['names'],
         sp: info['sp'],

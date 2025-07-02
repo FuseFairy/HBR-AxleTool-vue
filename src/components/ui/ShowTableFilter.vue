@@ -29,14 +29,14 @@
 
   const show = ref(false)
   const filterRef = ref(null)
-  onClickOutside(filterRef, (event) => {
+  onClickOutside(filterRef, () => {
     show.value = false
   })
 </script>
 
 <template>
   <div ref="filterRef">
-    <button @click="show = !show" class="filter">
+    <button class="filter" @click="show = !show">
       <img :src="show ? filterOffIcon : filterOnIcon" alt="Filter" />
     </button>
     <div v-if="show" class="filter-content">
@@ -48,10 +48,10 @@
         label="name"
         :close-on-select="false"
         :options="showTeams"
-        @change="(value) => showTeamStore.setShowTeam(value)"
         style="margin-left: 5px"
+        @change="(value) => showTeamStore.setShowTeam(value)"
       >
-        <template v-slot:option="{ option }">
+        <template #option="{ option }">
           <div class="option-container">
             <span :title="option.name">{{ option.name }}</span>
             <div class="option-images">
@@ -72,8 +72,8 @@
         label="name"
         :close-on-select="false"
         :options="showOptions"
-        @change="(value) => showRowStore.setShowRow(value)"
         style="margin-left: 5px"
+        @change="(value) => showRowStore.setShowRow(value)"
       />
     </div>
   </div>

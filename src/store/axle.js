@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
 export const useSkillStore = defineStore(
@@ -20,7 +21,7 @@ export const useSkillStore = defineStore(
         ])
         skills.value.push(...newSkills)
 
-        const newTurns = Array.from({ length: difference }, () => ({ turn: null, od: null }))
+        const newTurns = Array.from({ length: difference }, () => ({ id: uuidv4(), turn: null, od: null }))
         turns.value.push(...newTurns)
       } else if (difference < 0) {
         skills.value.splice(rows)
@@ -28,11 +29,20 @@ export const useSkillStore = defineStore(
       }
     }
 
+    function ensureIds() {
+      turns.value.forEach((turn) => {
+        if (!turn.id) {
+          turn.id = uuidv4()
+        }
+      })
+    }
+
     return {
       axleName,
       skills,
       turns,
       adjustSkills,
+      ensureIds,
     }
   },
   {
@@ -40,14 +50,14 @@ export const useSkillStore = defineStore(
       storage: localStorage,
       serializer: {
         serialize: (state) => {
-          const jsonString = JSON.stringify(state);
-          return compressToUTF16(jsonString);
+          const jsonString = JSON.stringify(state)
+          return compressToUTF16(jsonString)
         },
         deserialize: (compressedString) => {
-          const jsonString = decompressFromUTF16(compressedString);
-            return jsonString ? JSON.parse(jsonString) : {};
-        }
-      }
-    }
+          const jsonString = decompressFromUTF16(compressedString)
+          return jsonString ? JSON.parse(jsonString) : {}
+        },
+      },
+    },
   }
 )

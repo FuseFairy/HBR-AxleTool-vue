@@ -1,5 +1,6 @@
 <script setup>
   import { onBeforeMount, onMounted } from 'vue'
+  import { useSkillStore } from '@/store/axle'
   import { runIPGeolocation } from '@/utils/ipGeolocation'
   import { getData } from '@/utils/axleDataApi'
   import { updateData } from '@/utils/decompressData'
@@ -13,26 +14,24 @@
   import NProgress from 'nprogress'
   import '@/style/nprogress/nprogress.css'
 
+  const skillStore = useSkillStore()
+  skillStore.ensureIds()
+
   onBeforeMount(runIPGeolocation)
   onMounted(async () => {
-    NProgress.configure({ showSpinner: false });
-    NProgress.start();
+    NProgress.configure({ showSpinner: false })
+    NProgress.start()
     try {
-      const fonts = [
-        'fonts/LXGWWenKaiMonoTC-Regular/result.css',
-        'fonts/Gugi-Regular/result.css'
-      ]
+      const fonts = ['fonts/LXGWWenKaiMonoTC-Regular/result.css', 'fonts/Gugi-Regular/result.css']
 
-      await Promise.all(
-        fonts.map(path => loadFontCSS(getAssetsFile(path)))
-      )
+      await Promise.all(fonts.map((path) => loadFontCSS(getAssetsFile(path))))
     } catch (err) {
       console.error('ERROR:', err)
     }
     const params = new URLSearchParams(window.location.search)
     const axle_id = params.get('axle_id')
-    const promisesToTrack = [];
-    
+    const promisesToTrack = []
+
     if (axle_id) {
       promisesToTrack.push(
         (async () => {
@@ -45,18 +44,18 @@
             window.history.replaceState({}, document.title, '/')
           } catch (error) {
             alert(error)
-            throw error;
+            throw error
           }
         })()
-      );
+      )
     }
 
     try {
-      await Promise.all(promisesToTrack);
+      await Promise.all(promisesToTrack)
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error)
     } finally {
-      NProgress.done();
+      NProgress.done()
     }
   })
 </script>
@@ -65,9 +64,15 @@
   <div class="page-layout">
     <Navbar />
     <main class="scrollbar-style-1">
-      <div class="box_container"><TeamComposition /></div>
-      <div class="axle"><AxleSection /></div>
-      <div class="footer"><AppFooter /></div>
+      <div class="box_container">
+        <TeamComposition />
+      </div>
+      <div class="axle">
+        <AxleSection />
+      </div>
+      <div class="footer">
+        <AppFooter />
+      </div>
     </main>
   </div>
 </template>

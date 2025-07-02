@@ -1,9 +1,10 @@
 <script setup>
-  import { ref, nextTick, toRaw, onMounted, onUnmounted } from 'vue'
+  import { ref, nextTick, toRaw, onUnmounted } from 'vue'
   import { useSliderStore } from '@/store/slider'
   import { useSkillStore } from '@/store/axle'
   import { useCharStore } from '@/store/char'
   import { useSettingStore } from '@/store/setting'
+  import { v4 as uuidv4 } from 'uuid'
   import Multiselect from '@vueform/multiselect'
   import SelectAxleChar from '@/components/modal/SelectAxleChar.vue'
   import { getAssetsFile } from '@/utils/getAssetsFile'
@@ -79,6 +80,7 @@
   const copyRow = (index) => {
     sliderStore.rows += 1
     const copiedTurn = cloneDeep(skillStore.turns[index])
+    copiedTurn.id = uuidv4()
     const copiedSkill = cloneDeep(skillStore.skills[index])
     skillStore.turns.splice(index + 1, 0, copiedTurn)
     skillStore.skills.splice(index + 1, 0, copiedSkill)
@@ -101,12 +103,12 @@
 
   function handleTurnChange(value, index) {
     if (value === 'Switch') {
-      skillStore.skills[index - 1] = [
+      skillStore.skills[index] = [
         { selectedTab: null, style: null, style_img: null, skill: null, target: null },
         { selectedTab: null, style: null, style_img: null, skill: null, target: null },
         { selectedTab: null, style: null, style_img: null, skill: null, target: null },
       ]
-      skillStore.turns[index - 1].od = null
+      skillStore.turns[index].od = null
     }
   }
 
@@ -149,7 +151,7 @@
     mouseDownButton.value = { row, key }
   }
 
-  function handleDragEnd(e, row, key) {
+  function handleDragEnd(e) {
     e.target.classList.remove('dragging')
     swapButtons()
   }
@@ -204,7 +206,7 @@
     }
   }
 
-  function handleTouchEnd(e) {
+  function handleTouchEnd() {
     document.body.style.overflow = '' // 恢復頁面滾動
     if (touchElement.value) {
       touchElement.value.remove() // 移除影子元素
@@ -227,10 +229,6 @@
       mouseOnButton.value.row !== mouseDownButton.value.row ||
       mouseOnButton.value.key === mouseDownButton.value.key
     ) {
-      console.log('Swap skipped:', {
-        mouseOnButton: mouseOnButton.value,
-        mouseDownButton: mouseDownButton.value,
-      })
       mouseOnButton.value = null
       mouseDownButton.value = null
       return
@@ -253,14 +251,6 @@
     mouseDownButton.value = null
   }
 
-  // 動態添加事件監聽器
-  onMounted(() => {
-    // 綁定到 document，捕獲所有 .circle-button 的觸控事件
-    document.addEventListener('touchstart', handleTouchStartWrapper, { passive: false })
-    document.addEventListener('touchmove', handleTouchMove, { passive: false })
-    document.addEventListener('touchend', handleTouchEnd, { passive: false })
-  })
-
   onUnmounted(() => {
     document.removeEventListener('touchstart', handleTouchStartWrapper, { passive: false })
     document.removeEventListener('touchmove', handleTouchMove, { passive: false })
@@ -268,14 +258,14 @@
   })
 
   // 包裝 touchstart 以傳遞 row 和 key
-  function handleTouchStartWrapper(e) {
-    const button = e.target.closest('.circle-button')
+  function handleTouchStartWrapper(event) {
+    const button = event.target.closest('.circle-button')
     if (button) {
       const row = parseInt(button.dataset.row, 10)
       const key = parseInt(button.dataset.key, 10)
       console.log('Touch start:', { row, key }) // 調試日誌
       if (!isNaN(row) && !isNaN(key)) {
-        handleTouchStart(e, row, key)
+        handleTouchStart(event, row, key)
       }
     }
   }
@@ -283,37 +273,37 @@
 
 <template>
   <div
-    v-for="i in sliderStore.rows"
-    :key="i"
+    v-for="(turn, i) in skillStore.turns"
+    :key="turn.id"
+    v-slide-in
     :class="[
       'container row-item',
       {
-        'grid-disabled': skillStore.turns[i - 1].turn === 'Switch',
-        od1: skillStore.turns[i - 1].od === 'OD1',
-        od2: skillStore.turns[i - 1].od === 'OD2',
-        od3: skillStore.turns[i - 1].od === 'OD3',
+        'grid-disabled': turn.turn === 'Switch',
+        od1: turn.od === 'OD1',
+        od2: turn.od === 'OD2',
+        od3: turn.od === 'OD3',
       },
     ]"
-    v-slide-in
   >
-    <button class="delete-button" @click="deleteRow(i - 1)" v-tooltip="{ content: 'delete', placement: 'bottom' }">
+    <button v-tooltip="{ content: 'delete', placement: 'bottom' }" class="delete-button" @click="deleteRow(i)">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
         <path
           d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"
         />
       </svg>
     </button>
-    <button class="copy-button" @click="copyRow(i - 1)" v-tooltip="{ content: 'copy', placement: 'bottom' }">
+    <button v-tooltip="{ content: 'copy', placement: 'bottom' }" class="copy-button" @click="copyRow(i)">
       <img src="@/assets/custom-icon/copy.svg" alt="copy" />
     </button>
     <div class="column">
-      <div :class="['empty-1', { 'empty-2': skillStore.turns[i - 1].turn === 'Switch' }]">
-        <template v-if="skillStore.turns[i - 1].turn !== 'Switch'">
+      <div :class="['empty-1', { 'empty-2': turn.turn === 'Switch' }]">
+        <template v-if="turn.turn !== 'Switch'">
           <button
-            class="arrow-button"
-            :disabled="i === 1"
-            @click="exchange(i - 1, 'up')"
             v-tooltip="{ content: 'up', placement: 'top' }"
+            class="arrow-button"
+            :disabled="i === 0"
+            @click="exchange(i, 'up')"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -326,10 +316,10 @@
             </svg>
           </button>
           <button
-            class="arrow-button"
-            :disabled="sliderStore.rows === i"
-            @click="exchange(i - 1, 'down')"
             v-tooltip="{ content: 'down', placement: 'bottom' }"
+            class="arrow-button"
+            :disabled="i === skillStore.turns.length - 1"
+            @click="exchange(i, 'down')"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -344,7 +334,7 @@
         </template>
       </div>
       <Multiselect
-        v-model="skillStore.turns[i - 1].turn"
+        v-model="turn.turn"
         placeholder="Turn"
         :options="turnOptions"
         label="names"
@@ -353,69 +343,64 @@
         fallback-locale="zh-TW"
         @update:model-value="(value) => handleTurnChange(value, i)"
       />
-      <Multiselect
-        v-if="skillStore.turns[i - 1].turn !== 'Switch'"
-        v-model="skillStore.turns[i - 1].od"
-        placeholder="OD"
-        :options="odOptions"
-      />
+      <Multiselect v-if="turn.turn !== 'Switch'" v-model="turn.od" placeholder="OD" :options="odOptions" />
     </div>
-    <div class="button-container" v-if="skillStore.turns[i - 1].turn !== 'Switch'">
-      <div class="column" v-for="n in 3" :key="n">
+    <div v-if="turn.turn !== 'Switch'" class="button-container">
+      <div v-for="n in 3" :key="n" class="column">
         <button
-          :data-row="i - 1"
+          :data-row="i"
           :data-key="n - 1"
-          @click="handleBoxClick(i - 1, n - 1)"
           :class="{
-            'circle-button selected-button': skillStore.skills[i - 1][n - 1].style_img !== null,
-            'circle-button add-button': skillStore.skills[i - 1][n - 1].style_img === null,
+            'circle-button selected-button': skillStore.skills[i][n - 1].style_img !== null,
+            'circle-button add-button': skillStore.skills[i][n - 1].style_img === null,
           }"
           draggable="true"
-          @dragstart="handleDragStart($event, i - 1, n - 1)"
-          @dragover.prevent="handleDragOver($event, i - 1, n - 1)"
-          @dragend="handleDragEnd($event, i - 1, n - 1)"
+          @click="handleBoxClick(i, n - 1)"
+          @dragstart="handleDragStart($event, i, n - 1)"
+          @dragover.prevent="handleDragOver($event, i, n - 1)"
+          @dragend="handleDragEnd($event, i, n - 1)"
         >
           <img
-            v-if="skillStore.skills[i - 1][n - 1].style_img !== null"
+            v-if="skillStore.skills[i][n - 1].style_img !== null"
             class="char-img"
-            :src="getAssetsFile(skillStore.skills[i - 1][n - 1].style_img)"
-            :alt="skillStore.skills[i - 1][n - 1].style"
+            :src="getAssetsFile(skillStore.skills[i][n - 1].style_img)"
+            :alt="skillStore.skills[i][n - 1].style"
           />
           <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
         </button>
         <Multiselect
-          v-model="skillStore.skills[i - 1][n - 1].skill"
+          v-model="skillStore.skills[i][n - 1].skill"
           placeholder="Skill"
           label="names"
           track-by="value"
           :searchable="isDesktop"
-          :options="getFilteredSkills(i - 1, n - 1)"
+          :options="getFilteredSkills(i, n - 1)"
         >
-          <template v-slot:singlelabel="{ value }">
+          <template #singlelabel="{ value }">
             <div class="multiselect-single-label">
               <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
             </div>
           </template>
-          <template v-slot:option="{ option }">
+          <template #option="{ option }">
             <span :title="option.names[settingStore.lang]"
               >{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span
             >
           </template>
         </Multiselect>
         <Multiselect
-          v-model="skillStore.skills[i - 1][n - 1].target"
+          v-model="skillStore.skills[i][n - 1].target"
           placeholder="Target"
           label="names"
           track-by="value"
-          :options="getTargetOptions(i - 1, n - 1)"
+          :options="getTargetOptions(i, n - 1)"
         >
-          <template v-slot:singlelabel="{ value }">
+          <template #singlelabel="{ value }">
             <div class="multiselect-single-label">
               <img class="label-icon" :src="getAssetsFile(value.icon)" />
               <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
             </div>
           </template>
-          <template v-slot:option="{ option }">
+          <template #option="{ option }">
             <img class="option-icon" :src="getAssetsFile(option.icon)" />
             <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
           </template>
@@ -426,7 +411,7 @@
   <SelectAxleChar
     v-if="activeComponent.row !== null"
     :row="activeComponent.row"
-    :buttonKey="activeComponent.buttonKey"
+    :button-key="activeComponent.buttonKey"
     @close="closeContainer"
   />
 </template>

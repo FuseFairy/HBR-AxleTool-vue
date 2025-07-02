@@ -47,12 +47,12 @@
 
 <template>
   <button
-    @click="triggerShareLink"
+    v-tooltip="{ content: isLoading ? 'Uploading...' : 'Share', placement: 'bottom' }"
     class="share-button"
     :disabled="isLoading"
-    v-tooltip="{ content: isLoading ? 'Uploading...' : 'Share', placement: 'bottom' }"
+    @click="triggerShareLink"
   >
-    <div v-if="isLoading" class="loading-spinner"></div>
+    <div v-if="isLoading" class="loading-spinner" />
     <img v-else src="@/assets/custom-icon/share.svg" alt="Share" />
   </button>
 </template>

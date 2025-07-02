@@ -48,59 +48,65 @@
 <template>
   <teleport to="body">
     <transition name="modal-fade">
-      <div v-if="isVisible" @click="closeContainer" class="overlay">
-        <div @click.stop class="container">
+      <div v-if="isVisible" class="overlay" @click="closeContainer">
+        <div class="container" @click.stop>
           <div class="button-group">
-        <span class="title">Update</span>
-        <button @click="closeContainer" class="close">
-          <img src="@/assets/custom-icon/close.svg" alt="Close" />
-        </button>
-      </div>
+            <span class="title">Update</span>
+            <button class="close" @click="closeContainer">
+              <img src="@/assets/custom-icon/close.svg" alt="Close" />
+            </button>
+          </div>
           <div class="section scrollbar-style-1">
-        <div v-if="isLoading" class="loading">Loading...</div>
-        <div v-else-if="errorMessage" class="error">{{ errorMessage }}</div>
-        <div v-else class="updates-content">
-          <div v-for="update in updates" :key="update.date" class="update-item" :data-date="update.date">
-            <div class="update-header" @click="toggleSection(update.date)">
-              <span class="update-date">{{ update.date }}</span>
-              <span class="toggle-icon">{{ expandedSections[update.date] ? '−' : '+' }}</span>
+            <div v-if="isLoading" class="loading">Loading...</div>
+            <div v-else-if="errorMessage" class="error">
+              {{ errorMessage }}
             </div>
-            <div class="update-content-wrapper" :class="{ expanded: expandedSections[update.date] }">
-              <div class="update-content">
-                <div v-if="update.features?.length" class="category">
-                  <h2>✨ 新功能</h2>
-                  <ul>
-                    <li v-for="feature in update.features" :key="feature">{{ feature }}</li>
-                  </ul>
+            <div v-else class="updates-content">
+              <div v-for="update in updates" :key="update.date" class="update-item" :data-date="update.date">
+                <div class="update-header" @click="toggleSection(update.date)">
+                  <span class="update-date">{{ update.date }}</span>
+                  <span class="toggle-icon">{{ expandedSections[update.date] ? '−' : '+' }}</span>
                 </div>
-                <div v-if="update.bugFixes?.length" class="category">
-                  <h2>🛠️ 錯誤修正</h2>
-                  <ul>
-                    <li v-for="fix in update.bugFixes" :key="fix">{{ fix }}</li>
-                  </ul>
-                </div>
-                <div v-if="update.additions?.length" class="category">
-                  <h2>📌 新增內容</h2>
-                  <ul>
-                    <li v-for="addition in update.additions" :key="addition.text">
-                      <span>{{ addition.text }}</span>
-                      <div v-if="addition.images?.length" class="image-grid">
-                        <img
-                          v-for="img in addition.images"
-                          :key="img"
-                          :src="getAssetsFile(img)"
-                          alt="Update image"
-                          class="update-image"
-                        />
-                      </div>
-                    </li>
-                  </ul>
+                <div class="update-content-wrapper" :class="{ expanded: expandedSections[update.date] }">
+                  <div class="update-content">
+                    <div v-if="update.features?.length" class="category">
+                      <h2>✨ 新功能</h2>
+                      <ul>
+                        <li v-for="feature in update.features" :key="feature">
+                          {{ feature }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div v-if="update.bugFixes?.length" class="category">
+                      <h2>🛠️ 錯誤修正</h2>
+                      <ul>
+                        <li v-for="fix in update.bugFixes" :key="fix">
+                          {{ fix }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div v-if="update.additions?.length" class="category">
+                      <h2>📌 新增內容</h2>
+                      <ul>
+                        <li v-for="addition in update.additions" :key="addition.text">
+                          <span>{{ addition.text }}</span>
+                          <div v-if="addition.images?.length" class="image-grid">
+                            <img
+                              v-for="img in addition.images"
+                              :key="img"
+                              :src="getAssetsFile(img)"
+                              alt="Update image"
+                              class="update-image"
+                            />
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
         </div>
       </div>
     </transition>

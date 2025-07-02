@@ -46,7 +46,7 @@
 
   const filteredSelections = computed(() => {
     const filtered = Object.fromEntries(
-      Object.entries(charStore.selections[selectedTab.value]).filter(([key, value]) => value.img !== null)
+      Object.entries(charStore.selections[selectedTab.value]).filter(([, value]) => value.img !== null)
     )
     return filtered
   })
@@ -82,33 +82,33 @@
 <template>
   <teleport to="body">
     <transition name="modal-fade">
-      <div v-if="isVisible" @click="closeContainer" class="overlay">
-        <div @click.stop class="container">
-          <button @click="closeContainer" class="close">
-        <img src="@/assets/custom-icon/close.svg" alt="Close" />
-      </button>
+      <div v-if="isVisible" class="overlay" @click="closeContainer">
+        <div class="container" @click.stop>
+          <button class="close" @click="closeContainer">
+            <img src="@/assets/custom-icon/close.svg" alt="Close" />
+          </button>
           <div class="tabs">
-        <button
-          v-for="tab in tabs"
-          :key="tab.key"
-          class="tab"
-          :class="{ active: selectedTab === tab.key }"
-          @click="selectTab(tab.key)"
-        >
-          {{ tab.label }}
-        </button>
-      </div>
+            <button
+              v-for="tab in tabs"
+              :key="tab.key"
+              class="tab"
+              :class="{ active: selectedTab === tab.key }"
+              @click="selectTab(tab.key)"
+            >
+              {{ tab.label }}
+            </button>
+          </div>
           <div class="button-container">
-        <button
-          v-for="(item, key) in filteredSelections"
-          :key="key"
-          class="circle-button selected-button"
-          @click="handleImageClick(key)"
-        >
-          <img class="char-img" :src="getAssetsFile(item.img)" :alt="item.style" />
-          <div v-if="isSelected(key)" class="overlay-text">Selected</div>
-        </button>
-      </div>
+            <button
+              v-for="(item, key) in filteredSelections"
+              :key="key"
+              class="circle-button selected-button"
+              @click="handleImageClick(key)"
+            >
+              <img class="char-img" :src="getAssetsFile(item.img)" :alt="item.style" />
+              <div v-if="isSelected(key)" class="overlay-text">Selected</div>
+            </button>
+          </div>
         </div>
       </div>
     </transition>

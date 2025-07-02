@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build && node minify-json.js",
     "preview": "vite preview",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "@adamdehaven/vue-custom-tooltip": "^2.6.0",
@@ -33,12 +34,16 @@
   "devDependencies": {
     "@vitejs/plugin-legacy": "^6.1.1",
     "@vitejs/plugin-vue": "^5.2.1",
+    "eslint": "^9.30.1",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-vue": "^10.2.0",
     "jsonminify": "^0.4.2",
     "prettier": "^3.3.3",
     "rollup-plugin-external-globals": "^0.13.0",
     "rollup-plugin-visualizer": "^5.14.0",
     "terser": "^5.39.0",
     "vite": "^6.3.5",
-    "vite-plugin-vue-devtools": "^7.3.1"
+    "vite-plugin-vue-devtools": "^7.3.1",
+    "vue-eslint-parser": "^10.2.0"
   }
 }

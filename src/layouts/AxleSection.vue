@@ -7,8 +7,12 @@
 
 <template>
   <div class="form-row">
-    <div class="left-column"><AxleNameInput /></div>
-    <div class="right-column"><RowSlider /></div>
+    <div class="left-column">
+      <AxleNameInput />
+    </div>
+    <div class="right-column">
+      <RowSlider />
+    </div>
   </div>
   <TurnSkillSelection />
   <AddRows />

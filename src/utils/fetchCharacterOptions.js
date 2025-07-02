@@ -1,10 +1,10 @@
-import { getTeamData } from "./getTeamData"
+import { getTeamData } from './getTeamData'
 
 export async function fetchCharacterOptions(team) {
   try {
     const data = await getTeamData(team)
-    
-    return Object.entries(data).map(([_, info]) => ({
+
+    return Object.entries(data).map(([, info]) => ({
       value: info.value,
       names: info.names,
       icon: `char-images/${team}/${info['english name']}/icon.webp`,

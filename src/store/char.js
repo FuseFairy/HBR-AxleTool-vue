@@ -65,14 +65,14 @@ export const useCharStore = defineStore(
       storage: localStorage,
       serializer: {
         serialize: (state) => {
-          const jsonString = JSON.stringify(state);
-          return compressToUTF16(jsonString);
+          const jsonString = JSON.stringify(state)
+          return compressToUTF16(jsonString)
         },
         deserialize: (compressedString) => {
-          const jsonString = decompressFromUTF16(compressedString);
-            return jsonString ? JSON.parse(jsonString) : {};
-        }
-      }
-    }
+          const jsonString = decompressFromUTF16(compressedString)
+          return jsonString ? JSON.parse(jsonString) : {}
+        },
+      },
+    },
   }
 )

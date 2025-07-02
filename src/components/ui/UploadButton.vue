@@ -46,7 +46,7 @@
           isLoading.value = false
         }
       }
-    } catch (error) {
+    } catch {
       alert('Failed to read the file. Please try again.')
     }
   }
@@ -62,10 +62,10 @@
     loader="dots"
     color="#79d1cb"
   />
-  <button @click="triggerFileInput" class="upload-button" v-tooltip="{ content: 'Upload', placement: 'bottom' }">
+  <button v-tooltip="{ content: 'Upload', placement: 'bottom' }" class="upload-button" @click="triggerFileInput">
     <img src="@/assets/custom-icon/upload.svg" alt="Upload" />
   </button>
-  <input type="file" ref="fileInput" @change="onFileChange" accept=".jpg,.jpeg" style="display: none" />
+  <input ref="fileInput" type="file" accept=".jpg,.jpeg" style="display: none" @change="onFileChange" />
 </template>
 
 <style scoped>

@@ -12,7 +12,7 @@ export async function fetchStyleOptions(characterName, team) {
     const englishName = characterData['english name']
     const styles = characterData.style
 
-    return Object.entries(styles).map(([_, info]) => ({
+    return Object.entries(styles).map(([, info]) => ({
       value: info.value,
       names: info.names,
       icon: `char-images/${team}/${englishName}/${info.id}.webp`,

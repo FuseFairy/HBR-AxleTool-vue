@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <button
-      @click="addRow"
       class="circle-button add-button"
       :disabled="sliderStore.rows === 80 || (sliderStore.rows === 0 && !hasChar)"
+      @click="addRow"
     >
       <img class="icon-img" src="@/assets/custom-icon/add_circle.svg" alt="Add a row" />
     </button>

@@ -34,7 +34,7 @@
 </script>
 
 <template>
-  <button @click="downloadTable" class="download">
+  <button class="download" @click="downloadTable">
     <img src="@/assets/custom-icon/download.svg" alt="Download" />
   </button>
 </template>

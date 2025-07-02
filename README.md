@@ -32,3 +32,9 @@ npm run preview
 ```sh
 npm run format
 ```
+
+### Lint with ESLint
+
+```sh
+npm run lint
+```

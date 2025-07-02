@@ -35,8 +35,7 @@
       :drag-on-click="true"
       :marks="[0, 80]"
       @change="updateSkillsRows"
-    >
-    </vue-slider>
+    />
   </div>
 </template>
 

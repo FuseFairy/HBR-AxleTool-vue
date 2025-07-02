@@ -1,4 +1,4 @@
-import { getTeamData } from "./getTeamData"
+import { getTeamData } from './getTeamData'
 import { isObject, values } from 'lodash-es'
 
 export async function fetchCommandSkill(characterName, team, styleName) {

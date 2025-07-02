@@ -270,10 +270,10 @@
   }
 
   const handleTouchStart = (event, key) => {
-    event.stopPropagation();
-    event.preventDefault();
-    startDrag(key);
-  };
+    event.stopPropagation()
+    event.preventDefault()
+    startDrag(key)
+  }
 </script>
 
 <template>
@@ -291,9 +291,9 @@
 
   <div class="tool-container">
     <button
-      @click="refreshData"
-      class="refresh-button"
       v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom' }"
+      class="refresh-button"
+      @click="refreshData"
     >
       <img src="@/assets/custom-icon/update.svg" alt="refresh" :class="{ spin: isRefreshing }" />
     </button>
@@ -303,8 +303,8 @@
     <button
       v-for="button in buttons"
       :key="button.key"
-      :data-key="button.key"
       :ref="(el) => (buttonRefs[button.key] = el)"
+      :data-key="button.key"
       :class="{
         'team-circle-button': true,
         'selected-button': charStore.selections[selectedTab][button.key]?.img !== null,
@@ -338,8 +338,8 @@
 
   <SelectChar
     v-if="activeComponent !== null"
-    :buttonKey="activeComponent"
-    :selectedTab="selectedTab"
+    :button-key="activeComponent"
+    :selected-tab="selectedTab"
     @close="closeContainer"
   />
 </template>

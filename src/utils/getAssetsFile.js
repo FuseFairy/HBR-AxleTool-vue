@@ -1,10 +1,10 @@
-const assetModules = import.meta.glob('/src/assets/**/*', { 
-  eager: true, 
+const assetModules = import.meta.glob('/src/assets/**/*', {
+  eager: true,
   query: '?url',
-  import: 'default'
-});
+  import: 'default',
+})
 
 export function getAssetsFile(path) {
-  const fullPathInSrc = `/src/assets/${path}`;
-  return assetModules[fullPathInSrc];
+  const fullPathInSrc = `/src/assets/${path}`
+  return assetModules[fullPathInSrc]
 }
