@@ -5,3 +5,5 @@
 *.exe binary
 
 *.md text
+
+src/assets/fonts/** linguist-vendored
