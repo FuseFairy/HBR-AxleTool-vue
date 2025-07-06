@@ -1,17 +1,17 @@
 {
   "立華 奏": {
     "value": "立華 奏",
-    "names": { "zh-TW": "立華 奏", "jp": "立華 かなで", "zh-CN": "立华 奏" },
+    "names": { "zh-TW": "立華 奏", "jp": "立華 かなで", "zh-CN": "立华 奏", "zh-CN-CN": "立华 奏" },
     "english name": "Kanade_Tachibana",
     "style": {
       "Earth Angel": {
         "value": "Earth Angel",
-        "names": { "zh-TW": "Earth Angel", "jp": "Earth Angel", "zh-CN": "Earth Angel" },
+        "names": { "zh-TW": "Earth Angel", "jp": "Earth Angel", "zh-CN": "Earth Angel", "zh-CN-CN": "Earth Angel" },
         "id": "001"
       },
       "翱穹之劍": {
         "value": "翱穹之劍",
-        "names": { "zh-TW": "翱穹之劍", "jp": "天翔ける剣", "zh-CN": "翱穹之剑" },
+        "names": { "zh-TW": "翱穹之劍", "jp": "天翔ける剣", "zh-CN": "翱穹之剑", "zh-CN-CN": "翱翔天际之剑" },
         "id": "002"
       }
     },
@@ -19,34 +19,34 @@
       "common": {
         "洞察力": {
           "value": "洞察力",
-          "names": { "zh-TW": "洞察力", "jp": "インサイト", "zh-CN": "洞察力" },
+          "names": { "zh-TW": "洞察力", "jp": "インサイト", "zh-CN": "洞察力", "zh-CN-CN": "洞悉" },
           "sp": 5
         },
         "幸運斬": {
           "value": "幸運斬",
-          "names": { "zh-TW": "幸運斬", "jp": "フォーチュンスラッシュ", "zh-CN": "幸运斩" },
+          "names": { "zh-TW": "幸運斬", "jp": "フォーチュンスラッシュ", "zh-CN": "幸运斩", "zh-CN-CN": "幸运斩" },
           "sp": 7
         },
         "天使光線": {
           "value": "天使光線",
-          "names": { "zh-TW": "天使光線", "jp": "エンジェルズ・レイ", "zh-CN": "天使光线" },
+          "names": { "zh-TW": "天使光線", "jp": "エンジェルズ・レイ", "zh-CN": "天使光线", "zh-CN-CN": "天使光翼斩" },
           "sp": 15
         },
         "冰凍瞬間": {
           "value": "冰凍瞬間",
-          "names": { "zh-TW": "冰凍瞬間", "jp": "フローズンタイム", "zh-CN": "冰冻瞬间" },
+          "names": { "zh-TW": "冰凍瞬間", "jp": "フローズンタイム", "zh-CN": "冰冻瞬间", "zh-CN-CN": "冻结时刻" },
           "sp": 8
         },
         "天之心跳": {
           "value": "天之心跳",
-          "names": { "zh-TW": "天之心跳", "jp": "ヘヴンズビート", "zh-CN": "天之心跳" },
+          "names": { "zh-TW": "天之心跳", "jp": "ヘヴンズビート", "zh-CN": "天之心跳", "zh-CN-CN": "天堂心跳" },
           "sp": 4
         }
       },
       "翱穹之劍": {
         "垂直力": {
           "value": "垂直力",
-          "names": { "zh-TW": "垂直力", "jp": "バーチカルフォース", "zh-CN": "垂直力" },
+          "names": { "zh-TW": "垂直力", "jp": "バーチカルフォース", "zh-CN": "垂直力", "zh-CN-CN": "垂直打击" },
           "sp": 15
         }
       }
@@ -55,17 +55,22 @@
   },
   "仲村 百合": {
     "value": "仲村 百合",
-    "names": { "zh-TW": "仲村 百合", "jp": "仲村 ゆり", "zh-CN": "仲村 百合" },
+    "names": { "zh-TW": "仲村 百合", "jp": "仲村 ゆり", "zh-CN": "仲村 百合", "zh-CN-CN": "仲村 百合" },
     "english name": "Yuri_Nakamura",
     "style": {
       "Rain Fire": {
         "value": "Rain Fire",
-        "names": { "zh-TW": "Rain Fire", "jp": "Rain Fire", "zh-CN": "Rain Fire" },
+        "names": { "zh-TW": "Rain Fire", "jp": "Rain Fire", "zh-CN": "Rain Fire", "zh-CN-CN": "Rain Fire" },
         "id": "001"
       },
       "平凡的非日常": {
         "value": "平凡的非日常",
-        "names": { "zh-TW": "平凡的非日常", "jp": "ありふれた非日常", "zh-CN": "平凡的非日常" },
+        "names": {
+          "zh-TW": "平凡的非日常",
+          "jp": "ありふれた非日常",
+          "zh-CN": "平凡的非日常",
+          "zh-CN-CN": "平凡的非日常"
+        },
         "id": "002"
       }
     },
@@ -73,34 +78,34 @@
       "common": {
         "爆裂火焰": {
           "value": "爆裂火焰",
-          "names": { "zh-TW": "爆裂火焰", "jp": "バーストファイア", "zh-CN": "爆裂火焰" },
+          "names": { "zh-TW": "爆裂火焰", "jp": "バーストファイア", "zh-CN": "爆裂火焰", "zh-CN-CN": "爆裂赤炎" },
           "sp": 10
         },
         "突襲": {
           "value": "突襲",
-          "names": { "zh-TW": "突襲", "jp": "オンラッシュ", "zh-CN": "突袭" },
+          "names": { "zh-TW": "突襲", "jp": "オンラッシュ", "zh-CN": "突袭", "zh-CN-CN": "突击" },
           "sp": 6
         },
         "大災難": {
           "value": "大災難",
-          "names": { "zh-TW": "大災難", "jp": "カタストロフィー", "zh-CN": "大灾难" },
+          "names": { "zh-TW": "大災難", "jp": "カタストロフィー", "zh-CN": "大灾难", "zh-CN-CN": "灾难的业火" },
           "sp": 15
         },
         "冷冽子彈": {
           "value": "冷冽子彈",
-          "names": { "zh-TW": "冷冽子彈", "jp": "コールドバレット", "zh-CN": "冷冽子弹" },
+          "names": { "zh-TW": "冷冽子彈", "jp": "コールドバレット", "zh-CN": "冷冽子弹", "zh-CN-CN": "寒冷子弹" },
           "sp": 10
         },
         "冰霜棘刺": {
           "value": "冰霜棘刺",
-          "names": { "zh-TW": "冰霜棘刺", "jp": "フロストソーン", "zh-CN": "冰霜棘刺" },
+          "names": { "zh-TW": "冰霜棘刺", "jp": "フロストソーン", "zh-CN": "冰霜棘刺", "zh-CN-CN": "冰霜棘刺" },
           "sp": 10
         }
       },
       "平凡的非日常": {
         "真實冰錐": {
           "value": "真實冰錐",
-          "names": { "zh-TW": "真實冰錐", "jp": "トゥルー・アイシクル", "zh-CN": "真实冰锥" },
+          "names": { "zh-TW": "真實冰錐", "jp": "トゥルー・アイシクル", "zh-CN": "真实冰锥", "zh-CN-CN": "真实冰锥" },
           "sp": 16
         }
       }
@@ -109,17 +114,17 @@
   },
   "入江 美雪": {
     "value": "入江 美雪",
-    "names": { "zh-TW": "入江 美雪", "jp": "入江 みゆき", "zh-CN": "入江 美雪" },
+    "names": { "zh-TW": "入江 美雪", "jp": "入江 みゆき", "zh-CN": "入江 美雪", "zh-CN-CN": "入江 美雪" },
     "english name": "Miyuki_Irie",
     "style": {
       "Pure Cosmos": {
         "value": "Pure Cosmos",
-        "names": { "zh-TW": "Pure Cosmos", "jp": "Pure Cosmos", "zh-CN": "Pure Cosmos" },
+        "names": { "zh-TW": "Pure Cosmos", "jp": "Pure Cosmos", "zh-CN": "Pure Cosmos", "zh-CN-CN": "Pure Cosmos" },
         "id": "001"
       },
       "Faraway Eden": {
         "value": "Faraway Eden",
-        "names": { "zh-TW": "Faraway Eden", "jp": "Faraway Eden", "zh-CN": "Faraway Eden" },
+        "names": { "zh-TW": "Faraway Eden", "jp": "Faraway Eden", "zh-CN": "Faraway Eden", "zh-CN-CN": "Faraway Eden" },
         "id": "002"
       }
     },
@@ -127,29 +132,34 @@
       "common": {
         "休止消泛音": {
           "value": "休止消泛音",
-          "names": { "zh-TW": "休止消泛音", "jp": "ブレイクミュート", "zh-CN": "休止消泛音" },
+          "names": { "zh-TW": "休止消泛音", "jp": "ブレイクミュート", "zh-CN": "休止消泛音", "zh-CN-CN": "打破沉寂" },
           "sp": 9
         },
         "正拍": {
           "value": "正拍",
-          "names": { "zh-TW": "正拍", "jp": "ダウンビート", "zh-CN": "正拍" },
+          "names": { "zh-TW": "正拍", "jp": "ダウンビート", "zh-CN": "正拍", "zh-CN-CN": "正拍" },
           "sp": 8
         },
         "冷冽打擊": {
           "value": "冷冽打擊",
-          "names": { "zh-TW": "冷冽打擊", "jp": "コールドストローク", "zh-CN": "冷冽打击" },
+          "names": { "zh-TW": "冷冽打擊", "jp": "コールドストローク", "zh-CN": "冷冽打击", "zh-CN-CN": "寒冷一击" },
           "sp": 9
         },
         "切分音": {
           "value": "切分音",
-          "names": { "zh-TW": "切分音", "jp": "シンコペーション", "zh-CN": "切分音" },
+          "names": { "zh-TW": "切分音", "jp": "シンコペーション", "zh-CN": "切分音", "zh-CN-CN": "切分音" },
           "sp": 3
         }
       },
       "Faraway Eden": {
         "佯動光輝波斯菊": {
           "value": "佯動光輝波斯菊",
-          "names": { "zh-TW": "佯動光輝波斯菊", "jp": "フェイント・ルミナスコスモス", "zh-CN": "佯动光辉波斯菊" },
+          "names": {
+            "zh-TW": "佯動光輝波斯菊",
+            "jp": "フェイント・ルミナスコスモス",
+            "zh-CN": "佯动光辉波斯菊",
+            "zh-CN-CN": "佯攻·光辉波斯菊"
+          },
           "sp": 11
         }
       }
@@ -158,7 +168,7 @@
   },
   "渕田 久子": {
     "value": "渕田 久子",
-    "names": { "zh-TW": "渕田 久子", "jp": "渕田 ひさ子", "zh-CN": "渕田 久子" },
+    "names": { "zh-TW": "渕田 久子", "jp": "渕田 ひさ子", "zh-CN": "渕田 久子", "zh-CN-CN": "渕田 久子" },
     "english name": "Hisako_Fuchida",
     "style": {
       "Finally found our silver lining": {
@@ -166,7 +176,8 @@
         "names": {
           "zh-TW": "Finally found our silver lining",
           "jp": "Finally found our silver lining",
-          "zh-CN": "Finally found our silver lining"
+          "zh-CN": "Finally found our silver lining",
+          "zh-CN-CN": "Finally found our silver lining"
         },
         "id": "001"
       }
@@ -175,12 +186,12 @@
       "common": {
         "冷冽碎擊": {
           "value": "冷冽碎擊",
-          "names": { "zh-TW": "冷冽碎擊", "jp": "コールドクラッシュ", "zh-CN": "冷冽碎击" },
+          "names": { "zh-TW": "冷冽碎擊", "jp": "コールドクラッシュ", "zh-CN": "冷冽碎击", "zh-CN-CN": "寒冷冲击" },
           "sp": 9
         },
         "大肆破壞": {
           "value": "大肆破壞",
-          "names": { "zh-TW": "大肆破壞", "jp": "ヴァンダリズム", "zh-CN": "大肆破坏" },
+          "names": { "zh-TW": "大肆破壞", "jp": "ヴァンダリズム", "zh-CN": "大肆破坏", "zh-CN-CN": "大肆破坏" },
           "sp": 7
         }
       }
@@ -189,12 +200,12 @@
   },
   "關根 詩織": {
     "value": "關根 詩織",
-    "names": { "zh-TW": "關根 詩織", "jp": "関根 しおり", "zh-CN": "关根 诗织" },
+    "names": { "zh-TW": "關根 詩織", "jp": "関根 しおり", "zh-CN": "关根 诗织", "zh-CN-CN": "关根 诗织" },
     "english name": "Shiori_Sekine",
     "style": {
       "溫暖的記憶": {
         "value": "溫暖的記憶",
-        "names": { "zh-TW": "溫暖的記憶", "jp": "ぬくもりの記憶", "zh-CN": "温暖的记忆" },
+        "names": { "zh-TW": "溫暖的記憶", "jp": "ぬくもりの記憶", "zh-CN": "温暖的记忆", "zh-CN-CN": "温暖的记忆" },
         "id": "001"
       }
     },
@@ -202,12 +213,12 @@
       "common": {
         "韻律樂音": {
           "value": "韻律樂音",
-          "names": { "zh-TW": "韻律樂音", "jp": "リズミカルステップ", "zh-CN": "韵律乐音" },
+          "names": { "zh-TW": "韻律樂音", "jp": "リズミカルステップ", "zh-CN": "韵律乐音", "zh-CN-CN": "韵律乐音" },
           "sp": 8
         },
         "技術性節拍": {
           "value": "技術性節拍",
-          "names": { "zh-TW": "技術性節拍", "jp": "テクニカルビート", "zh-CN": "技术性节拍" },
+          "names": { "zh-TW": "技術性節拍", "jp": "テクニカルビート", "zh-CN": "技术性节拍", "zh-CN-CN": "技术性节拍" },
           "sp": 9
         }
       }
@@ -216,12 +227,17 @@
   },
   "芳岡 唯": {
     "value": "芳岡 唯",
-    "names": { "zh-TW": "芳岡 唯", "jp": "芳岡 ユイ", "zh-CN": "芳冈 唯" },
+    "names": { "zh-TW": "芳岡 唯", "jp": "芳岡 ユイ", "zh-CN": "芳冈 唯", "zh-CN-CN": "芳冈 唯" },
     "english name": "Yui_Yoshioka",
     "style": {
       "Stir Soul Song": {
         "value": "Stir Soul Song",
-        "names": { "zh-TW": "Stir Soul Song", "jp": "Stir Soul Song", "zh-CN": "Stir Soul Song" },
+        "names": {
+          "zh-TW": "Stir Soul Song",
+          "jp": "Stir Soul Song",
+          "zh-CN": "Stir Soul Song",
+          "zh-CN-CN": "Stir Soul Song"
+        },
         "id": "001"
       }
     },
@@ -229,17 +245,22 @@
       "common": {
         "魅力嗓音": {
           "value": "魅力嗓音",
-          "names": { "zh-TW": "魅力嗓音", "jp": "チャーミングボイス", "zh-CN": "魅力嗓音" },
+          "names": { "zh-TW": "魅力嗓音", "jp": "チャーミングボイス", "zh-CN": "魅力嗓音", "zh-CN-CN": "魅力嗓音" },
           "sp": 12
         },
         "交互撥弦": {
           "value": "交互撥弦",
-          "names": { "zh-TW": "交互撥弦", "jp": "オルタネイトピッキング", "zh-CN": "交互拨弦" },
+          "names": { "zh-TW": "交互撥弦", "jp": "オルタネイトピッキング", "zh-CN": "交互拨弦", "zh-CN-CN": "交替拨弦" },
           "sp": 9
         },
         "美妙歌曲彈下去": {
           "value": "美妙歌曲彈下去",
-          "names": { "zh-TW": "美妙歌曲彈下去", "jp": "かき鳴らせキラーチューン", "zh-CN": "美妙歌曲弹下去" },
+          "names": {
+            "zh-TW": "美妙歌曲彈下去",
+            "jp": "かき鳴らせキラーチューン",
+            "zh-CN": "美妙歌曲弹下去",
+            "zh-CN-CN": "美妙歌曲弹下去"
+          },
           "sp": 12
         }
       }
@@ -248,12 +269,17 @@
   },
   "岩澤 雅美": {
     "value": "岩澤 雅美",
-    "names": { "zh-TW": "岩澤 雅美", "jp": "岩沢 雅美", "zh-CN": "岩泽 雅美" },
+    "names": { "zh-TW": "岩澤 雅美", "jp": "岩沢 雅美", "zh-CN": "岩泽 雅美", "zh-CN-CN": "岩泽 雅美" },
     "english name": "Masami_Iwasawa",
     "style": {
       "Dreamlike Days": {
         "value": "Dreamlike Days",
-        "names": { "zh-TW": "Dreamlike Days", "jp": "Dreamlike Days", "zh-CN": "Dreamlike Days" },
+        "names": {
+          "zh-TW": "Dreamlike Days",
+          "jp": "Dreamlike Days",
+          "zh-CN": "Dreamlike Days",
+          "zh-CN-CN": "Dreamlike Days"
+        },
         "id": "001"
       }
     },
@@ -261,17 +287,22 @@
       "common": {
         "琶音": {
           "value": "琶音",
-          "names": { "zh-TW": "琶音", "jp": "アルペジオ", "zh-CN": "琶音" },
+          "names": { "zh-TW": "琶音", "jp": "アルペジオ", "zh-CN": "琶音", "zh-CN-CN": "琶音" },
           "sp": 12
         },
         "即興演奏": {
           "value": "即興演奏",
-          "names": { "zh-TW": "即興演奏", "jp": "ジャムセッション", "zh-CN": "即兴演奏" },
+          "names": { "zh-TW": "即興演奏", "jp": "ジャムセッション", "zh-CN": "即兴演奏", "zh-CN-CN": "即兴演奏" },
           "sp": 7
         },
         "以烏鴉的叫聲": {
           "value": "以烏鴉的叫聲",
-          "names": { "zh-TW": "以烏鴉的叫聲", "jp": "カラスの鳴き声で", "zh-CN": "以乌鸦的叫声" },
+          "names": {
+            "zh-TW": "以烏鴉的叫聲",
+            "jp": "カラスの鳴き声で",
+            "zh-CN": "以乌鸦的叫声",
+            "zh-CN-CN": "以乌鸦的叫声"
+          },
           "sp": 8
         }
       }

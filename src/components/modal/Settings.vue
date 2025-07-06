@@ -6,7 +6,8 @@
   const langOptions = [
     { value: 'zh-TW', name: '繁體中文' },
     { value: 'jp', name: '日本語' },
-    { value: 'zh-CN', name: '简体中文' },
+    { value: 'zh-CN', name: '简体中文（国际服）' },
+    { value: 'zh-CN-CN', name: '简体中文（B服）' },
   ]
   const settingStore = useSettingStore()
 

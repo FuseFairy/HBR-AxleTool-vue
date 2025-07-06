@@ -6,7 +6,7 @@ export async function fetchCommandSkill(characterName, team, styleName) {
     const data = await getTeamData(team)
     const characterData = data[characterName]
     const defaultCommandSkill = [
-      { value: '普攻', names: { 'zh-TW': '普通攻擊', jp: '通常攻撃', 'zh-CN': '普通攻击' }, sp: 0 },
+      { value: '普攻', names: { 'zh-TW': '普通攻擊', jp: '通常攻撃', 'zh-CN': '普通攻击', 'zh-CN-CN': '通常攻撃' }, sp: 0 },
     ]
 
     if (!characterData || !characterData.style) {

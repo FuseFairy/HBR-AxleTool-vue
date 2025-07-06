@@ -11,7 +11,7 @@ export function runIPGeolocation() {
   const countryLangMap = {
     TW: 'zh-TW',
     JP: 'jp',
-    CN: 'zh-CN',
+    CN: 'zh-CN-CN',
   }
 
   let targetLang = 'jp'
