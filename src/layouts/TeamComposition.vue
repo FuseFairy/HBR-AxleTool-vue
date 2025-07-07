@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, computed, onMounted, onUnmounted } from 'vue'
+  import { ref, computed } from 'vue'
   import { useCharStore } from '@/store/char'
   import { useLastTabStore } from '@/store/tab'
   import SelectChar from '@/components/modal/SelectChar.vue'
@@ -8,28 +8,12 @@
   import { toast } from 'vue3-toastify'
   import 'vue3-toastify/dist/index.css'
   import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
-  import { useDraggable } from '@vueuse/core'
 
   const charStore = useCharStore()
   const lastTabStore = useLastTabStore()
 
-  const buttons = [
-    { key: 1, label: 'Button 1' },
-    { key: 2, label: 'Button 2' },
-    { key: 3, label: 'Button 3' },
-    { key: 4, label: 'Button 4' },
-    { key: 5, label: 'Button 5' },
-    { key: 6, label: 'Button 6' },
-  ]
-
-  const tabs = [
-    { key: 1, label: 'Team 1' },
-    { key: 2, label: 'Team 2' },
-    { key: 3, label: 'Team 3' },
-    { key: 4, label: 'Team 4' },
-    { key: 5, label: 'Team 5' },
-    { key: 6, label: 'Team 6' },
-  ]
+  const buttons = Array.from({ length: 6 }, (_, i) => ({ key: i + 1, label: `Button ${i + 1}` }))
+  const tabs = Array.from({ length: 6 }, (_, i) => ({ key: i + 1, label: `Team ${i + 1}` }))
 
   const activeComponent = ref(null)
 
@@ -55,121 +39,148 @@
   }
 
   // 拖曳相關邏輯
-  const buttonRefs = ref({}) // 儲存按鈕 DOM 引用
-  const draggables = ref({}) // 儲存 useDraggable 實例
-  const draggedKey = ref(null) // 當前拖曳的按鈕鍵值
-  const dragTimestamp = ref(0) // 拖曳開始的時間戳
-  const mouseOnButton = ref(null) // 起始按鈕鍵值
-  const mouseDownButton = ref(null) // 目標按鈕鍵值
-  const isDragging = ref(false) // 控制影子元素顯示
-  const shadowPosition = ref({ x: 0, y: 0 }) // 影子元素位置
-  const shadowContent = ref(null) // 影子元素內容
+  const draggedKey = ref(null)
+  const dragImage = ref(null)
+  const touchElement = ref(null) // 記錄正在拖曳的影子元素
+  const touchOffset = ref({ x: 0, y: 0 }) // 記錄觸控點相對元素的偏移
+  const mouseOnButton = ref(null) // 記錄源按鈕的 key
+  const potentialDropTargetKey = ref(null) // 記錄潛在的目標按鈕的 key
 
-  // 開始拖曳
-  function startDrag(key) {
-    const button = buttonRefs.value[key]
-    if (button && draggables.value[key]) {
-      const rect = button.getBoundingClientRect()
-      shadowPosition.value = { x: rect.left, y: rect.top }
-      shadowContent.value = charStore.selections[selectedTab.value][key]
-      isDragging.value = true
-      mouseOnButton.value = key
-      draggedKey.value = key
-      button.classList.add('dragging')
+  // HTML5 Drag and Drop 事件（滑鼠）
+  function handleDragStart(e, key) {
+    draggedKey.value = key
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('text/plain', key)
+
+    const clone = e.target.cloneNode(true)
+    clone.style.opacity = '0.8'
+    clone.style.position = 'absolute'
+    clone.style.left = '-9999px'
+    document.body.appendChild(clone)
+    dragImage.value = clone
+    e.dataTransfer.setDragImage(clone, 60, 60)
+
+    e.target.classList.add('dragging')
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault()
+  }
+
+  function handleDrop(e, key) {
+    e.preventDefault()
+    const sourceKey = draggedKey.value
+    const targetKey = key
+
+    if (sourceKey !== targetKey) {
+      const currentTab = selectedTab.value
+      const temp = { ...charStore.selections[currentTab][sourceKey] }
+      charStore.selections[currentTab][sourceKey] = { ...charStore.selections[currentTab][targetKey] }
+      charStore.selections[currentTab][targetKey] = temp
+    }
+  }
+
+  function handleDragEnd(e) {
+    e.target.classList.remove('dragging')
+    draggedKey.value = null
+    if (dragImage.value) {
+      dragImage.value.remove()
+      dragImage.value = null
+    }
+  }
+
+  // 觸控事件
+  function handleTouchStart(e, key) {
+    const touch = e.touches[0]
+    const target = e.target.closest('.team-circle-button')
+    mouseOnButton.value = key
+    potentialDropTargetKey.value = null // Initialize potentialDropTargetKey
+
+    // 創建影子元素
+    const clone = target.cloneNode(true)
+    clone.classList.add('drag-shadow')
+    document.body.appendChild(clone)
+    touchElement.value = clone
+
+    const rect = target.getBoundingClientRect()
+    touchOffset.value = {
+      x: touch.clientX - rect.left,
+      y: touch.clientY - rect.top,
+    }
+    target.classList.add('dragging')
+    document.body.style.overflow = 'hidden' // 禁用頁面滾動
+  }
+
+  function handleTouchMove(e) {
+    if (!touchElement.value) return
+
+    const touch = e.touches[0]
+    // 移動影子元素
+    touchElement.value.style.position = 'fixed'
+    touchElement.value.style.left = `${touch.clientX - touchOffset.value.x}px`
+    touchElement.value.style.top = `${touch.clientY - touchOffset.value.y}px`
+    touchElement.value.style.zIndex = '1000'
+
+    // 碰撞檢測
+    touchElement.value.style.pointerEvents = 'none'
+    const target = document.elementFromPoint(touch.clientX, touch.clientY)
+    touchElement.value.style.pointerEvents = ''
+
+    const button = target?.closest('.team-circle-button')
+    if (button) {
+      const targetKey = parseInt(button.dataset.key, 10)
+      if (targetKey && targetKey !== mouseOnButton.value) {
+        potentialDropTargetKey.value = targetKey
+      } else {
+        potentialDropTargetKey.value = null
+      }
     } else {
-      console.error(`Draggable for key ${key} is not properly initialized`)
+      potentialDropTargetKey.value = null
+    }
+  }
+
+  function handleTouchEnd() {
+    document.body.style.overflow = '' // 恢復頁面滾動
+    if (touchElement.value) {
+      touchElement.value.remove() // 移除影子元素
+      const sourceButton = document.querySelector(
+        `.team-circle-button[data-key="${mouseOnButton.value}"]`
+      )
+      if (sourceButton) {
+        sourceButton.classList.remove('dragging')
+      }
+      swapButtons()
+      touchElement.value = null
     }
   }
 
   // 交換按鈕數據
   function swapButtons() {
-    let clickedKey = null
     if (
       mouseOnButton.value === null ||
-      mouseDownButton.value === null ||
-      mouseOnButton.value === mouseDownButton.value
+      potentialDropTargetKey.value === null ||
+      mouseOnButton.value === potentialDropTargetKey.value
     ) {
-      console.log('Swap skipped:', {
-        mouseOnButton: mouseOnButton.value,
-        mouseDownButton: mouseDownButton.value,
-      })
-      // 短時位置不變的拖曳被認為是click事件
-      if (Date.now() - dragTimestamp.value < 200) clickedKey = mouseOnButton.value
-    } else {
-      console.log('Swapping:', {
-        source: mouseOnButton.value,
-        target: mouseDownButton.value,
-      })
-      const currentTab = selectedTab.value
-      const sourceKey = mouseOnButton.value
-      const targetKey = mouseDownButton.value
-      const temp = { ...charStore.selections[currentTab][sourceKey] }
-      charStore.selections[currentTab][sourceKey] = { ...charStore.selections[currentTab][targetKey] }
-      charStore.selections[currentTab][targetKey] = temp
+      mouseOnButton.value = null
+      potentialDropTargetKey.value = null
+      return
     }
+
+    console.log('Swapping:', {
+      source: mouseOnButton.value,
+      target: potentialDropTargetKey.value,
+    })
+
+    const currentTab = selectedTab.value
+    const sourceKey = mouseOnButton.value
+    const targetKey = potentialDropTargetKey.value
+    const temp = { ...charStore.selections[currentTab][sourceKey] }
+    charStore.selections[currentTab][sourceKey] = { ...charStore.selections[currentTab][targetKey] }
+    charStore.selections[currentTab][targetKey] = temp
+
     mouseOnButton.value = null
-    mouseDownButton.value = null
-    draggedKey.value = null
-    isDragging.value = false
-    document.body.style.overflow = ''
-    if (clickedKey) handleBoxClick(clickedKey)
+    potentialDropTargetKey.value = null
   }
-
-  // 初始化 useDraggable
-  onMounted(() => {
-    for (const button of buttons) {
-      const key = button.key
-      const ref = computed(() => buttonRefs.value[key])
-      if (ref.value) {
-        const rect = ref.value.getBoundingClientRect()
-        console.log(`Initializing draggable for key ${key} at position:`, rect)
-        draggables.value[key] = useDraggable(ref, {
-          initialValue: { x: rect.x, y: rect.y },
-          preventDefault: true,
-          stopPropagation: true,
-          applyStyle: false, // 防止移動原始按鈕
-          onStart: () => {
-            dragTimestamp.value = Date.now()
-            startDrag(key)
-          },
-          onMove: (position) => {
-            if (!isDragging.value) return
-            // 更新影子元素位置
-            shadowPosition.value = { x: position.x, y: position.y }
-            // 碰撞檢測
-            const target = document.elementFromPoint(position.x + 60, position.y + 60)
-            const button = target?.closest('.team-circle-button')
-            if (button) {
-              const targetKey = parseInt(button.dataset.key, 10)
-              if (targetKey && targetKey !== mouseOnButton.value) {
-                mouseDownButton.value = targetKey
-              } else {
-                mouseDownButton.value = null
-              }
-            } else {
-              mouseDownButton.value = null
-            }
-          },
-          onEnd: () => {
-            if (buttonRefs.value[mouseOnButton.value]) {
-              buttonRefs.value[mouseOnButton.value].classList.remove('dragging')
-            }
-            swapButtons()
-          },
-        })
-      } else {
-        console.error(`Button ref not found for key: ${key}`)
-      }
-    }
-  })
-
-  onUnmounted(() => {
-    isDragging.value = false
-    mouseOnButton.value = null
-    mouseDownButton.value = null
-    draggedKey.value = null
-    document.body.style.overflow = ''
-  })
 
   const isRefreshing = ref(false)
   async function refreshData() {
@@ -268,12 +279,6 @@
       }
     )
   }
-
-  const handleTouchStart = (event, key) => {
-    event.stopPropagation()
-    event.preventDefault()
-    startDrag(key)
-  }
 </script>
 
 <template>
@@ -300,37 +305,34 @@
   </div>
 
   <div class="button-container">
-    <button
+    <div
       v-for="button in buttons"
       :key="button.key"
-      :ref="(el) => (buttonRefs[button.key] = el)"
       :data-key="button.key"
       :class="{
         'team-circle-button': true,
         'selected-button': charStore.selections[selectedTab][button.key]?.img !== null,
         'add-button': charStore.selections[selectedTab][button.key]?.img === null,
       }"
-      @touchstart.prevent.stop="handleTouchStart($event, button.key)"
+      draggable="true"
+      role="button"
+      tabindex="0"
+      @dragstart="handleDragStart($event, button.key)"
+      @dragover="handleDragOver($event)"
+      @drop="handleDrop($event, button.key)"
+      @dragend="handleDragEnd($event)"
+      @touchstart="handleTouchStart($event, button.key)"
+      @touchmove="handleTouchMove($event)"
+      @touchend="handleTouchEnd($event)"
+      @click="handleBoxClick(button.key)"
+      @keydown.enter="handleBoxClick(button.key)"
+      @keydown.space="handleBoxClick(button.key)"
     >
       <img
         v-if="charStore.selections[selectedTab][button.key]?.img !== null"
         class="char-img"
         :src="getAssetsFile(charStore.selections[selectedTab][button.key].img)"
         :alt="charStore.selections[selectedTab][button.key]?.style"
-      />
-      <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
-    </button>
-    <!-- 影子元素 -->
-    <div
-      v-if="isDragging"
-      class="drag-shadow"
-      :style="{ left: `${shadowPosition.x}px`, top: `${shadowPosition.y}px`, position: 'fixed', zIndex: 1000 }"
-    >
-      <img
-        v-if="shadowContent?.img !== null"
-        class="char-img"
-        :src="getAssetsFile(shadowContent?.img)"
-        :alt="shadowContent?.style"
       />
       <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
     </div>

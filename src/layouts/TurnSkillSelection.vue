@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, nextTick, toRaw, onUnmounted } from 'vue'
+  import { ref, nextTick, toRaw } from 'vue'
   import { useSliderStore } from '@/store/slider'
   import { useSkillStore } from '@/store/axle'
   import { useCharStore } from '@/store/char'
@@ -138,11 +138,22 @@
   const mouseDownButton = ref(null) // 記錄目標按鈕的 { row, key }
   const touchElement = ref(null) // 記錄正在拖曳的影子元素
   const touchOffset = ref({ x: 0, y: 0 }) // 記錄觸控點相對元素的偏移
+  const dragImage = ref(null) // 記錄拖曳圖片元素
 
   // HTML5 Drag and Drop 事件（滑鼠）
   function handleDragStart(e, row, key) {
     mouseOnButton.value = { row, key }
+    e.dataTransfer.setData('text/plain', null)
     e.dataTransfer.effectAllowed = 'move'
+
+    const clone = e.target.cloneNode(true)
+    clone.style.opacity = '0.8'
+    clone.style.position = 'absolute'
+    clone.style.left = '-9999px'
+    document.body.appendChild(clone)
+    dragImage.value = clone
+    e.dataTransfer.setDragImage(clone, 40, 40)
+
     e.target.classList.add('dragging')
   }
 
@@ -153,6 +164,10 @@
 
   function handleDragEnd(e) {
     e.target.classList.remove('dragging')
+    if (dragImage.value) {
+      dragImage.value.remove()
+      dragImage.value = null
+    }
     swapButtons()
   }
 
@@ -196,7 +211,7 @@
     if (button) {
       const row = parseInt(button.dataset.row, 10)
       const key = parseInt(button.dataset.key, 10)
-      if (row === mouseOnButton.value.row && key !== mouseOnButton.value.key) {
+      if (key !== mouseOnButton.value.key) {
         mouseDownButton.value = { row, key }
       } else {
         mouseDownButton.value = null
@@ -226,7 +241,6 @@
     if (
       mouseOnButton.value === null ||
       mouseDownButton.value === null ||
-      mouseOnButton.value.row !== mouseDownButton.value.row ||
       mouseOnButton.value.key === mouseDownButton.value.key
     ) {
       mouseOnButton.value = null
@@ -239,35 +253,17 @@
       target: mouseDownButton.value,
     })
 
-    const row = mouseOnButton.value.row
+    const sourceRow = mouseOnButton.value.row
     const sourceKey = mouseOnButton.value.key
+    const targetRow = mouseDownButton.value.row
     const targetKey = mouseDownButton.value.key
 
-    const temp = { ...skillStore.skills[row][sourceKey] }
-    skillStore.skills[row][sourceKey] = { ...skillStore.skills[row][targetKey] }
-    skillStore.skills[row][targetKey] = temp
+    const temp = { ...skillStore.skills[sourceRow][sourceKey] }
+    skillStore.skills[sourceRow][sourceKey] = { ...skillStore.skills[targetRow][targetKey] }
+    skillStore.skills[targetRow][targetKey] = temp
 
     mouseOnButton.value = null
     mouseDownButton.value = null
-  }
-
-  onUnmounted(() => {
-    document.removeEventListener('touchstart', handleTouchStartWrapper, { passive: false })
-    document.removeEventListener('touchmove', handleTouchMove, { passive: false })
-    document.removeEventListener('touchend', handleTouchEnd, { passive: false })
-  })
-
-  // 包裝 touchstart 以傳遞 row 和 key
-  function handleTouchStartWrapper(event) {
-    const button = event.target.closest('.circle-button')
-    if (button) {
-      const row = parseInt(button.dataset.row, 10)
-      const key = parseInt(button.dataset.key, 10)
-      console.log('Touch start:', { row, key }) // 調試日誌
-      if (!isNaN(row) && !isNaN(key)) {
-        handleTouchStart(event, row, key)
-      }
-    }
   }
 </script>
 
@@ -347,7 +343,9 @@
     </div>
     <div v-if="turn.turn !== 'Switch'" class="button-container">
       <div v-for="n in 3" :key="n" class="column">
-        <button
+        <div
+          role="button"
+          tabindex="0"
           :data-row="i"
           :data-key="n - 1"
           :class="{
@@ -359,6 +357,11 @@
           @dragstart="handleDragStart($event, i, n - 1)"
           @dragover.prevent="handleDragOver($event, i, n - 1)"
           @dragend="handleDragEnd($event, i, n - 1)"
+          @touchstart="handleTouchStart($event, i, n - 1)"
+          @touchmove="handleTouchMove($event)"
+          @touchend="handleTouchEnd($event)"
+          @keydown.enter="handleBoxClick(i, n - 1)"
+          @keydown.space="handleBoxClick(i, n - 1)"
         >
           <img
             v-if="skillStore.skills[i][n - 1].style_img !== null"
@@ -367,7 +370,7 @@
             :alt="skillStore.skills[i][n - 1].style"
           />
           <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
-        </button>
+        </div>
         <Multiselect
           v-model="skillStore.skills[i][n - 1].skill"
           placeholder="Skill"

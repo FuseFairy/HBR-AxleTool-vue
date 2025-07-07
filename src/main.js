@@ -5,6 +5,7 @@ import App from './App.vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import versionControlPlugin from '@/plugins/storeVersionControl'
+import nonPassiveTouchPlugin from '@/plugins/nonPassiveTouch'
 
 // Third-party UI/utility library imports and their styles
 import FloatingVue from 'floating-vue'
@@ -27,6 +28,7 @@ pinia.use(piniaPluginPersistedstate)
 
 app.use(pinia)
 app.use(versionControlPlugin)
+app.use(nonPassiveTouchPlugin)
 
 app.use(FloatingVue)
 app.use(directives)
