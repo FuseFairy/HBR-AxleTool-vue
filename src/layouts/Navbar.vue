@@ -75,11 +75,11 @@
     z-index: 1001;
     height: 3rem;
     width: 100%;
-    padding: 1rem;
+    padding: var(--spacing-4);
     box-sizing: border-box;
     position: fixed;
     grid-area: navbar;
-    background-color: rgb(21, 21, 23);
+    background-color: var(--bg-color-dark-2);
     color: white;
   }
   .nav-title {
@@ -87,17 +87,17 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
-    color: rgb(210, 203, 208);
+    font-family: var(--font-family-serif);
+    color: var(--text-color-light-purple-2);
   }
   .left-button-group {
     display: flex;
-    gap: 10px;
+    gap: var(--spacing-3);
     margin-right: auto;
   }
   .right-button-group {
     display: flex;
-    gap: 10px;
+    gap: var(--spacing-3);
     margin-left: auto;
   }
   .setting-icon-button {
@@ -128,7 +128,7 @@
     align-items: center;
   }
   button:hover {
-    background-color: rgba(78, 69, 69, 0.3);
+    background-color: var(--bg-color-light-gray-transparent);
   }
   @media (max-width: 800px) {
     .nav-title {

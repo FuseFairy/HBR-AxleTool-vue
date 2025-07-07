@@ -348,7 +348,7 @@
   .tabs {
     display: flex;
     gap: 0;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid var(--border-color-light-gray);
   }
   button.refresh-button {
     background-color: transparent;
@@ -364,7 +364,7 @@
     align-items: center;
   }
   button.refresh-button:hover {
-    background-color: rgba(78, 69, 69, 0.3);
+    background-color: var(--bg-color-light-gray-transparent);
   }
   button.tab {
     padding: 10px 20px;
@@ -374,32 +374,32 @@
     color: white;
     transition: background-color 0.3s ease;
     flex-grow: 1;
-    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+    font-family: var(--font-family-serif);
     font-size: 18px;
     border-radius: 10px 10px 0 0;
   }
   button.tab.active {
-    background-color: #ccc;
-    color: black;
+    background-color: var(--bg-color-light-gray);
+    color: var(--text-color-dark);
   }
   button.tab:hover {
-    background-color: #a5a5a5;
-    color: black;
+    background-color: var(--bg-color-medium-light-gray);
+    color: var(--text-color-dark);
   }
   .button-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 20px;
+    gap: var(--spacing-5);
     justify-items: center;
     align-items: center;
     height: auto;
-    padding-top: 10px;
+    padding-top: var(--spacing-3);
     position: relative;
   }
   .tool-container {
     display: flex;
     height: auto;
-    padding-top: 10px;
+    padding-top: var(--spacing-3);
     justify-content: right;
     align-items: center;
   }
@@ -414,7 +414,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(79, 74, 74, 0.5);
+    background-color: var(--bg-color-dark-transparent-2);
     touch-action: none;
   }
   .team-circle-button.dragging {
@@ -432,15 +432,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(79, 74, 74, 0.5);
+    background-color: var(--bg-color-dark-transparent-2);
   }
   .selected-button {
     border: none;
     transition: transform 0.3s ease;
-    box-shadow: 0 0 10px rgba(188, 115, 194, 0.8);
+    box-shadow: 0 0 10px var(--box-shadow-purple-light);
   }
   .selected-button:hover {
-    box-shadow: 0 0 15px rgba(188, 115, 194, 0.8);
+    box-shadow: 0 0 15px var(--box-shadow-purple-light);
   }
   .selected-button:hover .char-img {
     transform: scale(1.1);
@@ -455,10 +455,10 @@
     transition: background-color 0.3s ease;
   }
   .add-button:hover {
-    background-color: rgba(204, 201, 201, 0.5);
+    background-color: var(--bg-color-light-gray-transparent-2);
   }
   .add-button:hover .icon-img {
-    filter: invert(1);
+    filter: var(--filter-invert-1);
   }
   .icon-img {
     width: 50px;
@@ -497,13 +497,13 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(2, auto);
-      gap: 10px;
+      gap: var(--spacing-3);
       border-bottom: none;
     }
     button.tab {
       border-radius: 10px;
-      padding: 5px;
-      background-color: rgba(69, 65, 69, 0.8);
+      padding: var(--spacing-2);
+      background-color: var(--bg-color-dark-transparent-3);
     }
   }
 </style>

@@ -205,7 +205,7 @@
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
             </button>
           </div>
-          <div class="table scrollbar-style-1">
+          <div class="table custom-scrollbar">
             <div v-if="sliderStore.rows <= 0" class="sleeping-image">
               <img src="/src/assets/common/sleeping.webp" />
             </div>
@@ -697,6 +697,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: var(--spacing-4);
   }
   .left-button-group {
     display: flex;
@@ -724,32 +725,27 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgb(19, 18, 18);
+    background-color: var(--bg-color-dark);
     height: auto;
     max-height: 90%;
     width: 70%;
     max-width: 1024px;
     box-sizing: border-box;
-    padding: 15px;
+    padding-bottom: var(--spacing-4);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    border: 3px solid rgb(31, 44, 52);
+    border: 3px solid var(--border-color-dark-cyan);
   }
   .table {
     display: flex;
     height: 100%;
     width: 100%;
     overflow-y: auto;
-    overflow-x: auto;
+    overflow-x: hidden;
     box-sizing: border-box;
   }
-  .scrollbar-style-1::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-style-1 {
-    scrollbar-width: none; /* Firefox */
-  }
+  
   @media (max-width: 950px) {
     .container {
       width: 100%;

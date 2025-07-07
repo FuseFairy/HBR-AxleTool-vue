@@ -56,7 +56,7 @@
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
             </button>
           </div>
-          <div class="section scrollbar-style-1">
+          <div class="section custom-scrollbar">
             <div v-if="isLoading" class="loading">Loading...</div>
             <div v-else-if="errorMessage" class="error">
               {{ errorMessage }}
@@ -153,7 +153,7 @@
     display: flex;
     align-items: center;
     height: auto;
-    padding: 10px;
+    padding: var(--spacing-4);
   }
   .title {
     color: rgb(209, 228, 222);
@@ -183,8 +183,9 @@
     display: flex;
     position: relative;
     width: 100%;
-    overflow: auto;
-    padding: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--spacing-5);
   }
   .overlay {
     position: fixed;
@@ -192,7 +193,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--bg-color-black-transparent);
     justify-content: center;
     align-items: center;
     z-index: 1100;
@@ -207,7 +208,7 @@
     height: auto;
     max-height: 70%;
     width: 60%;
-    padding: 1rem;
+    padding-bottom: var(--spacing-4);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -291,12 +292,7 @@
     height: 80px;
     object-fit: cover;
   }
-  .scrollbar-style-1::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-style-1 {
-    scrollbar-width: none;
-  }
+  
   .update-content-wrapper {
     display: grid;
     grid-template-rows: 0fr;

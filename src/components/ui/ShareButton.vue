@@ -33,7 +33,7 @@
         newestOnTop: true,
         limit: 1,
         toastStyle: {
-          'font-family': 'LXGW WenKai Mono TC',
+          'font-family': 'var(--font-family-sans)',
         },
       })
     } catch (error) {
@@ -48,7 +48,7 @@
 <template>
   <button
     v-tooltip="{ content: isLoading ? 'Uploading...' : 'Share', placement: 'bottom' }"
-    class="share-button"
+    class="share-button flex items-center justify-center"
     :disabled="isLoading"
     @click="triggerShareLink"
   >
@@ -67,9 +67,6 @@
     width: 32px;
     cursor: pointer;
     border-radius: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     transition: background-color 0.2s ease;
   }
   .share-button:hover:not(:disabled) {

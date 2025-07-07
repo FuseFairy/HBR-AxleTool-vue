@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="flex items-center justify-center h-auto">
     <button
-      class="circle-button add-button"
+      class="add-button"
       :disabled="sliderStore.rows === 80 || (sliderStore.rows === 0 && !hasChar)"
       @click="addRow"
     >
@@ -49,25 +49,17 @@
 </script>
 
 <style scoped>
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-  }
-  .circle-button {
-    margin-top: 20px;
+  .add-button {
+    margin-top: var(--spacing-5);
     width: 80px;
     height: 80px;
     font-size: 16px;
+    border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
-  }
-  .add-button {
-    border: none;
   }
   .add-button:hover .icon-img {
     filter: brightness(1.5);
@@ -84,10 +76,7 @@
     display: none;
   }
   @media (max-width: 800px) {
-    .container {
-      width: auto;
-    }
-    .circle-button {
+    .add-button {
       width: 60px;
       height: 60px;
       font-size: 14px;

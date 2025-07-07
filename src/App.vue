@@ -63,7 +63,7 @@
 <template>
   <div class="page-layout">
     <Navbar />
-    <main class="scrollbar-style-1">
+    <main class="custom-scrollbar">
       <div class="box_container">
         <TeamComposition />
       </div>
@@ -136,19 +136,19 @@
     grid-area: axle;
     padding-top: 0.5rem;
   }
-  .scrollbar-style-1 {
+  .custom-scrollbar {
     overflow-x: auto;
   }
-  .scrollbar-style-1::-webkit-scrollbar {
+  .custom-scrollbar::-webkit-scrollbar {
     width: 5px;
     height: 0;
   }
-  .scrollbar-style-1::-webkit-scrollbar-track,
-  .scrollbar-style-1::-webkit-scrollbar-thumb {
+  .custom-scrollbar::-webkit-scrollbar-track,
+  .custom-scrollbar::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   }
-  .scrollbar-style-1::-webkit-scrollbar-thumb {
+  .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: #555;
   }
   @media (max-width: 800px) {

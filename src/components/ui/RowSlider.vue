@@ -67,8 +67,8 @@
   .top-container {
     margin-bottom: 5px;
     display: flex;
-    color: #efc2c2;
-    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+    color: var(--primary-light-color);
+    font-family: var(--font-family-serif);
   }
 
   .input-container {
@@ -82,7 +82,7 @@
   }
 
   .input-container:hover {
-    border: 1px solid #f44949;
+    border: 1px solid var(--danger-color);
     transition: 0.3s ease;
   }
 
@@ -131,7 +131,7 @@
   }
 
   button:hover {
-    background-color: #f44949;
+    background-color: var(--danger-color);
   }
 
   .disabled-button {

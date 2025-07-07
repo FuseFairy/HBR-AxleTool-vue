@@ -89,15 +89,15 @@
     animation: modal-scale-out 0.3s ease forwards;
   }
   label {
-    color: rgb(209, 228, 222);
-    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+    color: var(--text-color-light-green-2);
+    font-family: var(--font-family-serif);
   }
   .section {
     display: flex;
     position: relative;
     justify-content: space-between;
     align-items: center;
-    gap: 3rem;
+    gap: var(--spacing-6);
     width: 100%;
   }
   .close {
@@ -125,7 +125,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--bg-color-black-transparent);
     justify-content: center;
     align-items: center;
     z-index: 1100;

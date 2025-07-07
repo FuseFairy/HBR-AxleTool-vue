@@ -1,3 +1,6 @@
+@import './variables.css';
+@import './global.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -11,10 +14,10 @@
 }
 
 body {
-  font-family: 'LXGW WenKai Mono TC', 'Noto Sans TC', sans-serif;
+  font-family: var(--font-family-sans);
   font-weight: 400;
   font-style: normal;
-  background-color: black;
+  background-color: var(--dark-color);
 }
 
 img {

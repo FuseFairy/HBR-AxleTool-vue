@@ -22,9 +22,9 @@
   .form-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--spacing-3);
     flex-wrap: wrap;
-    margin: 10px 20px 0 20px;
+    margin: var(--spacing-3) var(--spacing-5) 0 var(--spacing-5);
   }
   .left-column {
     flex: 1;

@@ -82,9 +82,9 @@
 <template>
   <teleport to="body">
     <transition name="modal-fade">
-      <div v-if="isVisible" class="overlay" @click="closeContainer">
+      <div v-if="isVisible" class="overlay flex justify-center items-center" @click="closeContainer">
         <div class="container" @click.stop>
-          <button class="close" @click="closeContainer">
+          <button class="close flex justify-center items-center" @click="closeContainer">
             <img src="@/assets/custom-icon/close.svg" alt="Close" />
           </button>
           <div class="tabs">
@@ -154,7 +154,7 @@
   .tabs {
     display: flex;
     gap: 0;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid var(--border-color-light-gray);
   }
 
   button.tab {
@@ -165,32 +165,33 @@
     color: white;
     transition: background-color 0.3s ease;
     flex-grow: 1;
-    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+    font-family: var(--font-family-serif);
     border-radius: 10px 10px 0 0;
   }
   button.tab.active {
-    background-color: #ccc;
-    color: black;
+    background-color: var(--bg-color-light-gray);
+    color: var(--text-color-dark);
   }
   button.tab:hover {
-    background-color: #a5a5a5;
-    color: black;
+    background-color: var(--bg-color-medium-light-gray);
+    color: var(--text-color-dark);
   }
   .container {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgb(19, 18, 18);
+    background-color: var(--bg-color-dark);
     height: auto;
     width: auto;
-    box-sizing: border-box;
-    padding: 1.5rem;
+    padding: var(--spacing-6);
     padding-right: 3rem;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 3px solid #262426;
+    box-sizing: border-box
   }
   .close {
     background-color: transparent;
@@ -199,9 +200,6 @@
     box-sizing: border-box;
     height: 32px;
     width: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -217,9 +215,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
+    background-color: var(--bg-color-black-transparent);
     z-index: 1100;
     backdrop-filter: blur(5px);
   }
@@ -228,8 +224,8 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);;
   }
   .circle-button {
     border-radius: 50%;
@@ -242,16 +238,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(79, 74, 74, 0.5);
+    background-color: var(--bg-color-dark-transparent-2);
     position: relative;
   }
   .selected-button {
     border: none;
     transition: transform 0.3s ease;
-    box-shadow: 0 0 10px rgba(188, 115, 194, 0.8);
+    box-shadow: 0 0 10px var(--box-shadow-purple-light);
   }
   .selected-button:hover {
-    box-shadow: 0 0 15px rgba(188, 115, 194, 0.8);
+    box-shadow: 0 0 15px var(--box-shadow-purple-light);
   }
   .selected-button:hover .char-img {
     transform: scale(1.1);
@@ -267,13 +263,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--bg-color-black-transparent);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
     pointer-events: none;
-    font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
+    font-family: var(--font-family-xiaolai);
   }
 </style>

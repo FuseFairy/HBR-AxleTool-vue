@@ -16,6 +16,9 @@ import 'vue3-toastify/dist/index.css'
 // Custom directives import
 import directives from './directives'
 
+// Global styles
+import '@/style/main.css'
+
 // --- Application Initialization ---
 const app = createApp(App)
 const pinia = createPinia()

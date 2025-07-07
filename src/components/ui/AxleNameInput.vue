@@ -19,14 +19,14 @@
 
 <style scoped>
   .form-label {
-    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
-    color: #efc2c2;
+    font-family: var(--font-family-serif);
+    color: var(--primary-light-color);
   }
   .form-input {
     background-color: rgba(151, 107, 135, 0.5);
     color: white;
     border: none;
-    padding: 8px;
+    padding: var(--spacing-2);
     border-radius: 4px;
     font-size: 16px;
     width: 100%;

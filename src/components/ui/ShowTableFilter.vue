@@ -36,7 +36,7 @@
 
 <template>
   <div ref="filterRef">
-    <button class="filter" @click="show = !show">
+    <button class="filter flex items-center justify-center" @click="show = !show">
       <img :src="show ? filterOffIcon : filterOnIcon" alt="Filter" />
     </button>
     <div v-if="show" class="filter-content">
@@ -85,7 +85,7 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    background-color: rgba(18, 9, 9, 0.95);
+    background-color: var(--filter-bg-color);
     border-radius: 15px;
     width: 30vw;
     max-width: 35vw;
@@ -93,7 +93,7 @@
     z-index: 1500;
   }
   label {
-    font-family: 'Gugi', 'Noto Sans TC', sans-serif;
+    font-family: var(--font-family-serif);
     color: rgb(182, 208, 226);
   }
   .option-icon {
@@ -119,9 +119,6 @@
     width: 32px;
     cursor: pointer;
     border-radius: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   .filter:hover {
     background-color: rgba(78, 69, 69, 0.3);

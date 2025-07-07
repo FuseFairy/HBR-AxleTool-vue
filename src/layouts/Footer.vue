@@ -12,14 +12,14 @@
 
 <style scoped>
   .footer-content {
-    padding: 10px;
+    padding: var(--spacing-3);
     font-size: 0.8rem;
-    color: #808080;
+    color: var(--text-color-gray);
     display: flex;
     align-items: center;
   }
   .footer-content a {
-    color: #808080;
+    color: var(--text-color-gray);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -27,7 +27,7 @@
   }
   .footer-content a:hover {
     text-decoration: underline;
-    color: #606060;
+    color: var(--text-color-dark-gray);
   }
   .footer-text > p,
   .footer-text > a {

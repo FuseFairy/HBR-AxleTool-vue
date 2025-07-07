@@ -24,7 +24,7 @@
         newestOnTop: true,
         limit: 1,
         toastStyle: {
-          'font-family': 'LXGW WenKai Mono TC',
+          'font-family': 'var(--font-family-sans)',
         },
       })
     } finally {
@@ -34,7 +34,7 @@
 </script>
 
 <template>
-  <button class="download" @click="downloadTable">
+  <button class="download flex items-center justify-center" @click="downloadTable">
     <img src="@/assets/custom-icon/download.svg" alt="Download" />
   </button>
 </template>
@@ -49,9 +49,6 @@
     width: 32px;
     cursor: pointer;
     border-radius: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   .download:hover {
     background-color: rgba(78, 69, 69, 0.3);
