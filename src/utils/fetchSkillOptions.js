@@ -48,7 +48,7 @@ export async function fetchSkillOptions(characterName, team, styleName) {
       },
       重點保養: {
         value: '重點保養',
-        names: { 'zh-TW': '重點保養', jp: 'ポイントケア', 'zh-CN': '重点保养', 'zh-CN-CN': '重点保养' },
+        names: { 'zh-TW': '重點保養', jp: 'ポイントケア', 'zh-CN': '重点保养', 'zh-CN-CN': '点数援助' },
         sp: 1,
       },
       自我療癒: {
