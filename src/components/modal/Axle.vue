@@ -8,7 +8,6 @@
   import { useSettingStore } from '@/store/setting'
   import { getAssetsFile } from '@/utils/getAssetsFile'
   import { getUsedSkills } from '@/utils/getUsedSkills'
-  import { loadFontCSS } from '@/utils/loadFontCSS'
   import ShowTableFilter from '@/components/ui/ShowTableFilter.vue'
   import shareButton from '@/components/ui/ShareButton.vue'
   import DownloadButton from '@/components/ui/DownloadButton.vue'
@@ -17,14 +16,8 @@
   import loading from 'vue-loading-overlay'
 
   const isVisible = ref(false)
-  onMounted(async () => {
+  onMounted(() => {
     isVisible.value = true
-    try {
-      const href = getAssetsFile('fonts/Xiaolai-Regular/result.css')
-      await loadFontCSS(href)
-    } catch (err) {
-      console.error(err)
-    }
   })
 
   const isLoading = ref(false)

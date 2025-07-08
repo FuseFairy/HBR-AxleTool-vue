@@ -22,7 +22,7 @@
       const skillStore = useSkillStore()
       skillStore.ensureIds()
 
-      const fonts = ['fonts/LXGWWenKaiMonoTC-Regular/result.css', 'fonts/Gugi-Regular/result.css']
+      const fonts = ['fonts/LXGWWenKaiMonoTC-Regular/result.css', 'fonts/Gugi-Regular/result.css', 'fonts/Xiaolai-Regular/result.css']
 
       await Promise.all(fonts.map((path) => loadFontCSS(getAssetsFile(path))))
     } catch (err) {
