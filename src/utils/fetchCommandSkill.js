@@ -1,13 +1,12 @@
 import { getTeamData } from './getTeamData'
 import { isObject, values } from 'lodash-es'
+import { fetchCommonData } from './fetchCommonData'
 
 export async function fetchCommandSkill(characterName, team, styleName) {
   try {
     const data = await getTeamData(team)
     const characterData = data[characterName]
-    const defaultCommandSkill = [
-      { value: '普攻', names: { 'zh-TW': '普通攻擊', jp: '通常攻撃', 'zh-CN': '普通攻击', 'zh-CN-CN': '通常攻撃' }, sp: 0 },
-    ]
+    const { defaultCommandSkill } = await fetchCommonData()
 
     if (!characterData || !characterData.style) {
       throw new Error('Character data or styles not found')
