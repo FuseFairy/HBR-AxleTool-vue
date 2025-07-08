@@ -40,7 +40,7 @@
         *   ![download](/src/assets/custom-icon/download.svg)**下載圖片**: 將整個行動軸輸出成一張圖片，方便你在社群或與朋友討論。
 
 4.  **圖片上傳**
-    透過網頁右上角![upload](/src/assets/custom-icon/upload.svg)可以上傳圖片並載入資料。
+    *    透過網頁右上角![upload](/src/assets/custom-icon/upload.svg)可以上傳圖片並載入資料。
     ![upload](/image/upload.gif)
 
 5.  **其他功能**:

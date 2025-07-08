@@ -40,7 +40,7 @@ Through a visual interface, players can record the skill casting order of charac
         *   ![download](/src/assets/custom-icon/download.svg)**Download Image**: Exports the entire action-axis as an image, convenient for discussions in communities or with friends.
 
 4.  **Image Upload**
-    Upload an image and load data by clicking ![upload](/src/assets/custom-icon/upload.svg) in the top-right corner of the webpage.
+    *   Upload an image and load data by clicking ![upload](/src/assets/custom-icon/upload.svg) in the top-right corner of the webpage.
     ![upload](/image/upload.gif)
 
 5.  **Other Features**:

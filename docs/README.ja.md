@@ -40,7 +40,7 @@
         *   ![download](/src/assets/custom-icon/download.svg)**画像のダウンロード**: 行動軸全体を一枚の画像として出力し、コミュニティや友人と議論するのに便利です。
 
 4.  **画像のアップロード**
-    ウェブページの右上にある![upload](/src/assets/custom-icon/upload.svg)から画像をアップロードしてデータを読み込むことができます。
+    *   ウェブページの右上にある![upload](/src/assets/custom-icon/upload.svg)から画像をアップロードしてデータを読み込むことができます。
     ![upload](/image/upload.gif)
 
 5.  **その他の機能**:

@@ -40,7 +40,7 @@
         *   ![download](/src/assets/custom-icon/download.svg)**下载图片**: 将整个行动轴输出成一张图片，方便你在社群或与朋友讨论。
 
 4.  **图片上传**
-    通过网页右上角![upload](/src/assets/custom-icon/upload.svg)可以上传图片并加载数据。
+    *   通过网页右上角![upload](/src/assets/custom-icon/upload.svg)可以上传图片并加载数据。
     ![upload](/image/upload.gif)
 
 5.  **其他功能**:
