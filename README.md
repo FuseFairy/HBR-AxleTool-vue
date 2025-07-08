@@ -21,7 +21,7 @@
 1.  **隊伍編輯**:
     *    角色選擇介面按照順序依序選擇 隊伍（Team）、角色（Character）、戰型（Style）。
         ![角色選擇](/image/select_char.png)
-    *   其他設定���Others）可以設定 突破數（Rank）、耳環（Earring）、被動技能（Passive SKill）和 專武等級（Spiritual Rupture）。
+    *   其他設定（Others）可以設定 突破數（Rank）、耳環（Earring）、被動技能（Passive SKill）和 專武等級（Spiritual Rupture）。
         ![其他](/image/select_char_others.png)
     *   能透過拖曳隨意排序位置。
         ![拖曳](/image/select_char_drag&drop.gif)

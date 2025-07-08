@@ -23,7 +23,7 @@
         ![角色选择](/image/select_char.png)
     *   其他设定（Others）可以设定 突破数（Rank）、耳环（Earring）、被动技能（Passive SKill）和 专武等级（Spiritual Rupture）。
         ![其他](/image/select_char_others.png)
-    *   能通过拖���随意排序位置。
+    *   能通过拖曳随意排序位置。
         ![拖曳](/image/select_char_drag&drop.gif)
 
 2.  **行动轴编辑**:
@@ -40,7 +40,7 @@
         *   ![download](/src/assets/custom-icon/download.svg)**下载图片**: 将整个行动轴输出成一张图片，方便你在社群或与朋友讨论。
 
 4.  **图片上传**
-    通过网页右上角![upload](/src/assets/custom-icon/upload.svg)可以上传图片并载入数据。
+    通过网页右上角![upload](/src/assets/custom-icon/upload.svg)可以上传图片并加载数据。
     ![upload](/image/upload.gif)
 
 5.  **其他功能**:
@@ -66,7 +66,7 @@
 ### **环境准备**
 
 -   确认已安装 [Node.js](https://nodejs.org/) (建议版本 18.x 或以上)
--   推荐使用 [VSCode](https://code.visualstudio.com/) 作为开发工具，并安装 [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 扩展功能。
+-   推荐使用 [VSCode](https://code.visualstudio.com/) 作为开发工具，并安装 [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 扩充功能。
 
 ### **项目脚本**
 
@@ -75,7 +75,7 @@
 | `npm install` | 安装项目所有依赖。 |
 | `npm run dev` | 启动本地开发服务器，支持热重载。 |
 | `npm run build` | 将项目打包至 `dist` 文件夹，并压缩 JSON 文件。 |
-| `npm run preview` | 预览���包后的成果。 |
+| `npm run preview` | 预览打包后的成果。 |
 | `npm run format` | 使用 Prettier 格式化所有代码。 |
 | `npm run lint` | 使用 ESLint 检查并修正代码风格问题。 |
 
@@ -83,7 +83,7 @@
 
 我们计划开发一款搭配本网站使用的桌面端辅助工具，它将具备以下核心功能：
 
--   **实时战斗记录**：通过计算机视觉技术，工具能够在玩家进行游戏时，实时辨识画面中的角色、使用的技能与回合数。
+-   **即时战斗记录**：通过计算机视觉技术，工具能够在玩家进行游戏时，即时辨识画面中的角色、使用的技能与回合数。
 -   **生成行动轴**：能上传数据至本网站生成轴，并进行后续的编辑、分享。
 
 这个功能的目标是将手动记录的流程完全自动化，让玩家可以更专注于战斗本身。敬请期待！
@@ -98,11 +98,11 @@
 
 ### **欢迎其他语言的贡献者**
 
-除了 B 服的简体中文外，我们也诚挚地欢迎任何能够提供**其他语言**（如英文、韩文等）翻译的贡献者。如果你希望能让这个工具支持更多语言���帮助到更多不同地区的玩家，请不要犹豫，通过以下方式与我们联系！
+除了 B 服的简体中文外，我们也诚挚地欢迎任何能够提供**其他语言**（如英文、韩文等）翻译的贡献者。如果你希望能让这个工具支持更多语言，帮助到更多不同地区的玩家，请不要犹豫，通过以下方式与我们联系！
 
-**��系方式：**
+**联系方式：**
 
--   **GitHub Issues**: 直接在本专案的 [Issues](https://github.com/FuseFairy/HBR-AxleTool-vue/issues) 中开启一个新的 issue 说明你的来意。
+-   **GitHub Issues**: 直接在本项目的 [Issues](https://github.com/FuseFairy/HBR-AxleTool-vue/issues) 中开启一个新的 issue 说明你的来意。
 -   **Email**: [dd8611706@gmail.com](mailto:dd8611706@gmail.com)
 
 非常感谢你的热情与支持！
