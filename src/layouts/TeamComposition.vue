@@ -143,9 +143,7 @@
     document.body.style.overflow = '' // 恢復頁面滾動
     if (touchElement.value) {
       touchElement.value.remove() // 移除影子元素
-      const sourceButton = document.querySelector(
-        `.team-circle-button[data-key="${mouseOnButton.value}"]`
-      )
+      const sourceButton = document.querySelector(`.team-circle-button[data-key="${mouseOnButton.value}"]`)
       if (sourceButton) {
         sourceButton.classList.remove('dragging')
       }

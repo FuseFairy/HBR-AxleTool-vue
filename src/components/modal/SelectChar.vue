@@ -241,7 +241,7 @@
             </button>
           </div>
           <div class="content custom-scrollbar">
-            <div class="section" style="padding: 0;">
+            <div class="section" style="padding: 0">
               <label>Team</label>
               <Multiselect v-model="selectedTeam" placeholder="Select team" label="name" :options="teamOptions">
                 <template #singlelabel="{ value }">
@@ -582,7 +582,7 @@
     overflow-x: hidden;
     padding-right: 5px;
   }
-  
+
   label {
     font-family: var(--font-family-serif);
     color: white;

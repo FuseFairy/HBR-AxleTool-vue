@@ -738,7 +738,7 @@
     overflow-x: hidden;
     box-sizing: border-box;
   }
-  
+
   @media (max-width: 950px) {
     .container {
       width: 100%;

@@ -191,7 +191,7 @@
     flex-direction: column;
     align-items: center;
     border: 3px solid #262426;
-    box-sizing: border-box
+    box-sizing: border-box;
   }
   .close {
     background-color: transparent;
@@ -225,7 +225,7 @@
     justify-content: center;
     align-items: center;
     gap: var(--spacing-4);
-    margin-top: var(--spacing-4);;
+    margin-top: var(--spacing-4);
   }
   .circle-button {
     border-radius: 50%;

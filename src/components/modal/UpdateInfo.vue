@@ -292,7 +292,7 @@
     height: 80px;
     object-fit: cover;
   }
-  
+
   .update-content-wrapper {
     display: grid;
     grid-template-rows: 0fr;

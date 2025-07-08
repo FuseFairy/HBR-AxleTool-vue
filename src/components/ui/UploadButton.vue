@@ -62,7 +62,7 @@
     loader="dots"
     color="#79d1cb"
   />
-  <button v-tooltip="{ content: 'Upload', placement: 'bottom' }" class="upload-button flex items-center justify-center" @click="triggerFileInput">
+  <button v-tooltip="{ content: 'Upload', placement: 'bottom' }" class="upload-button" @click="triggerFileInput">
     <img src="@/assets/custom-icon/upload.svg" alt="Upload" />
   </button>
   <input ref="fileInput" type="file" accept=".jpg,.jpeg" style="display: none" @change="onFileChange" />
