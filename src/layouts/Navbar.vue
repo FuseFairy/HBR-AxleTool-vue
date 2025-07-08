@@ -8,22 +8,22 @@
 
   const buttons = [
     { key: 'table', tooltip: 'table', icon: getAssetsFile('custom-icon/table.svg'), component: Axle },
-    {
-      key: 'setting',
-      tooltip: 'setting',
-      icon: getAssetsFile('custom-icon/setting.svg'),
-      component: Settings,
-    },
+    { key: 'docs', tooltip: 'docs', icon: getAssetsFile('custom-icon/docs.svg') },
     {
       key: 'update_info',
       tooltip: 'update',
       icon: getAssetsFile('custom-icon/notifications.svg'),
       component: UpdateInfo,
     },
+    {
+      key: 'setting',
+      tooltip: 'setting',
+      icon: getAssetsFile('custom-icon/setting.svg'),
+      component: Settings,
+    },
     { key: 'bug_report', tooltip: 'report bug', icon: getAssetsFile('custom-icon/bug_report.svg') },
-    { key: 'github', tooltip: 'github', icon: getAssetsFile('custom-icon/github.svg') },
   ]
-  const githubURL = 'https://github.com/FuseFairy/HBR-AxleTool-vue'
+  const docsURL = 'https://github.com/FuseFairy/HBR-AxleTool-vue/blob/main/README.md'
   const bugReportURL = 'https://github.com/FuseFairy/HBR-AxleTool-vue/issues'
   const activeModal = ref(null)
 
@@ -37,8 +37,8 @@
   }
 
   const handleButtonClick = (key) => {
-    if (key === 'github') {
-      window.open(githubURL, '_blank')
+    if (key === 'docs') {
+      window.open(docsURL, '_blank')
     } else if (key === 'bug_report') {
       window.open(bugReportURL, '_blank')
     } else {
