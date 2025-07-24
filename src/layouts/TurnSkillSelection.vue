@@ -27,7 +27,7 @@
   })
   const turnOptions = [
     { value: 'Switch', names: 'Switch' },
-    { value: '追加回合', names: { 'zh-TW': '追加回合', jp: '追加ターン' } },
+    { value: '追加回合', names: { 'zh-TW': '追加回合', jp: '追加ターン', 'zh-CN-CN': '追加回合' } },
     ...formattedOptions,
   ]
 
