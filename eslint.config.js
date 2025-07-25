@@ -4,7 +4,7 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default [
   {
-    ignores: [".eslintrc.cjs", "dist/*", "node_modules/*", "minify-json.js", ".git/*", ".vscode/*"],
+    ignores: ["dist/*", "node_modules/*", "minify-json.js", ".git/*", ".vscode/*"],
   },
   js.configs.recommended,
   ...eslintPluginVue.configs['flat/recommended'],
