@@ -6,8 +6,6 @@ This is a web tool designed for the mobile game "[Heaven Burns Red](https://heav
 
 Through a visual interface, players can record the skill casting order of characters in each turn and export the final action-axis as an image or share it with friends via a URL.
 
-**[Try the Live Demo](https://hbr-axletool.pages.dev/)**
-
 ![Project Preview](/image/preview.png)
 
 ## ✨ Key Features

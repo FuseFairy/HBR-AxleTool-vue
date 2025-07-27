@@ -6,8 +6,6 @@
 
 透過視覺化的介面，玩家可以紀錄每個回合的角色技能施放順序，並將最終的行動軸匯出成圖片或透過 URL 分享給朋友。
 
-**[線上體驗 Demo](https://hbr-axletool.pages.dev/)**
-
 ![專案預覽圖](/image/preview.png)
 
 ## ✨ 主要功能
