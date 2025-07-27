@@ -10,7 +10,9 @@ import { useSliderStore } from '@/store/slider'
 import { useLastTabStore } from '@/store/tab'
 import { useSettingStore } from '@/store/setting'
 
-export async function updateData(customData) {
+const DATA_VERSION = '1.0.0'
+
+export async function decompressAxleData(customData) {
   let lastTabAssigned = false
   const charStore = useCharStore()
   const skillStore = useSkillStore()
@@ -20,7 +22,7 @@ export async function updateData(customData) {
 
   const decodedData = JSON.parse(decompressFromBase64(customData))
 
-  if (decodedData?.version != '1.0.0') {
+  if (decodedData?.version != DATA_VERSION) {
     throw new Error('Old image not supported!')
   }
 

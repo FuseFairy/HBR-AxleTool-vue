@@ -2,7 +2,7 @@
   import { ref } from 'vue'
   import piexif from 'piexifjs'
   import loading from 'vue-loading-overlay'
-  import { updateData } from '@/utils/decompressData'
+  import { decompressAxleData } from '@/utils/decompressAxleData'
 
   const fileInput = ref(null)
   const isLoading = ref(false)
@@ -38,7 +38,7 @@
             throw new Error('Custom metadata not found.')
           }
 
-          await updateData(customData)
+          await decompressAxleData(customData)
         } catch (error) {
           alert(error)
         } finally {

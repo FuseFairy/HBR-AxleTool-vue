@@ -2,7 +2,7 @@
   import { onBeforeMount, onMounted } from 'vue'
   import { runIPGeolocation } from '@/utils/ipGeolocation'
   import { getData } from '@/utils/axleDataApi'
-  import { updateData } from '@/utils/decompressData'
+  import { decompressAxleData } from '@/utils/decompressAxleData'
   import { loadFontCSS } from '@/utils/loadFontCSS'
   import { getAssetsFile } from '@/utils/getAssetsFile'
   import { useSkillStore } from '@/store/axle'
@@ -43,7 +43,7 @@
             const response = await getData(axle_id)
             const result = await response.json()
             const { data } = result
-            if (data != null || data != undefined) await updateData(data)
+            if (data != null || data != undefined) await decompressAxleData(data)
             else alert('ERROR: Wrong Url!')
             window.history.replaceState({}, document.title, '/')
           } catch (error) {
