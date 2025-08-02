@@ -737,6 +737,8 @@
     overflow-y: auto;
     overflow-x: auto;
     box-sizing: border-box;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
   }
 
   @media (max-width: 950px) {
