@@ -67,6 +67,7 @@
 }
 
 .custom-scrollbar {
+  overflow-y: scroll;
   overflow-x: auto;
 }
 .custom-scrollbar::-webkit-scrollbar {

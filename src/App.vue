@@ -116,7 +116,7 @@
     color: white;
     margin-top: 3rem;
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: auto;
     box-sizing: border-box;
     padding: 1rem;
     height: calc(100vh - 3rem);
@@ -142,21 +142,7 @@
     grid-area: axle;
     padding-top: 0.5rem;
   }
-  .custom-scrollbar {
-    overflow-x: auto;
-  }
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 5px;
-    height: 0;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track,
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #555;
-  }
+
   @media (max-width: 800px) {
     .form-row {
       flex-direction: column;
