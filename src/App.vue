@@ -13,6 +13,7 @@
   import '@/style/main.css'
   import NProgress from 'nprogress'
   import '@/style/nprogress/nprogress.css'
+  import BackToTopButton from '@/components/ui/BackToTopButton.vue'
 
   onBeforeMount(runIPGeolocation)
   onMounted(async () => {
@@ -67,7 +68,7 @@
 <template>
   <div class="page-layout">
     <Navbar />
-    <main class="custom-scrollbar">
+    <main id="main-scroll-container" class="custom-scrollbar">
       <div class="box_container">
         <TeamComposition />
       </div>
@@ -77,6 +78,7 @@
       <div class="footer">
         <AppFooter />
       </div>
+      <BackToTopButton scroll-container-selector="#main-scroll-container" />
     </main>
   </div>
 </template>
