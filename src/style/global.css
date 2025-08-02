@@ -71,7 +71,7 @@
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
-  height: 0;
+  height: 5px;
 }
 .custom-scrollbar::-webkit-scrollbar-track,
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -80,4 +80,8 @@
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #555;
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background-color: rgba(0, 0, 0, 0.3);
 }
