@@ -127,6 +127,8 @@
       'box_container'
       'axle'
       'footer';
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
   }
   .footer {
     grid-area: footer;
