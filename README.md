@@ -34,7 +34,7 @@
     *   點擊網頁右上角的 ![axle icon](/src/assets/custom-icon/table.svg) 可以看到完整的軸。
     *   點進去後會左上會看到 3 個按鈕，分別是 篩選、下載圖片、分享
         *   ![filter](/src/assets/custom-icon/filter-on.svg)**篩選**: 自由選擇需要顯示的部分。
-        *   ![share](/src/assets/custom-icon/share.svg)**分享**: 會產生一組包含目前隊伍和行動軸配置的連結，其他人打開連結即可看到你的軸，連結有效期限為7天。
+        *   ![share](/src/assets/custom-icon/share.svg)**分享**: 會產生一組包含目前隊伍和行動軸配置的連結，其他人打開連結即可看到你的軸，連結有效期限為60天。
         *   ![download](/src/assets/custom-icon/download.svg)**下載圖片**: 將整個行動軸輸出成一張圖片，方便你在社群或與朋友討論。
 
 4.  **圖片上傳**

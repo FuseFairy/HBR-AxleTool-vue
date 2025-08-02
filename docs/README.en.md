@@ -34,7 +34,7 @@ Through a visual interface, players can record the skill casting order of charac
     *   Click the ![axle icon](/src/assets/custom-icon/table.svg) in the top-right corner of the webpage to see the complete axis.
     *   After clicking, you will see 3 buttons in the top-left: Filter, Download Image, and Share.
         *   ![filter](/src/assets/custom-icon/filter-on.svg)**Filter**: Freely choose which parts to display.
-        *   ![share](/src/assets/custom-icon/share.svg)**Share**: Generates a link containing the current team and action-axis configuration. Others can open the link to see your axis. The link is valid for 7 days.
+        *   ![share](/src/assets/custom-icon/share.svg)**Share**: Generates a link containing the current team and action-axis configuration. Others can open the link to see your axis. The link is valid for 60 days.
         *   ![download](/src/assets/custom-icon/download.svg)**Download Image**: Exports the entire action-axis as an image, convenient for discussions in communities or with friends.
 
 4.  **Image Upload**

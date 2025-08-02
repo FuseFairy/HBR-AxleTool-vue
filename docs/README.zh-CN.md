@@ -34,7 +34,7 @@
     *   点击网页右上角的 ![axle icon](/src/assets/custom-icon/table.svg) 可以看到完整的轴。
     *   点进去后会左上会看到 3 个按钮，分别是 筛选、下载图片、分享
         *   ![filter](/src/assets/custom-icon/filter-on.svg)**筛选**: 自由选择需要显示的部分。
-        *   ![share](/src/assets/custom-icon/share.svg)**分享**: 会产生一组包含目前队伍和行动轴配置的链接，其他人打开链接即可看到你的轴，链接有效期限为7天。
+        *   ![share](/src/assets/custom-icon/share.svg)**分享**: 会产生一组包含目前队伍和行动轴配置的链接，其他人打开链接即可看到你的轴，链接有效期限为60天。
         *   ![download](/src/assets/custom-icon/download.svg)**下载图片**: 将整个行动轴输出成一张图片，方便你在社群或与朋友讨论。
 
 4.  **图片上传**
