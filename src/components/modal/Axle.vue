@@ -203,7 +203,7 @@
               <img src="/src/assets/common/sleeping.webp" />
             </div>
             <div v-else id="show-axle" class="table-wrapper">
-              <span v-if="axleName.length > 0" class="axle-name text-wrap">{{ axleName }}</span>
+              <div v-if="axleName.length > 0" class="axle-name text-wrap">{{ axleName }}</div>
               <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
                 <div
                   v-if="showTeamStore.showTeam.length > 1 && index > 0"
@@ -435,7 +435,7 @@
     font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
     color: rgb(225, 230, 209);
     border-bottom: 4px solid rgb(110, 107, 102);
-    max-width: 100%;
+    max-width: 98%;
   }
   .option-icon {
     width: 34px;
