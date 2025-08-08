@@ -4,17 +4,10 @@
   import UploadButton from '@/components/ui/UploadButton.vue'
   import Axle from '@/components/modal/Axle.vue'
   import Settings from '@/components/modal/Settings.vue'
-  import UpdateInfo from '@/components/modal/UpdateInfo.vue'
 
   const buttons = [
     { key: 'table', tooltip: 'table', icon: getAssetsFile('custom-icon/table.svg'), component: Axle },
     { key: 'docs', tooltip: 'docs', icon: getAssetsFile('custom-icon/docs.svg') },
-    {
-      key: 'update_info',
-      tooltip: 'update',
-      icon: getAssetsFile('custom-icon/notifications.svg'),
-      component: UpdateInfo,
-    },
     {
       key: 'setting',
       tooltip: 'setting',
