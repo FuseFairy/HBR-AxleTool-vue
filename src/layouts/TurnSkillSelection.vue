@@ -540,7 +540,7 @@
     top: -5px;
     right: -5px;
     background-color: rgba(30, 30, 30, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 50%;
     width: 28px;
     height: 28px;
@@ -555,7 +555,7 @@
   }
   .toggle-form-button:hover {
     background-color: rgba(50, 50, 50, 0.95);
-    border-color: rgba(255, 255, 255, 1);
+    border-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0 2px 12px rgba(255, 255, 255, 0.1);
   }
   .toggle-form-button img {
