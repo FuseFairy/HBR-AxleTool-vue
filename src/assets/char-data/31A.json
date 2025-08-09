@@ -388,6 +388,10 @@
       "遙拜之人": {
         "value": "遙拜之人",
         "names": { "zh-TW": "遙拜之人", "jp": "遥拝の君", "zh-CN": "遥拜之人", "zh-CN-CN": "遥拜之人" }
+      },
+      "BeatDown();": {
+        "value": "BeatDown()",
+        "names": { "zh-TW": "BeatDown()", "jp": "BeatDown()", "zh-CN": "BeatDown()", "zh-CN-CN": "BeatDown()" }
       }
     }
   },
