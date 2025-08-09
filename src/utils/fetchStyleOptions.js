@@ -12,11 +12,15 @@ export async function fetchStyleOptions(characterName, team) {
     const englishName = characterData['english name']
     const styles = characterData.style
 
-    return Object.entries(styles).map(([, info]) => ({
-      value: info.value,
-      names: info.names,
-      icon: `char-images/${team}/${englishName}/${info.id}.webp`,
-    }))
+    return Object.entries(styles).map(([, info]) => {
+      const iconId = Array.isArray(info.id) ? info.id[0] : info.id
+      return {
+        value: info.value,
+        names: info.names,
+        id: info.id,
+        icon: `char-images/${team}/${englishName}/${iconId}.webp`,
+      }
+    })
   } catch (error) {
     console.error('Error fetching style options:', error)
     return []

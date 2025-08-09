@@ -15,9 +15,33 @@ export const useSkillStore = defineStore(
 
       if (difference > 0) {
         const newSkills = Array.from({ length: difference }, () => [
-          { selectedTab: null, style: null, style_img: null, skill: null, target: null },
-          { selectedTab: null, style: null, style_img: null, skill: null, target: null },
-          { selectedTab: null, style: null, style_img: null, skill: null, target: null },
+          {
+            selectedTab: null,
+            style: null,
+            style_id: null,
+            activeFormId: null,
+            style_img: null,
+            skill: null,
+            target: null,
+          },
+          {
+            selectedTab: null,
+            style: null,
+            style_id: null,
+            activeFormId: null,
+            style_img: null,
+            skill: null,
+            target: null,
+          },
+          {
+            selectedTab: null,
+            style: null,
+            style_id: null,
+            activeFormId: null,
+            style_img: null,
+            skill: null,
+            target: null,
+          },
         ])
         skills.value.push(...newSkills)
 
@@ -36,6 +60,29 @@ export const useSkillStore = defineStore(
         }
       })
     }
+
+    // Data migration
+    skills.value.forEach((row) => {
+      row.forEach((skill) => {
+        if (skill && skill.style_id === undefined) {
+          if (skill.style_img) {
+            try {
+              const pathParts = skill.style_img.split('/')
+              const fileName = pathParts.pop()
+              skill.style_id = fileName.split('.').slice(0, -1).join('.')
+            // eslint-disable-next-line no-unused-vars
+            } catch (e) {
+              skill.style_id = null
+            }
+          } else {
+            skill.style_id = null
+          }
+        }
+        if (skill && skill.activeFormId === undefined) {
+          skill.activeFormId = null
+        }
+      })
+    })
 
     return {
       axleName,

@@ -23,6 +23,7 @@ export async function fetchSkillOptions(characterName, team, styleName) {
         value: info['value'],
         names: info['names'],
         sp: info['sp'],
+        owner: info['owner'],
       })),
       ...Object.entries(commonSkills).map(([, info]) => ({
         value: info['value'],

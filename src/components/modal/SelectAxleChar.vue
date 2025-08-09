@@ -62,10 +62,18 @@
       skillStore.skills[props.row][props.buttonKey].selectedTab = null
       skillStore.skills[props.row][props.buttonKey].style = null
       skillStore.skills[props.row][props.buttonKey].style_img = null
+      skillStore.skills[props.row][props.buttonKey].style_id = null
+      skillStore.skills[props.row][props.buttonKey].activeFormId = null
     } else {
-      skillStore.skills[props.row][props.buttonKey].selectedTab = selectedTab.value
-      skillStore.skills[props.row][props.buttonKey].style = filteredSelections.value[key].style
-      skillStore.skills[props.row][props.buttonKey].style_img = filteredSelections.value[key].img
+      const selection = charStore.selections[selectedTab.value][key]
+      const skill = skillStore.skills[props.row][props.buttonKey]
+
+      skill.selectedTab = selectedTab.value
+      skill.style = selection.style
+      skill.style_img = selection.img
+      skill.style_id = selection.style_id
+      skill.activeFormId = selection.activeFormId
+
       closeContainer()
     }
   }

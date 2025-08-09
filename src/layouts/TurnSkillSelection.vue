@@ -41,14 +41,18 @@
   }
 
   const getFilteredSkills = (row, key) => {
-    const currentSkill = skillStore.skills[row][key]
-    if (currentSkill && currentSkill.style != null) {
-      const currentStyle = currentSkill.style
-      const selectedTab = currentSkill.selectedTab
+    const currentSkillInfo = skillStore.skills[row][key]
+    if (currentSkillInfo && currentSkillInfo.style != null) {
+      const { style: currentStyle, selectedTab, style_id, activeFormId } = currentSkillInfo
       const selections = Object.values(charStore.selections[selectedTab])
 
       const currentSelection = selections.find((selection) => selection.style === currentStyle)
-      const skillOptions = cloneDeep(currentSelection.skill)
+      let skillOptions = cloneDeep(currentSelection.skill)
+
+      if (Array.isArray(style_id)) {
+        skillOptions = skillOptions.filter((skill) => !skill.owner || skill.owner === activeFormId)
+      }
+
       const commandSkillRaw = toRaw(currentSelection.commandSkill)
 
       if (Array.isArray(commandSkillRaw)) {
@@ -104,9 +108,33 @@
   function handleTurnChange(value, index) {
     if (value === 'Switch') {
       skillStore.skills[index] = [
-        { selectedTab: null, style: null, style_img: null, skill: null, target: null },
-        { selectedTab: null, style: null, style_img: null, skill: null, target: null },
-        { selectedTab: null, style: null, style_img: null, skill: null, target: null },
+        {
+          selectedTab: null,
+          style: null,
+          style_id: null,
+          activeFormId: null,
+          style_img: null,
+          skill: null,
+          target: null,
+        },
+        {
+          selectedTab: null,
+          style: null,
+          style_id: null,
+          activeFormId: null,
+          style_img: null,
+          skill: null,
+          target: null,
+        },
+        {
+          selectedTab: null,
+          style: null,
+          style_id: null,
+          activeFormId: null,
+          style_img: null,
+          skill: null,
+          target: null,
+        },
       ]
       skillStore.turns[index].od = null
     }
@@ -265,6 +293,20 @@
     mouseOnButton.value = null
     mouseDownButton.value = null
   }
+
+  const toggleForm = (row, key) => {
+    const skill = skillStore.skills[row][key]
+    if (!Array.isArray(skill.style_id) || !skill.style_img) return
+
+    const currentIndex = skill.style_id.indexOf(skill.activeFormId)
+    const nextIndex = (currentIndex + 1) % skill.style_id.length
+    const newActiveFormId = skill.style_id[nextIndex]
+    skill.activeFormId = newActiveFormId
+
+    const pathParts = skill.style_img.split('/')
+    pathParts.pop()
+    skill.style_img = `${pathParts.join('/')}/${newActiveFormId}.webp`
+  }
 </script>
 
 <template>
@@ -343,33 +385,43 @@
     </div>
     <div v-if="turn.turn !== 'Switch'" class="button-container">
       <div v-for="n in 3" :key="n" class="column">
-        <div
-          role="button"
-          tabindex="0"
-          :data-row="i"
-          :data-key="n - 1"
-          :class="{
-            'circle-button selected-button': skillStore.skills[i][n - 1].style_img !== null,
-            'circle-button add-button': skillStore.skills[i][n - 1].style_img === null,
-          }"
-          draggable="true"
-          @click="handleBoxClick(i, n - 1)"
-          @dragstart="handleDragStart($event, i, n - 1)"
-          @dragover.prevent="handleDragOver($event, i, n - 1)"
-          @dragend="handleDragEnd($event, i, n - 1)"
-          @touchstart="handleTouchStart($event, i, n - 1)"
-          @touchmove="handleTouchMove($event)"
-          @touchend="handleTouchEnd($event)"
-          @keydown.enter="handleBoxClick(i, n - 1)"
-          @keydown.space="handleBoxClick(i, n - 1)"
-        >
-          <img
-            v-if="skillStore.skills[i][n - 1].style_img !== null"
-            class="char-img"
-            :src="getAssetsFile(skillStore.skills[i][n - 1].style_img)"
-            :alt="skillStore.skills[i][n - 1].style"
-          />
-          <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
+        <div class="char-button-wrapper">
+          <div
+            role="button"
+            tabindex="0"
+            :data-row="i"
+            :data-key="n - 1"
+            :class="{
+              'circle-button selected-button': skillStore.skills[i][n - 1].style_img !== null,
+              'circle-button add-button': skillStore.skills[i][n - 1].style_img === null,
+            }"
+            draggable="true"
+            @click="handleBoxClick(i, n - 1)"
+            @dragstart="handleDragStart($event, i, n - 1)"
+            @dragover.prevent="handleDragOver($event, i, n - 1)"
+            @dragend="handleDragEnd($event, i, n - 1)"
+            @touchstart="handleTouchStart($event, i, n - 1)"
+            @touchmove="handleTouchMove($event)"
+            @touchend="handleTouchEnd($event)"
+            @keydown.enter="handleBoxClick(i, n - 1)"
+            @keydown.space="handleBoxClick(i, n - 1)"
+          >
+            <img
+              v-if="skillStore.skills[i][n - 1].style_img !== null"
+              class="char-img"
+              :src="getAssetsFile(skillStore.skills[i][n - 1].style_img)"
+              :alt="skillStore.skills[i][n - 1].style"
+            />
+            <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
+          </div>
+          <button
+            v-if="Array.isArray(skillStore.skills[i][n - 1].style_id)"
+            v-tooltip="{ content: 'switch style', placement: 'top' }"
+            class="toggle-form-button"
+            @click.stop="toggleForm(i, n - 1)"
+          >
+            <img src="@/assets/custom-icon/switch.svg" alt="Toggle Form" />
+          </button>
         </div>
         <Multiselect
           v-model="skillStore.skills[i][n - 1].skill"
@@ -479,6 +531,36 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+  }
+  .char-button-wrapper {
+    position: relative;
+  }
+  .toggle-form-button {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: rgba(30, 30, 30, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    z-index: 10;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+  .toggle-form-button:hover {
+    background-color: rgba(50, 50, 50, 0.95);
+    border-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 2px 12px rgba(255, 255, 255, 0.1);
+  }
+  .toggle-form-button img {
+    width: 100%;
+    height: 100%;
   }
   .empty-1 {
     width: 80px;

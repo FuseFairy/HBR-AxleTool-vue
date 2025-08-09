@@ -820,6 +820,16 @@
           "zh-CN-CN": "Twinkle Eclosion"
         },
         "id": "008"
+      },
+      "CODE:Virtual Killer": {
+        "value": "CODE:Virtual Killer",
+        "names": {
+          "zh-TW": "CODE:Virtual Killer",
+          "jp": "CODE:Virtual Killer",
+          "zh-CN": "CODE:Virtual Killer",
+          "zh-CN-CN": "CODE:Virtual Killer"
+        },
+        "id": [ "009-1", "009-2" ]
       }
     },
     "skill": {
@@ -931,6 +941,30 @@
             "zh-CN-CN": "芬布尔之舞"
           },
           "sp": 13
+        }
+      },
+      "CODE:Virtual Killer": {
+        "對稱釋能": {
+          "owner": "009-1",
+          "value": "對稱釋能",
+          "names": {
+            "zh-TW": "對稱釋能",
+            "jp": "シンメトリー・リベレーション",
+            "zh-CN": "对称释能",
+            "zh-CN-CN": "对称释能"
+          },
+          "sp": 16
+        },
+        "夜殺之刃": {
+          "owner": "009-2",
+          "value": "夜殺之刃",
+          "names": {
+            "zh-TW": "夜殺之刃",
+            "jp": "ナイトキルエッジ",
+            "zh-CN": "夜杀之刃",
+            "zh-CN-CN": "夜杀之刃"
+          },
+          "sp": 14
         }
       }
     },

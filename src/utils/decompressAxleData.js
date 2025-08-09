@@ -2,6 +2,7 @@ import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
 import { fetchCharacterOptions } from '@/utils/fetchCharacterOptions'
 import { fetchPassiveSkillOptions } from '@/utils/fetchPassiveSkillOptions'
 import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
+import { fetchStyleOptions } from './fetchStyleOptions'
 import { decompressFromBase64 } from 'lz-string'
 import { find } from 'lodash-es'
 import { useCharStore } from '@/store/char'
@@ -47,14 +48,56 @@ export async function decompressAxleData(customData) {
 
         const commandSkill = await fetchCommandSkill(character, teamName, style)
         team[charKey]['commandSkill'] = commandSkill || []
+
+        const styleOptions = await fetchStyleOptions(character, teamName)
+        const styleData = find(styleOptions, { value: style })
+        if (styleData) {
+          team[charKey]['style_id'] = styleData.id
+        }
       }
     }
   }
 
+  // 遷移 skills 資料
+  const migratedSkills = decodedData.skills.map((row) =>
+    row.map((skill) => {
+      const newSkill = { ...skill }
+
+      // 遷移 style_id
+      if (newSkill.style_id === undefined) {
+        if (newSkill.style && newSkill.selectedTab) {
+          const charData = decodedDataChar[newSkill.selectedTab]
+          const selection = Object.values(charData).find((sel) => sel.style === newSkill.style)
+          newSkill.style_id = selection ? selection.style_id : null
+        } else {
+          newSkill.style_id = null
+        }
+      }
+
+      // 遷移 activeFormId
+      if (newSkill.activeFormId === undefined) {
+        if (newSkill.style_img) {
+          try {
+            const pathParts = newSkill.style_img.split('/')
+            const fileName = pathParts.pop()
+            newSkill.activeFormId = fileName.split('.').slice(0, -1).join('.')
+            // eslint-disable-next-line no-unused-vars
+          } catch (e) {
+            newSkill.activeFormId = null
+          }
+        } else {
+          newSkill.activeFormId = null
+        }
+      }
+
+      return newSkill
+    })
+  )
+
   Object.assign(charStore.selections, decodedDataChar)
   Object.assign(skillStore, {
     axleName: decodedData.axleName ?? skillStore.axleName,
-    skills: decodedData.skills,
+    skills: migratedSkills,
     turns: decodedData.turns,
   })
   skillStore.ensureIds()

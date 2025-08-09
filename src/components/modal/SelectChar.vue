@@ -153,6 +153,7 @@
           charStore.setSelection(props.buttonKey, 'commandSkill', commandSkill, props.selectedTab)
           charStore.setSelection(props.buttonKey, 'style', newStyle, props.selectedTab)
           charStore.setSelection(props.buttonKey, 'img', selectedOption.icon, props.selectedTab)
+          charStore.setSelection(props.buttonKey, 'style_id', selectedOption.id, props.selectedTab)
           charStore.setSelection(props.buttonKey, 'passiveSkill', [], props.selectedTab)
           charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
 
