@@ -72,7 +72,7 @@
       skill.style = selection.style
       skill.style_img = selection.img
       skill.style_id = selection.style_id
-      skill.activeFormId = selection.activeFormId
+      skill.activeFormId = Array.isArray(selection.style_id) ? selection.style_id[0] : null
 
       closeContainer()
     }
