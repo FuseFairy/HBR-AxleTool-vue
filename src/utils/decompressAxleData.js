@@ -33,7 +33,7 @@ export async function decompressAxleData(customData) {
   const settingStore = useSettingStore()
 
   const decodedData = JSON.parse(decompressFromBase64(customData))
-  const dataVersion = decodedData.version
+  const dataVersion = decodedData?.version
 
   if (compareVersions(dataVersion, '1.0.0') < 0) {
     throw new Error('Old image not supported!')
