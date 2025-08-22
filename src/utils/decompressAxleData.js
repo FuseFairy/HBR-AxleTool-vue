@@ -78,32 +78,31 @@ export async function decompressAxleData(customData) {
         const newSkill = { ...skill }
 
         // 遷移 style_id
-        if (newSkill.style_id === undefined) {
-          if (newSkill.style && newSkill.selectedTab) {
-            const charData = decodedDataChar[newSkill.selectedTab]
+        if (newSkill.style && newSkill.selectedTab) {
+          const charData = decodedDataChar[newSkill.selectedTab]
+          if (charData) {
             const selection = Object.values(charData).find((sel) => sel.style === newSkill.style)
             newSkill.style_id = selection ? selection.style_id : null
           } else {
             newSkill.style_id = null
           }
+        } else {
+          newSkill.style_id = null
         }
 
         // 遷移 activeFormId
-        if (newSkill.activeFormId === undefined) {
-          if (newSkill.style_img) {
-            try {
-              const pathParts = newSkill.style_img.split('/')
-              const fileName = pathParts.pop()
-              newSkill.activeFormId = fileName.split('.').slice(0, -1).join('.')
-              // eslint-disable-next-line no-unused-vars
-            } catch (e) {
-              newSkill.activeFormId = null
-            }
-          } else {
+        if (newSkill.style_img) {
+          try {
+            const pathParts = newSkill.style_img.split('/')
+            const fileName = pathParts.pop()
+            newSkill.activeFormId = fileName.split('.').slice(0, -1).join('.')
+            // eslint-disable-next-line no-unused-vars
+          } catch (e) {
             newSkill.activeFormId = null
           }
+        } else {
+          newSkill.activeFormId = null
         }
-
         return newSkill
       })
     )
