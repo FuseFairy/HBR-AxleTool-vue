@@ -95,7 +95,7 @@ export async function decompressAxleData(customData) {
           try {
             const pathParts = newSkill.style_img.split('/')
             const fileName = pathParts.pop()
-            newSkill.activeFormId = fileName.split('.').slice(0, -1).join('.')
+            newSkill.activeFormId = fileName.substring(0, fileName.lastIndexOf('.')) || fileName
           } catch (e) {
             console.error(`Failed to parse activeFormId from style_img: ${newSkill.style_img}`, e)
             newSkill.activeFormId = null
