@@ -4,8 +4,7 @@ import { useSliderStore } from '@/store/slider'
 import { useSettingStore } from '@/store/setting'
 import { compressToBase64 } from 'lz-string'
 import { getUsedTeams } from '@/utils/getUsedTeams'
-
-const DATA_VERSION = '1.0.0'
+import { version } from '../../package.json'
 
 export function compressAxleData() {
   const charStore = useCharStore()
@@ -33,7 +32,7 @@ export function compressAxleData() {
   }
 
   const customData = {
-    version: DATA_VERSION, // version of the save file format
+    version: version, // version of the save file format
     char: usedCharStore,
     axleName: axleName,
     skills: skillStore.skills,
