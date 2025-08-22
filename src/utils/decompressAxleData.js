@@ -96,8 +96,8 @@ export async function decompressAxleData(customData) {
             const pathParts = newSkill.style_img.split('/')
             const fileName = pathParts.pop()
             newSkill.activeFormId = fileName.split('.').slice(0, -1).join('.')
-            // eslint-disable-next-line no-unused-vars
           } catch (e) {
+            console.error(`Failed to parse activeFormId from style_img: ${newSkill.style_img}`, e)
             newSkill.activeFormId = null
           }
         } else {
