@@ -16,8 +16,7 @@
   const skillStore = useSkillStore()
   const charStore = useCharStore()
   const settingStore = useSettingStore()
-  const odOptions = ['OD1', 'OD2', 'OD3']
-
+  const odOptions = ['OD1', 'OD1/Bonus1', 'OD2', 'OD2/Bonus1', 'OD2/Bonus2', 'OD3', 'OD3/Bonus1', 'OD3/Bonus2', 'OD3/Bonus3']
   const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`)
   const formattedOptions = options.map((option) => {
     return {
@@ -318,9 +317,9 @@
       'container row-item',
       {
         'grid-disabled': turn.turn === 'Switch',
-        od1: turn.od === 'OD1',
-        od2: turn.od === 'OD2',
-        od3: turn.od === 'OD3',
+        od1: turn.od && turn.od.startsWith('OD1'),
+        od2: turn.od && turn.od.startsWith('OD2'),
+        od3: turn.od && turn.od.startsWith('OD3'),
       },
     ]"
   >
