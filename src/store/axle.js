@@ -7,6 +7,7 @@ export const useSkillStore = defineStore(
   'skill',
   () => {
     const axleName = ref('')
+    const axleId = ref('')
     const skills = ref([])
     const turns = ref([])
 
@@ -86,6 +87,7 @@ export const useSkillStore = defineStore(
 
     return {
       axleName,
+      axleId,
       skills,
       turns,
       adjustSkills,

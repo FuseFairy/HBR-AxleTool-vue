@@ -40,6 +40,7 @@ export async function decompressAxleData(customData) {
   }
 
   const decodedDataChar = decodedData.char
+  skillStore.axleId = ''
 
   for (const teamKey in decodedDataChar) {
     const team = decodedDataChar[teamKey]
