@@ -6,6 +6,7 @@ import legacy from '@vitejs/plugin-legacy'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { visualizer } from "rollup-plugin-visualizer";
 import externalGlobals from "rollup-plugin-external-globals";
+import { VueMcp } from 'vite-plugin-vue-mcp'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,6 +26,7 @@ export default defineConfig({
     legacy({
       targets: ["defaults"]
     }),
+    VueMcp(),
   ],
   resolve: {
     alias: {
