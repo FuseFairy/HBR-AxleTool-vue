@@ -66,10 +66,15 @@
   margin: var(--spacing-3);
 }
 
+/* 針對 Firefox */
 .custom-scrollbar {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: auto;
+  scrollbar-width: thin; /* auto, thin, none */
+  scrollbar-color: #555 rgba(0, 0, 0, 0.3); /* thumb track */
 }
+
+/* 針對 WebKit 瀏覽器 (Chrome, Safari, Edge) */
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -82,7 +87,6 @@
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #555;
 }
-
 .custom-scrollbar::-webkit-scrollbar-corner {
   background-color: rgba(0, 0, 0, 0.3);
 }
