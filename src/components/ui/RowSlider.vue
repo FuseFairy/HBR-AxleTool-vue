@@ -1,28 +1,7 @@
 <template>
   <div class="slider-container">
     <div class="top-container">
-      <p>{{ title }}</p>
-      <div class="input-container">
-        <!-- <input v-model="sliderStore.rows" disabled="disabled" />
-      <button 
-        @click="decreaseValue" 
-        :class="{ 'disabled-button': sliderStore.rows === 0 || !hasChar}"
-        :disabled="sliderStore.rows === 0 || !hasChar"
-      >
-        <img
-          :class="['icon', { 'disabled-icon': sliderStore.rows === 0}]"
-          src="/src/assets/custom-icon/remove_w7g2.svg" alt="button - remove a row" />
-      </button>
-      <button 
-        @click="increaseValue" 
-        :class="{ 'disabled-button': sliderStore.rows === 50}"
-        :disabled="sliderStore.rows === 50 || !hasChar"
-      >
-        <img
-          :class="['icon', { 'disabled-icon': sliderStore.rows === 50 || !hasChar}]"
-          src="/src/assets/custom-icon/add_w7g2.svg" alt="button - add a row" />
-      </button> -->
-      </div>
+      <p>Number Of Rows：{{ sliderStore.rows }}</p>
     </div>
     <vue-slider
       v-model="sliderStore.rows"
@@ -47,7 +26,6 @@
   import VueSlider from 'vue-slider-component'
   import '@/style/slider/slider.css'
 
-  const title = 'Number Of Rows'
   const sliderStore = useSliderStore()
   const skillStore = useSkillStore()
   const charStore = useCharStore()
@@ -69,16 +47,6 @@
     display: flex;
     color: var(--primary-light-color);
     font-family: var(--font-family-serif);
-  }
-
-  .input-container {
-    display: flex;
-    align-items: center;
-    margin-left: 2vh;
-    border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 5px;
-    overflow: hidden;
-    transition: 0.3s ease;
   }
 
   .input-container:hover {

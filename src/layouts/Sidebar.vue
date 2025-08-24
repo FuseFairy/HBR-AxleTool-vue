@@ -1,16 +1,19 @@
 <script setup>
   import { useSidebarStore } from '@/store/sidebar'
+  import { useSkillStore } from '@/store/axle'
+  import { useSliderStore } from '@/store/slider'
   import { useAxleCollectionStore } from '@/store/axleCollection'
   import { storeToRefs } from 'pinia'
   import { ref, computed } from 'vue'
   import { getAssetsFile } from '@/utils/getAssetsFile'
   import { decompressAxleData } from '@/utils/decompressAxleData'
   import { compressToBase64, decompressFromBase64 } from 'lz-string'
-  import { useSkillStore } from '@/store/axle'
+
 
   const sidebarStore = useSidebarStore()
   const skillStore = useSkillStore()
   const axleCollectionStore = useAxleCollectionStore()
+  const sliderStore = useSliderStore()
   const { isSidebarOpen } = storeToRefs(sidebarStore)
   const { axles } = storeToRefs(axleCollectionStore)
 
@@ -57,7 +60,6 @@
       if (newAxleName.value !== oldAxleName) {
         // If the edited axle is the currently loaded one, update skillStore.axleName
         if (axle.id === skillStore.axleId) {
-          console.log('Updating skillStore.axleName to', axle.name)
           skillStore.axleName = axle.name
         }
         // Update axle.data with the new name
@@ -86,11 +88,15 @@
   }
 
   const loadAxle = async (axle) => {
-    await decompressAxleData(axle.data)
-    if (skillStore.axleName !== axle.name) {
-      skillStore.axleName = axle.name
+    if (axle.id === skillStore.axleId) {
+      sliderStore.rows = 0
+      skillStore.axleId = ''
+      skillStore.adjustSkills(0)
+      skillStore.axleName = ''
+    } else {
+      await decompressAxleData(axle.data)
+      skillStore.axleId = axle.id
     }
-    skillStore.axleId = axle.id // Update skillStore.axleId
   }
 </script>
 
