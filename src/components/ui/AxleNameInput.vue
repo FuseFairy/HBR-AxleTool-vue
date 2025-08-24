@@ -8,26 +8,27 @@
   const skillStore = useSkillStore()
   const maxlength = 35
   const axleCollectionStore = useAxleCollectionStore()
+  const toastOptions = {
+    theme: 'dark',
+    type: 'success',
+    transition: 'zoom',
+    position: 'bottom-center',
+    autoClose: 300,
+    dangerouslyHTMLString: true,
+    newestOnTop: true,
+    limit: 1,
+    toastStyle: {
+      'font-family': 'var(--font-family-sans)',
+    },
+  }
 
   const handleSaveAxle = () => {
     const compressedData = compressAxleData()
 
     // Update existing axle
-    axleCollectionStore.updateAxleData(skillStore.axleId, compressedData)
+    axleCollectionStore.updateAxleData(skillStore.axleId, skillStore.axleName.trim(), compressedData)
 
-    toast('Axle updated!', {
-      theme: 'dark',
-      type: 'success',
-      transition: 'zoom',
-      position: 'bottom-center',
-      autoClose: 300,
-      dangerouslyHTMLString: true,
-      newestOnTop: true,
-      limit: 1,
-      toastStyle: {
-        'font-family': 'var(--font-family-sans)',
-      },
-    })
+    toast('Axle updated!', toastOptions)
   }
 
   const handleSaveAsAxle = () => {
@@ -37,19 +38,7 @@
     const newAxleId = axleCollectionStore.addAxle({ name: axleName, data: compressedData, time: currentTime })
     skillStore.axleId = newAxleId // Update skillStore with the new axle's ID
 
-    toast('Axle saved as new!', {
-      theme: 'dark',
-      type: 'success',
-      transition: 'zoom',
-      position: 'bottom-center',
-      autoClose: 300,
-      dangerouslyHTMLString: true,
-      newestOnTop: true,
-      limit: 1,
-      toastStyle: {
-        'font-family': 'var(--font-family-sans)',
-      },
-    })
+    toast('Axle saved as new!', toastOptions)
   }
 </script>
 

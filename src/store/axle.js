@@ -62,6 +62,13 @@ export const useSkillStore = defineStore(
       })
     }
 
+    function resetCurrentAxle() {
+      axleName.value = ''
+      axleId.value = ''
+      skills.value = []
+      turns.value = []
+    }
+    
     // Data migration
     skills.value.forEach((row) => {
       row.forEach((skill) => {
@@ -92,6 +99,7 @@ export const useSkillStore = defineStore(
       turns,
       adjustSkills,
       ensureIds,
+      resetCurrentAxle
     }
   },
   {

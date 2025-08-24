@@ -44,11 +44,6 @@
 
   const toggleSortOrder = () => {
     sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
-    axles.value = [...axles.value].sort((a, b) => {
-      return sortOrder.value === 'asc'
-        ? a.time.localeCompare(b.time)  // 升序
-        : b.time.localeCompare(a.time)  // 降序
-    })
   }
 
   const editAxleName = (axle) => {
@@ -63,8 +58,8 @@
 
       if (newAxleName.value !== oldAxleName) {
         // If the edited axle is the currently loaded one, update skillStore.axleName
-        if (axle.id === skillStore.axleId) {
-          skillStore.axleName = axle.name
+        if (axle.id === skillStore.axleId && skillStore.axleName !== axle.name.trim()) {
+          skillStore.axleName = axle.name.trim()
         }
         // Update axle.data with the new name
         const decodedData = JSON.parse(decompressFromBase64(axle.data))
@@ -82,21 +77,18 @@
   }
 
   const deleteAxle = (axleToDelete) => {
-    axleCollectionStore.axles = axleCollectionStore.axles.filter(
-      (axle) => axle.id !== axleToDelete.id
-    )
+    axleCollectionStore.deleteAxle(axleToDelete.id)
 
     if (axleToDelete.id === skillStore.axleId) {
-      skillStore.axleId = ''
+      sliderStore.rows = 0
+      skillStore.resetCurrentAxle()
     }
   }
 
   const loadAxle = async (axle) => {
     if (axle.id === skillStore.axleId) {
       sliderStore.rows = 0
-      skillStore.axleId = ''
-      skillStore.adjustSkills(0)
-      skillStore.axleName = ''
+      skillStore.resetCurrentAxle()
     } else {
       await decompressAxleData(axle.data)
       skillStore.axleId = axle.id
