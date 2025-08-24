@@ -20,7 +20,7 @@ export const useAxleCollectionStore = defineStore(
 
     function addAxle(axleData) {
       const { name, data, time } = axleData
-      const uniqueName = name && name.trim() !== '' ? name : generateUniqueCode()
+      const uniqueName = name?.trim() || generateUniqueCode()
       const id = uuidv4()
       const newAxle = { id, name: uniqueName, data, time }
 
@@ -39,7 +39,7 @@ export const useAxleCollectionStore = defineStore(
     function updateAxleData(id, name, newData) {
       const index = axles.value.findIndex(axle => axle.id === id)
       if (index !== -1) {
-        axles.value[index].name = name && name !== '' ? name : generateUniqueCode()
+        axles.value[index].name = name?.trim() || generateUniqueCode()
         axles.value[index].data = newData
       }
     }

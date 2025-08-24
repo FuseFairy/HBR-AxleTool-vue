@@ -52,23 +52,26 @@
   }
 
   const saveEdit = (axle) => {
-    if (newAxleName.value.trim() !== '') {
-      const oldAxleName = axle.name
-      axle.name = newAxleName.value.trim()
-
-      if (newAxleName.value !== oldAxleName) {
-        // If the edited axle is the currently loaded one, update skillStore.axleName
-        if (axle.id === skillStore.axleId && skillStore.axleName !== axle.name.trim()) {
-          skillStore.axleName = axle.name.trim()
-        }
-        // Update axle.data with the new name
-        const decodedData = JSON.parse(decompressFromBase64(axle.data))
-        decodedData.axleName = axle.name
-        axle.data = compressToBase64(JSON.stringify(decodedData))
-      }
-      editingAxle.value = null
-      newAxleName.value = ''
+    const trimmedName = newAxleName.value.trim();
+    if (!trimmedName) {
+      cancelEdit();
+      return;
     }
+
+    if (trimmedName !== axle.name) {
+      axle.name = trimmedName;
+
+      if (axle.id === skillStore.axleId) {
+        skillStore.axleName = trimmedName;
+      }
+
+      const decodedData = JSON.parse(decompressFromBase64(axle.data));
+      decodedData.axleName = trimmedName;
+      axle.data = compressToBase64(JSON.stringify(decodedData));
+    }
+
+    editingAxle.value = null;
+    newAxleName.value = '';
   }
 
   const cancelEdit = () => {
