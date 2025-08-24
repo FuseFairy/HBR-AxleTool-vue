@@ -7,6 +7,7 @@ export const useSkillStore = defineStore(
   'skill',
   () => {
     const axleName = ref('')
+    const axleId = ref('')
     const skills = ref([])
     const turns = ref([])
 
@@ -61,6 +62,13 @@ export const useSkillStore = defineStore(
       })
     }
 
+    function resetCurrentAxle() {
+      axleName.value = ''
+      axleId.value = ''
+      skills.value = []
+      turns.value = []
+    }
+
     // Data migration
     skills.value.forEach((row) => {
       row.forEach((skill) => {
@@ -70,7 +78,7 @@ export const useSkillStore = defineStore(
               const pathParts = skill.style_img.split('/')
               const fileName = pathParts.pop()
               skill.style_id = fileName.split('.').slice(0, -1).join('.')
-            // eslint-disable-next-line no-unused-vars
+              // eslint-disable-next-line no-unused-vars
             } catch (e) {
               skill.style_id = null
             }
@@ -86,10 +94,12 @@ export const useSkillStore = defineStore(
 
     return {
       axleName,
+      axleId,
       skills,
       turns,
       adjustSkills,
       ensureIds,
+      resetCurrentAxle,
     }
   },
   {

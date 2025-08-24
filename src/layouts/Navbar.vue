@@ -4,6 +4,17 @@
   import UploadButton from '@/components/ui/UploadButton.vue'
   import Axle from '@/components/modal/Axle.vue'
   import Settings from '@/components/modal/Settings.vue'
+  import { useSidebarStore } from '@/store/sidebar'
+  import { storeToRefs } from 'pinia'
+
+  const sidebarStore = useSidebarStore()
+  const { isSidebarOpen } = storeToRefs(sidebarStore)
+
+  const sidebarIcon = computed(() => {
+    return isSidebarOpen.value
+      ? getAssetsFile('custom-icon/panel_close.svg')
+      : getAssetsFile('custom-icon/panel_open.svg')
+  })
 
   const buttons = [
     { key: 'table', tooltip: 'table', icon: getAssetsFile('custom-icon/table.svg'), component: Axle },
@@ -38,11 +49,18 @@
       toggleModal(key)
     }
   }
+
+  const toggleSidebar = () => {
+    sidebarStore.toggleSidebar()
+  }
 </script>
 
 <template>
   <nav>
     <div class="left-button-group">
+      <button v-tooltip="{ content: 'Sidebar', placement: 'bottom' }" @click="toggleSidebar">
+        <img :src="sidebarIcon" alt="Toggle Sidebar" />
+      </button>
       <UploadButton />
     </div>
     <h1 class="nav-title">HBR Axle Tool</h1>

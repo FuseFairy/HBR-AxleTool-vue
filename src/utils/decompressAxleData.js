@@ -12,8 +12,12 @@ import { useLastTabStore } from '@/store/tab'
 import { useSettingStore } from '@/store/setting'
 
 function compareVersions(v1, v2) {
-  const parts1 = String(v1 || '0').split('.').map(Number)
-  const parts2 = String(v2 || '0').split('.').map(Number)
+  const parts1 = String(v1 || '0')
+    .split('.')
+    .map(Number)
+  const parts2 = String(v2 || '0')
+    .split('.')
+    .map(Number)
   const len = Math.max(parts1.length, parts2.length)
   for (let i = 0; i < len; i++) {
     const p1 = parts1[i] || 0
@@ -40,6 +44,7 @@ export async function decompressAxleData(customData) {
   }
 
   const decodedDataChar = decodedData.char
+  skillStore.axleId = ''
 
   for (const teamKey in decodedDataChar) {
     const team = decodedDataChar[teamKey]

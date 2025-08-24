@@ -27,7 +27,7 @@
     margin: var(--spacing-3) var(--spacing-5) 0 var(--spacing-5);
   }
   .left-column {
-    flex: 1;
+    flex: 2;
   }
   .right-column {
     flex: 3;

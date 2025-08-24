@@ -14,6 +14,12 @@
   import NProgress from 'nprogress'
   import '@/style/nprogress/nprogress.css'
   import BackToTopButton from '@/components/ui/BackToTopButton.vue'
+  import Sidebar from '@/layouts/Sidebar.vue'
+  import { useSidebarStore } from '@/store/sidebar'
+  import { storeToRefs } from 'pinia'
+
+  const sidebarStore = useSidebarStore()
+  const { isSidebarOpen } = storeToRefs(sidebarStore)
 
   onBeforeMount(runIPGeolocation)
   onMounted(async () => {
@@ -66,8 +72,9 @@
 </script>
 
 <template>
-  <div class="page-layout">
+  <div class="page-layout" :class="{ 'sidebar-open': isSidebarOpen }">
     <Navbar />
+    <Sidebar />
     <main id="main-scroll-container" class="custom-scrollbar">
       <div class="box_container">
         <TeamComposition />
@@ -97,20 +104,7 @@
     z-index: 0;
     overflow: hidden;
   }
-  .page-layout::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(@/assets/common/bg.webp), url(@/assets/common/bg_compress.webp);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    z-index: -1;
-    pointer-events: none;
-  }
+
   main {
     grid-area: main;
     color: white;
@@ -129,7 +123,28 @@
       'footer';
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
     mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
+    transition: margin-left 0.3s ease-in-out;
   }
+
+  .page-layout.sidebar-open main {
+    margin-left: max(20%, 250px);
+  }
+
+  .page-layout::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(@/assets/common/bg.webp), url(@/assets/common/bg_compress.webp);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1;
+    pointer-events: none;
+  }
+
   .footer {
     grid-area: footer;
     display: flex;
@@ -146,6 +161,10 @@
   }
 
   @media (max-width: 800px) {
+    .page-layout.sidebar-open main {
+      margin-left: 0;
+      width: 100%;
+    }
     .form-row {
       flex-direction: column;
       gap: 0;

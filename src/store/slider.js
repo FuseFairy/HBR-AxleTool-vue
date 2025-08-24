@@ -6,13 +6,8 @@ export const useSliderStore = defineStore(
   () => {
     const rows = ref(0)
 
-    function setValue(newValue) {
-      rows.value = newValue
-    }
-
     return {
       rows,
-      setValue,
     }
   },
   {
