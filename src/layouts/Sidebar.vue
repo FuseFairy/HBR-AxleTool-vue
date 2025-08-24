@@ -124,7 +124,7 @@
           No axles found.
         </div>
         <TransitionGroup name="list-transition">
-          <div v-for="axle in filteredAxles" :key="axle.id" :title="axle.name" class="axle-card" :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }" @click="loadAxle(axle)">
+          <div v-for="axle in filteredAxles" :key="axle.id" v-tooltip="{ content: axle.name, placement: 'top' }" class="axle-card" :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }" @click="loadAxle(axle)">
             <div class="card-header">
               <template v-if="editingAxle === axle">
                 <div class="edit-mode-controls">
