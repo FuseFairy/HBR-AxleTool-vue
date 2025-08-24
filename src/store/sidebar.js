@@ -4,7 +4,7 @@ import { ref } from 'vue'
 export const useSidebarStore = defineStore(
   'sidebar',
   () => {
-    const isSidebarOpen = ref(true)
+    const isSidebarOpen = ref(window.innerWidth >= 800 ? true : false)
 
     function toggleSidebar() {
       isSidebarOpen.value = !isSidebarOpen.value
