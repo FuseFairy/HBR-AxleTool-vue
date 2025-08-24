@@ -33,11 +33,11 @@ export const useAxleCollectionStore = defineStore(
     }
 
     function deleteAxle(id) {
-      axles.value = axles.value.filter(axle => axle.id !== id)
+      axles.value = axles.value.filter((axle) => axle.id !== id)
     }
 
     function updateAxleData(id, name, newData) {
-      const index = axles.value.findIndex(axle => axle.id === id)
+      const index = axles.value.findIndex((axle) => axle.id === id)
       if (index !== -1) {
         axles.value[index].name = name?.trim() || generateUniqueCode()
         axles.value[index].data = newData

@@ -74,8 +74,8 @@
       OD3: 'rgba(237, 225, 108, 0.25)',
     }
     if (turnData.od) {
-      const odPrefix = turnData.od.slice(0, 3);
-      if (odPrefix in odColors) return odColors[odPrefix];
+      const odPrefix = turnData.od.slice(0, 3)
+      if (odPrefix in odColors) return odColors[odPrefix]
     }
     return row % 2 === 0 ? 'rgba(33, 33, 33, 0.9)' : 'transparent'
   }
@@ -165,23 +165,23 @@
 
   const formatOdDisplay = (turnValue, odValue) => {
     if (odValue === null) {
-      return turnValue;
+      return turnValue
     }
 
-    const odOnlyRegex = /^OD\d+$/;
-    const bonusRegex = /^OD\d+\/Bonus(\d+)$/;
+    const odOnlyRegex = /^OD\d+$/
+    const bonusRegex = /^OD\d+\/Bonus(\d+)$/
 
     if (odOnlyRegex.test(odValue)) {
-      return turnValue;
+      return turnValue
     } else if (bonusRegex.test(odValue)) {
-      const match = odValue.match(bonusRegex);
+      const match = odValue.match(bonusRegex)
       if (match && match[1]) {
-        return `${turnValue}\nBonus ${match[1]}`;
+        return `${turnValue}\nBonus ${match[1]}`
       }
     }
     // Fallback for any other format or if regex fails
-    return `${turnValue}\n${odValue}`;
-  };
+    return `${turnValue}\n${odValue}`
+  }
 
   const getStyle = computed(() => (row) => ({
     'background-color': getBackgroundColor(row),
@@ -349,7 +349,9 @@
                   <template v-if="turn.turn !== 'Switch'">
                     <div v-for="(col, colIndex) in 4" :key="colIndex" class="axle-table-column">
                       <div v-if="col === 1" class="label text-wrap">
-                        <span v-if="turn.turn !== null" style="white-space: pre-line"> {{ formatOdDisplay(turn.turn, turn.od) }} </span>
+                        <span v-if="turn.turn !== null" style="white-space: pre-line">
+                          {{ formatOdDisplay(turn.turn, turn.od) }}
+                        </span>
                         <span v-else-if="turn.turn === '追加回合'">{{ additionalTurn[settingStore.lang] }}</span>
                       </div>
                       <div v-else>

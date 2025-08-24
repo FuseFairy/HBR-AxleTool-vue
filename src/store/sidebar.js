@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useSidebarStore = defineStore(
-  'sidebar', 
+  'sidebar',
   () => {
     const isSidebarOpen = ref(true)
 
@@ -12,7 +12,7 @@ export const useSidebarStore = defineStore(
 
     return {
       isSidebarOpen,
-      toggleSidebar
+      toggleSidebar,
     }
   },
   {

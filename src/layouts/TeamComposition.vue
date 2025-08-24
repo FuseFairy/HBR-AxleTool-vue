@@ -405,7 +405,7 @@
   }
   .team-circle-button {
     border-radius: 50%;
-    width: min(100%, 120px); 
+    width: min(100%, 120px);
     aspect-ratio: 1 / 1;
     font-size: 16px;
     overflow: hidden;

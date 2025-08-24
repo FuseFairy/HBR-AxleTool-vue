@@ -9,7 +9,6 @@
   import { decompressAxleData } from '@/utils/decompressAxleData'
   import { compressToBase64, decompressFromBase64 } from 'lz-string'
 
-
   const sidebarStore = useSidebarStore()
   const skillStore = useSkillStore()
   const axleCollectionStore = useAxleCollectionStore()
@@ -25,18 +24,18 @@
 
   const filteredAxles = computed(() => {
     let result = axles.value
-    
+
     // 搜索過濾
     if (searchQuery.value) {
       const query = searchQuery.value.toLowerCase()
       result = result.filter((axle) => axle.name.toLowerCase().includes(query))
     }
-    
+
     // 排序
     result = [...result].sort((a, b) => {
       return sortOrder.value === 'asc'
-        ? a.time.localeCompare(b.time)  // 升序
-        : b.time.localeCompare(a.time)  // 降序
+        ? a.time.localeCompare(b.time) // 升序
+        : b.time.localeCompare(a.time) // 降序
     })
 
     return result
@@ -52,26 +51,26 @@
   }
 
   const saveEdit = (axle) => {
-    const trimmedName = newAxleName.value.trim();
+    const trimmedName = newAxleName.value.trim()
     if (!trimmedName) {
-      cancelEdit();
-      return;
+      cancelEdit()
+      return
     }
 
     if (trimmedName !== axle.name) {
-      axle.name = trimmedName;
+      axle.name = trimmedName
 
       if (axle.id === skillStore.axleId) {
-        skillStore.axleName = trimmedName;
+        skillStore.axleName = trimmedName
       }
 
-      const decodedData = JSON.parse(decompressFromBase64(axle.data));
-      decodedData.axleName = trimmedName;
-      axle.data = compressToBase64(JSON.stringify(decodedData));
+      const decodedData = JSON.parse(decompressFromBase64(axle.data))
+      decodedData.axleName = trimmedName
+      axle.data = compressToBase64(JSON.stringify(decodedData))
     }
 
-    editingAxle.value = null;
-    newAxleName.value = '';
+    editingAxle.value = null
+    newAxleName.value = ''
   }
 
   const cancelEdit = () => {
@@ -103,23 +102,23 @@
   <aside :class="{ 'sidebar-open': isSidebarOpen }">
     <div class="sidebar-content">
       <div class="sidebar-header">
-        <input
-          v-model="searchQuery"
-          type="text"
-          placeholder="Search Axle Name"
-          class="search-input"
-        />
+        <input v-model="searchQuery" type="text" placeholder="Search Axle Name" class="search-input" />
         <button class="sort-button" @click="toggleSortOrder">
           Sort by Time {{ sortOrder === 'asc' ? '(Oldest)' : '(Newest)' }}
         </button>
       </div>
 
       <div class="axle-cards-container custom-scrollbar">
-        <div v-if="filteredAxles.length === 0" class="no-axles-message">
-          No axles found.
-        </div>
+        <div v-if="filteredAxles.length === 0" class="no-axles-message">No axles found.</div>
         <TransitionGroup name="list-transition">
-          <div v-for="axle in filteredAxles" :key="axle.id" v-tooltip="{ content: axle.name, placement: 'top' }" class="axle-card" :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }" @click="loadAxle(axle)">
+          <div
+            v-for="axle in filteredAxles"
+            :key="axle.id"
+            v-tooltip="{ content: axle.name, placement: 'top' }"
+            class="axle-card"
+            :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }"
+            @click="loadAxle(axle)"
+          >
             <div class="card-header">
               <template v-if="editingAxle === axle">
                 <div class="edit-mode-controls">
@@ -135,18 +134,43 @@
                     />
                     <span class="char-counter">{{ newAxleName.length }}/{{ maxlength }}</span>
                   </div>
-                  <button class="check-button" @click.stop="saveEdit(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
+                  <button
+                    class="check-button"
+                    @click.stop="saveEdit(axle)"
+                    @mouseenter="isAnyButtonHovered = true"
+                    @mouseleave="isAnyButtonHovered = false"
+                  >
                     <img :src="getAssetsFile('custom-icon/check.svg')" alt="Check" />
                   </button>
                 </div>
               </template>
               <template v-else>
                 <span class="axle-name">{{ axle.name }}</span>
-                <button v-tooltip="{ content: 'Edit name', placement: 'top' }" class="edit-button" @click.stop="editAxleName(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
+                <button
+                  v-tooltip="{ content: 'Edit name', placement: 'top' }"
+                  class="edit-button"
+                  @click.stop="editAxleName(axle)"
+                  @mouseenter="isAnyButtonHovered = true"
+                  @mouseleave="isAnyButtonHovered = false"
+                >
                   <img :src="getAssetsFile('custom-icon/edit.svg')" alt="Edit" />
                 </button>
-                <button v-tooltip="{ content: 'Remove', placement: 'top' }" class="delete-button" @click.stop="deleteAxle(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M154-412v-136h652v136H154Z"/></svg>
+                <button
+                  v-tooltip="{ content: 'Remove', placement: 'top' }"
+                  class="delete-button"
+                  @click.stop="deleteAxle(axle)"
+                  @mouseenter="isAnyButtonHovered = true"
+                  @mouseleave="isAnyButtonHovered = false"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#e8eaed"
+                  >
+                    <path d="M154-412v-136h652v136H154Z" />
+                  </svg>
                 </button>
               </template>
             </div>
@@ -166,8 +190,10 @@
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     width: max(20%, 250px);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    position: fixed; 
+    transition:
+      transform 0.3s ease-in-out,
+      box-shadow 0.3s ease-in-out;
+    position: fixed;
     height: calc(100vh - 3rem);
     top: 3rem;
     left: 0;
@@ -234,7 +260,9 @@
     flex-direction: column;
     position: relative;
     cursor: pointer;
-    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    transition:
+      transform 0.2s ease-in-out,
+      background-color 0.2s ease-in-out;
     border: 2px solid transparent; /* Add a transparent border by default */
   }
 
@@ -276,7 +304,10 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0; /* Prevent buttons from shrinking */
-    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+    transition:
+      transform 0.2s ease-in-out,
+      background-color 0.2s ease-in-out,
+      border 0.2s ease-in-out;
   }
 
   .edit-button:hover,

@@ -68,7 +68,7 @@ export const useSkillStore = defineStore(
       skills.value = []
       turns.value = []
     }
-    
+
     // Data migration
     skills.value.forEach((row) => {
       row.forEach((skill) => {
@@ -78,7 +78,7 @@ export const useSkillStore = defineStore(
               const pathParts = skill.style_img.split('/')
               const fileName = pathParts.pop()
               skill.style_id = fileName.split('.').slice(0, -1).join('.')
-            // eslint-disable-next-line no-unused-vars
+              // eslint-disable-next-line no-unused-vars
             } catch (e) {
               skill.style_id = null
             }
@@ -99,7 +99,7 @@ export const useSkillStore = defineStore(
       turns,
       adjustSkills,
       ensureIds,
-      resetCurrentAxle
+      resetCurrentAxle,
     }
   },
   {

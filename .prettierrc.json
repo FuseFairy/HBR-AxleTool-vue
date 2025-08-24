@@ -5,7 +5,7 @@
   "singleQuote": true,
   "printWidth": 120,
   "trailingComma": "es5",
-  "endOfLine": "crlf",
+  "endOfLine": "lf",
   "vueIndentScriptAndStyle": true,
   "bracketSpacing": true,
   "arrowParens": "always"

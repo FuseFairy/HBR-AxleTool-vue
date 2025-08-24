@@ -1,58 +1,59 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { ref, onMounted, onUnmounted } from 'vue'
+  import { getAssetsFile } from '@/utils/getAssetsFile'
 
-const props = defineProps({
-  scrollContainerSelector: {
-    type: String,
-    default: null,
-  },
-})
+  const props = defineProps({
+    scrollContainerSelector: {
+      type: String,
+      default: null,
+    },
+  })
 
-const isVisible = ref(false)
-const scrollableElement = ref(null)
+  const isVisible = ref(false)
+  const scrollableElement = ref(null)
 
-const handleScroll = () => {
-  if (!scrollableElement.value) return
+  const handleScroll = () => {
+    if (!scrollableElement.value) return
 
-  const scrollTop =
-    props.scrollContainerSelector ? scrollableElement.value.scrollTop : window.scrollY || document.documentElement.scrollTop
-  isVisible.value = scrollTop > 500
-}
-
-const scrollToTop = () => {
-  if (!scrollableElement.value) return
-
-  if (props.scrollContainerSelector) {
-    scrollableElement.value.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
-  } else {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
-  }
-}
-
-onMounted(() => {
-  if (props.scrollContainerSelector) {
-    scrollableElement.value = document.querySelector(props.scrollContainerSelector)
-  } else {
-    scrollableElement.value = window
+    const scrollTop = props.scrollContainerSelector
+      ? scrollableElement.value.scrollTop
+      : window.scrollY || document.documentElement.scrollTop
+    isVisible.value = scrollTop > 500
   }
 
-  if (scrollableElement.value) {
-    scrollableElement.value.addEventListener('scroll', handleScroll)
-  }
-})
+  const scrollToTop = () => {
+    if (!scrollableElement.value) return
 
-onUnmounted(() => {
-  if (scrollableElement.value) {
-    scrollableElement.value.removeEventListener('scroll', handleScroll)
+    if (props.scrollContainerSelector) {
+      scrollableElement.value.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
   }
-})
+
+  onMounted(() => {
+    if (props.scrollContainerSelector) {
+      scrollableElement.value = document.querySelector(props.scrollContainerSelector)
+    } else {
+      scrollableElement.value = window
+    }
+
+    if (scrollableElement.value) {
+      scrollableElement.value.addEventListener('scroll', handleScroll)
+    }
+  })
+
+  onUnmounted(() => {
+    if (scrollableElement.value) {
+      scrollableElement.value.removeEventListener('scroll', handleScroll)
+    }
+  })
 </script>
 
 <template>
@@ -95,7 +96,7 @@ onUnmounted(() => {
   .back-to-top:hover {
     background: linear-gradient(135deg, rgba(50, 50, 50, 0.95), rgba(70, 70, 70, 0.9));
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 
+    box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.7),
       0 4px 16px rgba(0, 0, 0, 0.5),
       inset 0 1px 0 rgba(255, 255, 255, 0.15),
@@ -143,7 +144,7 @@ onUnmounted(() => {
       bottom: 20px;
       right: 20px;
     }
-    
+
     .back-to-top img {
       width: 20px;
       height: 20px;
