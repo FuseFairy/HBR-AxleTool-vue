@@ -113,41 +113,43 @@
         <div v-if="filteredAxles.length === 0" class="no-axles-message">
           No axles found.
         </div>
-        <div v-for="axle in filteredAxles" :key="axle.id" :title="axle.name" class="axle-card" :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }" @click="loadAxle(axle)">
-          <div class="card-header">
-            <template v-if="editingAxle === axle">
-              <div class="edit-mode-controls">
-                <div class="input-wrapper-relative">
-                  <input
-                    v-model="newAxleName"
-                    type="text"
-                    class="edit-axle-input"
-                    :maxlength="maxlength"
-                    @click.stop
-                    @keyup.enter="saveEdit(axle)"
-                    @keyup.esc="cancelEdit()"
-                  />
-                  <span class="char-counter">{{ newAxleName.length }}/{{ maxlength }}</span>
+        <TransitionGroup name="list-transition">
+          <div v-for="axle in filteredAxles" :key="axle.id" :title="axle.name" class="axle-card" :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }" @click="loadAxle(axle)">
+            <div class="card-header">
+              <template v-if="editingAxle === axle">
+                <div class="edit-mode-controls">
+                  <div class="input-wrapper-relative">
+                    <input
+                      v-model="newAxleName"
+                      type="text"
+                      class="edit-axle-input"
+                      :maxlength="maxlength"
+                      @click.stop
+                      @keyup.enter="saveEdit(axle)"
+                      @keyup.esc="cancelEdit()"
+                    />
+                    <span class="char-counter">{{ newAxleName.length }}/{{ maxlength }}</span>
+                  </div>
+                  <button class="check-button" @click.stop="saveEdit(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
+                    <img :src="getAssetsFile('custom-icon/check.svg')" alt="Check" />
+                  </button>
                 </div>
-                <button class="check-button" @click.stop="saveEdit(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
-                  <img :src="getAssetsFile('custom-icon/check.svg')" alt="Check" />
+              </template>
+              <template v-else>
+                <span class="axle-name">{{ axle.name }}</span>
+                <button v-tooltip="{ content: 'Edit name', placement: 'top' }" class="edit-button" @click.stop="editAxleName(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
+                  <img :src="getAssetsFile('custom-icon/edit.svg')" alt="Edit" />
                 </button>
-              </div>
-            </template>
-            <template v-else>
-              <span class="axle-name">{{ axle.name }}</span>
-              <button v-tooltip="{ content: 'Edit name', placement: 'top' }" class="edit-button" @click.stop="editAxleName(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
-                <img :src="getAssetsFile('custom-icon/edit.svg')" alt="Edit" />
-              </button>
-              <button v-tooltip="{ content: 'Remove', placement: 'top' }" class="delete-button" @click.stop="deleteAxle(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M154-412v-136h652v136H154Z"/></svg>
-              </button>
-            </template>
+                <button v-tooltip="{ content: 'Remove', placement: 'top' }" class="delete-button" @click.stop="deleteAxle(axle)" @mouseenter="isAnyButtonHovered = true" @mouseleave="isAnyButtonHovered = false">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M154-412v-136h652v136H154Z"/></svg>
+                </button>
+              </template>
+            </div>
+            <div class="card-footer">
+              <span class="axle-time">{{ axle.time }}</span>
+            </div>
           </div>
-          <div class="card-footer">
-            <span class="axle-time">{{ axle.time }}</span>
-          </div>
-        </div>
+        </TransitionGroup>
       </div>
     </div>
   </aside>
@@ -233,6 +235,7 @@
 
   .axle-card.card-hover-effect:hover {
     background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.02);
   }
 
   .selected-axle-card {
@@ -305,6 +308,7 @@
     align-items: center;
     flex-grow: 1;
     min-width: 0; /* Allow the container to shrink */
+    gap: 5px;
   }
 
   .card-footer {
@@ -327,6 +331,28 @@
     color: #ccc;
     margin-top: 20px;
   }
+
+  /* TransitionGroup styles */
+  .list-transition-enter-active,
+  .list-transition-leave-active {
+    transition: all 0.5s ease;
+  }
+
+  .list-transition-enter-from,
+  .list-transition-leave-to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  /* ensure leaving items animate out of position even if they are not displayed */
+  .list-transition-leave-active {
+    position: absolute;
+  }
+
+  .list-transition-move {
+    transition: transform 0.5s ease;
+  }
+
   @media (max-width: 800px) {
     aside {
       background-color: rgba(0, 0, 0, 0.8);
