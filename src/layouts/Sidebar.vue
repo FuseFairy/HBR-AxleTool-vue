@@ -15,10 +15,9 @@
   const axleCollectionStore = useAxleCollectionStore()
   const sliderStore = useSliderStore()
   const { isSidebarOpen } = storeToRefs(sidebarStore)
-  const { axles } = storeToRefs(axleCollectionStore)
+  const { axles, sortOrder } = storeToRefs(axleCollectionStore)
 
   const searchQuery = ref('')
-  const sortByTime = ref(false) // false for ascending, true for descending
   const editingAxle = ref(null)
   const newAxleName = ref('')
   const isAnyButtonHovered = ref(false)
@@ -35,16 +34,21 @@
     
     // 排序
     result = [...result].sort((a, b) => {
-      return sortByTime.value 
+      return sortOrder.value === 'asc'
         ? a.time.localeCompare(b.time)  // 升序
         : b.time.localeCompare(a.time)  // 降序
     })
-    
+
     return result
   })
 
-  const toggleSortByTime = () => {
-    sortByTime.value = !sortByTime.value
+  const toggleSortOrder = () => {
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+    axles.value = [...axles.value].sort((a, b) => {
+      return sortOrder.value === 'asc'
+        ? a.time.localeCompare(b.time)  // 升序
+        : b.time.localeCompare(a.time)  // 降序
+    })
   }
 
   const editAxleName = (axle) => {
@@ -110,8 +114,8 @@
           placeholder="Search Axle Name"
           class="search-input"
         />
-        <button class="sort-button" @click="toggleSortByTime">
-          Sort by Time {{ sortByTime ? '(Oldest)' : '(Newest)' }}
+        <button class="sort-button" @click="toggleSortOrder">
+          Sort by Time {{ sortOrder === 'asc' ? '(Oldest)' : '(Newest)' }}
         </button>
       </div>
 

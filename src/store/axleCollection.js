@@ -6,6 +6,7 @@ export const useAxleCollectionStore = defineStore(
   'axleCollection',
   () => {
     const axles = ref([])
+    const sortOrder = ref('desc') // 'desc' for newest first, 'asc' for oldest first
 
     function generateUniqueCode() {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -21,7 +22,13 @@ export const useAxleCollectionStore = defineStore(
       const { name, data, time } = axleData
       const uniqueName = name && name.trim() !== '' ? name : generateUniqueCode()
       const id = uuidv4()
-      axles.value.push({ id, name: uniqueName, data, time })
+      const newAxle = { id, name: uniqueName, data, time }
+      
+      if (sortOrder.value === 'desc') {
+        axles.value.unshift(newAxle) // Add to the beginning for newest first
+      } else {
+        axles.value.push(newAxle) // Add to the end for oldest first
+      }
       return id
     }
 
@@ -34,6 +41,7 @@ export const useAxleCollectionStore = defineStore(
 
     return {
       axles,
+      sortOrder,
       addAxle,
       updateAxleData,
     }
