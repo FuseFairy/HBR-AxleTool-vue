@@ -332,23 +332,19 @@
         'od3': turn.od && turn.od.startsWith('OD3'),
       },
     ]">
-    <button v-tooltip="{ content: 'delete', placement: 'bottom' }" class="delete-button" @click="deleteRow(i)">
+    <button v-tooltip="'delete'" class="delete-button" @click="deleteRow(i)">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
         <path
           d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z" />
       </svg>
     </button>
-    <button v-tooltip="{ content: 'copy', placement: 'bottom' }" class="copy-button" @click="copyRow(i)">
+    <button v-tooltip="'copy'" class="copy-button" @click="copyRow(i)">
       <img src="@/assets/custom-icon/copy.svg" alt="copy" />
     </button>
     <div class="column">
       <div :class="['empty-1', { 'empty-2': turn.turn === 'Switch' }]">
         <template v-if="turn.turn !== 'Switch'">
-          <button
-            v-tooltip="{ content: 'up', placement: 'top' }"
-            class="arrow-button"
-            :disabled="i === 0"
-            @click="exchange(i, 'up')">
+          <button v-tooltip="'up'" class="arrow-button" :disabled="i === 0" @click="exchange(i, 'up')">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="21px"
@@ -359,7 +355,7 @@
             </svg>
           </button>
           <button
-            v-tooltip="{ content: 'down', placement: 'bottom' }"
+            v-tooltip="'down'"
             class="arrow-button"
             :disabled="i === skillStore.turns.length - 1"
             @click="exchange(i, 'down')">
@@ -416,7 +412,7 @@
           </div>
           <button
             v-if="Array.isArray(skillStore.skills[i][n - 1].style_id)"
-            v-tooltip="{ content: 'switch style', placement: 'top' }"
+            v-tooltip="'switch style'"
             class="toggle-form-button"
             @click.stop="toggleForm(i, n - 1)">
             <img src="@/assets/custom-icon/switch.svg" alt="Toggle Form" />

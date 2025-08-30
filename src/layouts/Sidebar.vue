@@ -114,7 +114,7 @@
           <div
             v-for="axle in filteredAxles"
             :key="axle.id"
-            v-tooltip="{ content: axle.name, placement: 'top' }"
+            v-tooltip="axle.name"
             class="axle-card"
             :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }"
             @click="loadAxle(axle)">
@@ -144,7 +144,6 @@
               <template v-else>
                 <span class="axle-name">{{ axle.name }}</span>
                 <button
-                  v-tooltip="{ content: 'Edit name', placement: 'top' }"
                   class="edit-button"
                   @click.stop="editAxleName(axle)"
                   @mouseenter="isAnyButtonHovered = true"
@@ -152,7 +151,6 @@
                   <img :src="getAssetsFile('custom-icon/edit.svg')" alt="Edit" />
                 </button>
                 <button
-                  v-tooltip="{ content: 'Remove', placement: 'top' }"
                   class="delete-button"
                   @click.stop="deleteAxle(axle)"
                   @mouseenter="isAnyButtonHovered = true"

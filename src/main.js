@@ -7,10 +7,6 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import versionControlPlugin from '@/plugins/storeVersionControl'
 import nonPassiveTouchPlugin from '@/plugins/nonPassiveTouch'
 
-// Third-party UI/utility library imports and their styles
-import FloatingVue from 'floating-vue'
-import 'floating-vue/dist/style.css'
-
 import 'vue-loading-overlay/dist/css/index.css'
 import 'vue3-toastify/dist/index.css'
 
@@ -29,8 +25,6 @@ pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(versionControlPlugin)
 app.use(nonPassiveTouchPlugin)
-
-app.use(FloatingVue)
 app.use(directives)
 
 app.mount('#app')

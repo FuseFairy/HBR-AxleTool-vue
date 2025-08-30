@@ -58,7 +58,7 @@
 <template>
   <nav>
     <div class="left-button-group">
-      <button v-tooltip="{ content: 'Sidebar', placement: 'bottom' }" @click="toggleSidebar">
+      <button v-tooltip="'Axle List'" @click="toggleSidebar">
         <img :src="sidebarIcon" alt="Toggle Sidebar" />
       </button>
       <UploadButton />
@@ -68,7 +68,7 @@
       <button
         v-for="btn in buttons"
         :key="btn.key"
-        v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
+        v-tooltip="btn.tooltip"
         :class="{ 'setting-icon-button': btn.key === 'setting', 'github-icon-button': btn.key === 'github' }"
         @click="handleButtonClick(btn.key)">
         <img :src="btn.icon" :alt="btn.key" />

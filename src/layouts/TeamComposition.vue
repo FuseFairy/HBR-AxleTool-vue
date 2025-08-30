@@ -292,10 +292,7 @@
   </div>
 
   <div class="tool-container">
-    <button
-      v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom' }"
-      class="refresh-button"
-      @click="refreshData">
+    <button v-tooltip="'Refresh Skill Options'" class="refresh-button" @click="refreshData">
       <img src="@/assets/custom-icon/update.svg" alt="refresh" :class="{ spin: isRefreshing }" />
     </button>
   </div>

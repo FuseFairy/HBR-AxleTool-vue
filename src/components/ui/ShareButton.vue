@@ -47,7 +47,7 @@
 
 <template>
   <button
-    v-tooltip="{ content: isLoading ? 'Uploading...' : 'Share', placement: 'bottom' }"
+    v-tooltip="isLoading ? 'Uploading...' : 'Share Axle'"
     class="share-button flex items-center justify-center"
     :disabled="isLoading"
     @click="triggerShareLink">
