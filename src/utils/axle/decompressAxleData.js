@@ -109,7 +109,7 @@ export async function decompressAxleData(customData) {
           newSkill.activeFormId = null
         }
         return newSkill
-      })
+      }),
     )
   }
 

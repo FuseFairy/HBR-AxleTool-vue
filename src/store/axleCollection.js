@@ -23,7 +23,7 @@ export const useAxleCollectionStore = defineStore(
       const uniqueName = name?.trim() || generateUniqueCode()
       const id = uuidv4()
       const newAxle = { id, name: uniqueName, data, time }
-      
+
       axles.value.push(newAxle)
     }
 
@@ -51,5 +51,5 @@ export const useAxleCollectionStore = defineStore(
     persist: {
       storage: localStorage,
     },
-  }
+  },
 )

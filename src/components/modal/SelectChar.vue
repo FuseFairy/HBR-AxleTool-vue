@@ -47,22 +47,22 @@
   const earringOptions = [
     {
       value: 'BREAK耳環',
-      names: { 'zh-TW': 'BREAK耳環', jp: 'ブレイクピアス', 'zh-CN': 'BREAK耳环', 'zh-CN-CN': '击碎耳坠' },
+      names: { 'zh-TW': 'BREAK耳環', 'jp': 'ブレイクピアス', 'zh-CN': 'BREAK耳环', 'zh-CN-CN': '击碎耳坠' },
       icon: 'earring-icon/break.webp',
     },
     {
       value: '進攻耳環',
-      names: { 'zh-TW': '進攻耳環', jp: 'アタックピアス', 'zh-CN': '进攻耳环', 'zh-CN-CN': '攻击耳坠' },
+      names: { 'zh-TW': '進攻耳環', 'jp': 'アタックピアス', 'zh-CN': '进攻耳环', 'zh-CN-CN': '攻击耳坠' },
       icon: 'earring-icon/attach.webp',
     },
     {
       value: 'DRIVE耳環',
-      names: { 'zh-TW': 'DRIVE耳環', jp: 'ドライブピアス', 'zh-CN': 'DRIVE耳环', 'zh-CN-CN': '驱动耳坠' },
+      names: { 'zh-TW': 'DRIVE耳環', 'jp': 'ドライブピアス', 'zh-CN': 'DRIVE耳环', 'zh-CN-CN': '驱动耳坠' },
       icon: 'earring-icon/drive.webp',
     },
     {
       value: '爆破耳環',
-      names: { 'zh-TW': '爆破耳環', jp: 'ブラストピアス', 'zh-CN': '爆破耳环', 'zh-CN-CN': '破坏耳坠' },
+      names: { 'zh-TW': '爆破耳環', 'jp': 'ブラストピアス', 'zh-CN': '爆破耳环', 'zh-CN-CN': '破坏耳坠' },
       icon: 'earring-icon/explosion.webp',
     },
   ]
@@ -103,7 +103,7 @@
       passiveSkillOptions.value = await fetchPassiveSkillOptions(
         selectedCharacter.value,
         selectedTeam.value,
-        selectedStyle.value
+        selectedStyle.value,
       )
       charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
     }
@@ -147,7 +147,7 @@
           passiveSkillOptions.value = await fetchPassiveSkillOptions(
             selectedCharacter.value,
             selectedTeam.value,
-            newStyle
+            newStyle,
           )
           const commandSkill = await fetchCommandSkill(selectedCharacter.value, selectedTeam.value, newStyle)
           charStore.setSelection(props.buttonKey, 'commandSkill', commandSkill, props.selectedTab)
@@ -204,7 +204,7 @@
         console.log('skillStore.skills after reset:', skillStore.skills)
       }
     },
-    { immediate: false }
+    { immediate: false },
   )
 
   const toggleCheckbox = () => {
@@ -234,8 +234,7 @@
         <div
           class="container custom-scrollbar"
           :style="{ overflow: isExpandedCollapse || isMobile ? 'scroll' : 'visible' }"
-          @click.stop
-        >
+          @click.stop>
           <div class="button-group">
             <button class="close" @click="closeContainer">
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
@@ -265,8 +264,7 @@
                 :disabled="isCharDisabled"
                 :options="characterOptions"
                 label="names"
-                track-by="value"
-              >
+                track-by="value">
                 <template #singlelabel="{ value }">
                   <div class="multiselect-single-label">
                     <img class="label-icon" :src="getAssetsFile(value.icon)" />
@@ -287,8 +285,7 @@
                 :disabled="isStyleDisabled"
                 :options="styleOptions"
                 label="names"
-                track-by="value"
-              >
+                track-by="value">
                 <template #singlelabel="{ value }">
                   <div class="multiselect-single-label">
                     <img class="label-icon" :src="getAssetsFile(value.icon)" />
@@ -305,8 +302,7 @@
               <button
                 class="collapse_btn"
                 :class="{ collapse_btn_active: isExpandedCollapse }"
-                @click="isExpandedCollapse = !isExpandedCollapse"
-              >
+                @click="isExpandedCollapse = !isExpandedCollapse">
                 <svg
                   class="collapse_arrow"
                   :class="{ rotate: isExpandedCollapse }"
@@ -314,8 +310,7 @@
                   height="24px"
                   viewBox="0 -960 960 960"
                   width="24px"
-                  fill="#FFFFFF"
-                >
+                  fill="#FFFFFF">
                   <path d="m280-400 200-200 200 200H280Z" />
                 </svg>
                 <label style="font-size: 24px; color: inherit">Others</label>
@@ -328,22 +323,19 @@
                     placeholder="Select Rank"
                     :disabled="isOtherDisable"
                     :options="rankOptions"
-                    @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)"
-                  />
+                    @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)" />
                   <div class="flower-container">
                     <input
                       v-model="selectedFlower"
                       type="checkbox"
                       :disabled="isOtherDisable"
-                      @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)"
-                    />
+                      @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)" />
                     <img
                       src="/src/assets/common/flower.webp"
                       alt="Is Flower"
                       :class="['flower-icon', { 'flower-icon-disabled': isOtherDisable }]"
                       draggable="false"
-                      @click="toggleCheckbox"
-                    />
+                      @click="toggleCheckbox" />
                   </div>
                 </div>
                 <div class="section">
@@ -354,8 +346,7 @@
                     :disabled="isOtherDisable"
                     :options="earringOptions"
                     label="names"
-                    track-by="value"
-                  >
+                    track-by="value">
                     <template #singlelabel="{ value }">
                       <div class="multiselect-single-label">
                         <img class="label-icon" :src="getAssetsFile(value.icon)" />
@@ -380,8 +371,7 @@
                     label="names"
                     track-by="value"
                     :locale="settingStore.lang"
-                    fallback-locale="zh-TW"
-                  />
+                    fallback-locale="zh-TW" />
                 </div>
                 <div class="section">
                   <label>Spiritual Rupture</label>
@@ -391,8 +381,7 @@
                     :disabled="isOtherDisable"
                     :options="spiritualOptions"
                     label="name"
-                    track-by="value"
-                  />
+                    track-by="value" />
                 </div>
               </Collapse>
             </div>

@@ -50,8 +50,7 @@
     v-tooltip="{ content: isLoading ? 'Uploading...' : 'Share', placement: 'bottom' }"
     class="share-button flex items-center justify-center"
     :disabled="isLoading"
-    @click="triggerShareLink"
-  >
+    @click="triggerShareLink">
     <div v-if="isLoading" class="loading-spinner" />
     <img v-else src="@/assets/custom-icon/share.svg" alt="Share" />
   </button>

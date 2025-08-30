@@ -36,7 +36,7 @@ export default {
       {
         duration: DURATION,
         easing: 'ease',
-      }
+      },
     )
     animation.pause()
     animationMap.set(el, animation)

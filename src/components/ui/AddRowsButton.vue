@@ -3,8 +3,7 @@
     <button
       class="add-button"
       :disabled="sliderStore.rows === 80 || (sliderStore.rows === 0 && !hasChar)"
-      @click="addRow"
-    >
+      @click="addRow">
       <img class="icon-img" src="@/assets/custom-icon/add_circle.svg" alt="Add a row" />
     </button>
   </div>
@@ -33,7 +32,7 @@
 
   const hasChar = computed(() => {
     return Object.values(charStore.selections).some((group) =>
-      Object.values(group).some((selection) => selection.character !== null && selection.style !== null)
+      Object.values(group).some((selection) => selection.character !== null && selection.style !== null),
     )
   })
 

@@ -19,5 +19,5 @@ export const useSidebarStore = defineStore(
     persist: {
       storage: localStorage,
     },
-  }
+  },
 )

@@ -14,7 +14,7 @@ export function getTargetOptions(row, key) {
 
     const charOptions = filter(
       map(Object.values(team), (teamObject) => teamObject.character_info),
-      (characterInfo) => !isEmpty(characterInfo)
+      (characterInfo) => !isEmpty(characterInfo),
     )
 
     return charOptions

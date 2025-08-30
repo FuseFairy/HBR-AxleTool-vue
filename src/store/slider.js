@@ -14,5 +14,5 @@ export const useSliderStore = defineStore(
     persist: {
       storage: localStorage,
     },
-  }
+  },
 )

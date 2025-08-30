@@ -57,7 +57,7 @@
             alert(error)
             throw error
           }
-        })()
+        })(),
       )
     }
 

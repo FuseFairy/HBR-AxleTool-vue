@@ -13,8 +13,7 @@
       :lazy="true"
       :drag-on-click="true"
       :marks="[0, 80]"
-      @change="updateSkillsRows"
-    />
+      @change="updateSkillsRows" />
   </div>
 </template>
 
@@ -36,7 +35,7 @@
 
   const hasChar = computed(() => {
     return Object.values(charStore.selections).some((team) =>
-      Object.values(team).some((selection) => selection.character !== null && selection.style !== null)
+      Object.values(team).some((selection) => selection.character !== null && selection.style !== null),
     )
   })
 </script>

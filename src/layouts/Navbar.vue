@@ -70,8 +70,7 @@
         :key="btn.key"
         v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
         :class="{ 'setting-icon-button': btn.key === 'setting', 'github-icon-button': btn.key === 'github' }"
-        @click="handleButtonClick(btn.key)"
-      >
+        @click="handleButtonClick(btn.key)">
         <img :src="btn.icon" :alt="btn.key" />
       </button>
     </div>

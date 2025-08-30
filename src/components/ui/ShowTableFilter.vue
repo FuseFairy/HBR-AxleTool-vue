@@ -49,8 +49,7 @@
         :close-on-select="false"
         :options="showTeams"
         style="margin-left: 5px"
-        @change="(value) => showTeamStore.setShowTeam(value)"
-      >
+        @change="(value) => showTeamStore.setShowTeam(value)">
         <template #option="{ option }">
           <div class="option-container">
             <span :title="option.name">{{ option.name }}</span>
@@ -73,8 +72,7 @@
         :close-on-select="false"
         :options="showOptions"
         style="margin-left: 5px"
-        @change="(value) => showRowStore.setShowRow(value)"
-      />
+        @change="(value) => showRowStore.setShowRow(value)" />
     </div>
   </div>
 </template>

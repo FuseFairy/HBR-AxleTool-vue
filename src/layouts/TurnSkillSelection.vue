@@ -36,7 +36,7 @@
   })
   const turnOptions = [
     { value: 'Switch', names: 'Switch' },
-    { value: '追加回合', names: { 'zh-TW': '追加回合', jp: '追加ターン', 'zh-CN-CN': '追加回合' } },
+    { value: '追加回合', names: { 'zh-TW': '追加回合', 'jp': '追加ターン', 'zh-CN-CN': '追加回合' } },
     ...formattedOptions,
   ]
 
@@ -263,7 +263,7 @@
     if (touchElement.value) {
       touchElement.value.remove() // 移除影子元素
       const sourceButton = document.querySelector(
-        `.circle-button[data-row="${mouseOnButton.value.row}"][data-key="${mouseOnButton.value.key}"]`
+        `.circle-button[data-row="${mouseOnButton.value.row}"][data-key="${mouseOnButton.value.key}"]`,
       )
       if (sourceButton) {
         sourceButton.classList.remove('dragging')
@@ -327,17 +327,15 @@
       'container row-item',
       {
         'grid-disabled': turn.turn === 'Switch',
-        od1: turn.od && turn.od.startsWith('OD1'),
-        od2: turn.od && turn.od.startsWith('OD2'),
-        od3: turn.od && turn.od.startsWith('OD3'),
+        'od1': turn.od && turn.od.startsWith('OD1'),
+        'od2': turn.od && turn.od.startsWith('OD2'),
+        'od3': turn.od && turn.od.startsWith('OD3'),
       },
-    ]"
-  >
+    ]">
     <button v-tooltip="{ content: 'delete', placement: 'bottom' }" class="delete-button" @click="deleteRow(i)">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
         <path
-          d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z"
-        />
+          d="m376-300 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 180q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520Zm-400 0v520-520Z" />
       </svg>
     </button>
     <button v-tooltip="{ content: 'copy', placement: 'bottom' }" class="copy-button" @click="copyRow(i)">
@@ -350,15 +348,13 @@
             v-tooltip="{ content: 'up', placement: 'top' }"
             class="arrow-button"
             :disabled="i === 0"
-            @click="exchange(i, 'up')"
-          >
+            @click="exchange(i, 'up')">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="21px"
               weight="21px"
               fill-opacity="0.85"
-              viewBox="280 -600 400 200"
-            >
+              viewBox="280 -600 400 200">
               <path d="m280-400 200-200 200 200H280Z" />
             </svg>
           </button>
@@ -366,15 +362,13 @@
             v-tooltip="{ content: 'down', placement: 'bottom' }"
             class="arrow-button"
             :disabled="i === skillStore.turns.length - 1"
-            @click="exchange(i, 'down')"
-          >
+            @click="exchange(i, 'down')">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="21px"
               weight="21px"
               fill-opacity="0.85"
-              viewBox="280 -560 400 200"
-            >
+              viewBox="280 -560 400 200">
               <path d="M480-360 280-560h400L480-360Z" />
             </svg>
           </button>
@@ -388,8 +382,7 @@
         track-by="value"
         :locale="settingStore.lang"
         fallback-locale="zh-TW"
-        @update:model-value="(value) => handleTurnChange(value, i)"
-      />
+        @update:model-value="(value) => handleTurnChange(value, i)" />
       <Multiselect v-if="turn.turn !== 'Switch'" v-model="turn.od" placeholder="OD" :options="odOptions" />
     </div>
     <div v-if="turn.turn !== 'Switch'" class="button-container">
@@ -413,22 +406,19 @@
             @touchmove="handleTouchMove($event)"
             @touchend="handleTouchEnd($event)"
             @keydown.enter="handleBoxClick(i, n - 1)"
-            @keydown.space="handleBoxClick(i, n - 1)"
-          >
+            @keydown.space="handleBoxClick(i, n - 1)">
             <img
               v-if="skillStore.skills[i][n - 1].style_img !== null"
               class="char-img"
               :src="getAssetsFile(skillStore.skills[i][n - 1].style_img)"
-              :alt="skillStore.skills[i][n - 1].style"
-            />
+              :alt="skillStore.skills[i][n - 1].style" />
             <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
           </div>
           <button
             v-if="Array.isArray(skillStore.skills[i][n - 1].style_id)"
             v-tooltip="{ content: 'switch style', placement: 'top' }"
             class="toggle-form-button"
-            @click.stop="toggleForm(i, n - 1)"
-          >
+            @click.stop="toggleForm(i, n - 1)">
             <img src="@/assets/custom-icon/switch.svg" alt="Toggle Form" />
           </button>
         </div>
@@ -438,8 +428,7 @@
           label="names"
           track-by="value"
           :searchable="isDesktop"
-          :options="getFilteredSkills(i, n - 1)"
-        >
+          :options="getFilteredSkills(i, n - 1)">
           <template #singlelabel="{ value }">
             <div class="multiselect-single-label">
               <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
@@ -456,8 +445,7 @@
           placeholder="Target"
           label="names"
           track-by="value"
-          :options="getTargetOptions(i, n - 1)"
-        >
+          :options="getTargetOptions(i, n - 1)">
           <template #singlelabel="{ value }">
             <div class="multiselect-single-label">
               <img class="label-icon" :src="getAssetsFile(value.icon)" />
@@ -476,8 +464,7 @@
     v-if="activeComponent.row !== null"
     :row="activeComponent.row"
     :button-key="activeComponent.buttonKey"
-    @close="closeContainer"
-  />
+    @close="closeContainer" />
 </template>
 
 <style src="@vueform/multiselect/themes/default.css" />

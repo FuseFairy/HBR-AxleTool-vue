@@ -14,5 +14,5 @@ export const useSettingStore = defineStore(
     persist: {
       storage: localStorage,
     },
-  }
+  },
 )

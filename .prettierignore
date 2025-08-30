@@ -1,0 +1,19 @@
+# Dist
+dist/
+
+# node modules
+node_modules
+package.json
+package-lock.json
+
+# Editors
+.vscode
+
+# Source Control
+.github
+
+# Secure
+.env
+
+# Font files
+/src/assets/fonts/*

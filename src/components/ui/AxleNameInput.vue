@@ -51,21 +51,18 @@
         type="text"
         placeholder="Enter your axle name"
         class="form-input"
-        :maxlength="maxlength"
-      />
+        :maxlength="maxlength" />
       <button
         v-tooltip="{ content: 'Save Axle', placement: 'top' }"
         class="save-axle-button"
         :disabled="skillStore.axleId === ''"
-        @click="handleSaveAxle"
-      >
+        @click="handleSaveAxle">
         <img :src="getAssetsFile('custom-icon/save.svg')" alt="Save Axle" />
       </button>
       <button
         v-tooltip="{ content: 'Save Axle As New', placement: 'top' }"
         class="save-as-axle-button"
-        @click="handleSaveAsAxle"
-      >
+        @click="handleSaveAsAxle">
         <img :src="getAssetsFile('custom-icon/save_as.svg')" alt="Save As Axle" />
       </button>
     </div>

@@ -10,7 +10,7 @@ export default {
     if (storedVersion !== currentStorageVersion) {
       if (localStorage.getItem('characterSelect') !== null) {
         console.warn(
-          '[Version Update Notice] Pinia Storage version updated, will clear Storage data for all Pinia Stores.'
+          '[Version Update Notice] Pinia Storage version updated, will clear Storage data for all Pinia Stores.',
         )
 
         piniaStoreIds.forEach((storeId) => {
@@ -32,9 +32,9 @@ export default {
           newestOnTop: true,
           limit: 1,
           toastStyle: {
-            backgroundColor: 'rgba(22, 21, 24, 0.9)',
+            'backgroundColor': 'rgba(22, 21, 24, 0.9)',
             'font-family': 'LXGW WenKai Mono TC',
-            color: 'rgb(250, 130, 78)',
+            'color': 'rgb(250, 130, 78)',
           },
           progressStyle: {
             backgroundColor: 'rgb(232, 178, 104)',

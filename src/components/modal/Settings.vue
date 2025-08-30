@@ -42,8 +42,7 @@
               track-by="value"
               :options="langOptions"
               :can-clear="false"
-              :can-deselect="false"
-            />
+              :can-deselect="false" />
           </div>
         </div>
       </div>
