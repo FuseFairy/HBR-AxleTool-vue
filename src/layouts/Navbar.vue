@@ -140,7 +140,7 @@
   button:hover {
     background-color: var(--bg-color-light-gray-transparent);
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .nav-title {
       display: none;
     }

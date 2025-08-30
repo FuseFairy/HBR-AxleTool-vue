@@ -74,7 +74,7 @@
   button:disabled {
     display: none;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .add-button {
       width: 60px;
       height: 60px;

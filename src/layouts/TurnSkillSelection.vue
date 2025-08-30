@@ -726,7 +726,7 @@
   :deep(.multiselect-clear-icon:focus) {
     background-color: #999;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .container {
       width: auto;
       grid-template-columns: 120px 1fr;

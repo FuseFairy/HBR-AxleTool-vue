@@ -174,7 +174,7 @@
     background-color: rgb(160, 160, 167);
     color: rgb(0, 0, 0);
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .container {
       width: 100%;
     }

@@ -748,7 +748,7 @@
     mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
   }
 
-  @media (max-width: 950px) {
+  @media (max-width: 900px) {
     .container {
       width: 100%;
       height: auto;

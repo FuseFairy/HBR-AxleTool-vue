@@ -471,7 +471,7 @@
   .spin {
     animation: spin 0.2s ease-in-out;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .button-container {
       grid-template-columns: repeat(3, 1fr);
     }

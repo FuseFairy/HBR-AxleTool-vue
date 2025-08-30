@@ -137,7 +137,7 @@
     transform: translateY(10px) scale(0.9);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .back-to-top {
       width: 48px;
       height: 48px;

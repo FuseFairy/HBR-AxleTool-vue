@@ -652,7 +652,7 @@
   :deep(.multiselect-tag) {
     background-color: #663fba;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .container {
       width: 90%;
     }

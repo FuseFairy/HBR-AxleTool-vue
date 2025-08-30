@@ -381,7 +381,7 @@
     transition: transform 0.5s ease;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     aside {
       background-color: rgba(0, 0, 0, 0.8);
       width: 100%;

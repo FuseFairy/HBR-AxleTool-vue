@@ -194,7 +194,7 @@
     margin: 0;
     width: 100%;
   }
-  @media (max-width: 950px) {
+  @media (max-width: 900px) {
     .filter-content {
       width: 45vw;
       max-width: 50vw;

@@ -160,7 +160,7 @@
     padding-top: 0.5rem;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .page-layout.sidebar-open main {
       margin-left: 0;
       width: 100%;
