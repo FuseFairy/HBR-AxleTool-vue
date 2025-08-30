@@ -1,10 +1,9 @@
 <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted, onUnmounted } from 'vue'
   import { useCharStore } from '@/store/char'
   import { useShowRowStore } from '@/store/showRow.js'
   import { useShowTeamStore } from '@/store/showTeam'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
-  import { onClickOutside } from '@vueuse/core'
   import { getUsedTeams } from '@/utils/state-getters/getUsedTeams'
   import Multiselect from '@vueform/multiselect'
   import filterOffIcon from '@/assets/custom-icon/filter-off.svg'
@@ -29,14 +28,31 @@
 
   const show = ref(false)
   const filterRef = ref(null)
-  onClickOutside(filterRef, () => {
-    show.value = false
+
+  const handleClickOutside = (event) => {
+    if (!show.value) return
+
+    const target = event.target
+    const isClickInsideComponent = filterRef.value && filterRef.value.contains(target)
+    const isClickInsideMultiselectDropdown = target.closest('.multiselect-dropdown')
+
+    if (!isClickInsideComponent && !isClickInsideMultiselectDropdown) {
+      show.value = false
+    }
+  }
+
+  onMounted(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+  })
+
+  onUnmounted(() => {
+    document.removeEventListener('mousedown', handleClickOutside)
   })
 </script>
 
 <template>
   <div ref="filterRef">
-    <button class="filter flex items-center justify-center" @click="show = !show">
+    <button class="filter flex items-center justify-center" @click.stop="show = !show">
       <img :src="show ? filterOffIcon : filterOnIcon" alt="Filter" />
     </button>
     <div v-if="show" class="filter-content">

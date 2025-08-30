@@ -13,7 +13,6 @@
   "dependencies": {
     "@tenrok/vue3-device-detect": "^1.0.1",
     "@vueform/multiselect": "^2.6.11",
-    "@vueuse/core": "^12.3.0",
     "hbr-axletool-vue": "file:",
     "lodash-es": "^4.17.21",
     "lz-string": "^1.5.0",
