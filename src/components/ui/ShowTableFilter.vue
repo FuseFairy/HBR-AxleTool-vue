@@ -6,8 +6,6 @@
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { getUsedTeams } from '@/utils/state-getters/getUsedTeams'
   import Multiselect from '@vueform/multiselect'
-  import filterOffIcon from '@/assets/custom-icon/filter-off.svg'
-  import filterOnIcon from '@/assets/custom-icon/filter-on.svg'
 
   const charStore = useCharStore()
   const showRowStore = useShowRowStore()
@@ -53,7 +51,9 @@
 <template>
   <div ref="filterRef">
     <button class="filter flex items-center justify-center" @click.stop="show = !show">
-      <img :src="show ? filterOffIcon : filterOnIcon" alt="Filter" />
+      <img
+        :src="show ? getAssetsFile('custom-icon/filter-off.svg') : getAssetsFile('custom-icon/filter-on.svg')"
+        alt="Filter" />
     </button>
     <div v-if="show" class="filter-content">
       <label>Teams</label>
