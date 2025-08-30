@@ -5,8 +5,8 @@
   import { useAxleCollectionStore } from '@/store/axleCollection'
   import { storeToRefs } from 'pinia'
   import { ref, computed } from 'vue'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { decompressAxleData } from '@/utils/decompressAxleData'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { decompressAxleData } from '@/utils/axle/decompressAxleData'
   import { compressToBase64, decompressFromBase64 } from 'lz-string'
 
   const sidebarStore = useSidebarStore()

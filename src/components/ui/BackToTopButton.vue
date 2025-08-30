@@ -1,6 +1,6 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
 
   const props = defineProps({
     scrollContainerSelector: {

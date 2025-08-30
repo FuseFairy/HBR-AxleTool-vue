@@ -1,4 +1,4 @@
-import { getAssetsFile } from '@/utils/getAssetsFile'
+import { getAssetsFile } from '@/utils/assets/getAssetsFile'
 
 let commonDataCache = null
 

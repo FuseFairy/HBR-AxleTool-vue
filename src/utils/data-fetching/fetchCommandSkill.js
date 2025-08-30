@@ -1,6 +1,6 @@
-import { getTeamData } from './getTeamData'
+import { getTeamData } from '@/utils/state-getters/getTeamData'
 import { isObject, values } from 'lodash-es'
-import { fetchCommonData } from './fetchCommonData'
+import { fetchCommonData } from '@/utils/data-fetching/fetchCommonData'
 
 export async function fetchCommandSkill(characterName, team, styleName) {
   try {

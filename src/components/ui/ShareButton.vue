@@ -1,9 +1,9 @@
 <script setup>
   import { ref } from 'vue'
   import { v5 as uuidv5 } from 'uuid'
-  import { compressAxleData } from '@/utils/compressAxleData'
+  import { compressAxleData } from '@/utils/axle/compressAxleData'
   import { toast } from 'vue3-toastify'
-  import { uploadDate } from '@/utils/axleDataApi'
+  import { uploadDate } from '@/utils/axle/axleDataApi'
 
   const MY_NAMESPACE = 'f1fe056a-f52e-4062-9c8a-03659d1893d0'
   const isLoading = ref(false)

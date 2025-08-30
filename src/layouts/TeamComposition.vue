@@ -3,11 +3,11 @@
   import { useCharStore } from '@/store/char'
   import { useLastTabStore } from '@/store/tab'
   import SelectChar from '@/components/modal/SelectChar.vue'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { fetchSkillOptions } from '@/utils/data-fetching/fetchSkillOptions'
   import { toast } from 'vue3-toastify'
   import 'vue3-toastify/dist/index.css'
-  import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
+  import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
 
   const charStore = useCharStore()
   const lastTabStore = useLastTabStore()

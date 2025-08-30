@@ -1,7 +1,7 @@
 <script setup>
   import { useSkillStore } from '@/store/axle'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { compressAxleData } from '@/utils/compressAxleData'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { compressAxleData } from '@/utils/axle/compressAxleData'
   import { useAxleCollectionStore } from '@/store/axleCollection'
   import { toast } from 'vue3-toastify'
 

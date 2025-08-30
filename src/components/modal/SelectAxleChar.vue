@@ -3,7 +3,7 @@
   import { useCharStore } from '@/store/char'
   import { useSkillStore } from '@/store/axle'
   import { useLastTabStore } from '@/store/tab'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
 
   const charStore = useCharStore()
   const skillStore = useSkillStore()

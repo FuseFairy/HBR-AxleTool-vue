@@ -1,4 +1,4 @@
-import { getTeamData } from './getTeamData'
+import { getTeamData } from '@/utils/state-getters/getTeamData'
 
 export async function fetchPassiveSkillOptions(characterName, team, styleName) {
   try {

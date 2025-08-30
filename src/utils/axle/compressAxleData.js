@@ -3,8 +3,8 @@ import { useSkillStore } from '@/store/axle'
 import { useSliderStore } from '@/store/slider'
 import { useSettingStore } from '@/store/setting'
 import { compressToBase64 } from 'lz-string'
-import { getUsedTeams } from '@/utils/getUsedTeams'
-import { version } from '../../package.json'
+import { getUsedTeams } from '@/utils/state-getters/getUsedTeams'
+import { version } from '/package.json'
 
 export function compressAxleData() {
   const charStore = useCharStore()

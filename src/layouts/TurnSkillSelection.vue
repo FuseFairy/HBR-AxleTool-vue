@@ -7,8 +7,8 @@
   import { v4 as uuidv4 } from 'uuid'
   import Multiselect from '@vueform/multiselect'
   import SelectAxleChar from '@/components/modal/SelectAxleChar.vue'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { getTargetOptions } from '@/utils/getTargetOptions'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { getTargetOptions } from '@/utils/state-getters/getTargetOptions'
   import { isDesktop } from '@tenrok/vue3-device-detect'
   import { cloneDeep } from 'lodash-es'
 

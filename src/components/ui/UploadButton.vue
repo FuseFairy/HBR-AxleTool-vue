@@ -2,7 +2,7 @@
   import { ref } from 'vue'
   import piexif from 'piexifjs'
   import loading from 'vue-loading-overlay'
-  import { decompressAxleData } from '@/utils/decompressAxleData'
+  import { decompressAxleData } from '@/utils/axle/decompressAxleData'
 
   const fileInput = ref(null)
   const isLoading = ref(false)

@@ -1,5 +1,5 @@
-import { getTeamData } from './getTeamData'
-import { fetchCommonData } from './fetchCommonData'
+import { getTeamData } from '@/utils/state-getters/getTeamData'
+import { fetchCommonData } from '@/utils/data-fetching/fetchCommonData'
 
 export async function fetchSkillOptions(characterName, team, styleName) {
   try {

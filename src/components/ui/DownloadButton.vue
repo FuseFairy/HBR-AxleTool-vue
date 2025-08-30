@@ -1,6 +1,6 @@
 <script setup>
   import { toast } from 'vue3-toastify'
-  import { convertElementToJpg } from '@/utils/domToImage'
+  import { convertElementToJpg } from '@/utils/browser/domToImage'
 
   const isLoading = defineModel('isLoading', { type: Boolean, default: false })
 

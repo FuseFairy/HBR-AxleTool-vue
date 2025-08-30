@@ -1,4 +1,4 @@
-import { getAssetsFile } from './getAssetsFile'
+import { getAssetsFile } from '@/utils/assets/getAssetsFile'
 
 export async function getTeamData(team) {
   try {

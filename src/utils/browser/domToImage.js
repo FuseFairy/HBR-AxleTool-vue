@@ -1,6 +1,6 @@
 import piexif from 'piexifjs'
 import { useSkillStore } from '@/store/axle'
-import { compressAxleData } from '@/utils/compressAxleData'
+import { compressAxleData } from '@/utils/axle/compressAxleData'
 import { isDesktop } from '@tenrok/vue3-device-detect'
 import workerUrl from 'modern-screenshot/worker?url'
 import { createContext, destroyContext, domToDataUrl } from 'modern-screenshot'
