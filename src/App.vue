@@ -135,6 +135,8 @@
     margin-top: 3rem;
     height: calc(100vh - 3rem);
     transition: margin-left 0.3s ease-in-out;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
   }
 
   .main-content-wrapper {
@@ -147,8 +149,6 @@
       'box_container'
       'axle'
       'footer';
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
   }
 
   .page-layout.sidebar-open main {
