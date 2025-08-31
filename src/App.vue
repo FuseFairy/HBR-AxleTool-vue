@@ -18,19 +18,10 @@
   import BackToTopButton from '@/components/ui/BackToTopButton.vue'
   import Sidebar from '@/layouts/Sidebar.vue'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+  import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
   const sidebarStore = useSidebarStore()
   const scrollbarStore = useScrollbarStore()
-
-  const scrollbarOptions = {
-    scrollbars: {
-      theme: 'os-theme-light',
-    },
-    overflow: {
-      x: 'hidden',
-      y: 'scroll',
-    },
-  }
 
   const handleScroll = (instance) => {
     const { scrollOffsetElement } = instance.elements()

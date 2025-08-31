@@ -14,6 +14,8 @@
   import 'vue3-toastify/dist/index.css'
   import { find } from 'lodash-es'
   import loading from 'vue-loading-overlay'
+  import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+  import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
   const isVisible = ref(false)
   onMounted(() => {
@@ -220,7 +222,7 @@
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
             </button>
           </div>
-          <div class="table custom-scrollbar">
+          <OverlayScrollbarsComponent class="table overlayscrollbars-vue" :options="scrollbarOptions">
             <div v-if="sliderStore.rows <= 0" class="sleeping-image">
               <img src="/src/assets/common/sleeping.webp" />
             </div>
@@ -376,7 +378,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </OverlayScrollbarsComponent>
         </div>
       </div>
     </transition>
@@ -741,9 +743,6 @@
     display: flex;
     height: 100%;
     width: 100%;
-    overflow-y: auto;
-    overflow-x: auto;
-    box-sizing: border-box;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
   }
