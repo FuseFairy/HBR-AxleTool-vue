@@ -11,12 +11,11 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
-    "@tenrok/vue3-device-detect": "^1.0.1",
     "@vueform/multiselect": "^2.6.11",
     "hbr-axletool-vue": "file:",
     "lodash-es": "^4.17.21",
     "lz-string": "^1.5.0",
-    "modern-screenshot": "^4.6.4",
+    "modern-screenshot": "^4.6.6",
     "nprogress": "^0.2.0",
     "overlayscrollbars-vue": "^0.5.9",
     "piexifjs": "^1.0.4",
