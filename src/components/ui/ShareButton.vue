@@ -4,9 +4,11 @@
   import { compressAxleData } from '@/utils/axle/compressAxleData'
   import { toast } from 'vue3-toastify'
   import { uploadDate } from '@/utils/axle/axleDataApi'
+  import { useSliderStore } from '@/store/slider'
 
   const MY_NAMESPACE = 'f1fe056a-f52e-4062-9c8a-03659d1893d0'
   const isLoading = ref(false)
+  const sliderStore = useSliderStore()
 
   async function triggerShareLink() {
     isLoading.value = true
@@ -49,7 +51,7 @@
   <button
     v-tooltip="isLoading ? 'Uploading...' : 'Share Axle'"
     class="share-button flex items-center justify-center"
-    :disabled="isLoading"
+    :disabled="isLoading || sliderStore.rows <= 0"
     @click="triggerShareLink">
     <div v-if="isLoading" class="loading-spinner" />
     <img v-else src="@/assets/custom-icon/share.svg" alt="Share" />
@@ -73,7 +75,7 @@
   }
   .share-button:disabled {
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.5;
   }
   .loading-spinner {
     width: 16px;

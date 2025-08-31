@@ -417,8 +417,10 @@
     animation: modal-scale-out 0.3s ease forwards;
   }
   .sleeping-image {
-    display: block;
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
   .switch-turn {
     font-size: 36px;
