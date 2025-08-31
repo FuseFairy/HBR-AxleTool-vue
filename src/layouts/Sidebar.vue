@@ -10,6 +10,7 @@
   import { compressToBase64, decompressFromBase64 } from 'lz-string'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
+  import LoadingOverlay from '@/components/modal/LoadingOverlay.vue'
 
   const sidebarStore = useSidebarStore()
   const skillStore = useSkillStore()
@@ -23,6 +24,7 @@
   const newAxleName = ref('')
   const isAnyButtonHovered = ref(false)
   const maxlength = 35
+  const isLoading = ref(false)
 
   const filteredAxles = computed(() => {
     let result = axles.value
@@ -90,6 +92,7 @@
   }
 
   const loadAxle = async (axle) => {
+    isLoading.value = true
     if (axle.id === skillStore.axleId) {
       sliderStore.rows = 0
       skillStore.resetCurrentAxle()
@@ -97,10 +100,12 @@
       await decompressAxleData(axle.data)
       skillStore.axleId = axle.id
     }
+    isLoading.value = false
   }
 </script>
 
 <template>
+  <LoadingOverlay :visible="isLoading" text="Loading..." type="circles-to-rhombuses" />
   <aside :class="{ 'sidebar-open': isSidebarOpen }">
     <div class="sidebar-content">
       <div class="sidebar-header">
