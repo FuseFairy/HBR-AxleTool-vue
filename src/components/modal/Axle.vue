@@ -222,7 +222,7 @@
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
             </button>
           </div>
-          <OverlayScrollbarsComponent class="table overlayscrollbars-vue" :options="scrollbarOptions">
+          <OverlayScrollbarsComponent class="table overlayscrollbars-vue" :options="scrollbarOptions" defer>
             <div v-if="sliderStore.rows <= 0" class="sleeping-image">
               <img src="/src/assets/common/sleeping.webp" />
             </div>
