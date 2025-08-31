@@ -234,6 +234,7 @@
   .sort-button {
     width: 100%;
     padding: 8px;
+    margin-top: 5px;
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: rgba(255, 255, 255, 0.1);
