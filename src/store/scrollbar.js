@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const useSettingStore = defineStore(
-  'setting',
+export const useScrollbarStore = defineStore(
+  'scrollbar',
   () => {
-    const lang = ref(null)
+    const topOffset = ref(0)
+    const instance = ref(null)
 
     return {
-      lang,
+      topOffset,
+      instance,
     }
   },
   {

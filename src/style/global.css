@@ -66,27 +66,7 @@
   margin: var(--spacing-3);
 }
 
-/* 針對 Firefox */
-.custom-scrollbar {
-  overflow-y: auto;
-  overflow-x: auto;
-  scrollbar-width: thin; /* auto, thin, none */
-  scrollbar-color: #555 rgba(0, 0, 0, 0.3); /* thumb track */
-}
-
-/* 針對 WebKit 瀏覽器 (Chrome, Safari, Edge) */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-.custom-scrollbar::-webkit-scrollbar-track,
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #555;
-}
-.custom-scrollbar::-webkit-scrollbar-corner {
-  background-color: rgba(0, 0, 0, 0.3);
+.overlayscrollbars-vue {
+  height: 100%;
+  width: 100%;
 }

@@ -1,64 +1,23 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { useScrollbarStore } from '@/store/scrollbar'
 
-  const props = defineProps({
-    scrollContainerSelector: {
-      type: String,
-      default: null,
-    },
-  })
-
-  const isVisible = ref(false)
-  const scrollableElement = ref(null)
-
-  const handleScroll = () => {
-    if (!scrollableElement.value) return
-
-    const scrollTop = props.scrollContainerSelector
-      ? scrollableElement.value.scrollTop
-      : window.scrollY || document.documentElement.scrollTop
-    isVisible.value = scrollTop > 500
-  }
+  const scrollbarStore = useScrollbarStore()
 
   const scrollToTop = () => {
-    if (!scrollableElement.value) return
+    const osInstance = scrollbarStore.instance
+    const { scrollOffsetElement } = osInstance.elements()
 
-    if (props.scrollContainerSelector) {
-      scrollableElement.value.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
-    } else {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
-    }
+    scrollOffsetElement.scrollTo({
+      behavior: 'smooth',
+      top: 0,
+    })
   }
-
-  onMounted(() => {
-    if (props.scrollContainerSelector) {
-      scrollableElement.value = document.querySelector(props.scrollContainerSelector)
-    } else {
-      scrollableElement.value = window
-    }
-
-    if (scrollableElement.value) {
-      scrollableElement.value.addEventListener('scroll', handleScroll)
-    }
-  })
-
-  onUnmounted(() => {
-    if (scrollableElement.value) {
-      scrollableElement.value.removeEventListener('scroll', handleScroll)
-    }
-  })
 </script>
 
 <template>
   <transition name="fade">
-    <button v-if="isVisible" class="back-to-top" @click="scrollToTop">
+    <button v-if="scrollbarStore.topOffset > 500" class="back-to-top" @click="scrollToTop">
       <img :src="getAssetsFile('custom-icon/arrow_up.svg')" alt="Back to Top" />
     </button>
   </transition>
@@ -137,7 +96,7 @@
     transform: translateY(10px) scale(0.9);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .back-to-top {
       width: 48px;
       height: 48px;

@@ -27,10 +27,10 @@ export const useCharStore = defineStore(
                 img: null,
                 spiritual: null,
               },
-            ])
+            ]),
           ),
-        ])
-      )
+        ]),
+      ),
     )
 
     const setSelection = (buttonKey, type, value, selectedTab) => {
@@ -97,5 +97,5 @@ export const useCharStore = defineStore(
         },
       },
     },
-  }
+  },
 )

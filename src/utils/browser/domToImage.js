@@ -1,7 +1,7 @@
 import piexif from 'piexifjs'
 import { useSkillStore } from '@/store/axle'
-import { compressAxleData } from '@/utils/compressAxleData'
-import { isDesktop } from '@tenrok/vue3-device-detect'
+import { compressAxleData } from '@/utils/axle/compressAxleData'
+import { isMobile } from '@/utils/browser/deviceDetector.js'
 import workerUrl from 'modern-screenshot/worker?url'
 import { createContext, destroyContext, domToDataUrl } from 'modern-screenshot'
 
@@ -18,7 +18,8 @@ export async function convertElementToJpg(elementId, useWebWorker = false) {
   let context = null
   try {
     let dataUrl = ''
-    const pixelRatio = isDesktop ? window.devicePixelRatio : 1
+    const isMobileDevice = isMobile()
+    const pixelRatio = isMobileDevice ? 1 : window.devicePixelRatio || 1
     const options = {
       quality: 1.0,
       backgroundColor: 'black',

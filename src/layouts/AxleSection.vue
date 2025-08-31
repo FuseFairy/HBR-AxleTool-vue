@@ -32,7 +32,7 @@
   .right-column {
     flex: 3;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .form-row {
       flex-direction: column;
       align-items: stretch;

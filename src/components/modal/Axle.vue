@@ -6,14 +6,16 @@
   import { useShowRowStore } from '@/store/showRow'
   import { useShowTeamStore } from '@/store/showTeam'
   import { useSettingStore } from '@/store/setting'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { getUsedSkills } from '@/utils/getUsedSkills'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { getUsedSkills } from '@/utils/state-getters/getUsedSkills'
   import ShowTableFilter from '@/components/ui/ShowTableFilter.vue'
   import shareButton from '@/components/ui/ShareButton.vue'
   import DownloadButton from '@/components/ui/DownloadButton.vue'
   import 'vue3-toastify/dist/index.css'
   import { find } from 'lodash-es'
-  import loading from 'vue-loading-overlay'
+  import LoadingOverlay from '@/components/modal/LoadingOverlay.vue'
+  import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+  import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
   const isVisible = ref(false)
   onMounted(() => {
@@ -33,7 +35,7 @@
     DRIVE耳環: 'earring-icon/drive.webp',
     爆破耳環: 'earring-icon/explosion.webp',
   }
-  const additionalTurn = { 'zh-TW': '追加回合', jp: '追加ターン', 'zh-CN': '追加回合', 'zh-CN-CN': '追加回合' }
+  const additionalTurn = { 'zh-TW': '追加回合', 'jp': '追加ターン', 'zh-CN': '追加回合', 'zh-CN-CN': '追加回合' }
   const axleName = skillStore.axleName.trim()
 
   const hasRank = () => {
@@ -54,7 +56,7 @@
   const hasPassiveSkill = (selectedTab) => {
     const passiveSkillInShowRow = showRowStore.showRow.includes('passive skill')
     const hasValidPassiveSkillSelection = Object.values(charStore.selections[selectedTab]).some(
-      (selection) => selection?.passiveSkill !== null && selection?.passiveSkill.length > 0
+      (selection) => selection?.passiveSkill !== null && selection?.passiveSkill.length > 0,
     )
     return passiveSkillInShowRow && hasValidPassiveSkillSelection
   }
@@ -201,15 +203,8 @@
 <template>
   <teleport to="body">
     <transition name="modal-fade">
-      <div v-if="isVisible" class="overlay" @click="closeTable">
-        <loading
-          v-model:active="isLoading"
-          :can-cancel="false"
-          :is-full-page="true"
-          :lock-scroll="true"
-          background-color="#54504b"
-          color="#79d1cb"
-        />
+      <div v-if="isVisible" class="axle-overlay" @click="closeTable">
+        <LoadingOverlay :visible="isLoading" text="Downloading..." type="half-circle" />
         <div class="container" @click.stop>
           <div class="button-group">
             <div class="left-button-group">
@@ -221,7 +216,7 @@
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
             </button>
           </div>
-          <div class="table custom-scrollbar">
+          <OverlayScrollbarsComponent class="table overlayscrollbars-vue" :options="scrollbarOptions" defer>
             <div v-if="sliderStore.rows <= 0" class="sleeping-image">
               <img src="/src/assets/common/sleeping.webp" />
             </div>
@@ -231,8 +226,7 @@
                 <div
                   v-if="showTeamStore.showTeam.length > 1 && index > 0"
                   class="axle-line-container"
-                  style="margin-top: 20px"
-                >
+                  style="margin-top: 20px">
                   <div class="blue-line" />
                 </div>
                 <div class="table-container">
@@ -244,13 +238,11 @@
                           v-if="charStore.selections[selectedTab][i - 1].img"
                           :src="getAssetsFile(charStore.selections[selectedTab][i - 1].img)"
                           :alt="charStore.selections[selectedTab][i - 1].style"
-                          class="character-image"
-                        />
+                          class="character-image" />
                         <!-- Rank -->
                         <div
                           v-if="hasRank() && charStore.selections[selectedTab][i - 1].rank !== null"
-                          class="rank-text"
-                        >
+                          class="rank-text">
                           {{ charStore.selections[selectedTab][i - 1].rank }}
                         </div>
                         <div
@@ -259,21 +251,18 @@
                             charStore.selections[selectedTab][i - 1].rank === null &&
                             charStore.selections[selectedTab][i - 1].style !== null
                           "
-                          class="rank-text"
-                        >
+                          class="rank-text">
                           <span>0</span>
                         </div>
                         <img
                           v-if="hasRank() && charStore.selections[selectedTab][i - 1].flower"
                           src="/src/assets/common/flower.webp"
                           alt="flower"
-                          class="flower-img"
-                        />
+                          class="flower-img" />
                         <!-- Spiritual -->
                         <div
                           v-if="hasSpiritual() && charStore.selections[selectedTab][i - 1].spiritual !== null"
-                          class="spiritual-text"
-                        >
+                          class="spiritual-text">
                           {{ charStore.selections[selectedTab][i - 1].spiritual }}
                         </div>
                         <!-- Earring -->
@@ -281,8 +270,7 @@
                           v-if="hasEarring() && charStore.selections[selectedTab][i - 1].earring !== null"
                           :src="getAssetsFile(earringDict[charStore.selections[selectedTab][i - 1].earring])"
                           :alt="charStore.selections[selectedTab][i - 1].earring"
-                          class="earring-icon"
-                        />
+                          class="earring-icon" />
                       </div>
                     </div>
                   </div>
@@ -295,13 +283,11 @@
                         charStore.selections[selectedTab][i - 1].passiveSkill !== null &&
                         charStore.selections[selectedTab][i - 1].passiveSkill.length > 0
                       "
-                      class="text"
-                    >
+                      class="text">
                       <span
                         v-for="(skill, skillIndex) in charStore.selections[selectedTab][i - 1].passiveSkill"
                         :key="skillIndex"
-                        class="passive-skill text-wrap"
-                      >
+                        class="passive-skill text-wrap">
                         {{
                           displayPassiveSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style)
                         }}
@@ -313,18 +299,16 @@
                 <div
                   v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)"
                   class="used-skill-bg table-container"
-                  style="margin-top: 20px"
-                >
+                  style="margin-top: 20px">
                   <div v-for="(i, colIndex) in 7" :key="colIndex" class="table-column">
                     <div v-if="i === 1" class="label text-wrap">Skill</div>
                     <div v-else-if="charStore.selections[selectedTab][i - 1].style !== null" class="text">
                       <span
                         v-for="(skill, skillIndex) in Array.from(
-                          getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style]
+                          getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style],
                         )"
                         :key="skillIndex"
-                        class="used-skill text-wrap"
-                      >
+                        class="used-skill text-wrap">
                         {{ displayUsedSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
                       </span>
                     </div>
@@ -336,16 +320,14 @@
                 <div
                   v-if="sliderStore.rows > 0 && showTeamStore.showTeam.length > 0"
                   class="axle-line-container"
-                  style="margin-top: 20px"
-                >
+                  style="margin-top: 20px">
                   <div class="red-line"></div>
                 </div>
                 <div
                   v-for="(turn, i) in skillStore.turns"
                   :key="turn.id"
                   :class="turn.turn !== 'Switch' ? 'table-container-2' : 'table-container-3'"
-                  :style="getStyle(i + 1)"
-                >
+                  :style="getStyle(i + 1)">
                   <template v-if="turn.turn !== 'Switch'">
                     <div v-for="(col, colIndex) in 4" :key="colIndex" class="axle-table-column">
                       <div v-if="col === 1" class="label text-wrap">
@@ -360,14 +342,12 @@
                             <img
                               :src="getAssetsFile(skillStore.skills[i][col - 2].style_img)"
                               :alt="skillStore.skills[i][col - 2].style"
-                              class="axle-img"
-                            />
+                              class="axle-img" />
                           </div>
                           <div class="txt">
                             <span
                               class="axle-text text-wrap"
-                              :style="{ opacity: checkCommandSkill(i, col - 2) ? '0.6' : '1' }"
-                            >
+                              :style="{ opacity: checkCommandSkill(i, col - 2) ? '0.6' : '1' }">
                               {{ displaySkillName(i, col - 2) }}
                             </span>
                             <img
@@ -376,12 +356,11 @@
                                 getAssetsFile(
                                   getTargetImg(
                                     skillStore.skills[i][col - 2].selectedTab,
-                                    skillStore.skills[i][col - 2].target
-                                  )
+                                    skillStore.skills[i][col - 2].target,
+                                  ),
                                 )
                               "
-                              class="axle-target-img"
-                            />
+                              class="axle-target-img" />
                           </div>
                         </span>
                       </div>
@@ -393,7 +372,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </OverlayScrollbarsComponent>
         </div>
       </div>
     </transition>
@@ -438,8 +417,10 @@
     animation: modal-scale-out 0.3s ease forwards;
   }
   .sleeping-image {
-    display: block;
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
   }
   .switch-turn {
     font-size: 36px;
@@ -725,7 +706,7 @@
     height: 100%;
     width: 100%;
   }
-  .overlay {
+  .axle-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -758,14 +739,11 @@
     display: flex;
     height: 100%;
     width: 100%;
-    overflow-y: auto;
-    overflow-x: auto;
-    box-sizing: border-box;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
   }
 
-  @media (max-width: 950px) {
+  @media (max-width: 900px) {
     .container {
       width: 100%;
       height: auto;

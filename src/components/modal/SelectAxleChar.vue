@@ -3,7 +3,7 @@
   import { useCharStore } from '@/store/char'
   import { useSkillStore } from '@/store/axle'
   import { useLastTabStore } from '@/store/tab'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
 
   const charStore = useCharStore()
   const skillStore = useSkillStore()
@@ -36,7 +36,7 @@
 
   const selectedTab = ref(
     skillStore.skills[props.row][props.buttonKey]?.selectedTab ??
-      (lastTabStore.axle_lastTab !== 1 ? lastTabStore.axle_lastTab : 1)
+      (lastTabStore.axle_lastTab !== 1 ? lastTabStore.axle_lastTab : 1),
   )
 
   const selectTab = (key) => {
@@ -46,7 +46,7 @@
 
   const filteredSelections = computed(() => {
     const filtered = Object.fromEntries(
-      Object.entries(charStore.selections[selectedTab.value]).filter(([, value]) => value.img !== null)
+      Object.entries(charStore.selections[selectedTab.value]).filter(([, value]) => value.img !== null),
     )
     return filtered
   })
@@ -101,8 +101,7 @@
               :key="tab.key"
               class="tab"
               :class="{ active: selectedTab === tab.key }"
-              @click="selectTab(tab.key)"
-            >
+              @click="selectTab(tab.key)">
               {{ tab.label }}
             </button>
           </div>
@@ -111,8 +110,7 @@
               v-for="(item, key) in filteredSelections"
               :key="key"
               class="circle-button selected-button"
-              @click="handleImageClick(key)"
-            >
+              @click="handleImageClick(key)">
               <img class="char-img" :src="getAssetsFile(item.img)" :alt="item.style" />
               <div v-if="isSelected(key)" class="overlay-text">Selected</div>
             </button>

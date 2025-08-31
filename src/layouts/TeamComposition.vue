@@ -3,11 +3,11 @@
   import { useCharStore } from '@/store/char'
   import { useLastTabStore } from '@/store/tab'
   import SelectChar from '@/components/modal/SelectChar.vue'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { fetchSkillOptions } from '@/utils/data-fetching/fetchSkillOptions'
   import { toast } from 'vue3-toastify'
   import 'vue3-toastify/dist/index.css'
-  import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
+  import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
 
   const charStore = useCharStore()
   const lastTabStore = useLastTabStore()
@@ -207,7 +207,7 @@
                 .catch((error) => {
                   console.error(`Error fetching data for ${character} in team ${team} with style ${style}:`, error)
                   throw error
-                })
+                }),
             )
           }
         }
@@ -237,9 +237,9 @@
           dangerouslyHTMLString: true,
           newestOnTop: true,
           toastStyle: {
-            backgroundColor: 'rgba(22, 21, 24, 0.9)',
+            'backgroundColor': 'rgba(22, 21, 24, 0.9)',
             'font-family': 'LXGW WenKai Mono TC',
-            color: 'rgb(248, 216, 251)',
+            'color': 'rgb(248, 216, 251)',
           },
           progressStyle: {
             backgroundColor: 'rgb(180, 68, 191)',
@@ -257,9 +257,9 @@
           dangerouslyHTMLString: true,
           newestOnTop: true,
           toastStyle: {
-            backgroundColor: 'rgba(22, 21, 24, 0.9)',
+            'backgroundColor': 'rgba(22, 21, 24, 0.9)',
             'font-family': 'LXGW WenKai Mono TC',
-            color: 'rgb(248, 216, 251)',
+            'color': 'rgb(248, 216, 251)',
           },
           progressStyle: {
             backgroundColor: 'rgb(255, 88, 88)',
@@ -270,11 +270,11 @@
         position: toast.POSITION.BOTTOM_RIGHT,
         theme: 'colored',
         toastStyle: {
-          backgroundColor: 'rgba(22, 21, 24, 0.9)',
+          'backgroundColor': 'rgba(22, 21, 24, 0.9)',
           'font-family': 'LXGW WenKai Mono TC',
-          color: 'rgb(248, 216, 251)',
+          'color': 'rgb(248, 216, 251)',
         },
-      }
+      },
     )
   }
 </script>
@@ -286,18 +286,13 @@
       :key="tab.key"
       class="tab"
       :class="{ active: selectedTab === tab.key }"
-      @click="selectTab(tab.key)"
-    >
+      @click="selectTab(tab.key)">
       {{ tab.label }}
     </button>
   </div>
 
   <div class="tool-container">
-    <button
-      v-tooltip="{ content: 'Refresh Skill Options', placement: 'bottom' }"
-      class="refresh-button"
-      @click="refreshData"
-    >
+    <button v-tooltip="'Refresh Skill Options'" class="refresh-button" @click="refreshData">
       <img src="@/assets/custom-icon/update.svg" alt="refresh" :class="{ spin: isRefreshing }" />
     </button>
   </div>
@@ -324,14 +319,12 @@
       @touchend="handleTouchEnd($event)"
       @click="handleBoxClick(button.key)"
       @keydown.enter="handleBoxClick(button.key)"
-      @keydown.space="handleBoxClick(button.key)"
-    >
+      @keydown.space="handleBoxClick(button.key)">
       <img
         v-if="charStore.selections[selectedTab][button.key]?.img !== null"
         class="char-img"
         :src="getAssetsFile(charStore.selections[selectedTab][button.key].img)"
-        :alt="charStore.selections[selectedTab][button.key]?.style"
-      />
+        :alt="charStore.selections[selectedTab][button.key]?.style" />
       <img v-else class="icon-img" src="@/assets/custom-icon/add.svg" alt="Add" />
     </div>
   </div>
@@ -340,8 +333,7 @@
     v-if="activeComponent !== null"
     :button-key="activeComponent"
     :selected-tab="selectedTab"
-    @close="closeContainer"
-  />
+    @close="closeContainer" />
 </template>
 
 <style scoped>
@@ -479,7 +471,7 @@
   .spin {
     animation: spin 0.2s ease-in-out;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .button-container {
       grid-template-columns: repeat(3, 1fr);
     }

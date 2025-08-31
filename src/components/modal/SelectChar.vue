@@ -4,17 +4,18 @@
   import { useCharStore } from '@/store/char'
   import { useSliderStore } from '@/store/slider'
   import { useSkillStore } from '@/store/axle'
-  import { getTargetOptions } from '@/utils/getTargetOptions'
-  import { fetchCharacterOptions } from '@/utils/fetchCharacterOptions'
-  import { fetchStyleOptions } from '@/utils/fetchStyleOptions'
-  import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
-  import { fetchPassiveSkillOptions } from '@/utils/fetchPassiveSkillOptions'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
-  import { isMobile } from '@tenrok/vue3-device-detect'
+  import { getTargetOptions } from '@/utils/state-getters/getTargetOptions'
+  import { fetchCharacterOptions } from '@/utils/data-fetching/fetchCharacterOptions'
+  import { fetchStyleOptions } from '@/utils/data-fetching/fetchStyleOptions'
+  import { fetchSkillOptions } from '@/utils/data-fetching/fetchSkillOptions'
+  import { fetchPassiveSkillOptions } from '@/utils/data-fetching/fetchPassiveSkillOptions'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
   import { useSettingStore } from '@/store/setting'
   import { Collapse } from 'vue-collapsed'
   import { find } from 'lodash-es'
+  import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+  import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
   const charStore = useCharStore()
   const sliderStore = useSliderStore()
@@ -47,22 +48,22 @@
   const earringOptions = [
     {
       value: 'BREAK耳環',
-      names: { 'zh-TW': 'BREAK耳環', jp: 'ブレイクピアス', 'zh-CN': 'BREAK耳环', 'zh-CN-CN': '击碎耳坠' },
+      names: { 'zh-TW': 'BREAK耳環', 'jp': 'ブレイクピアス', 'zh-CN': 'BREAK耳环', 'zh-CN-CN': '击碎耳坠' },
       icon: 'earring-icon/break.webp',
     },
     {
       value: '進攻耳環',
-      names: { 'zh-TW': '進攻耳環', jp: 'アタックピアス', 'zh-CN': '进攻耳环', 'zh-CN-CN': '攻击耳坠' },
+      names: { 'zh-TW': '進攻耳環', 'jp': 'アタックピアス', 'zh-CN': '进攻耳环', 'zh-CN-CN': '攻击耳坠' },
       icon: 'earring-icon/attach.webp',
     },
     {
       value: 'DRIVE耳環',
-      names: { 'zh-TW': 'DRIVE耳環', jp: 'ドライブピアス', 'zh-CN': 'DRIVE耳环', 'zh-CN-CN': '驱动耳坠' },
+      names: { 'zh-TW': 'DRIVE耳環', 'jp': 'ドライブピアス', 'zh-CN': 'DRIVE耳环', 'zh-CN-CN': '驱动耳坠' },
       icon: 'earring-icon/drive.webp',
     },
     {
       value: '爆破耳環',
-      names: { 'zh-TW': '爆破耳環', jp: 'ブラストピアス', 'zh-CN': '爆破耳环', 'zh-CN-CN': '破坏耳坠' },
+      names: { 'zh-TW': '爆破耳環', 'jp': 'ブラストピアス', 'zh-CN': '爆破耳环', 'zh-CN-CN': '破坏耳坠' },
       icon: 'earring-icon/explosion.webp',
     },
   ]
@@ -103,7 +104,7 @@
       passiveSkillOptions.value = await fetchPassiveSkillOptions(
         selectedCharacter.value,
         selectedTeam.value,
-        selectedStyle.value
+        selectedStyle.value,
       )
       charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
     }
@@ -147,7 +148,7 @@
           passiveSkillOptions.value = await fetchPassiveSkillOptions(
             selectedCharacter.value,
             selectedTeam.value,
-            newStyle
+            newStyle,
           )
           const commandSkill = await fetchCommandSkill(selectedCharacter.value, selectedTeam.value, newStyle)
           charStore.setSelection(props.buttonKey, 'commandSkill', commandSkill, props.selectedTab)
@@ -204,7 +205,7 @@
         console.log('skillStore.skills after reset:', skillStore.skills)
       }
     },
-    { immediate: false }
+    { immediate: false },
   )
 
   const toggleCheckbox = () => {
@@ -231,17 +232,13 @@
   <teleport to="body">
     <transition name="modal-fade">
       <div v-if="isVisible" class="overlay" @click="closeContainer">
-        <div
-          class="container custom-scrollbar"
-          :style="{ overflow: isExpandedCollapse || isMobile ? 'scroll' : 'visible' }"
-          @click.stop
-        >
+        <div class="container" @click.stop>
           <div class="button-group">
             <button class="close" @click="closeContainer">
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
             </button>
           </div>
-          <div class="content custom-scrollbar">
+          <OverlayScrollbarsComponent class="content overlayscrollbars-vue" :options="scrollbarOptions" defer>
             <div class="section" style="padding: 0">
               <label>Team</label>
               <Multiselect v-model="selectedTeam" placeholder="Select team" label="name" :options="teamOptions">
@@ -265,8 +262,7 @@
                 :disabled="isCharDisabled"
                 :options="characterOptions"
                 label="names"
-                track-by="value"
-              >
+                track-by="value">
                 <template #singlelabel="{ value }">
                   <div class="multiselect-single-label">
                     <img class="label-icon" :src="getAssetsFile(value.icon)" />
@@ -287,8 +283,7 @@
                 :disabled="isStyleDisabled"
                 :options="styleOptions"
                 label="names"
-                track-by="value"
-              >
+                track-by="value">
                 <template #singlelabel="{ value }">
                   <div class="multiselect-single-label">
                     <img class="label-icon" :src="getAssetsFile(value.icon)" />
@@ -305,8 +300,7 @@
               <button
                 class="collapse_btn"
                 :class="{ collapse_btn_active: isExpandedCollapse }"
-                @click="isExpandedCollapse = !isExpandedCollapse"
-              >
+                @click="isExpandedCollapse = !isExpandedCollapse">
                 <svg
                   class="collapse_arrow"
                   :class="{ rotate: isExpandedCollapse }"
@@ -314,8 +308,7 @@
                   height="24px"
                   viewBox="0 -960 960 960"
                   width="24px"
-                  fill="#FFFFFF"
-                >
+                  fill="#FFFFFF">
                   <path d="m280-400 200-200 200 200H280Z" />
                 </svg>
                 <label style="font-size: 24px; color: inherit">Others</label>
@@ -328,22 +321,19 @@
                     placeholder="Select Rank"
                     :disabled="isOtherDisable"
                     :options="rankOptions"
-                    @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)"
-                  />
+                    @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)" />
                   <div class="flower-container">
                     <input
                       v-model="selectedFlower"
                       type="checkbox"
                       :disabled="isOtherDisable"
-                      @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)"
-                    />
+                      @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)" />
                     <img
                       src="/src/assets/common/flower.webp"
                       alt="Is Flower"
                       :class="['flower-icon', { 'flower-icon-disabled': isOtherDisable }]"
                       draggable="false"
-                      @click="toggleCheckbox"
-                    />
+                      @click="toggleCheckbox" />
                   </div>
                 </div>
                 <div class="section">
@@ -354,8 +344,7 @@
                     :disabled="isOtherDisable"
                     :options="earringOptions"
                     label="names"
-                    track-by="value"
-                  >
+                    track-by="value">
                     <template #singlelabel="{ value }">
                       <div class="multiselect-single-label">
                         <img class="label-icon" :src="getAssetsFile(value.icon)" />
@@ -380,8 +369,7 @@
                     label="names"
                     track-by="value"
                     :locale="settingStore.lang"
-                    fallback-locale="zh-TW"
-                  />
+                    fallback-locale="zh-TW" />
                 </div>
                 <div class="section">
                   <label>Spiritual Rupture</label>
@@ -391,12 +379,11 @@
                     :disabled="isOtherDisable"
                     :options="spiritualOptions"
                     label="name"
-                    track-by="value"
-                  />
+                    track-by="value" />
                 </div>
               </Collapse>
             </div>
-          </div>
+          </OverlayScrollbarsComponent>
         </div>
       </div>
     </transition>
@@ -407,10 +394,9 @@
 <style scoped>
   .content {
     position: relative;
+    height: 100%;
     width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: var(--spacing-5);
+    padding: 0 1.25rem;
   }
 
   .modal-fade-enter-active,
@@ -550,7 +536,6 @@
     flex-direction: column;
     padding-bottom: var(--spacing-4);
     border: 3px solid #262426;
-    box-sizing: border-box;
   }
   .container > .close {
     position: absolute;
@@ -574,14 +559,6 @@
     display: flex;
     justify-content: flex-end;
     padding: var(--spacing-4);
-  }
-  .selectboxes {
-    flex-grow: 1;
-    padding: var(--spacing-4);
-    overflow-y: auto;
-    max-height: 81%;
-    overflow-x: hidden;
-    padding-right: 5px;
   }
 
   label {
@@ -663,7 +640,7 @@
   :deep(.multiselect-tag) {
     background-color: #663fba;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .container {
       width: 90%;
     }

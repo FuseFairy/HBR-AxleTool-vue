@@ -1,8 +1,8 @@
-import { fetchSkillOptions } from '@/utils/fetchSkillOptions'
-import { fetchCharacterOptions } from '@/utils/fetchCharacterOptions'
-import { fetchPassiveSkillOptions } from '@/utils/fetchPassiveSkillOptions'
-import { fetchCommandSkill } from '@/utils/fetchCommandSkill'
-import { fetchStyleOptions } from './fetchStyleOptions'
+import { fetchSkillOptions } from '@/utils/data-fetching/fetchSkillOptions'
+import { fetchCharacterOptions } from '@/utils/data-fetching/fetchCharacterOptions'
+import { fetchPassiveSkillOptions } from '@/utils/data-fetching/fetchPassiveSkillOptions'
+import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
+import { fetchStyleOptions } from '@/utils/data-fetching/fetchStyleOptions'
 import { decompressFromBase64 } from 'lz-string'
 import { find } from 'lodash-es'
 import { useCharStore } from '@/store/char'
@@ -109,7 +109,7 @@ export async function decompressAxleData(customData) {
           newSkill.activeFormId = null
         }
         return newSkill
-      })
+      }),
     )
   }
 

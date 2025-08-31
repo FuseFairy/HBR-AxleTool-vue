@@ -1,14 +1,11 @@
 <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted, onUnmounted } from 'vue'
   import { useCharStore } from '@/store/char'
   import { useShowRowStore } from '@/store/showRow.js'
   import { useShowTeamStore } from '@/store/showTeam'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { onClickOutside } from '@vueuse/core'
-  import { getUsedTeams } from '@/utils/getUsedTeams'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { getUsedTeams } from '@/utils/state-getters/getUsedTeams'
   import Multiselect from '@vueform/multiselect'
-  import filterOffIcon from '@/assets/custom-icon/filter-off.svg'
-  import filterOnIcon from '@/assets/custom-icon/filter-on.svg'
 
   const charStore = useCharStore()
   const showRowStore = useShowRowStore()
@@ -29,15 +26,34 @@
 
   const show = ref(false)
   const filterRef = ref(null)
-  onClickOutside(filterRef, () => {
-    show.value = false
+
+  const handleClickOutside = (event) => {
+    if (!show.value) return
+
+    const target = event.target
+    const isClickInsideComponent = filterRef.value && filterRef.value.contains(target)
+    const isClickInsideMultiselectDropdown = target.closest('.multiselect-dropdown')
+
+    if (!isClickInsideComponent && !isClickInsideMultiselectDropdown) {
+      show.value = false
+    }
+  }
+
+  onMounted(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+  })
+
+  onUnmounted(() => {
+    document.removeEventListener('mousedown', handleClickOutside)
   })
 </script>
 
 <template>
   <div ref="filterRef">
-    <button class="filter flex items-center justify-center" @click="show = !show">
-      <img :src="show ? filterOffIcon : filterOnIcon" alt="Filter" />
+    <button class="filter flex items-center justify-center" @click.stop="show = !show">
+      <img
+        :src="show ? getAssetsFile('custom-icon/filter-off.svg') : getAssetsFile('custom-icon/filter-on.svg')"
+        alt="Filter" />
     </button>
     <div v-if="show" class="filter-content">
       <label>Teams</label>
@@ -49,8 +65,7 @@
         :close-on-select="false"
         :options="showTeams"
         style="margin-left: 5px"
-        @change="(value) => showTeamStore.setShowTeam(value)"
-      >
+        @change="(value) => showTeamStore.setShowTeam(value)">
         <template #option="{ option }">
           <div class="option-container">
             <span :title="option.name">{{ option.name }}</span>
@@ -73,8 +88,7 @@
         :close-on-select="false"
         :options="showOptions"
         style="margin-left: 5px"
-        @change="(value) => showRowStore.setShowRow(value)"
-      />
+        @change="(value) => showRowStore.setShowRow(value)" />
     </div>
   </div>
 </template>
@@ -180,7 +194,7 @@
     margin: 0;
     width: 100%;
   }
-  @media (max-width: 950px) {
+  @media (max-width: 900px) {
     .filter-content {
       width: 45vw;
       max-width: 50vw;

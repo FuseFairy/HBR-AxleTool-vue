@@ -1,7 +1,9 @@
 <script setup>
   import { toast } from 'vue3-toastify'
-  import { convertElementToJpg } from '@/utils/domToImage'
+  import { convertElementToJpg } from '@/utils/browser/domToImage'
+  import { useSliderStore } from '@/store/slider'
 
+  const sliderStore = useSliderStore()
   const isLoading = defineModel('isLoading', { type: Boolean, default: false })
 
   const downloadTable = async () => {
@@ -34,7 +36,7 @@
 </script>
 
 <template>
-  <button class="download flex items-center justify-center" @click="downloadTable">
+  <button class="download flex items-center justify-center" :disabled="sliderStore.rows <= 0" @click="downloadTable">
     <img src="@/assets/custom-icon/download.svg" alt="Download" />
   </button>
 </template>
@@ -52,5 +54,9 @@
   }
   .download:hover {
     background-color: rgba(78, 69, 69, 0.3);
+  }
+  .download:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 </style>

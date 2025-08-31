@@ -19,5 +19,5 @@ export const useShowRowStore = defineStore(
     persist: {
       storage: localStorage,
     },
-  }
+  },
 )

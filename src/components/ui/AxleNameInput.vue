@@ -1,11 +1,13 @@
 <script setup>
   import { useSkillStore } from '@/store/axle'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
-  import { compressAxleData } from '@/utils/compressAxleData'
+  import { useSliderStore } from '@/store/slider'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
+  import { compressAxleData } from '@/utils/axle/compressAxleData'
   import { useAxleCollectionStore } from '@/store/axleCollection'
   import { toast } from 'vue3-toastify'
 
   const skillStore = useSkillStore()
+  const sliderStore = useSliderStore()
   const maxlength = 35
   const axleCollectionStore = useAxleCollectionStore()
   const toastOptions = {
@@ -51,21 +53,19 @@
         type="text"
         placeholder="Enter your axle name"
         class="form-input"
-        :maxlength="maxlength"
-      />
+        :maxlength="maxlength" />
       <button
-        v-tooltip="{ content: 'Save Axle', placement: 'top' }"
+        v-tooltip="'Save Axle'"
         class="save-axle-button"
         :disabled="skillStore.axleId === ''"
-        @click="handleSaveAxle"
-      >
+        @click="handleSaveAxle">
         <img :src="getAssetsFile('custom-icon/save.svg')" alt="Save Axle" />
       </button>
       <button
-        v-tooltip="{ content: 'Save Axle As New', placement: 'top' }"
+        v-tooltip="'Save Axle As New'"
         class="save-as-axle-button"
-        @click="handleSaveAsAxle"
-      >
+        :disabled="sliderStore.rows <= 0"
+        @click="handleSaveAsAxle">
         <img :src="getAssetsFile('custom-icon/save_as.svg')" alt="Save As Axle" />
       </button>
     </div>
@@ -105,7 +105,8 @@
   .save-as-axle-button:hover {
     filter: brightness(1.6);
   }
-  .save-axle-button:disabled {
+  .save-axle-button:disabled,
+  .save-as-axle-button:disabled {
     cursor: not-allowed;
     opacity: 0.5;
     filter: none;

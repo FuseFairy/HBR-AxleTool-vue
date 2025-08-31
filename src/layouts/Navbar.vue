@@ -1,6 +1,6 @@
 <script setup>
   import { ref, computed } from 'vue'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import UploadButton from '@/components/ui/UploadButton.vue'
   import Axle from '@/components/modal/Axle.vue'
   import Settings from '@/components/modal/Settings.vue'
@@ -58,7 +58,7 @@
 <template>
   <nav>
     <div class="left-button-group">
-      <button v-tooltip="{ content: 'Sidebar', placement: 'bottom' }" @click="toggleSidebar">
+      <button v-tooltip="'Axle List'" @click="toggleSidebar">
         <img :src="sidebarIcon" alt="Toggle Sidebar" />
       </button>
       <UploadButton />
@@ -68,10 +68,9 @@
       <button
         v-for="btn in buttons"
         :key="btn.key"
-        v-tooltip="{ content: btn.tooltip, placement: 'bottom' }"
+        v-tooltip="btn.tooltip"
         :class="{ 'setting-icon-button': btn.key === 'setting', 'github-icon-button': btn.key === 'github' }"
-        @click="handleButtonClick(btn.key)"
-      >
+        @click="handleButtonClick(btn.key)">
         <img :src="btn.icon" :alt="btn.key" />
       </button>
     </div>
@@ -141,7 +140,7 @@
   button:hover {
     background-color: var(--bg-color-light-gray-transparent);
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .nav-title {
       display: none;
     }

@@ -24,12 +24,7 @@ export const useAxleCollectionStore = defineStore(
       const id = uuidv4()
       const newAxle = { id, name: uniqueName, data, time }
 
-      if (sortOrder.value === 'desc') {
-        axles.value.unshift(newAxle) // Add to the beginning for newest first
-      } else {
-        axles.value.push(newAxle) // Add to the end for oldest first
-      }
-      return id
+      axles.value.push(newAxle)
     }
 
     function deleteAxle(id) {
@@ -56,5 +51,5 @@ export const useAxleCollectionStore = defineStore(
     persist: {
       storage: localStorage,
     },
-  }
+  },
 )

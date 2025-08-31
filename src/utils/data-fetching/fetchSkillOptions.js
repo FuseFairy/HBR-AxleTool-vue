@@ -1,5 +1,5 @@
-import { getTeamData } from './getTeamData'
-import { fetchCommonData } from './fetchCommonData'
+import { getTeamData } from '@/utils/state-getters/getTeamData'
+import { fetchCommonData } from '@/utils/data-fetching/fetchCommonData'
 
 export async function fetchSkillOptions(characterName, team, styleName) {
   try {
@@ -14,8 +14,8 @@ export async function fetchSkillOptions(characterName, team, styleName) {
     const commonSkills = characterData.skill.common || {}
     const specificSkills = Object.fromEntries(
       Object.entries(characterData.skill[styleName] || {}).filter(
-        ([key]) => key !== 'command action' && key !== 'passive skill'
-      )
+        ([key]) => key !== 'command action' && key !== 'passive skill',
+      ),
     )
 
     const allSkills = [

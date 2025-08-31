@@ -1,11 +1,13 @@
 <script setup>
   import { onBeforeMount, onMounted } from 'vue'
-  import { runIPGeolocation } from '@/utils/ipGeolocation'
-  import { getData } from '@/utils/axleDataApi'
-  import { decompressAxleData } from '@/utils/decompressAxleData'
-  import { loadFontCSS } from '@/utils/loadFontCSS'
-  import { getAssetsFile } from '@/utils/getAssetsFile'
+  import { runIPGeolocation } from '@/utils/browser/ipGeolocation'
+  import { getData } from '@/utils/axle/axleDataApi'
+  import { decompressAxleData } from '@/utils/axle/decompressAxleData'
+  import { loadFontCSS } from '@/utils/browser/loadFontCSS'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { useSkillStore } from '@/store/axle'
+  import { useSidebarStore } from '@/store/sidebar'
+  import { useScrollbarStore } from '@/store/scrollbar'
   import TeamComposition from '@/layouts/TeamComposition.vue'
   import Navbar from '@/layouts/Navbar.vue'
   import AppFooter from '@/layouts/Footer.vue'
@@ -15,11 +17,25 @@
   import '@/style/nprogress/nprogress.css'
   import BackToTopButton from '@/components/ui/BackToTopButton.vue'
   import Sidebar from '@/layouts/Sidebar.vue'
-  import { useSidebarStore } from '@/store/sidebar'
-  import { storeToRefs } from 'pinia'
+  import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+  import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
   const sidebarStore = useSidebarStore()
-  const { isSidebarOpen } = storeToRefs(sidebarStore)
+  const scrollbarStore = useScrollbarStore()
+
+  const handleScroll = (instance) => {
+    const { scrollOffsetElement } = instance.elements()
+    scrollbarStore.topOffset = scrollOffsetElement.scrollTop
+  }
+
+  const onScrollbarInitialized = (instance) => {
+    scrollbarStore.instance = instance
+  }
+
+  const scrollbarEvents = {
+    initialized: onScrollbarInitialized,
+    scroll: handleScroll,
+  }
 
   onBeforeMount(runIPGeolocation)
   onMounted(async () => {
@@ -57,7 +73,7 @@
             alert(error)
             throw error
           }
-        })()
+        })(),
       )
     }
 
@@ -72,20 +88,29 @@
 </script>
 
 <template>
-  <div class="page-layout" :class="{ 'sidebar-open': isSidebarOpen }">
+  <div class="page-layout" :class="{ 'sidebar-open': sidebarStore.isSidebarOpen }">
     <Navbar />
     <Sidebar />
-    <main id="main-scroll-container" class="custom-scrollbar">
-      <div class="box_container">
-        <TeamComposition />
-      </div>
-      <div class="axle">
-        <AxleSection />
-      </div>
-      <div class="footer">
-        <AppFooter />
-      </div>
-      <BackToTopButton scroll-container-selector="#main-scroll-container" />
+    <main>
+      <OverlayScrollbarsComponent
+        class="overlayscrollbars-vue"
+        :options="scrollbarOptions"
+        :events="scrollbarEvents"
+        defer>
+        <div class="main-content-wrapper">
+          <div class="box_container">
+            <TeamComposition />
+          </div>
+          <div class="axle">
+            <AxleSection />
+          </div>
+          <div class="footer">
+            <AppFooter />
+          </div>
+
+          <BackToTopButton />
+        </div>
+      </OverlayScrollbarsComponent>
     </main>
   </div>
 </template>
@@ -107,23 +132,24 @@
 
   main {
     grid-area: main;
-    color: white;
     margin-top: 3rem;
-    overflow-y: scroll;
-    overflow-x: auto;
-    box-sizing: border-box;
-    padding: 1rem;
     height: calc(100vh - 3rem);
+    transition: margin-left 0.3s ease-in-out;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
+  }
+
+  .main-content-wrapper {
+    color: white;
+    padding: 1rem;
     display: grid;
+    height: calc(100vh - 3rem);
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr;
     grid-template-areas:
       'box_container'
       'axle'
       'footer';
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
-    transition: margin-left 0.3s ease-in-out;
   }
 
   .page-layout.sidebar-open main {
@@ -160,7 +186,7 @@
     padding-top: 0.5rem;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .page-layout.sidebar-open main {
       margin-left: 0;
       width: 100%;
