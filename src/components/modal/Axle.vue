@@ -536,7 +536,7 @@
     height: 32px;
     width: 32px;
     vertical-align: middle;
-    filter: drop-shadow(0 0 5px rgb(255, 255, 255));
+    filter: drop-shadow(0 0 7px rgb(255, 255, 255));
     border-radius: 50%;
   }
   .red-line {
