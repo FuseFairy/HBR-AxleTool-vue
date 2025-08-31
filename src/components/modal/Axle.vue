@@ -536,7 +536,7 @@
     height: 32px;
     width: 32px;
     vertical-align: middle;
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+    filter: drop-shadow(0 0 5px rgb(255, 255, 255));
     border-radius: 50%;
   }
   .red-line {
@@ -607,7 +607,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 8px 4px rgba(201, 198, 200, 0.8);
+    filter: drop-shadow(0 0 6px rgba(201, 198, 200, 0.8));
     text-shadow:
       0 0 4px rgb(0, 0, 0),
       0 0 8px rgb(0, 0, 0),
