@@ -11,10 +11,11 @@
   import { fetchPassiveSkillOptions } from '@/utils/data-fetching/fetchPassiveSkillOptions'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
-  import { isMobile } from '@tenrok/vue3-device-detect'
   import { useSettingStore } from '@/store/setting'
   import { Collapse } from 'vue-collapsed'
   import { find } from 'lodash-es'
+  import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+  import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
   const charStore = useCharStore()
   const sliderStore = useSliderStore()
@@ -231,16 +232,13 @@
   <teleport to="body">
     <transition name="modal-fade">
       <div v-if="isVisible" class="overlay" @click="closeContainer">
-        <div
-          class="container custom-scrollbar"
-          :style="{ overflow: isExpandedCollapse || isMobile ? 'scroll' : 'visible' }"
-          @click.stop>
+        <div class="container" @click.stop>
           <div class="button-group">
             <button class="close" @click="closeContainer">
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
             </button>
           </div>
-          <div class="content custom-scrollbar">
+          <OverlayScrollbarsComponent class="content overlayscrollbars-vue" :options="scrollbarOptions">
             <div class="section" style="padding: 0">
               <label>Team</label>
               <Multiselect v-model="selectedTeam" placeholder="Select team" label="name" :options="teamOptions">
@@ -385,7 +383,7 @@
                 </div>
               </Collapse>
             </div>
-          </div>
+          </OverlayScrollbarsComponent>
         </div>
       </div>
     </transition>
@@ -396,10 +394,9 @@
 <style scoped>
   .content {
     position: relative;
+    height: 100%;
     width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: var(--spacing-5);
+    padding: 0 1.25rem;
   }
 
   .modal-fade-enter-active,
@@ -539,7 +536,6 @@
     flex-direction: column;
     padding-bottom: var(--spacing-4);
     border: 3px solid #262426;
-    box-sizing: border-box;
   }
   .container > .close {
     position: absolute;
@@ -563,14 +559,6 @@
     display: flex;
     justify-content: flex-end;
     padding: var(--spacing-4);
-  }
-  .selectboxes {
-    flex-grow: 1;
-    padding: var(--spacing-4);
-    overflow-y: auto;
-    max-height: 81%;
-    overflow-x: hidden;
-    padding-right: 5px;
   }
 
   label {
