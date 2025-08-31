@@ -1,7 +1,160 @@
-let currentTooltip = null
-// eslint-disable-next-line no-unused-vars
-let currentElement = null
-let hideTimer = null
+// Tooltip manager singleton
+class TooltipManager {
+  constructor() {
+    this.tooltips = new Set()
+    this.currentTooltip = null
+    this.currentElement = null
+    this.hideTimer = null
+    this.globalListenersAdded = false
+  }
+
+  addTooltip(tooltip) {
+    this.tooltips.add(tooltip)
+    this.ensureGlobalListeners()
+  }
+
+  removeTooltip(tooltip) {
+    this.tooltips.delete(tooltip)
+    if (this.currentTooltip === tooltip.element) {
+      this.hideCurrentTooltip()
+    }
+    if (this.tooltips.size === 0) {
+      this.removeGlobalListeners()
+    }
+  }
+
+  ensureGlobalListeners() {
+    if (!this.globalListenersAdded) {
+      document.addEventListener('click', this.handleGlobalClick.bind(this), true)
+      document.addEventListener('touchstart', this.handleGlobalTouchStart.bind(this), {
+        passive: true,
+        capture: true,
+      })
+      document.addEventListener('scroll', this.handleGlobalScroll.bind(this), { passive: true })
+      document.addEventListener('resize', this.handleGlobalResize.bind(this))
+      this.globalListenersAdded = true
+    }
+  }
+
+  removeGlobalListeners() {
+    if (this.globalListenersAdded) {
+      document.removeEventListener('click', this.handleGlobalClick.bind(this), true)
+      document.removeEventListener('touchstart', this.handleGlobalTouchStart.bind(this), true)
+      document.removeEventListener('scroll', this.handleGlobalScroll.bind(this))
+      document.removeEventListener('resize', this.handleGlobalResize.bind(this))
+      this.globalListenersAdded = false
+    }
+  }
+
+  handleGlobalClick(e) {
+    if (this.currentTooltip) {
+      const tooltip = this.findTooltipByElement(this.currentElement)
+      if (tooltip && tooltip.element !== e.target && !tooltip.element.contains(e.target)) {
+        this.hideCurrentTooltip()
+      }
+    }
+  }
+
+  handleGlobalTouchStart(e) {
+    if (this.currentTooltip) {
+      const tooltip = this.findTooltipByElement(this.currentElement)
+      if (tooltip && tooltip.element !== e.target && !tooltip.element.contains(e.target)) {
+        this.hideCurrentTooltip()
+      }
+    }
+  }
+
+  handleGlobalScroll() {
+    this.hideCurrentTooltip()
+  }
+
+  handleGlobalResize() {
+    this.hideCurrentTooltip()
+  }
+
+  findTooltipByElement(element) {
+    for (const tooltip of this.tooltips) {
+      if (tooltip.element === element) {
+        return tooltip
+      }
+    }
+    return null
+  }
+
+  showTooltip(tooltip, e) {
+    if (!tooltip.binding.value) return
+
+    if (this.hideTimer) {
+      clearTimeout(this.hideTimer)
+      this.hideTimer = null
+    }
+
+    if (this.currentTooltip && this.currentTooltip !== tooltip.tooltipEl) {
+      this.currentTooltip.style.display = 'none'
+    }
+
+    this.currentTooltip = tooltip.tooltipEl
+    this.currentElement = tooltip.element
+
+    this.positionTooltip(tooltip.tooltipEl, e)
+
+    // Auto-hide for touch devices
+    if (e.type === 'touchstart') {
+      this.hideTimer = setTimeout(() => {
+        this.hideCurrentTooltip()
+      }, 2000)
+    }
+  }
+
+  hideCurrentTooltip() {
+    if (this.hideTimer) {
+      clearTimeout(this.hideTimer)
+      this.hideTimer = null
+    }
+    if (this.currentTooltip) {
+      this.currentTooltip.style.display = 'none'
+      this.currentTooltip = null
+      this.currentElement = null
+    }
+  }
+
+  positionTooltip(tooltipEl, e) {
+    tooltipEl.style.visibility = 'hidden'
+    tooltipEl.style.display = 'block'
+
+    let left = e.pageX + 10
+    let top = e.pageY + 10
+    const tooltipRect = tooltipEl.getBoundingClientRect()
+    const viewportWidth = window.innerWidth
+    const viewportHeight = window.innerHeight
+    const scrollX = window.pageXOffset || document.documentElement.scrollLeft
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop
+
+    // Prevent overflow - right edge
+    if (left + tooltipRect.width > viewportWidth + scrollX) {
+      left = e.pageX - tooltipRect.width - 10
+    }
+    // Prevent overflow - left edge
+    if (left < scrollX) {
+      left = scrollX + 10
+    }
+    // Prevent overflow - bottom edge
+    if (top + tooltipRect.height > viewportHeight + scrollY) {
+      top = e.pageY - tooltipRect.height - 10
+    }
+    // Prevent overflow - top edge
+    if (top < scrollY) {
+      top = scrollY + 10
+    }
+
+    tooltipEl.style.left = left + 'px'
+    tooltipEl.style.top = top + 'px'
+    tooltipEl.style.visibility = 'visible'
+  }
+}
+
+// Create singleton instance
+const tooltipManager = new TooltipManager()
 
 export default {
   mounted(el, binding) {
@@ -24,175 +177,94 @@ export default {
       white-space: normal;
     `
     document.body.appendChild(tooltipEl)
-    el._tooltip = tooltipEl
+
+    const tooltip = {
+      element: el,
+      tooltipEl,
+      binding,
+    }
+
+    // Store tooltip reference
+    el._tooltip = tooltip
 
     const showTooltip = (e) => {
-      if (!binding.value) return
-
-      if (hideTimer) {
-        clearTimeout(hideTimer)
-        hideTimer = null
-      }
-
-      if (currentTooltip && currentTooltip !== tooltipEl) {
-        currentTooltip.style.display = 'none'
-      }
-
-      currentTooltip = tooltipEl
-      currentElement = el
-
-      tooltipEl.style.visibility = 'hidden'
-      tooltipEl.style.display = 'block'
-
-      let left = e.pageX + 10
-      let top = e.pageY + 10
-      const tooltipRect = tooltipEl.getBoundingClientRect()
-      const viewportWidth = window.innerWidth
-      const viewportHeight = window.innerHeight
-      const scrollX = window.pageXOffset || document.documentElement.scrollLeft
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop
-
-      // 防止超出右邊界
-      if (left + tooltipRect.width > viewportWidth + scrollX) {
-        left = e.pageX - tooltipRect.width - 10
-      }
-      // 防止超出左邊界
-      if (left < scrollX) {
-        left = scrollX + 10
-      }
-      // 防止超出下邊界
-      if (top + tooltipRect.height > viewportHeight + scrollY) {
-        top = e.pageY - tooltipRect.height - 10
-      }
-      // 防止超出上邊界
-      if (top < scrollY) {
-        top = scrollY + 10
-      }
-
-      tooltipEl.style.left = left + 'px'
-      tooltipEl.style.top = top + 'px'
-      tooltipEl.style.visibility = 'visible'
-
-      // 觸控設備自動隱藏
-      if (e.type === 'touchstart') {
-        hideTimer = setTimeout(() => {
-          hideTooltip()
-        }, 2000)
-      }
+      tooltipManager.showTooltip(tooltip, e)
     }
 
     const hideTooltip = () => {
-      if (hideTimer) {
-        clearTimeout(hideTimer)
-        hideTimer = null
-      }
-      tooltipEl.style.display = 'none'
-      if (currentTooltip === tooltipEl) {
-        currentTooltip = null
-        currentElement = null
-      }
+      tooltipManager.hideCurrentTooltip()
     }
 
-    // 處理點擊事件 - 使用 capture 階段確保優先執行
-    // eslint-disable-next-line no-unused-vars
-    const handleClick = (e) => {
-      // 延遲執行以確保在其他點擊事件之後
+    const handleClick = () => {
       setTimeout(() => {
-        if (currentTooltip === tooltipEl) {
-          hideTooltip()
+        if (tooltipManager.currentTooltip === tooltipEl) {
+          tooltipManager.hideCurrentTooltip()
         }
       }, 0)
     }
 
-    //eslint-disable-next-line no-unused-vars
-    const handleTouchEnd = (e) => {
+    const handleTouchEnd = () => {
       setTimeout(() => {
-        if (currentTooltip === tooltipEl) {
-          hideTooltip()
+        if (tooltipManager.currentTooltip === tooltipEl) {
+          tooltipManager.hideCurrentTooltip()
         }
       }, 100)
     }
 
-    const globalHideHandler = (e) => {
-      if (currentTooltip === tooltipEl && el !== e.target && !el.contains(e.target)) {
-        hideTooltip()
-      }
-    }
-
-    // 桌面事件
+    // Only add local event listeners
     el.addEventListener('mouseenter', showTooltip)
     el.addEventListener('mouseleave', hideTooltip)
-
-    // 觸控事件
     el.addEventListener('touchstart', showTooltip, { passive: true })
-
-    // 點擊和觸控結束時隱藏
     el.addEventListener('click', handleClick)
     el.addEventListener('touchend', handleTouchEnd, { passive: true })
 
-    // 全域事件監聽 - 使用 capture 階段
-    document.addEventListener('click', globalHideHandler, true)
-    document.addEventListener('touchstart', globalHideHandler, { passive: true, capture: true })
-    document.addEventListener('scroll', hideTooltip, { passive: true })
-    document.addEventListener('resize', hideTooltip)
+    // Store event handlers for cleanup
+    tooltip.showTooltip = showTooltip
+    tooltip.hideTooltip = hideTooltip
+    tooltip.handleClick = handleClick
+    tooltip.handleTouchEnd = handleTouchEnd
 
-    // 儲存事件處理器以便清理
-    el._showTooltip = showTooltip
-    el._hideTooltip = hideTooltip
-    el._handleClick = handleClick
-    el._handleTouchEnd = handleTouchEnd
-    el._globalHideHandler = globalHideHandler
+    // Register tooltip with manager
+    tooltipManager.addTooltip(tooltip)
   },
 
   updated(el, binding) {
     if (el._tooltip) {
-      el._tooltip.textContent = binding.value
-      if (currentTooltip === el._tooltip && el._tooltip.style.display === 'block') {
+      el._tooltip.tooltipEl.textContent = binding.value
+      el._tooltip.binding = binding
+
+      if (tooltipManager.currentTooltip === el._tooltip.tooltipEl && el._tooltip.tooltipEl.style.display === 'block') {
         const rect = el.getBoundingClientRect()
         const fakeEvent = {
           pageX: rect.left + rect.width / 2,
           pageY: rect.top + rect.height / 2,
           type: 'update',
         }
-        el._showTooltip(fakeEvent)
+        tooltipManager.showTooltip(el._tooltip, fakeEvent)
       }
     }
   },
 
   unmounted(el) {
     if (el._tooltip) {
-      // 移除所有事件監聽器
-      el.removeEventListener('mouseenter', el._showTooltip)
-      el.removeEventListener('mouseleave', el._hideTooltip)
-      el.removeEventListener('touchstart', el._showTooltip)
-      el.removeEventListener('click', el._handleClick)
-      el.removeEventListener('touchend', el._handleTouchEnd)
+      const tooltip = el._tooltip
 
-      document.removeEventListener('click', el._globalHideHandler, true)
-      document.removeEventListener('touchstart', el._globalHideHandler, true)
-      document.removeEventListener('scroll', el._hideTooltip)
-      document.removeEventListener('resize', el._hideTooltip)
+      // Remove local event listeners
+      el.removeEventListener('mouseenter', tooltip.showTooltip)
+      el.removeEventListener('mouseleave', tooltip.hideTooltip)
+      el.removeEventListener('touchstart', tooltip.showTooltip)
+      el.removeEventListener('click', tooltip.handleClick)
+      el.removeEventListener('touchend', tooltip.handleTouchEnd)
 
-      if (hideTimer) {
-        clearTimeout(hideTimer)
-        hideTimer = null
+      // Remove tooltip from DOM
+      if (tooltip.tooltipEl.parentNode) {
+        document.body.removeChild(tooltip.tooltipEl)
       }
 
-      if (currentTooltip === el._tooltip) {
-        currentTooltip = null
-        currentElement = null
-      }
-
-      if (el._tooltip.parentNode) {
-        document.body.removeChild(el._tooltip)
-      }
+      // Unregister from manager
+      tooltipManager.removeTooltip(tooltip)
 
       delete el._tooltip
-      delete el._showTooltip
-      delete el._hideTooltip
-      delete el._handleClick
-      delete el._handleTouchEnd
-      delete el._globalHideHandler
     }
   },
 }
