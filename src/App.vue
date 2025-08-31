@@ -143,6 +143,7 @@
     color: white;
     padding: 1rem;
     display: grid;
+    height: calc(100vh - 3rem);
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr;
     grid-template-areas:
