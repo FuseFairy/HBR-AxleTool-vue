@@ -100,22 +100,27 @@
   <div class="page-layout" :class="{ 'sidebar-open': sidebarStore.isSidebarOpen }">
     <Navbar />
     <Sidebar />
-    <OverlayScrollbarsComponent
-      class="overlayscrollbars-vue"
-      :options="scrollbarOptions"
-      :events="scrollbarEvents"
-      defer>
-      <div class="box_container">
-        <TeamComposition />
-      </div>
-      <div class="axle">
-        <AxleSection />
-      </div>
-      <div class="footer">
-        <AppFooter />
-      </div>
-      <BackToTopButton />
-    </OverlayScrollbarsComponent>
+    <main>
+      <OverlayScrollbarsComponent
+        class="overlayscrollbars-vue"
+        :options="scrollbarOptions"
+        :events="scrollbarEvents"
+        defer>
+        <div class="main-content-wrapper">
+          <div class="box_container">
+            <TeamComposition />
+          </div>
+          <div class="axle">
+            <AxleSection />
+          </div>
+          <div class="footer">
+            <AppFooter />
+          </div>
+
+          <BackToTopButton />
+        </div>
+      </OverlayScrollbarsComponent>
+    </main>
   </div>
 </template>
 
@@ -134,13 +139,16 @@
     overflow: hidden;
   }
 
-  .overlayscrollbars-vue {
+  main {
     grid-area: main;
-    color: white;
     margin-top: 3rem;
-    padding: 1rem;
     height: calc(100vh - 3rem);
-    width: auto;
+    transition: margin-left 0.3s ease-in-out;
+  }
+
+  .main-content-wrapper {
+    color: white;
+    padding: 1rem;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr;
@@ -150,10 +158,9 @@
       'footer';
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
     mask-image: linear-gradient(to bottom, transparent 0%, black 15px);
-    transition: margin-left 0.3s ease-in-out;
   }
 
-  .page-layout.sidebar-open .overlayscrollbars-vue {
+  .page-layout.sidebar-open main {
     margin-left: max(20%, 250px);
   }
 
@@ -188,7 +195,7 @@
   }
 
   @media (max-width: 900px) {
-    .page-layout.sidebar-open .overlayscrollbars-vue {
+    .page-layout.sidebar-open main {
       margin-left: 0;
       width: 100%;
     }
