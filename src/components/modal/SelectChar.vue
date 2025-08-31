@@ -238,7 +238,7 @@
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
             </button>
           </div>
-          <OverlayScrollbarsComponent class="content overlayscrollbars-vue" :options="scrollbarOptions">
+          <OverlayScrollbarsComponent class="content overlayscrollbars-vue" :options="scrollbarOptions" defer>
             <div class="section" style="padding: 0">
               <label>Team</label>
               <Multiselect v-model="selectedTeam" placeholder="Select team" label="name" :options="teamOptions">
