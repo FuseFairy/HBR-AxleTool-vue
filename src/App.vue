@@ -6,6 +6,8 @@
   import { loadFontCSS } from '@/utils/browser/loadFontCSS'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { useSkillStore } from '@/store/axle'
+  import { useSidebarStore } from '@/store/sidebar'
+  import { useScrollbarStore } from '@/store/scrollbar'
   import TeamComposition from '@/layouts/TeamComposition.vue'
   import Navbar from '@/layouts/Navbar.vue'
   import AppFooter from '@/layouts/Footer.vue'
@@ -15,11 +17,34 @@
   import '@/style/nprogress/nprogress.css'
   import BackToTopButton from '@/components/ui/BackToTopButton.vue'
   import Sidebar from '@/layouts/Sidebar.vue'
-  import { useSidebarStore } from '@/store/sidebar'
-  import { storeToRefs } from 'pinia'
+  import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 
   const sidebarStore = useSidebarStore()
-  const { isSidebarOpen } = storeToRefs(sidebarStore)
+  const scrollbarStore = useScrollbarStore()
+
+  const scrollbarOptions = {
+    scrollbars: {
+      theme: 'os-theme-light',
+    },
+    overflow: {
+      x: 'hidden',
+      y: 'scroll',
+    },
+  }
+
+  const handleScroll = (instance) => {
+    const { scrollOffsetElement } = instance.elements()
+    scrollbarStore.topOffset = scrollOffsetElement.scrollTop
+  }
+
+  const onScrollbarInitialized = (instance) => {
+    scrollbarStore.instance = instance
+  }
+
+  const scrollbarEvents = {
+    initialized: onScrollbarInitialized,
+    scroll: handleScroll,
+  }
 
   onBeforeMount(runIPGeolocation)
   onMounted(async () => {
@@ -72,10 +97,14 @@
 </script>
 
 <template>
-  <div class="page-layout" :class="{ 'sidebar-open': isSidebarOpen }">
+  <div class="page-layout" :class="{ 'sidebar-open': sidebarStore.isSidebarOpen }">
     <Navbar />
     <Sidebar />
-    <main id="main-scroll-container" class="custom-scrollbar">
+    <OverlayScrollbarsComponent
+      class="overlayscrollbars-vue"
+      :options="scrollbarOptions"
+      :events="scrollbarEvents"
+      defer>
       <div class="box_container">
         <TeamComposition />
       </div>
@@ -85,8 +114,8 @@
       <div class="footer">
         <AppFooter />
       </div>
-      <BackToTopButton scroll-container-selector="#main-scroll-container" />
-    </main>
+      <BackToTopButton />
+    </OverlayScrollbarsComponent>
   </div>
 </template>
 
@@ -105,15 +134,13 @@
     overflow: hidden;
   }
 
-  main {
+  .overlayscrollbars-vue {
     grid-area: main;
     color: white;
     margin-top: 3rem;
-    overflow-y: scroll;
-    overflow-x: auto;
-    box-sizing: border-box;
     padding: 1rem;
     height: calc(100vh - 3rem);
+    width: auto;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr;
@@ -126,7 +153,7 @@
     transition: margin-left 0.3s ease-in-out;
   }
 
-  .page-layout.sidebar-open main {
+  .page-layout.sidebar-open .overlayscrollbars-vue {
     margin-left: max(20%, 250px);
   }
 
@@ -161,7 +188,7 @@
   }
 
   @media (max-width: 900px) {
-    .page-layout.sidebar-open main {
+    .page-layout.sidebar-open .overlayscrollbars-vue {
       margin-left: 0;
       width: 100%;
     }

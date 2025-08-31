@@ -9,6 +9,7 @@ import nonPassiveTouchPlugin from '@/plugins/nonPassiveTouch'
 
 import 'vue-loading-overlay/dist/css/index.css'
 import 'vue3-toastify/dist/index.css'
+import 'overlayscrollbars/overlayscrollbars.css'
 
 // Custom directives import
 import directives from './directives'
