@@ -1,7 +1,7 @@
 <script setup>
   import { ref } from 'vue'
   import piexif from 'piexifjs'
-  import loading from 'vue-loading-overlay'
+  import LoadingOverlay from '@/components/modal/LoadingOverlay.vue'
   import { decompressAxleData } from '@/utils/axle/decompressAxleData'
 
   const fileInput = ref(null)
@@ -53,14 +53,7 @@
 </script>
 
 <template>
-  <loading
-    v-model:active="isLoading"
-    :can-cancel="false"
-    :is-full-page="true"
-    :lock-scroll="true"
-    background-color="#54504b"
-    loader="dots"
-    color="#79d1cb" />
+  <LoadingOverlay :visible="isLoading" text="Uploading..." type="scaling-squares" />
   <button v-tooltip="'Upload'" class="upload-button" @click="triggerFileInput">
     <img src="@/assets/custom-icon/upload.svg" alt="Upload" />
   </button>

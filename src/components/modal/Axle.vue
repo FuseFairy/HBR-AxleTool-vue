@@ -13,7 +13,7 @@
   import DownloadButton from '@/components/ui/DownloadButton.vue'
   import 'vue3-toastify/dist/index.css'
   import { find } from 'lodash-es'
-  import loading from 'vue-loading-overlay'
+  import LoadingOverlay from '@/components/modal/LoadingOverlay.vue'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
@@ -204,13 +204,7 @@
   <teleport to="body">
     <transition name="modal-fade">
       <div v-if="isVisible" class="overlay" @click="closeTable">
-        <loading
-          v-model:active="isLoading"
-          :can-cancel="false"
-          :is-full-page="true"
-          :lock-scroll="true"
-          background-color="#54504b"
-          color="#79d1cb" />
+        <LoadingOverlay :visible="isLoading" text="Downloading..." type="half-circle" />
         <div class="container" @click.stop>
           <div class="button-group">
             <div class="left-button-group">
@@ -709,18 +703,6 @@
   .close img {
     height: 100%;
     width: 100%;
-  }
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1100;
-    backdrop-filter: blur(5px);
   }
   .container {
     position: fixed;

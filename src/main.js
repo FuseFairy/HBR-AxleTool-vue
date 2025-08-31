@@ -7,7 +7,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import versionControlPlugin from '@/plugins/storeVersionControl'
 import nonPassiveTouchPlugin from '@/plugins/nonPassiveTouch'
 
-import 'vue-loading-overlay/dist/css/index.css'
+// Third-party libraries imports
 import 'vue3-toastify/dist/index.css'
 import 'overlayscrollbars/overlayscrollbars.css'
 
