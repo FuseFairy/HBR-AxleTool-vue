@@ -203,7 +203,7 @@
 <template>
   <teleport to="body">
     <transition name="modal-fade">
-      <div v-if="isVisible" class="overlay" @click="closeTable">
+      <div v-if="isVisible" class="axle-overlay" @click="closeTable">
         <LoadingOverlay :visible="isLoading" text="Downloading..." type="half-circle" />
         <div class="container" @click.stop>
           <div class="button-group">
@@ -703,6 +703,18 @@
   .close img {
     height: 100%;
     width: 100%;
+  }
+  .axle-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+    backdrop-filter: blur(5px);
   }
   .container {
     position: fixed;
