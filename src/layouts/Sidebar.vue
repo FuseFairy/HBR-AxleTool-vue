@@ -8,6 +8,8 @@
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { decompressAxleData } from '@/utils/axle/decompressAxleData'
   import { compressToBase64, decompressFromBase64 } from 'lz-string'
+  import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+  import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
   const sidebarStore = useSidebarStore()
   const skillStore = useSkillStore()
@@ -107,71 +109,72 @@
           Sort by Time {{ sortOrder === 'asc' ? '(Oldest)' : '(Newest)' }}
         </button>
       </div>
-
-      <div class="axle-cards-container custom-scrollbar">
-        <div v-if="filteredAxles.length === 0" class="no-axles-message">No axles found.</div>
-        <TransitionGroup name="list-transition">
-          <div
-            v-for="axle in filteredAxles"
-            :key="axle.id"
-            v-tooltip="axle.name"
-            class="axle-card"
-            :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }"
-            @click="loadAxle(axle)">
-            <div class="card-header">
-              <template v-if="editingAxle === axle">
-                <div class="edit-mode-controls">
-                  <div class="input-wrapper-relative">
-                    <input
-                      v-model="newAxleName"
-                      type="text"
-                      class="edit-axle-input"
-                      :maxlength="maxlength"
-                      @click.stop
-                      @keyup.enter="saveEdit(axle)"
-                      @keyup.esc="cancelEdit()" />
-                    <span class="char-counter">{{ newAxleName.length }}/{{ maxlength }}</span>
+      <OverlayScrollbarsComponent class="overlayscrollbars-vue" :options="scrollbarOptions" defer>
+        <div class="axle-cards-container">
+          <div v-if="filteredAxles.length === 0" class="no-axles-message">No axles found.</div>
+          <TransitionGroup name="list-transition">
+            <div
+              v-for="axle in filteredAxles"
+              :key="axle.id"
+              v-tooltip="axle.name"
+              class="axle-card"
+              :class="{ 'card-hover-effect': !isAnyButtonHovered, 'selected-axle-card': axle.id === skillStore.axleId }"
+              @click="loadAxle(axle)">
+              <div class="card-header">
+                <template v-if="editingAxle === axle">
+                  <div class="edit-mode-controls">
+                    <div class="input-wrapper-relative">
+                      <input
+                        v-model="newAxleName"
+                        type="text"
+                        class="edit-axle-input"
+                        :maxlength="maxlength"
+                        @click.stop
+                        @keyup.enter="saveEdit(axle)"
+                        @keyup.esc="cancelEdit()" />
+                      <span class="char-counter">{{ newAxleName.length }}/{{ maxlength }}</span>
+                    </div>
+                    <button
+                      class="check-button"
+                      @click.stop="saveEdit(axle)"
+                      @mouseenter="isAnyButtonHovered = true"
+                      @mouseleave="isAnyButtonHovered = false">
+                      <img :src="getAssetsFile('custom-icon/check.svg')" alt="Check" />
+                    </button>
                   </div>
+                </template>
+                <template v-else>
+                  <span class="axle-name">{{ axle.name }}</span>
                   <button
-                    class="check-button"
-                    @click.stop="saveEdit(axle)"
+                    class="edit-button"
+                    @click.stop="editAxleName(axle)"
                     @mouseenter="isAnyButtonHovered = true"
                     @mouseleave="isAnyButtonHovered = false">
-                    <img :src="getAssetsFile('custom-icon/check.svg')" alt="Check" />
+                    <img :src="getAssetsFile('custom-icon/edit.svg')" alt="Edit" />
                   </button>
-                </div>
-              </template>
-              <template v-else>
-                <span class="axle-name">{{ axle.name }}</span>
-                <button
-                  class="edit-button"
-                  @click.stop="editAxleName(axle)"
-                  @mouseenter="isAnyButtonHovered = true"
-                  @mouseleave="isAnyButtonHovered = false">
-                  <img :src="getAssetsFile('custom-icon/edit.svg')" alt="Edit" />
-                </button>
-                <button
-                  class="delete-button"
-                  @click.stop="deleteAxle(axle)"
-                  @mouseenter="isAnyButtonHovered = true"
-                  @mouseleave="isAnyButtonHovered = false">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 -960 960 960"
-                    width="24px"
-                    fill="#e8eaed">
-                    <path d="M154-412v-136h652v136H154Z" />
-                  </svg>
-                </button>
-              </template>
+                  <button
+                    class="delete-button"
+                    @click.stop="deleteAxle(axle)"
+                    @mouseenter="isAnyButtonHovered = true"
+                    @mouseleave="isAnyButtonHovered = false">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 -960 960 960"
+                      width="24px"
+                      fill="#e8eaed">
+                      <path d="M154-412v-136h652v136H154Z" />
+                    </svg>
+                  </button>
+                </template>
+              </div>
+              <div class="card-footer">
+                <span class="axle-time">{{ axle.time }}</span>
+              </div>
             </div>
-            <div class="card-footer">
-              <span class="axle-time">{{ axle.time }}</span>
-            </div>
-          </div>
-        </TransitionGroup>
-      </div>
+          </TransitionGroup>
+        </div>
+      </OverlayScrollbarsComponent>
     </div>
   </aside>
 </template>
@@ -208,10 +211,10 @@
   }
 
   .sidebar-content {
-    padding: 0.6rem;
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
   }
 
   .sidebar-header {
@@ -219,7 +222,7 @@
     flex-direction: column;
     gap: 10px;
     margin-bottom: 1rem;
-    padding: 0 5px;
+    padding: 0 1rem;
   }
 
   .search-input,
@@ -241,7 +244,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0 5px;
+    padding: 0 1rem;
   }
 
   .axle-card {
