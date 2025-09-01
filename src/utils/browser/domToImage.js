@@ -16,6 +16,11 @@ export async function convertElementToJpg(elementId) {
   try {
     const options = {
       embedFonts: true,
+      localFonts: [
+        { family: 'Gugi', src: '@/assets/fonts/Gugi.woff2' },
+        { family: 'Xiaolai', src: '@/assets/fonts/XiaolaiMonoSC-Regular.woff2' },
+        { family: 'LXGW WenKai Mono TC', src: '@/assets/fonts/LXGWWenKaiMonoTC-Regular.woff2' },
+      ],
       quality: 1.0,
       backgroundColor: 'black',
       width: element.scrollWidth,
