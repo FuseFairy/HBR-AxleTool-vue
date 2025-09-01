@@ -539,6 +539,7 @@
     vertical-align: middle;
     display: inline-block;
     position: relative;
+    isolation: isolate;
   }
   .axle-target-img-wrapper::after {
     content: '';
