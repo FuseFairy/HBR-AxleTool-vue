@@ -25,6 +25,8 @@ export const useAxleCollectionStore = defineStore(
       const newAxle = { id, name: uniqueName, data, time }
 
       axles.value.push(newAxle)
+
+      return id
     }
 
     function deleteAxle(id) {
