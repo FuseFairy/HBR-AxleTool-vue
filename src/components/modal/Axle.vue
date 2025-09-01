@@ -417,10 +417,11 @@
     animation: modal-scale-out 0.3s ease forwards;
   }
   .sleeping-image {
+    position: relative;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
   }
   .switch-turn {
     font-size: 36px;
@@ -739,9 +740,6 @@
     display: flex;
     height: 100%;
     width: 100%;
-    overflow-y: auto;
-    overflow-x: auto;
-    box-sizing: border-box;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
   }
