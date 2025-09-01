@@ -1,5 +1,5 @@
 <script setup>
-  import { onBeforeMount, onMounted } from 'vue'
+  import { ref, onBeforeMount, onMounted } from 'vue'
   import { runIPGeolocation } from '@/utils/browser/ipGeolocation'
   import { getData } from '@/utils/axle/axleDataApi'
   import { decompressAxleData } from '@/utils/axle/decompressAxleData'
@@ -17,9 +17,11 @@
   import Sidebar from '@/layouts/Sidebar.vue'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
+  import LoadingOverlay from './components/modal/LoadingOverlay.vue'
 
   const sidebarStore = useSidebarStore()
   const scrollbarStore = useScrollbarStore()
+  const isLoading = ref(false)
 
   const handleScroll = (instance) => {
     const { scrollOffsetElement } = instance.elements()
@@ -51,6 +53,7 @@
       promisesToTrack.push(
         (async () => {
           try {
+            isLoading.value = true
             const response = await getData(axle_id)
             const result = await response.json()
             const { data } = result
@@ -60,6 +63,8 @@
           } catch (error) {
             alert(error)
             throw error
+          } finally {
+            isLoading.value = false
           }
         })(),
       )
@@ -76,6 +81,7 @@
 </script>
 
 <template>
+  <LoadingOverlay :visible="isLoading" text="Loading..." type="scaling-squares" />
   <div class="page-layout" :class="{ 'sidebar-open': sidebarStore.isSidebarOpen }">
     <Navbar />
     <Sidebar />
