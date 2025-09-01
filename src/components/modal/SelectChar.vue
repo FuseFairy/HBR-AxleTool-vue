@@ -12,7 +12,6 @@
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
   import { useSettingStore } from '@/store/setting'
-  import { Collapse } from 'vue-collapsed'
   import { find } from 'lodash-es'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
@@ -78,7 +77,6 @@
   const characterOptions = ref([])
   const styleOptions = ref([])
   const passiveSkillOptions = ref([])
-  const isExpandedCollapse = ref(false)
   const isVisible = ref(false)
 
   const selectedTeam = ref(charStore.getSelection(props.buttonKey, 'team', props.selectedTab))
@@ -297,91 +295,71 @@
               </Multiselect>
             </div>
             <div class="section">
-              <button
-                class="collapse_btn"
-                :class="{ collapse_btn_active: isExpandedCollapse }"
-                @click="isExpandedCollapse = !isExpandedCollapse">
-                <svg
-                  class="collapse_arrow"
-                  :class="{ rotate: isExpandedCollapse }"
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  fill="#FFFFFF">
-                  <path d="m280-400 200-200 200 200H280Z" />
-                </svg>
-                <label style="font-size: 24px; color: inherit">Others</label>
-              </button>
-              <Collapse :when="isExpandedCollapse">
-                <div class="section">
-                  <label>Rank</label>
-                  <Multiselect
-                    v-model="selectedRank"
-                    placeholder="Select Rank"
-                    :disabled="isOtherDisable"
-                    :options="rankOptions"
-                    @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)" />
-                  <div class="flower-container">
-                    <input
-                      v-model="selectedFlower"
-                      type="checkbox"
-                      :disabled="isOtherDisable"
-                      @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)" />
-                    <img
-                      src="/src/assets/common/flower.webp"
-                      alt="Is Flower"
-                      :class="['flower-icon', { 'flower-icon-disabled': isOtherDisable }]"
-                      draggable="false"
-                      @click="toggleCheckbox" />
+              <label>Rank</label>
+              <Multiselect
+                v-model="selectedRank"
+                placeholder="Select Rank"
+                :disabled="isOtherDisable"
+                :options="rankOptions"
+                @change="(value) => charStore.setSelection(props.buttonKey, 'rank', value, props.selectedTab)" />
+              <div class="flower-container">
+                <input
+                  v-model="selectedFlower"
+                  type="checkbox"
+                  :disabled="isOtherDisable"
+                  @change="charStore.setSelection(props.buttonKey, 'flower', selectedFlower, props.selectedTab)" />
+                <img
+                  src="/src/assets/common/flower.webp"
+                  alt="Is Flower"
+                  :class="['flower-icon', { 'flower-icon-disabled': isOtherDisable }]"
+                  draggable="false"
+                  @click="toggleCheckbox" />
+              </div>
+            </div>
+            <div class="section">
+              <label>Earring</label>
+              <Multiselect
+                v-model="charStore.selections[props.selectedTab][props.buttonKey]['earring']"
+                placeholder="Select earring"
+                :disabled="isOtherDisable"
+                :options="earringOptions"
+                label="names"
+                track-by="value">
+                <template #singlelabel="{ value }">
+                  <div class="multiselect-single-label">
+                    <img class="label-icon" :src="getAssetsFile(value.icon)" />
+                    <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
                   </div>
-                </div>
-                <div class="section">
-                  <label>Earring</label>
-                  <Multiselect
-                    v-model="charStore.selections[props.selectedTab][props.buttonKey]['earring']"
-                    placeholder="Select earring"
-                    :disabled="isOtherDisable"
-                    :options="earringOptions"
-                    label="names"
-                    track-by="value">
-                    <template #singlelabel="{ value }">
-                      <div class="multiselect-single-label">
-                        <img class="label-icon" :src="getAssetsFile(value.icon)" />
-                        <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
-                      </div>
-                    </template>
-                    <template #option="{ option }">
-                      <img class="option-icon" :src="getAssetsFile(option.icon)" />
-                      <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
-                    </template>
-                  </Multiselect>
-                </div>
-                <div class="section">
-                  <label>Passive Skill</label>
-                  <Multiselect
-                    v-model="charStore.selections[props.selectedTab][props.buttonKey]['passiveSkill']"
-                    mode="tags"
-                    placeholder="Select passive skill"
-                    :close-on-select="false"
-                    :disabled="isOtherDisable"
-                    :options="passiveSkillOptions"
-                    label="names"
-                    track-by="value"
-                    :locale="settingStore.lang"
-                    fallback-locale="zh-TW" />
-                </div>
-                <div class="section">
-                  <label>Spiritual Rupture</label>
-                  <Multiselect
-                    v-model="charStore.selections[props.selectedTab][props.buttonKey]['spiritual']"
-                    placeholder="Select Spiritual level"
-                    :disabled="isOtherDisable"
-                    :options="spiritualOptions"
-                    label="name"
-                    track-by="value" />
-                </div>
-              </Collapse>
+                </template>
+                <template #option="{ option }">
+                  <img class="option-icon" :src="getAssetsFile(option.icon)" />
+                  <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+                </template>
+              </Multiselect>
+            </div>
+            <div class="section">
+              <label>Passive Skill</label>
+              <Multiselect
+                v-model="charStore.selections[props.selectedTab][props.buttonKey]['passiveSkill']"
+                mode="tags"
+                placeholder="Select passive skill"
+                :close-on-select="false"
+                :disabled="isOtherDisable"
+                :options="passiveSkillOptions"
+                label="names"
+                track-by="value"
+                :locale="settingStore.lang"
+                fallback-locale="zh-TW" />
+            </div>
+            <div class="section">
+              <label>Spiritual Rupture</label>
+              <Multiselect
+                v-model="charStore.selections[props.selectedTab][props.buttonKey]['spiritual']"
+                placeholder="Select Spiritual level"
+                :disabled="isOtherDisable"
+                :options="spiritualOptions"
+                label="name"
+                track-by="value" />
             </div>
           </OverlayScrollbarsComponent>
         </div>
@@ -397,6 +375,7 @@
     height: 100%;
     width: 100%;
     padding: 0 1.25rem;
+    overflow: hidden;
   }
 
   .modal-fade-enter-active,
@@ -433,27 +412,6 @@
   }
   .modal-fade-leave-active .container {
     animation: modal-scale-out 0.3s ease forwards;
-  }
-  .collapse_arrow {
-    transition: transform 0.3s ease-in-out;
-    transform: rotate(90deg);
-    fill: #b4f9f9;
-  }
-  .rotate {
-    transform: rotate(180deg);
-  }
-  .collapse_btn {
-    display: flex;
-    width: 100%;
-    border: none;
-    background-color: transparent;
-    color: var(--text-color-cyan);
-    font-size: 16px;
-    align-items: center;
-    justify-content: center;
-  }
-  .collapse_btn_active {
-    border-bottom: 2px solid var(--border-color-cyan);
   }
   .close {
     background-color: transparent;
@@ -536,7 +494,6 @@
     flex-direction: column;
     padding-bottom: var(--spacing-4);
     border: 3px solid #262426;
-    overflow: hidden;
   }
   .container > .close {
     position: absolute;
