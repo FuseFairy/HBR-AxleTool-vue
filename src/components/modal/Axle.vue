@@ -549,7 +549,7 @@
     width: 100%;
     height: 100%;
     background-color: rgb(255, 255, 255);
-    filter: blur(7px);
+    filter: blur(4px);
     border-radius: 50%;
     z-index: -1;
   }
