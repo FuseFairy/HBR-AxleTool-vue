@@ -726,10 +726,9 @@
     transform: translate(-50%, -50%);
     background-color: var(--bg-color-dark);
     height: auto;
-    max-height: 90%;
+    max-height: 95%;
     width: 70%;
     max-width: 1024px;
-    box-sizing: border-box;
     padding-bottom: var(--spacing-4);
     border-radius: 20px;
     display: flex;

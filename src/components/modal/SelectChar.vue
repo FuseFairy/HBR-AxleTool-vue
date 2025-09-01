@@ -487,7 +487,7 @@
     transform: translate(-50%, -50%);
     background-color: var(--bg-color-dark);
     height: auto;
-    max-height: 70%;
+    max-height: 95%;
     width: 50%;
     border-radius: 20px;
     display: flex;
@@ -540,6 +540,7 @@
   .multiselect-single-label {
     width: 100%;
     justify-content: center;
+    padding: 0;
   }
   :deep(.multiselect-tags-search) {
     background-color: black;
