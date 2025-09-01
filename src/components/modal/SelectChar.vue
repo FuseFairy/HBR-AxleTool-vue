@@ -536,6 +536,7 @@
     flex-direction: column;
     padding-bottom: var(--spacing-4);
     border: 3px solid #262426;
+    overflow: hidden;
   }
   .container > .close {
     position: absolute;

@@ -740,6 +740,7 @@
     display: flex;
     height: 100%;
     width: 100%;
+    overflow: hidden;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
   }
