@@ -14,17 +14,16 @@ export async function convertElementToJpg(elementId) {
   const axleName = skillStore.axleName.trim()
 
   try {
+    await document.fonts.ready
+    await new Promise((resolve) => window.requestAnimationFrame(resolve))
+    const rect = element.getBoundingClientRect()
+
     const options = {
       embedFonts: true,
-      localFonts: [
-        { family: 'Gugi', src: '@/assets/fonts/Gugi.woff2' },
-        { family: 'Xiaolai', src: '@/assets/fonts/XiaolaiMonoSC-Regular.woff2' },
-        { family: 'LXGW WenKai Mono TC', src: '@/assets/fonts/LXGWWenKaiMonoTC-Regular.woff2' },
-      ],
       quality: 1.0,
       backgroundColor: 'black',
-      width: element.scrollWidth,
-      height: element.scrollHeight,
+      width: rect.width,
+      height: rect.height,
     }
 
     const canvas = await snapdom.toCanvas(element, options)
