@@ -20,7 +20,6 @@ export async function convertElementToJpg(elementId) {
       backgroundColor: 'black',
       width: element.scrollWidth,
       height: element.scrollHeight,
-      type: 'jpg',
     }
 
     const canvas = await snapdom.toCanvas(element, options)
