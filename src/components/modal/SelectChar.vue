@@ -474,7 +474,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: var(--bg-color-dark-transparent-2);
+    background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
     z-index: 1100;
