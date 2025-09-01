@@ -1,9 +1,11 @@
 import piexif from 'piexifjs'
 import { useSkillStore } from '@/store/axle'
 import { compressAxleData } from '@/utils/axle/compressAxleData'
-import { snapdom } from '@zumer/snapdom'
+import { isMobile } from '@/utils/browser/deviceDetector'
+import workerUrl from 'modern-screenshot/worker?url'
+import { createContext, destroyContext, domToDataUrl } from 'modern-screenshot'
 
-export async function convertElementToJpg(elementId) {
+export async function convertElementToJpg(elementId, useWebWorker = false) {
   const element = document.getElementById(elementId)
   if (!element) {
     console.error(`Element with ID "${elementId}" not found.`)
@@ -13,21 +15,30 @@ export async function convertElementToJpg(elementId) {
   const skillStore = useSkillStore()
   const axleName = skillStore.axleName.trim()
 
+  let context = null
   try {
-    await document.fonts.ready
-    await new Promise((resolve) => window.requestAnimationFrame(resolve))
+    let dataUrl = ''
+    const pixelRatio = isMobile() ? 1 : window.devicePixelRatio
     const rect = element.getBoundingClientRect()
-
     const options = {
-      embedFonts: true,
       quality: 1.0,
       backgroundColor: 'black',
       width: rect.width,
       height: rect.height,
+      type: 'image/jpeg',
+      scale: pixelRatio,
     }
 
-    const canvas = await snapdom.toCanvas(element, options)
-    const dataUrl = canvas.toDataURL('image/jpeg', options.quality)
+    if (useWebWorker) {
+      context = await createContext(element, {
+        ...options,
+        workerUrl,
+        workerNumber: 1,
+      })
+      dataUrl = await domToDataUrl(context)
+    } else {
+      dataUrl = await domToDataUrl(element, options)
+    }
 
     const compressedData = compressAxleData()
     const exif = {
@@ -45,5 +56,9 @@ export async function convertElementToJpg(elementId) {
   } catch (error) {
     console.error('Error during JPG conversion:', error)
     throw error
+  } finally {
+    if (context) {
+      destroyContext(context)
+    }
   }
 }

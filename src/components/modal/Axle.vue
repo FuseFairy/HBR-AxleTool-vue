@@ -350,18 +350,17 @@
                               :style="{ opacity: checkCommandSkill(i, col - 2) ? '0.6' : '1' }">
                               {{ displaySkillName(i, col - 2) }}
                             </span>
-                            <span v-if="skillStore.skills[i][col - 2].target !== null" class="axle-target-img-wrapper">
-                              <img
-                                :src="
-                                  getAssetsFile(
-                                    getTargetImg(
-                                      skillStore.skills[i][col - 2].selectedTab,
-                                      skillStore.skills[i][col - 2].target,
-                                    ),
-                                  )
-                                "
-                                class="axle-target-img" />
-                            </span>
+                            <img
+                              v-if="skillStore.skills[i][col - 2].target !== null"
+                              :src="
+                                getAssetsFile(
+                                  getTargetImg(
+                                    skillStore.skills[i][col - 2].selectedTab,
+                                    skillStore.skills[i][col - 2].target,
+                                  ),
+                                )
+                              "
+                              class="axle-target-img" />
                           </div>
                         </span>
                       </div>
@@ -532,34 +531,13 @@
     width: 45px;
     vertical-align: middle;
   }
-  .axle-target-img-wrapper {
+  .axle-target-img {
     margin-left: 5px;
     height: 32px;
     width: 32px;
     vertical-align: middle;
-    display: inline-block;
-    position: relative;
-    isolation: isolate;
-  }
-  .axle-target-img-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(255, 255, 255);
-    filter: blur(4px);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
     border-radius: 50%;
-    z-index: -1;
-  }
-  .axle-target-img {
-    height: 100%;
-    width: 100%;
-    border-radius: 50%;
-    position: relative;
-    z-index: 1;
-    display: block;
   }
   .red-line {
     display: flex;
@@ -603,8 +581,6 @@
     width: 80px;
     height: 80px;
     object-fit: contain;
-    position: relative;
-    z-index: -2;
   }
   .text {
     display: flex;
@@ -631,22 +607,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 8px 4px rgba(201, 198, 200, 0.8);
     text-shadow:
       0 0 4px rgb(0, 0, 0),
       0 0 8px rgb(0, 0, 0),
       0 0 16px rgb(0, 0, 0);
-  }
-  .rank-text::after {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    width: calc(100% + 8px);
-    height: calc(100% + 8px);
-    background-color: rgba(201, 198, 200, 0.8);
-    filter: blur(4px);
-    border-radius: 50%;
-    z-index: -1;
   }
   .spiritual-text {
     position: absolute;
@@ -774,11 +739,14 @@
     display: flex;
     height: 100%;
     width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    box-sizing: border-box;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 98%, transparent 100%);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 950px) {
     .container {
       width: 100%;
       height: auto;

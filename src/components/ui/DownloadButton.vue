@@ -10,7 +10,11 @@
     isLoading.value = true
     try {
       const elementId = 'show-axle'
-      await convertElementToJpg(elementId)
+      if (window.Worker) {
+        await convertElementToJpg(elementId, true)
+      } else {
+        await convertElementToJpg(elementId, false)
+      }
     } catch (error) {
       console.error('Error during download:', error)
       toast('Download error occurred, please use Chrome, Edge browser to download as much as possible.', {

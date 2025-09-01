@@ -17,7 +17,9 @@
   import Sidebar from '@/layouts/Sidebar.vue'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
-  import LoadingOverlay from './components/modal/LoadingOverlay.vue'
+  import LoadingOverlay from '@/components/modal/LoadingOverlay.vue'
+  import { loadFontCSS } from '@/utils/browser/loadFontCSS'
+  import { getAssetsFile } from '@/utils/assets/getAssetsFile'
 
   const sidebarStore = useSidebarStore()
   const scrollbarStore = useScrollbarStore()
@@ -41,6 +43,20 @@
   onMounted(async () => {
     NProgress.configure({ showSpinner: false })
     NProgress.start()
+    try {
+      const skillStore = useSkillStore()
+      skillStore.ensureIds()
+
+      const fonts = [
+        'fonts/LXGWWenKaiMonoTC-Regular/result.css',
+        'fonts/Gugi-Regular/result.css',
+        'fonts/Xiaolai-Regular/result.css',
+      ]
+
+      await Promise.all(fonts.map((path) => loadFontCSS(getAssetsFile(path))))
+    } catch (err) {
+      console.error('ERROR:', err)
+    }
 
     const skillStore = useSkillStore()
     skillStore.ensureIds()
