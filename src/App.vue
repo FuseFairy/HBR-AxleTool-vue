@@ -3,7 +3,6 @@
   import { runIPGeolocation } from '@/utils/browser/ipGeolocation'
   import { getData } from '@/utils/axle/axleDataApi'
   import { decompressAxleData } from '@/utils/axle/decompressAxleData'
-  import { useSkillStore } from '@/store/axle'
   import { useSidebarStore } from '@/store/sidebar'
   import { useScrollbarStore } from '@/store/scrollbar'
   import TeamComposition from '@/layouts/TeamComposition.vue'
@@ -39,27 +38,19 @@
     scroll: handleScroll,
   }
 
-  onBeforeMount(runIPGeolocation)
+  onBeforeMount(async () => {
+    await runIPGeolocation()
+
+    const fonts = [
+      'fonts/LXGWWenKaiMonoTC-Regular/result.css',
+      'fonts/Gugi-Regular/result.css',
+      'fonts/Xiaolai-Regular/result.css',
+    ]
+    await Promise.all(fonts.map((path) => loadFontCSS(getAssetsFile(path))))
+  })
   onMounted(async () => {
     NProgress.configure({ showSpinner: false })
     NProgress.start()
-    try {
-      const skillStore = useSkillStore()
-      skillStore.ensureIds()
-
-      const fonts = [
-        'fonts/LXGWWenKaiMonoTC-Regular/result.css',
-        'fonts/Gugi-Regular/result.css',
-        'fonts/Xiaolai-Regular/result.css',
-      ]
-
-      await Promise.all(fonts.map((path) => loadFontCSS(getAssetsFile(path))))
-    } catch (err) {
-      console.error('ERROR:', err)
-    }
-
-    const skillStore = useSkillStore()
-    skillStore.ensureIds()
 
     const params = new URLSearchParams(window.location.search)
     const axle_id = params.get('axle_id')

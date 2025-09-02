@@ -69,29 +69,6 @@ export const useSkillStore = defineStore(
       turns.value = []
     }
 
-    // Data migration
-    skills.value.forEach((row) => {
-      row.forEach((skill) => {
-        if (skill && skill.style_id === undefined) {
-          if (skill.style_img) {
-            try {
-              const pathParts = skill.style_img.split('/')
-              const fileName = pathParts.pop()
-              skill.style_id = fileName.split('.').slice(0, -1).join('.')
-              // eslint-disable-next-line no-unused-vars
-            } catch (e) {
-              skill.style_id = null
-            }
-          } else {
-            skill.style_id = null
-          }
-        }
-        if (skill && skill.activeFormId === undefined) {
-          skill.activeFormId = null
-        }
-      })
-    })
-
     return {
       axleName,
       axleId,

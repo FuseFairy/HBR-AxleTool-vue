@@ -1,6 +1,6 @@
 import { useSettingStore } from '@/store/setting'
 
-export function runIPGeolocation() {
+export async function runIPGeolocation() {
   const settingStore = useSettingStore()
 
   if (settingStore.lang !== null) {
@@ -14,35 +14,30 @@ export function runIPGeolocation() {
     CN: 'zh-CN-CN',
   }
 
-  let targetLang = 'jp'
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), 800)
 
-  fetch(`https://ipinfo.io/json?token=${import.meta.env.VITE_IPINFO_TOKEN}`, {
-    signal: controller.signal,
-  })
-    .then((response) => {
-      clearTimeout(timeoutId)
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      return response.json()
+  try {
+    const response = await fetch(`https://ipinfo.io/json?token=${import.meta.env.VITE_IPINFO_TOKEN}`, {
+      signal: controller.signal,
     })
-    .then((data) => {
-      const countryCode = data.country
-      targetLang = countryLangMap[countryCode] || 'jp'
-      settingStore.lang = targetLang
-    })
-    .catch((error) => {
-      clearTimeout(timeoutId)
 
-      if (error.name === 'AbortError') {
-        console.error('IP Geolocation API request timeout.')
-      } else {
-        console.error('IP Geolocation API request error:', error.message)
-      }
-      settingStore.lang = 'jp'
-    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+
+    const countryCode = data.country
+    settingStore.lang = countryLangMap[countryCode] || 'jp'
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      console.error('IP Geolocation API request timeout.')
+    } else {
+      console.error('IP Geolocation API request error:', error.message)
+    }
+    settingStore.lang = 'jp'
+  } finally {
+    clearTimeout(timeoutId)
+  }
 }
