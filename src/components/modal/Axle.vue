@@ -352,7 +352,6 @@
                             </span>
                             <span v-if="skillStore.skills[i][col - 2].target !== null" class="axle-target-img-wrapper">
                               <img
-                                v-if="skillStore.skills[i][col - 2].target !== null"
                                 :src="
                                   getAssetsFile(
                                     getTargetImg(
