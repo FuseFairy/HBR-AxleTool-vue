@@ -621,7 +621,7 @@
     position: absolute;
     top: -1px;
     right: -6px;
-    background-color: rgba(93, 80, 86, 0.7);
+    background-color: rgba(51, 46, 48, 0.7);
     font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
     color: rgb(192, 229, 250);
     width: 25px;
