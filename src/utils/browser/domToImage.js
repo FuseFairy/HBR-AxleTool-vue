@@ -22,6 +22,12 @@ export async function convertElementToJpg(elementId) {
       height: rect.height,
     }
 
+    // WORKAROUND: Force-clear snapdom's cache before the actual capture.
+    // A single call with `cache: 'disabled'` was not reliable. This two-step process ensures
+    // that all stale assets are flushed by the first call, guaranteeing the second
+    // call captures the latest DOM state accurately.
+
+    // 1. Sacrificial call to clear caches. The result is intentionally ignored.
     // eslint-disable-next-line no-unused-vars
     const _ = await snapdom.toCanvas(element, {
       embedFonts: true,
@@ -29,6 +35,8 @@ export async function convertElementToJpg(elementId) {
       height: 1,
       cache: 'disabled',
     })
+
+    // 2. The actual capture, now running with a clean cache.
     const canvas = await snapdom.toCanvas(element, options)
 
     const dataUrl = canvas.toDataURL('image/jpeg', 1)
