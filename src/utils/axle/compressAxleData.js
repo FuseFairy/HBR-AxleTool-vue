@@ -1,6 +1,6 @@
 import { useCharStore } from '@/store/char'
 import { useSkillStore } from '@/store/axle'
-import { useSliderStore } from '@/store/slider'
+import { useUiStore } from '@/store/ui'
 import { useSettingStore } from '@/store/setting'
 import { compressToBase64 } from 'lz-string'
 import { getUsedTeams } from '@/utils/state-getters/getUsedTeams'
@@ -9,7 +9,7 @@ import { version } from '/package.json'
 export function compressAxleData() {
   const charStore = useCharStore()
   const skillStore = useSkillStore()
-  const sliderStore = useSliderStore()
+  const uiStore = useUiStore()
   const settingStore = useSettingStore()
   const usedTeams = getUsedTeams()
   const axleName = skillStore.axleName.trim()
@@ -38,7 +38,7 @@ export function compressAxleData() {
     skills: skillStore.skills,
     // eslint-disable-next-line no-unused-vars
     turns: skillStore.turns.map(({ id, ...rest }) => rest),
-    rows: sliderStore.rows,
+    rows: uiStore.sliderRows,
     language: settingStore.lang,
   }
 

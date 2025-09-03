@@ -1,6 +1,6 @@
 <script setup>
   import { ref, nextTick, toRaw } from 'vue'
-  import { useSliderStore } from '@/store/slider'
+  import { useUiStore } from '@/store/ui'
   import { useSkillStore } from '@/store/axle'
   import { useCharStore } from '@/store/char'
   import { useSettingStore } from '@/store/setting'
@@ -12,7 +12,7 @@
   import { isMobile } from '@/utils/browser/deviceDetector'
   import { cloneDeep } from 'lodash-es'
 
-  const sliderStore = useSliderStore()
+  const uiStore = useUiStore()
   const skillStore = useSkillStore()
   const charStore = useCharStore()
   const settingStore = useSettingStore()
@@ -85,13 +85,13 @@
   }
 
   const deleteRow = (index) => {
-    sliderStore.rows -= 1
+    uiStore.sliderRows -= 1
     skillStore.turns.splice(index, 1)
     skillStore.skills.splice(index, 1)
   }
 
   const copyRow = (index) => {
-    sliderStore.rows += 1
+    uiStore.sliderRows += 1
     const copiedTurn = cloneDeep(skillStore.turns[index])
     copiedTurn.id = uuidv4()
     const copiedSkill = cloneDeep(skillStore.skills[index])

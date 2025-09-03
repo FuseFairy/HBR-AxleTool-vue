@@ -1,7 +1,7 @@
 <script setup>
   import { ref, computed } from 'vue'
   import { useCharStore } from '@/store/char'
-  import { useLastTabStore } from '@/store/tab'
+  import { useUiStore } from '@/store/ui'
   import SelectChar from '@/components/modal/SelectChar.vue'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { fetchSkillOptions } from '@/utils/data-fetching/fetchSkillOptions'
@@ -10,7 +10,7 @@
   import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
 
   const charStore = useCharStore()
-  const lastTabStore = useLastTabStore()
+  const uiStore = useUiStore()
 
   const buttons = Array.from({ length: 6 }, (_, i) => ({ key: i + 1, label: `Button ${i + 1}` }))
   const tabs = Array.from({ length: 6 }, (_, i) => ({ key: i + 1, label: `Team ${i + 1}` }))
@@ -19,10 +19,10 @@
 
   const selectedTab = computed({
     get() {
-      return lastTabStore.box_lastTab || 1
+      return uiStore.boxLastTab || 1
     },
     set(key) {
-      lastTabStore.box_lastTab = key
+      uiStore.boxLastTab = key
     },
   })
 
@@ -184,7 +184,7 @@
   async function refreshData() {
     if (isRefreshing.value) return
 
-    const currentTab = lastTabStore.box_lastTab
+    const currentTab = uiStore.boxLastTab
     const Team = charStore.selections[currentTab]
 
     const refreshPromise = async () => {

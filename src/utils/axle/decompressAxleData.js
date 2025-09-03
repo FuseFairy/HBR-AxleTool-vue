@@ -7,33 +7,15 @@ import { decompressFromBase64 } from 'lz-string'
 import { find } from 'lodash-es'
 import { useCharStore } from '@/store/char'
 import { useSkillStore } from '@/store/axle'
-import { useSliderStore } from '@/store/slider'
-import { useLastTabStore } from '@/store/tab'
+import { useUiStore } from '@/store/ui'
 import { useSettingStore } from '@/store/setting'
-
-function compareVersions(v1, v2) {
-  const parts1 = String(v1 || '0')
-    .split('.')
-    .map(Number)
-  const parts2 = String(v2 || '0')
-    .split('.')
-    .map(Number)
-  const len = Math.max(parts1.length, parts2.length)
-  for (let i = 0; i < len; i++) {
-    const p1 = parts1[i] || 0
-    const p2 = parts2[i] || 0
-    if (p1 > p2) return 1
-    if (p1 < p2) return -1
-  }
-  return 0
-}
+import { compareVersions } from '@/utils/compareVersions'
 
 export async function decompressAxleData(customData) {
   let lastTabAssigned = false
   const charStore = useCharStore()
   const skillStore = useSkillStore()
-  const sliderStore = useSliderStore()
-  const lastTabStore = useLastTabStore()
+  const uiStore = useUiStore()
   const settingStore = useSettingStore()
 
   const decodedData = JSON.parse(decompressFromBase64(customData))
@@ -52,7 +34,7 @@ export async function decompressAxleData(customData) {
       const { character, team: teamName, style } = team[charKey]
       if (style) {
         if (!lastTabAssigned) {
-          lastTabStore.box_lastTab = parseInt(teamKey, 10)
+          uiStore.boxLastTab = parseInt(teamKey, 10)
           lastTabAssigned = true
         }
         team[charKey]['skill'] = await fetchSkillOptions(character, teamName, style)
@@ -120,6 +102,6 @@ export async function decompressAxleData(customData) {
     turns: decodedData.turns,
   })
   skillStore.ensureIds()
-  sliderStore.rows = decodedData.rows
+  uiStore.sliderRows = decodedData.rows
   settingStore.lang = decodedData.language ?? settingStore.lang
 }

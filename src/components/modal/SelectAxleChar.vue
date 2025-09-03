@@ -2,12 +2,12 @@
   import { ref, computed, onMounted } from 'vue'
   import { useCharStore } from '@/store/char'
   import { useSkillStore } from '@/store/axle'
-  import { useLastTabStore } from '@/store/tab'
+  import { useUiStore } from '@/store/ui'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
 
   const charStore = useCharStore()
   const skillStore = useSkillStore()
-  const lastTabStore = useLastTabStore()
+  const uiStore = useUiStore()
 
   const isVisible = ref(false)
   onMounted(() => {
@@ -35,13 +35,12 @@
   ]
 
   const selectedTab = ref(
-    skillStore.skills[props.row][props.buttonKey]?.selectedTab ??
-      (lastTabStore.axle_lastTab !== 1 ? lastTabStore.axle_lastTab : 1),
+    skillStore.skills[props.row][props.buttonKey]?.selectedTab ?? (uiStore.axleLastTab !== 1 ? uiStore.axleLastTab : 1),
   )
 
   const selectTab = (key) => {
     selectedTab.value = key
-    lastTabStore.axle_lastTab = key
+    uiStore.axleLastTab = key
   }
 
   const filteredSelections = computed(() => {

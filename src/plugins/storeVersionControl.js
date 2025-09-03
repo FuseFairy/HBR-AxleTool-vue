@@ -1,29 +1,46 @@
 import { toast } from 'vue3-toastify'
+import { compareVersions } from '@/utils/compareVersions'
 
-const currentStorageVersion = '1.0.4'
+const currentStorageVersion = '1.0.5'
 const storedVersion = localStorage.getItem('piniaStorageVersion')
 
-const piniaStoreIds = ['characterSelect', 'lastTab', 'setting', 'showRow', 'showTeam', 'skill', 'slider']
+const versionUpdateHandlers = {
+  '1.0.5': () => {
+    const storeIdsToClear = ['lastTab', 'showRow', 'slider', 'scrollbar', 'showTeam', 'sidebar', 'skill']
+    storeIdsToClear.forEach((storeId) => {
+      const storageKey = storeId
+      localStorage.removeItem(storageKey)
+      sessionStorage.removeItem(storageKey)
+      console.warn(`Cleared Storage data for Pinia Store "${storeId}" during version 1.0.5 update.`)
+    })
+  },
+}
 
 export default {
   install: () => {
-    if (storedVersion !== currentStorageVersion) {
-      if (localStorage.getItem('characterSelect') !== null) {
-        console.warn(
-          '[Version Update Notice] Pinia Storage version updated, will clear Storage data for all Pinia Stores.',
-        )
+    if (storedVersion && storedVersion !== currentStorageVersion) {
+      console.warn('[Version Update Notice] Pinia Storage version updated.')
 
-        piniaStoreIds.forEach((storeId) => {
-          const storageKey = storeId
-          localStorage.removeItem(storageKey)
-          sessionStorage.removeItem(storageKey)
-          console.warn(`Cleared Storage data for Pinia Store "${storeId}".`)
+      const versionsToUpdate = Object.keys(versionUpdateHandlers)
+        .filter((version) => {
+          const isNewer = compareVersions(version, storedVersion) > 0
+          const isNotFuture = compareVersions(version, currentStorageVersion) <= 0
+          return isNewer && isNotFuture
+        })
+        .sort((a, b) => compareVersions(a, b))
+
+      if (versionsToUpdate.length > 0) {
+        versionsToUpdate.forEach((version) => {
+          const handler = versionUpdateHandlers[version]
+          if (handler) {
+            console.warn(`Executing update handler for version ${version}.`)
+            handler()
+          }
         })
 
-        localStorage.removeItem('piniaStorageVersion')
         localStorage.setItem('piniaStorageVersion', currentStorageVersion)
 
-        toast('Storage data structure changed, old storage deleted.', {
+        toast('Data version update.', {
           theme: 'colored',
           type: 'warning',
           position: 'top-right',
@@ -41,9 +58,11 @@ export default {
           },
         })
       } else {
-        console.warn('[Version Control] First visit detected, initializing Pinia Storage version.')
         localStorage.setItem('piniaStorageVersion', currentStorageVersion)
       }
+    } else if (!storedVersion) {
+      console.warn('[Version Control] First visit detected, initializing Pinia Storage version.')
+      localStorage.setItem('piniaStorageVersion', currentStorageVersion)
     }
   },
 }

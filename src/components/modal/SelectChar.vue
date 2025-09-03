@@ -2,8 +2,9 @@
   import { ref, watch, computed, onMounted } from 'vue'
   import Multiselect from '@vueform/multiselect'
   import { useCharStore } from '@/store/char'
-  import { useSliderStore } from '@/store/slider'
   import { useSkillStore } from '@/store/axle'
+  import { useSettingStore } from '@/store/setting'
+  import { useUiStore } from '@/store/ui'
   import { getTargetOptions } from '@/utils/state-getters/getTargetOptions'
   import { fetchCharacterOptions } from '@/utils/data-fetching/fetchCharacterOptions'
   import { fetchStyleOptions } from '@/utils/data-fetching/fetchStyleOptions'
@@ -11,13 +12,12 @@
   import { fetchPassiveSkillOptions } from '@/utils/data-fetching/fetchPassiveSkillOptions'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
-  import { useSettingStore } from '@/store/setting'
   import { find } from 'lodash-es'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
 
   const charStore = useCharStore()
-  const sliderStore = useSliderStore()
+  const uiStore = useUiStore()
   const settingStore = useSettingStore()
   const skillStore = useSkillStore()
 
@@ -181,7 +181,7 @@
       }
 
       // 檢查是否需要重置各回合的內容
-      if (sliderStore.rows > 0 && oldStyle) {
+      if (uiStore.sliderRows > 0 && oldStyle) {
         console.log('skillStore.skills before reset:', skillStore.skills)
 
         skillStore.skills.forEach((row, rowIndex) => {

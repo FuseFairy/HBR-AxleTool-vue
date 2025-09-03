@@ -1,10 +1,10 @@
 <template>
   <div class="slider-container">
     <div class="top-container">
-      <p>Number Of Rows：{{ sliderStore.rows }}</p>
+      <p>Number Of Rows：{{ uiStore.sliderRows }}</p>
     </div>
     <vue-slider
-      v-model="sliderStore.rows"
+      v-model="uiStore.sliderRows"
       :disabled="!hasChar"
       :min="0"
       :max="80"
@@ -19,13 +19,13 @@
 
 <script setup>
   import { computed } from 'vue'
-  import { useSliderStore } from '@/store/slider'
+  import { useUiStore } from '@/store/ui'
   import { useSkillStore } from '@/store/axle'
   import { useCharStore } from '@/store/char'
   import VueSlider from 'vue-slider-component'
   import '@/style/slider/slider.css'
 
-  const sliderStore = useSliderStore()
+  const uiStore = useUiStore()
   const skillStore = useSkillStore()
   const charStore = useCharStore()
 

@@ -1,13 +1,13 @@
 <script setup>
   import { useSkillStore } from '@/store/axle'
-  import { useSliderStore } from '@/store/slider'
+  import { useAxleCollectionStore } from '@/store/axleCollection'
+  import { useUiStore } from '@/store/ui'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { compressAxleData } from '@/utils/axle/compressAxleData'
-  import { useAxleCollectionStore } from '@/store/axleCollection'
   import { toast } from 'vue3-toastify'
 
   const skillStore = useSkillStore()
-  const sliderStore = useSliderStore()
+  const uiStore = useUiStore()
   const maxlength = 35
   const axleCollectionStore = useAxleCollectionStore()
   const toastOptions = {
@@ -64,7 +64,7 @@
       <button
         v-tooltip="'Save Axle As New'"
         class="save-as-axle-button"
-        :disabled="sliderStore.rows <= 0"
+        :disabled="uiStore.sliderRows <= 0"
         @click="handleSaveAsAxle">
         <img :src="getAssetsFile('custom-icon/save_as.svg')" alt="Save As Axle" />
       </button>
