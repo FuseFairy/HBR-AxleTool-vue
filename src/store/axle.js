@@ -3,8 +3,6 @@ import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
-const VERSION = '1.0.0' // Initial version for axle store
-
 export const useSkillStore = defineStore(
   'skill',
   () => {
@@ -86,24 +84,12 @@ export const useSkillStore = defineStore(
       storage: localStorage,
       serializer: {
         serialize: (state) => {
-          const jsonString = JSON.stringify({ data: state, version: VERSION })
+          const jsonString = JSON.stringify(state)
           return compressToUTF16(jsonString)
         },
         deserialize: (compressedString) => {
           const jsonString = decompressFromUTF16(compressedString)
-          if (!jsonString) return {}
-
-          const storedState = JSON.parse(jsonString)
-
-          // Handle migration if needed
-          if (storedState.version === VERSION) {
-            return storedState.data
-          } else {
-            console.warn(
-              `[Axle Store] Data version mismatch. Stored: ${storedState.version}, Current: ${VERSION}. Resetting store.`,
-            )
-            return {}
-          }
+          return jsonString ? JSON.parse(jsonString) : {}
         },
       },
     },
