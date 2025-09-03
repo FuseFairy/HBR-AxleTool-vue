@@ -1,7 +1,6 @@
 <script setup>
-  import { useSidebarStore } from '@/store/sidebar'
   import { useSkillStore } from '@/store/axle'
-  import { useSliderStore } from '@/store/slider'
+  import { useUiStore } from '@/store/ui'
   import { useAxleCollectionStore } from '@/store/axleCollection'
   import { storeToRefs } from 'pinia'
   import { ref, computed } from 'vue'
@@ -12,11 +11,10 @@
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
   import LoadingOverlay from '@/components/modal/LoadingOverlay.vue'
 
-  const sidebarStore = useSidebarStore()
   const skillStore = useSkillStore()
   const axleCollectionStore = useAxleCollectionStore()
-  const sliderStore = useSliderStore()
-  const { isSidebarOpen } = storeToRefs(sidebarStore)
+  const uiStore = useUiStore()
+  const { isSidebarOpen } = storeToRefs(uiStore)
   const { axles, sortOrder } = storeToRefs(axleCollectionStore)
 
   const searchQuery = ref('')
@@ -86,7 +84,7 @@
     axleCollectionStore.deleteAxle(axleToDelete.id)
 
     if (axleToDelete.id === skillStore.axleId) {
-      sliderStore.rows = 0
+      uiStore.sliderRows = 0
       skillStore.resetCurrentAxle()
     }
   }
@@ -94,7 +92,7 @@
   const loadAxle = async (axle) => {
     isLoading.value = true
     if (axle.id === skillStore.axleId) {
-      sliderStore.rows = 0
+      uiStore.sliderRows = 0
       skillStore.resetCurrentAxle()
     } else {
       await decompressAxleData(axle.data)

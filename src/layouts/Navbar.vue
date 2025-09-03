@@ -4,11 +4,11 @@
   import UploadButton from '@/components/ui/UploadButton.vue'
   import Axle from '@/components/modal/Axle.vue'
   import Settings from '@/components/modal/Settings.vue'
-  import { useSidebarStore } from '@/store/sidebar'
+  import { useUiStore } from '@/store/ui'
   import { storeToRefs } from 'pinia'
 
-  const sidebarStore = useSidebarStore()
-  const { isSidebarOpen } = storeToRefs(sidebarStore)
+  const uiStore = useUiStore()
+  const { isSidebarOpen } = storeToRefs(uiStore)
 
   const sidebarIcon = computed(() => {
     return isSidebarOpen.value
@@ -51,7 +51,7 @@
   }
 
   const toggleSidebar = () => {
-    sidebarStore.toggleSidebar()
+    uiStore.toggleSidebar()
   }
 </script>
 

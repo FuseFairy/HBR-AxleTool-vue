@@ -1,11 +1,11 @@
 <script setup>
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
-  import { useScrollbarStore } from '@/store/scrollbar'
+  import { useUiStore } from '@/store/ui'
 
-  const scrollbarStore = useScrollbarStore()
+  const uiStore = useUiStore()
 
   const scrollToTop = () => {
-    const osInstance = scrollbarStore.instance
+    const osInstance = uiStore.scrollbarInstance
     const { scrollOffsetElement } = osInstance.elements()
 
     scrollOffsetElement.scrollTo({
@@ -17,7 +17,7 @@
 
 <template>
   <transition name="fade">
-    <button v-if="scrollbarStore.topOffset > 500" class="back-to-top" @click="scrollToTop">
+    <button v-if="uiStore.scrollbarTopOffset > 500" class="back-to-top" @click="scrollToTop">
       <img :src="getAssetsFile('custom-icon/arrow_up.svg')" alt="Back to Top" />
     </button>
   </transition>

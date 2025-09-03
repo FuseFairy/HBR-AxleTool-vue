@@ -4,7 +4,6 @@ import App from './App.vue'
 // Pinia state management imports
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-import versionControlPlugin from '@/plugins/storeVersionControl'
 import nonPassiveTouchPlugin from '@/plugins/nonPassiveTouch'
 
 // Third-party libraries imports
@@ -24,7 +23,6 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
 app.use(pinia)
-app.use(versionControlPlugin)
 app.use(nonPassiveTouchPlugin)
 app.use(directives)
 

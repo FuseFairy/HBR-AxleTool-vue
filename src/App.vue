@@ -3,8 +3,7 @@
   import { runIPGeolocation } from '@/utils/browser/ipGeolocation'
   import { getData } from '@/utils/axle/axleDataApi'
   import { decompressAxleData } from '@/utils/axle/decompressAxleData'
-  import { useSidebarStore } from '@/store/sidebar'
-  import { useScrollbarStore } from '@/store/scrollbar'
+  import { useUiStore } from './store/ui'
   import TeamComposition from '@/layouts/TeamComposition.vue'
   import Navbar from '@/layouts/Navbar.vue'
   import AppFooter from '@/layouts/Footer.vue'
@@ -20,17 +19,16 @@
   import { loadFontCSS } from '@/utils/browser/loadFontCSS'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
 
-  const sidebarStore = useSidebarStore()
-  const scrollbarStore = useScrollbarStore()
+  const uiStore = useUiStore()
   const isLoading = ref(false)
 
   const handleScroll = (instance) => {
     const { scrollOffsetElement } = instance.elements()
-    scrollbarStore.topOffset = scrollOffsetElement.scrollTop
+    uiStore.scrollbarTopOffset = scrollOffsetElement.scrollTop
   }
 
   const onScrollbarInitialized = (instance) => {
-    scrollbarStore.instance = instance
+    uiStore.scrollbarInstance = instance
   }
 
   const scrollbarEvents = {
@@ -89,7 +87,7 @@
 
 <template>
   <LoadingOverlay :visible="isLoading" text="Loading..." type="scaling-squares" />
-  <div class="page-layout" :class="{ 'sidebar-open': sidebarStore.isSidebarOpen }">
+  <div class="page-layout" :class="{ 'sidebar-open': uiStore.isSidebarOpen }">
     <Navbar />
     <Sidebar />
     <main>

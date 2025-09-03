@@ -1,18 +1,16 @@
 <script setup>
   import { ref, onMounted, onUnmounted } from 'vue'
   import { useCharStore } from '@/store/char'
-  import { useShowRowStore } from '@/store/showRow.js'
-  import { useShowTeamStore } from '@/store/showTeam'
+  import { useUiStore } from '@/store/ui'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { getUsedTeams } from '@/utils/state-getters/getUsedTeams'
   import Multiselect from '@vueform/multiselect'
 
   const charStore = useCharStore()
-  const showRowStore = useShowRowStore()
-  const showTeamStore = useShowTeamStore()
+  const uiStore = useUiStore()
   const usedTeam = getUsedTeams()
 
-  showTeamStore.showTeam = usedTeam
+  uiStore.showTeam = usedTeam
 
   const showOptions = [
     { value: 'rank', name: 'Rank' },
@@ -58,14 +56,14 @@
     <div v-if="show" class="filter-content">
       <label>Teams</label>
       <Multiselect
-        v-model="showTeamStore.showTeam"
+        v-model="uiStore.showTeam"
         mode="tags"
         placeholder="Display Team"
         label="name"
         :close-on-select="false"
         :options="showTeams"
         style="margin-left: 5px"
-        @change="(value) => showTeamStore.setShowTeam(value)">
+        @change="(value) => uiStore.setShowTeam(value)">
         <template #option="{ option }">
           <div class="option-container">
             <span :title="option.name">{{ option.name }}</span>
@@ -81,14 +79,14 @@
       <label style="margin-top: 10px">Others</label>
       <Multiselect
         v-if="show"
-        v-model="showRowStore.showRow"
+        v-model="uiStore.showTag"
         mode="tags"
         placeholder="Display Row"
         label="name"
         :close-on-select="false"
         :options="showOptions"
         style="margin-left: 5px"
-        @change="(value) => showRowStore.setShowRow(value)" />
+        @change="(value) => uiStore.setShowTag(value)" />
     </div>
   </div>
 </template>

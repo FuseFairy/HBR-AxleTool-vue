@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 
+const VERSION = '1.0.0' // Initial version for axleCollection store
+
 export const useAxleCollectionStore = defineStore(
   'axleCollection',
   () => {
@@ -52,6 +54,26 @@ export const useAxleCollectionStore = defineStore(
   {
     persist: {
       storage: localStorage,
+      serializer: {
+        serialize: (state) => {
+          return JSON.stringify({ data: state, version: VERSION })
+        },
+        deserialize: (jsonString) => {
+          if (!jsonString) return {}
+
+          const storedState = JSON.parse(jsonString)
+
+          // Handle migration if needed
+          if (storedState.version === VERSION) {
+            return storedState.data
+          } else {
+            console.warn(
+              `[Axle Collection Store] Data version mismatch. Stored: ${storedState.version}, Current: ${VERSION}. Resetting store.`,
+            )
+            return {}
+          }
+        },
+      },
     },
   },
 )

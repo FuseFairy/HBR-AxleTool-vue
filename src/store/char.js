@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
+const VERSION = '1.0.0' // Initial version for characterSelect store
+
 export const useCharStore = defineStore(
   'characterSelect',
   () => {
@@ -57,26 +59,6 @@ export const useCharStore = defineStore(
       return selections.value[selectedTab][buttonKey]?.[type] || null
     }
 
-    // Data migration
-    for (const team of Object.values(selections.value)) {
-      for (const selection of Object.values(team)) {
-        if (selection.style_id === undefined) {
-          if (selection.img) {
-            try {
-              const pathParts = selection.img.split('/')
-              const fileName = pathParts.pop()
-              selection.style_id = fileName.split('.').slice(0, -1).join('.')
-              // eslint-disable-next-line no-unused-vars
-            } catch (e) {
-              selection.style_id = null
-            }
-          } else {
-            selection.style_id = null
-          }
-        }
-      }
-    }
-
     return {
       selections,
       setSelection,
@@ -88,12 +70,24 @@ export const useCharStore = defineStore(
       storage: localStorage,
       serializer: {
         serialize: (state) => {
-          const jsonString = JSON.stringify(state)
+          const jsonString = JSON.stringify({ data: state, version: VERSION })
           return compressToUTF16(jsonString)
         },
         deserialize: (compressedString) => {
           const jsonString = decompressFromUTF16(compressedString)
-          return jsonString ? JSON.parse(jsonString) : {}
+          if (!jsonString) return {}
+
+          const storedState = JSON.parse(jsonString)
+
+          // Handle migration if needed
+          if (storedState.version === VERSION) {
+            return storedState.data
+          } else {
+            console.warn(
+              `[Char Store] Data version mismatch. Stored: ${storedState.version}, Current: ${VERSION}. Resetting store.`,
+            )
+            return {}
+          }
         },
       },
     },

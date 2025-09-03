@@ -1,9 +1,9 @@
 <script setup>
   import { toast } from 'vue3-toastify'
   import { convertElementToJpg } from '@/utils/browser/domToImage'
-  import { useSliderStore } from '@/store/slider'
+  import { useUiStore } from '@/store/ui'
 
-  const sliderStore = useSliderStore()
+  const uiStore = useUiStore()
   const isLoading = defineModel('isLoading', { type: Boolean, default: false })
 
   const downloadTable = async () => {
@@ -33,7 +33,7 @@
 </script>
 
 <template>
-  <button class="download flex items-center justify-center" :disabled="sliderStore.rows <= 0" @click="downloadTable">
+  <button class="download flex items-center justify-center" :disabled="uiStore.sliderRows <= 0" @click="downloadTable">
     <img src="@/assets/custom-icon/download.svg" alt="Download" />
   </button>
 </template>

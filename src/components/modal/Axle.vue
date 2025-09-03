@@ -2,9 +2,7 @@
   import { ref, computed, onMounted } from 'vue'
   import { useCharStore } from '@/store/char'
   import { useSkillStore } from '@/store/axle'
-  import { useSliderStore } from '@/store/slider'
-  import { useShowRowStore } from '@/store/showRow'
-  import { useShowTeamStore } from '@/store/showTeam'
+  import { useUiStore } from '@/store/ui'
   import { useSettingStore } from '@/store/setting'
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { getUsedSkills } from '@/utils/state-getters/getUsedSkills'
@@ -25,9 +23,7 @@
   const isLoading = ref(false)
   const charStore = useCharStore()
   const skillStore = useSkillStore()
-  const sliderStore = useSliderStore()
-  const showRowStore = useShowRowStore()
-  const showTeamStore = useShowTeamStore()
+  const uiStore = useUiStore()
   const settingStore = useSettingStore()
   const earringDict = {
     BREAK耳環: 'earring-icon/break.webp',
@@ -39,22 +35,22 @@
   const axleName = skillStore.axleName.trim()
 
   const hasRank = () => {
-    const rankInShowRow = showRowStore.showRow.includes('rank')
+    const rankInShowRow = uiStore.showTag.includes('rank')
     return rankInShowRow
   }
 
   const hasEarring = () => {
-    const earringInShowRow = showRowStore.showRow.includes('earring')
+    const earringInShowRow = uiStore.showTag.includes('earring')
     return earringInShowRow
   }
 
   const hasSpiritual = () => {
-    const spiritualInShowRow = showRowStore.showRow.includes('spiritual')
+    const spiritualInShowRow = uiStore.showTag.includes('spiritual')
     return spiritualInShowRow
   }
 
   const hasPassiveSkill = (selectedTab) => {
-    const passiveSkillInShowRow = showRowStore.showRow.includes('passive skill')
+    const passiveSkillInShowRow = uiStore.showTag.includes('passive skill')
     const hasValidPassiveSkillSelection = Object.values(charStore.selections[selectedTab]).some(
       (selection) => selection?.passiveSkill !== null && selection?.passiveSkill.length > 0,
     )
@@ -62,7 +58,7 @@
   }
 
   function hasTeam(selectedTab) {
-    const usedTeams = showTeamStore.showTeam
+    const usedTeams = uiStore.showTeam
     return usedTeams.includes(selectedTab)
   }
 
@@ -217,14 +213,14 @@
             </button>
           </div>
           <OverlayScrollbarsComponent class="table overlayscrollbars-vue" :options="scrollbarOptions" defer>
-            <div v-if="sliderStore.rows <= 0" class="sleeping-image">
+            <div v-if="uiStore.sliderRows <= 0" class="sleeping-image">
               <img src="/src/assets/common/sleeping.webp" />
             </div>
             <div v-else id="show-axle" class="table-wrapper">
               <div v-if="axleName.length > 0" class="axle-name text-wrap">{{ axleName }}</div>
-              <div v-for="(selectedTab, index) in showTeamStore.showTeam" :key="selectedTab">
+              <div v-for="(selectedTab, index) in uiStore.showTeam" :key="selectedTab">
                 <div
-                  v-if="showTeamStore.showTeam.length > 1 && index > 0"
+                  v-if="uiStore.showTeam.length > 1 && index > 0"
                   class="axle-line-container"
                   style="margin-top: 20px">
                   <div class="blue-line" />
@@ -297,7 +293,7 @@
                 </div>
                 <!-- Used skill row -->
                 <div
-                  v-if="showRowStore.showRow.includes('skill') && hasTeam(selectedTab)"
+                  v-if="uiStore.showTag.includes('skill') && hasTeam(selectedTab)"
                   class="used-skill-bg table-container"
                   style="margin-top: 20px">
                   <div v-for="(i, colIndex) in 7" :key="colIndex" class="table-column">
@@ -316,9 +312,9 @@
                 </div>
               </div>
               <!-- Axle -->
-              <div v-if="showRowStore.showRow.includes('axle')">
+              <div v-if="uiStore.showTag.includes('axle')">
                 <div
-                  v-if="sliderStore.rows > 0 && showTeamStore.showTeam.length > 0"
+                  v-if="uiStore.sliderRows > 0 && uiStore.showTeam.length > 0"
                   class="axle-line-container"
                   style="margin-top: 20px">
                   <div class="red-line"></div>

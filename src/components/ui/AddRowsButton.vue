@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center h-auto">
     <button
       class="add-button"
-      :disabled="sliderStore.rows === 80 || (sliderStore.rows === 0 && !hasChar)"
+      :disabled="uiStore.sliderRows === 80 || (uiStore.sliderRows === 0 && !hasChar)"
       @click="addRow">
       <img class="icon-img" src="@/assets/custom-icon/add_circle.svg" alt="Add a row" />
     </button>
@@ -11,18 +11,18 @@
 
 <script setup>
   import { computed, nextTick } from 'vue'
-  import { useSliderStore } from '@/store/slider'
   import { useSkillStore } from '@/store/axle'
   import { useCharStore } from '@/store/char'
+  import { useUiStore } from '@/store/ui'
 
-  const sliderStore = useSliderStore()
   const skillStore = useSkillStore()
   const charStore = useCharStore()
+  const uiStore = useUiStore()
 
   const addRow = () => {
-    if (sliderStore.rows < 80) {
-      sliderStore.rows++
-      skillStore.adjustSkills(sliderStore.rows)
+    if (uiStore.sliderRows < 80) {
+      uiStore.sliderRows++
+      skillStore.adjustSkills(uiStore.sliderRows)
       nextTick(async () => {
         await nextTick()
         scrollToBottom()
