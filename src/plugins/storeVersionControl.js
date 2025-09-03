@@ -1,9 +1,9 @@
 import { toast } from 'vue3-toastify'
+import { compareVersions } from '@/utils/compareVersions'
 
 const currentStorageVersion = '1.0.5'
 const storedVersion = localStorage.getItem('piniaStorageVersion')
 
-// Define a map for version-specific update handlers
 const versionUpdateHandlers = {
   '1.0.5': () => {
     const storeIdsToClear = ['lastTab', 'showRow', 'slider', 'scrollbar', 'showTeam', 'sidebar']
@@ -18,29 +18,29 @@ const versionUpdateHandlers = {
 
 export default {
   install: () => {
-    if (storedVersion !== currentStorageVersion) {
+    if (storedVersion && storedVersion !== currentStorageVersion) {
       console.warn('[Version Update Notice] Pinia Storage version updated.')
 
-      // Get all versions that need to be updated, in order
       const versionsToUpdate = Object.keys(versionUpdateHandlers)
         .filter((version) => {
-          if (storedVersion === null) return false
-          version > storedVersion && version <= currentStorageVersion
+          const isNewer = compareVersions(version, storedVersion) > 0
+          const isNotFuture = compareVersions(version, currentStorageVersion) <= 0
+          return isNewer && isNotFuture
         })
-        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }))
+        .sort((a, b) => compareVersions(a, b))
 
       if (versionsToUpdate.length > 0) {
         versionsToUpdate.forEach((version) => {
           const handler = versionUpdateHandlers[version]
           if (handler) {
             console.warn(`Executing update handler for version ${version}.`)
-            handler() // Execute the specific update logic for this version
+            handler()
           }
         })
 
         localStorage.setItem('piniaStorageVersion', currentStorageVersion)
 
-        toast('Storage data structure changed, old storage deleted.', {
+        toast('Data version update.', {
           theme: 'colored',
           type: 'warning',
           position: 'top-right',
@@ -58,7 +58,6 @@ export default {
           },
         })
       } else {
-        // If no specific updates for versions, but storedVersion is older, just update the version number
         localStorage.setItem('piniaStorageVersion', currentStorageVersion)
       }
     } else if (!storedVersion) {
