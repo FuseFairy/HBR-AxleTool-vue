@@ -2,6 +2,7 @@ import piexif from 'piexifjs'
 import { useSkillStore } from '@/store/axle'
 import { compressAxleData } from '@/utils/axle/compressAxleData'
 import { snapdom } from '@zumer/snapdom'
+import { isMobile } from '@/utils/browser/deviceDetector'
 
 export async function convertElementToJpg(elementId) {
   const element = document.getElementById(elementId)
@@ -20,6 +21,8 @@ export async function convertElementToJpg(elementId) {
       backgroundColor: 'black',
       width: rect.width,
       height: rect.height,
+      dpr: isMobile() ? 1 : window.devicePixelRatio,
+      scale: isMobile() ? 1.2 : 1,
     }
 
     // WORKAROUND: Force-clear snapdom's cache before the actual capture.
@@ -33,6 +36,7 @@ export async function convertElementToJpg(elementId) {
       embedFonts: true,
       width: 1,
       height: 1,
+      dpr: 1,
       cache: 'disabled',
     })
 
