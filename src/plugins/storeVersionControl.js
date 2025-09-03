@@ -6,7 +6,7 @@ const storedVersion = localStorage.getItem('piniaStorageVersion')
 
 const versionUpdateHandlers = {
   '1.0.5': () => {
-    const storeIdsToClear = ['lastTab', 'showRow', 'slider', 'scrollbar', 'showTeam', 'sidebar']
+    const storeIdsToClear = ['lastTab', 'showRow', 'slider', 'scrollbar', 'showTeam', 'sidebar', 'skill']
     storeIdsToClear.forEach((storeId) => {
       const storageKey = storeId
       localStorage.removeItem(storageKey)
