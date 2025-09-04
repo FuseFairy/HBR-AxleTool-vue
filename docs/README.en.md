@@ -1,3 +1,5 @@
+[English](/docs/README.en.md) | [日本語](/docs/README.ja.md) | [繁體中文](/README.md) | [简体中文](/docs/README.zh-CN.md)
+
 # HBR-AxleTool-vue - Heaven Burns Red Axle Tool
 
 This is a web tool designed for the mobile game "Heaven Burns Red" to help players easily share their battle action axes.
@@ -56,10 +58,10 @@ Through a visualized interface, players can record the skill casting order of ch
 
 ## 🛠️ Main Development Frameworks & Packages
 
-| Category         | Tool                              |
-| :--------------- | :-------------------------------- |
-| **Core Framework** | [Vue 3](https://vuejs.org/)       |
-| **Build Tool**   | [Vite](https://vitejs.dev/)       |
+| Category             | Tool                              |
+| :------------------- | :-------------------------------- |
+| **Core Framework**   | [Vue 3](https://vuejs.org/)       |
+| **Build Tool**       | [Vite](https://vitejs.dev/)       |
 | **State Management** | [Pinia](https://pinia.vuejs.org/) |
 
 ## 🚀 Local Development
@@ -73,14 +75,14 @@ If you want to run or develop locally, please follow these steps.
 
 ### **Project Scripts**
 
-| Command           | Description                                    |
-| :---------------- | :--------------------------------------------- |
-| `npm install`     | Installs all project dependencies.             |
-| `npm run dev`     | Starts the local development server with hot reload. |
+| Command           | Description                                                        |
+| :---------------- | :----------------------------------------------------------------- |
+| `npm install`     | Installs all project dependencies.                                 |
+| `npm run dev`     | Starts the local development server with hot reload.               |
 | `npm run build`   | Builds the project to the `dist` folder and compresses JSON files. |
-| `npm run preview` | Previews the built output.                     |
-| `npm run format`  | Formats all code using Prettier.               |
-| `npm run lint`    | Checks and fixes code style issues using ESLint. |
+| `npm run preview` | Previews the built output.                                         |
+| `npm run format`  | Formats all code using Prettier.                                   |
+| `npm run lint`    | Checks and fixes code style issues using ESLint.                   |
 
 ## 🤝 Contributions & Assistance
 
