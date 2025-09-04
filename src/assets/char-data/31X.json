@@ -43,6 +43,16 @@
           "zh-CN-CN": "Carnival with You"
         },
         "id": "005"
+      },
+      "Have no fear! I'm a hero!": {
+        "value": "Have no fear! I'm a hero!",
+        "names": {
+          "zh-TW": "Have no fear! I'm a hero!",
+          "jp": "Have no fear! I'm a hero!",
+          "zh-CN": "Have no fear! I'm a hero!",
+          "zh-CN-CN": "Have no fear! I'm a hero!"
+        },
+        "id": "006"
       }
     },
     "skill": {
@@ -81,6 +91,16 @@
           "value": "你的英雄",
           "names": { "zh-TW": "你的英雄", "jp": "あなたのヒーロー", "zh-CN": "你的英雄", "zh-CN-CN": "你的英雄" },
           "sp": 8
+        },
+        "傳奇模式": {
+          "value": "傳奇模式",
+          "names": {
+            "zh-TW": "傳奇模式",
+            "jp": "サンダー・オブ・ジャスティス",
+            "zh-CN": "传奇模式",
+            "zh-CN-CN": "传奇模式"
+          },
+          "sp": 8
         }
       },
       "Carnival with You": {
@@ -93,6 +113,18 @@
             "zh-CN-CN": "秘密的浪漫"
           },
           "sp": 14
+        }
+      },
+      "Have no fear! I'm a hero!": {
+        "正義雷霆": {
+          "value": "正義雷霆",
+          "names": {
+            "zh-TW": "正義雷霆",
+            "jp": "サンダー・オブ・ジャスティス",
+            "zh-CN": "正义雷霆",
+            "zh-CN-CN": "正义雷霆"
+          },
+          "sp": 17
         }
       }
     },
@@ -281,6 +313,16 @@
         },
         "id": "002"
       },
+      "香檸檬的撫慰": {
+        "value": "香檸檬的抚慰",
+        "names": {
+          "zh-TW": "香檸檬的抚慰",
+          "jp": "ベルガモットの安らぎ",
+          "zh-CN": "香柠檬的抚慰",
+          "zh-CN-CN": "香柠檬的抚慰"
+        },
+        "id": "006"
+      },
       "藍色石榴石探案": {
         "value": "藍色石榴石探案",
         "names": {
@@ -373,6 +415,11 @@
           "value": "回想",
           "names": { "zh-TW": "回想", "jp": "リコレクション", "zh-CN": "回想", "zh-CN-CN": "回想" },
           "sp": 14
+        },
+        "下午茶小憩": {
+          "value": "下午茶小憩",
+          "names": { "zh-TW": "下午茶小憩", "jp": "ティーブレイク", "zh-CN": "下午茶小憩", "zh-CN-CN": "下午茶小憩" },
+          "sp": 10
         }
       },
       "月下的捉迷藏": {
@@ -461,6 +508,16 @@
           "zh-CN-CN": "美丽圣虎"
         },
         "id": "005"
+      },
+      "款待的安納布爾納": {
+        "value": "款待的安納布爾納",
+        "names": {
+          "zh-TW": "款待的安納布爾納",
+          "jp": "歓待のアンナプールナ",
+          "zh-CN": "款待的安纳布尔纳",
+          "zh-CN-CN": "款待的安纳布尔纳"
+        },
+        "id": "006"
       }
     },
     "skill": {
@@ -532,9 +589,31 @@
           },
           "sp": 11
         }
+      },
+      "款待的安納布爾納": {
+        "ANURAGA的饗宴": {
+          "value": "ANURAGA的饗宴",
+          "names": {
+            "zh-TW": "ANURAGA的饗宴",
+            "jp": "饗宴アヌラーガ",
+            "zh-CN": "ANURAGA的飨宴",
+            "zh-CN-CN": "ANURAGA的飨宴"
+          },
+          "sp": 13
+        }
       }
     },
-    "passive skill": {}
+    "passive skill": {
+      "再來一份印度烤餅": {
+        "value": "再來一份印度烤餅",
+        "names": {
+          "zh-TW": "再來一份印度烤餅",
+          "jp": "ナンおかわり",
+          "zh-CN": "再来一份印度烤饼",
+          "zh-CN-CN": "再来一份印度烤饼"
+        }
+      }
+    }
   },
   "瑪麗亞 黛 安傑利斯": {
     "value": "瑪麗亞 黛 安傑利斯",
