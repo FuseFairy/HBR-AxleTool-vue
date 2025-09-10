@@ -20,21 +20,18 @@
 <summary>點擊展開使用教學</summary>
 
 1.  **隊伍編輯**:
-
     - 角色選擇介面按照順序依序選擇 隊伍（Team）、角色（Character）、戰型（Style）。
       ![角色選擇](/image/select_char.png)
     - 能透過拖曳隨意排序位置。
       ![拖曳](/image/select_char_drag&drop.gif)
 
 2.  **行動軸編輯**:
-
     - 可以編輯 回合（Turn）、OD、技能選擇（Skill） 和 選擇對象（Target）。
       ![axle](/image/axle.png)
     - 能調換軸順序和透過拖曳隨意排序角色位置。
       ![拖曳](/image/axle.gif)
 
 3.  **分享與匯出**:
-
     - 點擊網頁右上角的 ![axle icon](/src/assets/custom-icon/table.svg) 可以看到完整的軸。
     - 點進去後會左上會看到 3 個按鈕，分別是 篩選、下載圖片、分享
       - ![filter](/src/assets/custom-icon/filter-on.svg)**篩選**: 自由選擇需要顯示的部分。
@@ -42,7 +39,6 @@
       - ![download](/src/assets/custom-icon/download.svg)**下載圖片**: 將整個行動軸轉換成圖片。
 
 4.  **圖片上傳**
-
     - 透過網頁左上角![upload](/src/assets/custom-icon/upload.svg)可以上傳圖片並載入資料。
       ![upload](/image/upload.gif)
 
@@ -70,7 +66,7 @@
 
 ### **環境準備**
 
-- 確認已安裝 [Node.js](https://nodejs.org/) (建議版本 18.x 或以上)
+- 確認已安裝 [Node.js](https://nodejs.org/) `20.19+`
 - 推薦使用 [VSCode](https://code.visualstudio.com/) 作為開發工具，並安裝 [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 擴充功能。
 
 ### **專案腳本**

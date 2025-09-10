@@ -20,21 +20,18 @@ Through a visualized interface, players can record the skill casting order of ch
 <summary>Click to expand usage guide</summary>
 
 1.  **Team Editing**:
-
     - In the character selection interface, select Team, Character, and Style in order.
       ![Character Selection](/image/select_char.png)
     - You can freely sort positions by dragging.
       ![Drag and Drop](/image/select_char_drag&drop.gif)
 
 2.  **Axle Editing**:
-
     - You can edit Turn, OD, Skill Selection, and Target.
       ![Axle](/image/axle.png)
     - You can swap axle order and freely sort character positions by dragging.
       ![Drag and Drop Axle](/image/axle.gif)
 
 3.  **Share and Export**:
-
     - Click the ![Axle Icon](/src/assets/custom-icon/table.svg) in the upper right corner of the webpage to see the complete axle.
     - After clicking, you will see 3 buttons in the upper left: Filter, Download Image, Share
       - ![Filter](/src/assets/custom-icon/filter-on.svg)**Filter**: Freely select the parts you need to display.
@@ -42,7 +39,6 @@ Through a visualized interface, players can record the skill casting order of ch
       - ![Download](/src/assets/custom-icon/download.svg)**Download Image**: Converts the entire axle into an image.
 
 4.  **Image Upload**
-
     - You can upload images and load data via ![Upload Icon](/src/assets/custom-icon/upload.svg) in the upper left corner of the webpage.
       ![Upload](/image/upload.gif)
 
@@ -70,7 +66,7 @@ If you want to run or develop locally, please follow these steps.
 
 ### **Environment Setup**
 
-- Confirm [Node.js](https://nodejs.org/) is installed (recommended version 18.x or above)
+- Confirm [Node.js](https://nodejs.org/) `20.19+`
 - Recommended to use [VSCode](https://code.visualstudio.com/) as a development tool and install the [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) extension.
 
 ### **Project Scripts**

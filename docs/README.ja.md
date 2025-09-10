@@ -20,21 +20,18 @@
 <summary>使用方法を展開</summary>
 
 1.  **チーム編集**:
-
     - キャラクター選択画面で、チーム、キャラクター、スタイルを順番に選択します。
       ![キャラクター選択](/image/select_char.png)
     - ドラッグ＆ドロップで自由に位置を並べ替えることができます。
       ![ドラッグ](/image/select_char_drag&drop.gif)
 
 2.  **行動軸編集**:
-
     - ターン、OD、スキル選択、ターゲットを編集できます。
       ![行動軸](/image/axle.png)
     - 軸の順序を入れ替えたり、ドラッグ＆ドロップでキャラクターの位置を自由に並べ替えたりできます。
       ![ドラッグ](/image/axle.gif)
 
 3.  **共有とエクスポート**:
-
     - ウェブページ右上の ![行動軸アイコン](/src/assets/custom-icon/table.svg) をクリックすると、完全な行動軸が表示されます。
     - クリックすると、左上に3つのボタンが表示されます: フィルター、画像ダウンロード、共有
       - ![フィルター](/src/assets/custom-icon/filter-on.svg)**フィルター**: 表示したい部分を自由に選択できます。
@@ -42,7 +39,6 @@
       - ![ダウンロード](/src/assets/custom-icon/download.svg)**画像ダウンロード**: 行動軸全体を画像に変換します。
 
 4.  **画像アップロード**
-
     - ウェブページ左上の ![アップロードアイコン](/src/assets/custom-icon/upload.svg) を介して画像をアップロードし、データを読み込むことができます。
       ![アップロード](/image/upload.gif)
 
@@ -70,7 +66,7 @@
 
 ### **環境設定**
 
-- [Node.js](https://nodejs.org/) がインストールされていることを確認してください（推奨バージョン18.x以上）。
+- [Node.js](https://nodejs.org/) `20.19+`
 - 開発ツールとして [VSCode](https://code.visualstudio.com/) を使用し、[Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 拡張機能をインストールすることをお勧めします。
 
 ### **プロジェクトスクリプト**
