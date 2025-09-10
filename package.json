@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@vueform/multiselect": "^2.6.11",
-    "@zumer/snapdom": "^1.9.10-dev.1",
+    "@zumer/snapdom": "^1.9.11",
     "epic-spinners": "^2.0.0",
     "hbr-axletool-vue": "file:",
     "lodash-es": "^4.17.21",
