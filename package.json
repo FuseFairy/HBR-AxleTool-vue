@@ -28,18 +28,18 @@
     "vue3-toastify": "^0.2.8"
   },
   "devDependencies": {
-    "@vitejs/plugin-legacy": "^6.1.1",
-    "@vitejs/plugin-vue": "^5.2.1",
-    "eslint": "^9.30.1",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-vue": "^10.2.0",
+    "@vitejs/plugin-legacy": "^7.2.1",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.4.0",
     "jsonminify": "^0.4.2",
-    "prettier": "^3.3.3",
+    "prettier": "^3.6.2",
     "rollup-plugin-external-globals": "^0.13.0",
-    "rollup-plugin-visualizer": "^5.14.0",
-    "terser": "^5.39.0",
-    "vite": "^6.3.5",
-    "vite-plugin-vue-devtools": "^7.3.1",
+    "rollup-plugin-visualizer": "^6.0.3",
+    "terser": "^5.44.0",
+    "vite": "^7.1.5",
+    "vite-plugin-vue-devtools": "^8.0.1",
     "vue-eslint-parser": "^10.2.0"
   }
 }
