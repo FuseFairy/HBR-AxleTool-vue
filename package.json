@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node minify-json.js",
+    "build": "vite build",
     "preview": "vite preview",
     "format": "prettier --write src/",
     "lint": "eslint . --fix"
@@ -33,7 +33,6 @@
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.4.0",
-    "jsonminify": "^0.4.2",
     "prettier": "^3.6.2",
     "rollup-plugin-external-globals": "^0.13.0",
     "rollup-plugin-visualizer": "^6.0.3",
