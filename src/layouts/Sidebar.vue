@@ -24,6 +24,22 @@
   const maxlength = 35
   const isLoading = ref(false)
 
+  const parseChineseDate = (str) => {
+    const [datePart, timePart] = str.split(' ')
+    const [year, month, day] = datePart.split('/').map(Number)
+
+    let [hh, mm, ss] = timePart
+      .replace(/[上午下午]/g, '')
+      .split(':')
+      .map(Number)
+
+    const isPM = str.includes('下午')
+    if (isPM && hh < 12) hh += 12
+    if (!isPM && hh === 12) hh = 0 // 上午12點是0點
+
+    return new Date(year, month - 1, day, hh, mm, ss)
+  }
+
   const filteredAxles = computed(() => {
     let result = axles.value
 
@@ -35,9 +51,10 @@
 
     // 排序
     result = [...result].sort((a, b) => {
-      return sortOrder.value === 'asc'
-        ? a.time.localeCompare(b.time) // 升序
-        : b.time.localeCompare(a.time) // 降序
+      const ta = parseChineseDate(a.time)
+      const tb = parseChineseDate(b.time)
+
+      return sortOrder.value === 'asc' ? ta - tb : tb - ta
     })
 
     return result
