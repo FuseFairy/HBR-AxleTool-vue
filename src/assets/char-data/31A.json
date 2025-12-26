@@ -88,6 +88,16 @@
           "zh-CN-CN": "激烈！招来胜利的一球入魂！"
         },
         "id": "010"
+      },
+      "Glorious Blades": {
+        "value": "Glorious Blades",
+        "names": {
+          "zh-TW": "Glorious Blades",
+          "jp": "Glorious Blades",
+          "zh-CN": "Glorious Blades",
+          "zh-CN-CN": "Glorious Blades"
+        },
+        "id": "011"
       }
     },
     "skill": {
@@ -221,6 +231,35 @@
               "zh-CN": "怪物球威",
               "zh-CN-CN": "怪物球威"
             }
+          }
+        }
+      },
+      "Glorious Blades": {
+        "先導的領袖魅力": {
+          "value": "先導的領袖魅力",
+          "names": {
+            "zh-TW": "先導的領袖魅力",
+            "jp": "先導のカリスマ",
+            "zh-CN": "先导的领袖魅力",
+            "zh-CN-CN": "先导的领袖魅力"
+          },
+          "sp": 9
+        },
+        "勝利之弧": {
+          "value": "勝利之弧",
+          "names": {
+            "zh-TW": "勝利之弧",
+            "jp": "アーク・オブ・ヴィクトリア",
+            "zh-CN": "胜利之弧",
+            "zh-CN-CN": "胜利之弧"
+          },
+          "sp": 13
+        },
+        "command action": {
+          "指揮行動": {
+            "value": "指揮行動",
+            "names": { "zh-TW": "指揮行動", "jp": "指揮行動", "zh-CN": "指挥行动", "zh-CN-CN": "指挥行动" },
+            "sp": 0
           }
         }
       }
