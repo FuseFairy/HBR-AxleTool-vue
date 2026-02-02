@@ -15,7 +15,7 @@
   const axleCollectionStore = useAxleCollectionStore()
   const uiStore = useUiStore()
   const { isSidebarOpen } = storeToRefs(uiStore)
-  const { axles, sortOrder } = storeToRefs(axleCollectionStore)
+  const { axles } = storeToRefs(axleCollectionStore)
 
   const searchQuery = ref('')
   const editingAxle = ref(null)
@@ -23,21 +23,63 @@
   const isAnyButtonHovered = ref(false)
   const maxlength = 35
   const isLoading = ref(false)
+  const sortOrder = ref('desc')
 
-  const parseChineseDate = (str) => {
-    const [datePart, timePart] = str.split(' ')
-    const [year, month, day] = datePart.split('/').map(Number)
+  const parseDateTime = (dateStr) => {
+    if (!dateStr || typeof dateStr !== 'string') {
+      console.warn('Invalid date string:', dateStr)
+      return new Date(0)
+    }
 
-    let [hh, mm, ss] = timePart
-      .replace(/[上午下午]/g, '')
-      .split(':')
-      .map(Number)
+    try {
+      const str = dateStr.trim()
 
-    const isPM = str.includes('下午')
-    if (isPM && hh < 12) hh += 12
-    if (!isPM && hh === 12) hh = 0 // 上午12點是0點
+      const hasAfternoon = str.includes('下午')
+      const hasMorning = str.includes('上午')
 
-    return new Date(year, month - 1, day, hh, mm, ss)
+      let datePart, timePart
+
+      if (hasAfternoon) {
+        const parts = str.split('下午')
+        datePart = parts[0]
+        timePart = parts[1]
+      } else if (hasMorning) {
+        const parts = str.split('上午')
+        datePart = parts[0]
+        timePart = parts[1]
+      } else {
+        console.warn('Date string missing 上午/下午:', dateStr)
+        return new Date(0)
+      }
+
+      // 解析時間部分
+      const timeComponents = timePart.split(':')
+      const hours = parseInt(timeComponents[0], 10) || 0
+      const minutes = parseInt(timeComponents[1], 10) || 0
+      const seconds = parseInt(timeComponents[2], 10) || 0
+
+      // 轉換 12 小時制到 24 小時制
+      let hour24 = hours
+      if (hasAfternoon && hours !== 12) {
+        hour24 = hours + 12
+      } else if (hasMorning && hours === 12) {
+        hour24 = 0
+      }
+
+      // 解析日期部分
+      const dateComponents = datePart.split('/')
+      const year = parseInt(dateComponents[0], 10)
+      const month = parseInt(dateComponents[1], 10)
+      const day = parseInt(dateComponents[2], 10)
+
+      // 創建日期對象
+      const result = new Date(year, month - 1, day, hour24, minutes, seconds)
+
+      return result
+    } catch (error) {
+      console.error('Error parsing date:', dateStr, error)
+      return new Date(0)
+    }
   }
 
   const filteredAxles = computed(() => {
@@ -51,12 +93,12 @@
 
     // 排序
     result = [...result].sort((a, b) => {
-      const ta = parseChineseDate(a.time)
-      const tb = parseChineseDate(b.time)
+      const ta = parseDateTime(a.time)
+      const tb = parseDateTime(b.time)
+      const diff = sortOrder.value === 'asc' ? ta - tb : tb - ta
 
-      return sortOrder.value === 'asc' ? ta - tb : tb - ta
+      return diff
     })
-
     return result
   })
 
