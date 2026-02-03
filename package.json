@@ -15,7 +15,7 @@
     "@zumer/snapdom": "^1.9.11",
     "epic-spinners": "^2.0.0",
     "hbr-axletool-vue": "file:",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.23",
     "lz-string": "^1.5.0",
     "nprogress": "^0.2.0",
     "overlayscrollbars-vue": "^0.5.9",
