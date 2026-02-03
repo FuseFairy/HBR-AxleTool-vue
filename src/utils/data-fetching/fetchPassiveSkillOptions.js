@@ -1,8 +1,10 @@
 import { getTeamData } from '@/utils/state-getters/getTeamData'
+import { fetchCommonData } from '@/utils/data-fetching/fetchCommonData'
 
 export async function fetchPassiveSkillOptions(characterName, team, styleName) {
   try {
     const data = await getTeamData(team)
+    const { defaultPassiveSkill } = await fetchCommonData()
     const characterData = data[characterName]
 
     if (!characterData || !characterData.style) {
@@ -19,6 +21,10 @@ export async function fetchPassiveSkillOptions(characterName, team, styleName) {
     const rootPassiveSkillObj = characterData['passive skill']
     if (rootPassiveSkillObj && typeof rootPassiveSkillObj === 'object') {
       passiveSkills.push(...Object.values(rootPassiveSkillObj))
+    }
+
+    if (defaultPassiveSkill && Array.isArray(defaultPassiveSkill)) {
+      passiveSkills.push(...defaultPassiveSkill)
     }
 
     const formattedPassiveSkills = passiveSkills.map((skill) => ({

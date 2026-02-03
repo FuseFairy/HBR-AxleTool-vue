@@ -6,6 +6,12 @@
       "sp": 0
     }
   ],
+  "defaultPassiveSkill": [
+    {
+      "value": "防禦增強",
+      "names": { "zh-TW": "防禦增強", "jp": "ディフェンスブースト", "zh-CN": "防御增强", "zh-CN-CN": "防御增强" }
+    }
+  ],
   "universalSkills": [
     {
       "value": "批判性思考",
@@ -80,6 +86,16 @@
     {
       "value": "寒冰重力子",
       "names": { "zh-TW": "寒冰重力子", "jp": "アイスグラビトン", "zh-CN": "寒冰重力子", "zh-CN-CN": "冰霜重力子" },
+      "sp": 6
+    },
+    {
+      "value": "蓄力注入",
+      "names": { "zh-TW": "蓄力注入", "jp": "チャージインジェクション", "zh-CN": "蓄力注入", "zh-CN-CN": "蓄力注入" },
+      "sp": 5
+    },
+    {
+      "value": "振奮",
+      "names": { "zh-TW": "振奮", "jp": "チアーアップ", "zh-CN": "振奋", "zh-CN-CN": "振奋" },
       "sp": 6
     }
   ]
