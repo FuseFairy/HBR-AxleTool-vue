@@ -477,19 +477,11 @@
     gap: 10px;
     padding: 20px;
     border-radius: 20px;
-    background: rgba(68, 65, 65, 0.3);
+    background: rgba(45, 42, 42, 0.89);
     margin: 20px 20px 0 20px;
     grid-template-columns: 160px 1fr;
     align-items: center;
     transition: box-shadow 0.3s ease;
-  }
-  .container::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    backdrop-filter: blur(2px);
-    z-index: -1;
-    border-radius: inherit;
   }
   .grid-disabled {
     grid-template-columns: none !important;
