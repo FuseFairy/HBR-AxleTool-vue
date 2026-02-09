@@ -91,7 +91,7 @@
     if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
       if (count > 1) {
-        skillName += `[${count}]`
+        skillName += ` [${count}]`
       }
     } else {
       skillName = ''
