@@ -13,37 +13,35 @@ export function getUsedSkills(selectedTab) {
     const style = selection['style']
 
     if (style && !skillsDictionary[style]) {
-      skillsDictionary[style] = new Set()
+      const skillCounts = {} // 用來記錄次數
 
       skillStore.skills.forEach((group) => {
         group.forEach((skillEntry) => {
           if (skillEntry.style === style && skillEntry.selectedTab === selectedTab) {
             const { skill } = skillEntry
             const foundCommandSkill = find(selection['commandSkill'], { value: skill })
-            if (skill && !skillsDictionary[style].has(skill) && !foundCommandSkill) {
-              skillsDictionary[style].add(skill)
+            if (skill && !foundCommandSkill) {
+              skillCounts[skill] = (skillCounts[skill] || 0) + 1
             }
           }
         })
       })
 
-      const sortedSkills = (() => {
-        const skillNameMap = new Map()
-        selection['skill'].forEach((skill) => {
-          skillNameMap.set(skill.value, skill['names'][settingStore.lang])
-        })
+      const skillNameMap = new Map()
+      selection['skill'].forEach((skill) => {
+        skillNameMap.set(skill.value, skill['names'][settingStore.lang])
+      })
 
-        const skillsArray = Array.from(skillsDictionary[style])
-
-        skillsArray.sort((a, b) => {
-          const nameA = skillNameMap.get(a)
-          const nameB = skillNameMap.get(b)
+      // 轉換為陣列並排序
+      const sortedSkills = Object.entries(skillCounts)
+        .map(([value, count]) => ({ value, count }))
+        .sort((a, b) => {
+          const nameA = skillNameMap.get(a.value) || ''
+          const nameB = skillNameMap.get(b.value) || ''
           return nameA.length - nameB.length
         })
-        return skillsArray
-      })()
 
-      skillsDictionary[style] = new Set(sortedSkills)
+      skillsDictionary[style] = sortedSkills
     }
   })
 

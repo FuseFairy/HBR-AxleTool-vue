@@ -78,16 +78,21 @@
     return row % 2 === 0 ? 'rgba(33, 33, 33, 0.9)' : 'transparent'
   }
 
-  const displayUsedSkillName = (tab, skillValue, style) => {
+  const displayUsedSkillName = (tab, skillObj, style) => {
     let skillName = ''
+    const skillValue = skillObj.value
+    const count = skillObj.count
     const charInfo = charStore.selections[tab]
     const styleInfo = find(charInfo, (characterData) => {
       return characterData.style === style
     })
     const skills = styleInfo['skill']
-    const foundSkillObject = find(skills, (skillObj) => skillObj.value === skillValue)
+    const foundSkillObject = find(skills, (s) => s.value === skillValue)
     if (foundSkillObject) {
       skillName = foundSkillObject.names[settingStore.lang]
+      if (count > 1) {
+        skillName += `[${count}]`
+      }
     } else {
       skillName = ''
     }
@@ -300,9 +305,9 @@
                     <div v-if="i === 1" class="label text-wrap">Skill</div>
                     <div v-else-if="charStore.selections[selectedTab][i - 1].style !== null" class="text">
                       <span
-                        v-for="(skill, skillIndex) in Array.from(
-                          getUsedSkills(selectedTab)[charStore.selections[selectedTab][i - 1].style],
-                        )"
+                        v-for="(skill, skillIndex) in getUsedSkills(selectedTab)[
+                          charStore.selections[selectedTab][i - 1].style
+                        ]"
                         :key="skillIndex"
                         class="used-skill text-wrap">
                         {{ displayUsedSkillName(selectedTab, skill, charStore.selections[selectedTab][i - 1].style) }}
