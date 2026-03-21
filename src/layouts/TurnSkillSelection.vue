@@ -357,7 +357,7 @@
           <button
             v-tooltip="'down'"
             class="arrow-button"
-            :disabled="i === skillStore.turns.length - 1"
+            :disabled="i === skillStore.turns.length - 1 || skillStore.turns[i + 1]?.turn === 'Switch'"
             @click="exchange(i, 'down')">
             <svg
               xmlns="http://www.w3.org/2000/svg"
