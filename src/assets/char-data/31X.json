@@ -53,6 +53,16 @@
           "zh-CN-CN": "Have no fear! I'm a hero!"
         },
         "id": "006"
+      },
+      "A Taste of Victory!": {
+        "value": "A Taste of Victory!",
+        "names": {
+          "zh-TW": "A Taste of Victory!",
+          "jp": "A Taste of Victory!",
+          "zh-CN": "A Taste of Victory!",
+          "zh-CN-CN": "A Taste of Victory!"
+        },
+        "id": "007"
       }
     },
     "skill": {
@@ -125,6 +135,29 @@
             "zh-CN-CN": "正义雷霆"
           },
           "sp": 17
+        }
+      },
+      "A Taste of Victory!": {
+        "Served Amazing": {
+          "value": "Served Amazing",
+          "names": {
+            "zh-TW": "Served Amazing",
+            "jp": "サーブド・アメイジング",
+            "zh-CN": "Served Amazing",
+            "zh-CN-CN": "Served Amazing"
+          },
+          "sp": 13
+        },
+        "passive skill": {
+          "荒野式補滿能量": {
+            "value": "荒野式補滿能量",
+            "names": {
+              "zh-TW": "荒野式補滿能量",
+              "jp": "荒野式フルチャージ",
+              "zh-CN": "荒野式补满能量",
+              "zh-CN-CN": "荒野式补满能量"
+            }
+          }
         }
       }
     },
@@ -691,6 +724,16 @@
         "value": "優雅假期",
         "names": { "zh-TW": "優雅假期", "jp": "ヴァカンザ・エレガンテ", "zh-CN": "优雅假期", "zh-CN-CN": "优雅假期" },
         "id": "005"
+      },
+      "沁甜聖佑": {
+        "value": "沁甜聖佑",
+        "names": {
+          "zh-TW": "沁甜聖佑",
+          "jp": "ドルチェ・ベネディツィオーネ",
+          "zh-CN": "沁甜圣佑",
+          "zh-CN-CN": "沁甜圣佑"
+        },
+        "id": "007"
       }
     },
     "skill": {
@@ -748,6 +791,29 @@
           "value": "鮮明生動",
           "names": { "zh-TW": "鮮明生動", "jp": "ディナミコ・アチェーゾ", "zh-CN": "鲜明生动", "zh-CN-CN": "炽热活力" },
           "sp": 14
+        }
+      },
+      "沁甜聖佑": {
+        "驚嘆不已的BUON APPETITO": {
+          "value": "驚嘆不已的BUON APPETITO",
+          "names": {
+            "zh-TW": "驚嘆不已的BUON APPETITO",
+            "jp": "感嘆必至のボナペティート",
+            "zh-CN": "惊叹不已的BUON APPETITO",
+            "zh-CN-CN": "惊叹不已的BUON APPETITO"
+          },
+          "sp": 13
+        },
+        "passive skill": {
+          "至高幸福的BUONO": {
+            "value": "至高幸福的BUONO",
+            "names": {
+              "zh-TW": "至高幸福的BUONO",
+              "jp": "至福のボーノ",
+              "zh-CN": "至高幸福的BUONO",
+              "zh-CN-CN": "至高幸福的BUONO"
+            }
+          }
         }
       }
     },
