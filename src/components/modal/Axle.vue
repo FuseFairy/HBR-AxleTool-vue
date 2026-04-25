@@ -7,7 +7,6 @@
   import { getAssetsFile } from '@/utils/assets/getAssetsFile'
   import { getUsedSkills } from '@/utils/state-getters/getUsedSkills'
   import ShowTableFilter from '@/components/ui/ShowTableFilter.vue'
-  import shareButton from '@/components/ui/ShareButton.vue'
   import DownloadButton from '@/components/ui/DownloadButton.vue'
   import 'vue3-toastify/dist/index.css'
   import { find } from 'lodash-es'
@@ -211,7 +210,6 @@
             <div class="left-button-group">
               <ShowTableFilter />
               <DownloadButton v-model:is-loading="isLoading" />
-              <shareButton />
             </div>
             <button class="close" @click="closeTable">
               <img src="@/assets/custom-icon/close.svg" alt="Close" />
