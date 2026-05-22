@@ -42,6 +42,7 @@
     { value: '31F', name: '31F', icon: 'team-icon/31F.webp' },
     { value: '31X', name: '31X', icon: 'team-icon/31X.webp' },
     { value: '31AB', name: 'Angel Beats!', icon: 'team-icon/Angel Beats.webp' },
+    { value: 'P5R', name: 'Persona 5 Royal', icon: 'team-icon/p5r.webp' },
     { value: 'Command', name: '司令部', icon: 'team-icon/Command.webp' },
   ]
   const earringOptions = [

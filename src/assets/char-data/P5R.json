@@ -1,0 +1,88 @@
+{
+  "Mona": {
+    "value": "Mona",
+    "names": { "zh-TW": "Mona", "jp": "モナ", "zh-CN": "Mona", "zh-CN-CN": "Mona" },
+    "english name": "Mona",
+    "style": {
+      "黎明的魔術師": {
+        "value": "黎明的魔術師",
+        "names": {
+          "zh-TW": "黎明的魔術師",
+          "jp": "黎明の魔術師",
+          "zh-CN": "黎明的魔术师",
+          "zh-CN-CN": "黎明的魔术师"
+        },
+        "id": "001"
+      }
+    },
+    "skill": {
+      "common": {
+        "迪亞拉翰": {
+          "value": "迪亞拉翰",
+          "names": { "zh-TW": "迪亞拉翰", "jp": "ディアラハン", "zh-CN": "迪亚拉翰", "zh-CN-CN": "迪亚拉翰" },
+          "sp": 8
+        },
+        "加爾達因": {
+          "value": "加爾達因",
+          "names": { "zh-TW": "加爾達因", "jp": "ガルダイン", "zh-CN": "加尔达因", "zh-CN-CN": "加尔达因" },
+          "sp": 9
+        }
+      }
+    },
+    "passive skill": {}
+  },
+  "Queen": {
+    "value": "Queen",
+    "names": { "zh-TW": "Queen", "jp": "クイーン", "zh-CN": "Queen", "zh-CN-CN": "Queen" },
+    "english name": "Queen",
+    "style": {
+      "慧眼的女教皇": {
+        "value": "慧眼的女教皇",
+        "names": {
+          "zh-TW": "慧眼的女教皇",
+          "jp": "慧眼の女教皇",
+          "zh-CN": "慧眼的女教皇",
+          "zh-CN-CN": "慧眼的女教皇"
+        },
+        "id": "001"
+      }
+    },
+    "skill": {
+      "common": {
+        "瑪哈拉庫卡加": {
+          "value": "瑪哈拉庫卡加",
+          "names": {
+            "zh-TW": "瑪哈拉庫卡加",
+            "jp": "マハラクカジャ",
+            "zh-CN": "玛哈拉库卡加",
+            "zh-CN-CN": "玛哈拉库卡加"
+          },
+          "sp": 12
+        },
+        "梅迪亞拉翰": {
+          "value": "梅迪亞拉翰",
+          "names": {
+            "zh-TW": "梅迪亞拉翰",
+            "jp": "メディアラハン",
+            "zh-CN": "梅迪亚拉翰",
+            "zh-CN-CN": "梅迪亚拉翰"
+          },
+          "sp": 10
+        }
+      },
+      "慧眼的女教皇": {
+        "原子火焰": {
+          "value": "原子火焰",
+          "names": {
+            "zh-TW": "原子火焰",
+            "jp": "アトミックフレア",
+            "zh-CN": "原子火焰",
+            "zh-CN-CN": "原子火焰"
+          },
+          "sp": 16
+        }
+      }
+    },
+    "passive skill": {}
+  }
+}
