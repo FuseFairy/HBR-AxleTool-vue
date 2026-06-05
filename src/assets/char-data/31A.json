@@ -98,6 +98,16 @@
           "zh-CN-CN": "Glorious Blades"
         },
         "id": "011"
+      },
+      "TAKE YOUR HEART": {
+        "value": "TAKE YOUR HEART",
+        "names": {
+          "zh-TW": "TAKE YOUR HEART",
+          "jp": "TAKE YOUR HEART",
+          "zh-CN": "TAKE YOUR HEART",
+          "zh-CN-CN": "TAKE YOUR HEART"
+        },
+        "id": "012"
       }
     },
     "skill": {
@@ -261,6 +271,23 @@
             "names": { "zh-TW": "指揮行動", "jp": "指揮行動", "zh-CN": "指挥行动", "zh-CN-CN": "指挥行动" },
             "sp": 0
           }
+        }
+      },
+      "TAKE YOUR HEART": {
+        "不羈卡牌": {
+          "value": "不羈卡牌",
+          "names": { "zh-TW": "不羈卡牌", "jp": "ワイルドカード", "zh-CN": "不羁卡牌", "zh-CN-CN": "不羁卡牌" },
+          "sp": 0
+        },
+        "混沌詭騙師": {
+          "value": "混沌詭騙師",
+          "names": {
+            "zh-TW": "混沌詭騙師",
+            "jp": "カオス・トリックスター",
+            "zh-CN": "混沌诡骗师",
+            "zh-CN-CN": "混沌诡骗师"
+          },
+          "sp": 17
         }
       }
     },

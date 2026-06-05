@@ -84,5 +84,59 @@
       }
     },
     "passive skill": {}
+  },
+  "Violet": {
+    "value": "Violet",
+    "names": { "zh-TW": "Violet", "jp": "ヴァイオレット", "zh-CN": "Violet", "zh-CN-CN": "Violet" },
+    "english name": "Violet",
+    "style": {
+      "堅定的信念": {
+        "value": "堅定的信念",
+        "names": {
+          "zh-TW": "堅定的信念",
+          "jp": "揺るぎなき信念",
+          "zh-CN": "坚定的信念",
+          "zh-CN-CN": "坚定的信念"
+        },
+        "id": "001"
+      }
+    },
+    "skill": {
+      "common": {
+        "瑪哈克加翁": {
+          "value": "瑪哈克加翁",
+          "names": {
+            "zh-TW": "瑪哈克加翁",
+            "jp": "マハコウガオン",
+            "zh-CN": "玛哈克加翁",
+            "zh-CN-CN": "玛哈克加翁"
+          },
+          "sp": 8
+        },
+        "勇氣步伐": {
+          "value": "勇氣步伐",
+          "names": {
+            "zh-TW": "勇氣步伐",
+            "jp": "ブレイブステップ",
+            "zh-CN": "勇气步伐",
+            "zh-CN-CN": "勇气步伐"
+          },
+          "sp": 12
+        }
+      },
+      "堅定的信念": {
+        "劍之舞": {
+          "value": "劍之舞",
+          "names": {
+            "zh-TW": "劍之舞",
+            "jp": "剣の舞",
+            "zh-CN": "剑之舞",
+            "zh-CN-CN": "剑之舞"
+          },
+          "sp": 16
+        }
+      }
+    },
+    "passive skill": {}
   }
 }
