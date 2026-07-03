@@ -10,9 +10,13 @@
     {
       "value": "防禦增強",
       "names": { "zh-TW": "防禦增強", "jp": "ディフェンスブースト", "zh-CN": "防御增强", "zh-CN-CN": "防御增强" }
+    },
+    {
+      "value": "傷害值限制",
+      "names": { "zh-TW": "傷害值限制", "jp": "ダメージリミッター", "zh-CN": "伤害值限制", "zh-CN-CN": "伤害值限制" }
     }
   ],
-  "universalSkills": [
+  "defaultSkills": [
     {
       "value": "批判性思考",
       "names": { "zh-TW": "批判性思考", "jp": "クリティカルシンキング", "zh-CN": "批判性思考", "zh-CN-CN": "暴击冥想" },

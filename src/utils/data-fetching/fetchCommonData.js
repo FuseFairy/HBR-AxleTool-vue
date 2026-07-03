@@ -9,7 +9,7 @@ export async function fetchCommonData() {
       commonDataCache = await response.json()
     } catch (error) {
       console.error('Error fetch common_skills.json:', error)
-      commonDataCache = { defaultCommandSkill: [], universalSkills: [] } // Fallback
+      commonDataCache = { defaultCommandSkill: [], defaultSkills: [] } // Fallback
     }
   }
   return commonDataCache

@@ -5,7 +5,7 @@ export async function fetchSkillOptions(characterName, team, styleName) {
   try {
     const data = await getTeamData(team)
     const characterData = data[characterName]
-    const { universalSkills } = await fetchCommonData()
+    const { defaultSkills } = await fetchCommonData()
 
     if (!characterData || !characterData.style) {
       throw new Error('Character data or styles not found')
@@ -30,7 +30,7 @@ export async function fetchSkillOptions(characterName, team, styleName) {
         names: info['names'],
         sp: info['sp'],
       })),
-      ...universalSkills.map((skill) => ({
+      ...defaultSkills.map((skill) => ({
         value: skill.value,
         names: skill.names,
         sp: skill.sp,
