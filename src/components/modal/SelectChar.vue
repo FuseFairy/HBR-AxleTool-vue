@@ -195,7 +195,7 @@
 
             if (shouldResetAll || shouldResetTarget) {
               skillStore.skills[rowIndex][buttonIndex] = shouldResetAll
-                ? { selectedTab: null, style: null, style_img: null, skill: null, target: null }
+                ? { selectedTab: null, style: null, style_img: null, skill: null, target: null, is1Damage: false }
                 : { ...button, target: null }
             }
           })

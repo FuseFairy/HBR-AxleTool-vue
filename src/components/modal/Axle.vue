@@ -143,6 +143,20 @@
     return isCommandSkill
   }
 
+  const hasDamageLimitPassiveInAxle = (skillInfo) => {
+    const tab = skillInfo.selectedTab
+    const style = skillInfo.style
+    if (!tab || !style) return false
+    const charInfo = charStore.selections[tab]
+    const styleInfo = find(charInfo, (characterData) => {
+      return characterData.style === style
+    })
+    if (styleInfo && Array.isArray(styleInfo.passiveSkill)) {
+      return styleInfo.passiveSkill.includes('傷害值限制')
+    }
+    return false
+  }
+
   const displaySkillName = (row, col) => {
     let skillName = ''
     const skillInfo = skillStore.skills[row][col]
@@ -342,6 +356,14 @@
                               :src="getAssetsFile(skillStore.skills[i][col - 2].style_img)"
                               :alt="skillStore.skills[i][col - 2].style"
                               class="axle-img" />
+                            <img
+                              v-if="
+                                skillStore.skills[i][col - 2].is1Damage &&
+                                hasDamageLimitPassiveInAxle(skillStore.skills[i][col - 2])
+                              "
+                              src="@/assets/common/1damage.webp"
+                              class="axle-1damage-badge"
+                              alt="1 Damage" />
                           </div>
                           <div class="txt">
                             <span
@@ -469,8 +491,18 @@
     align-items: center;
     padding: 0 20px;
   }
+  .axle-1damage-badge {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    z-index: 10;
+  }
   .image {
     grid-area: img;
+    position: relative;
   }
   .txt {
     grid-area: txt;

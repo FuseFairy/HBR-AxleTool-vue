@@ -24,6 +24,7 @@ export const useSkillStore = defineStore(
             style_img: null,
             skill: null,
             target: null,
+            is1Damage: false,
           },
           {
             selectedTab: null,
@@ -33,6 +34,7 @@ export const useSkillStore = defineStore(
             style_img: null,
             skill: null,
             target: null,
+            is1Damage: false,
           },
           {
             selectedTab: null,
@@ -42,6 +44,7 @@ export const useSkillStore = defineStore(
             style_img: null,
             skill: null,
             target: null,
+            is1Damage: false,
           },
         ])
         skills.value.push(...newSkills)

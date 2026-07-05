@@ -95,6 +95,15 @@ export async function decompressAxleData(customData) {
     )
   }
 
+  if (skillsData) {
+    skillsData = skillsData.map((row) =>
+      row.map((skill) => ({
+        is1Damage: false,
+        ...skill,
+      }))
+    )
+  }
+
   Object.assign(charStore.selections, decodedDataChar)
   Object.assign(skillStore, {
     axleName: decodedData.axleName ?? skillStore.axleName,

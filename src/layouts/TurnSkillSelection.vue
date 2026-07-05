@@ -84,6 +84,18 @@
     }
   }
 
+  const hasDamageLimitPassive = (row, key) => {
+    const currentSkillInfo = skillStore.skills[row][key]
+    if (currentSkillInfo && currentSkillInfo.style != null && currentSkillInfo.selectedTab != null) {
+      const selections = Object.values(charStore.selections[currentSkillInfo.selectedTab])
+      const currentSelection = selections.find((selection) => selection.style === currentSkillInfo.style)
+      if (currentSelection && Array.isArray(currentSelection.passiveSkill)) {
+        return currentSelection.passiveSkill.includes('傷害值限制')
+      }
+    }
+    return false
+  }
+
   const deleteRow = (index) => {
     uiStore.sliderRows -= 1
     skillStore.turns.splice(index, 1)
@@ -125,6 +137,7 @@
           style_img: null,
           skill: null,
           target: null,
+          is1Damage: false,
         },
         {
           selectedTab: null,
@@ -134,6 +147,7 @@
           style_img: null,
           skill: null,
           target: null,
+          is1Damage: false,
         },
         {
           selectedTab: null,
@@ -143,6 +157,7 @@
           style_img: null,
           skill: null,
           target: null,
+          is1Damage: false,
         },
       ]
       skillStore.turns[index].od = null
@@ -418,24 +433,34 @@
             <img src="@/assets/custom-icon/switch.svg" alt="Toggle Form" />
           </button>
         </div>
-        <Multiselect
-          v-model="skillStore.skills[i][n - 1].skill"
-          placeholder="Skill"
-          label="names"
-          track-by="value"
-          :searchable="!isMobile()"
-          :options="getFilteredSkills(i, n - 1)">
-          <template #singlelabel="{ value }">
-            <div class="multiselect-single-label">
-              <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
-            </div>
-          </template>
-          <template #option="{ option }">
-            <span :title="option.names[settingStore.lang]"
-              >{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span
-            >
-          </template>
-        </Multiselect>
+        <div class="skill-select-container">
+          <Multiselect
+            v-model="skillStore.skills[i][n - 1].skill"
+            placeholder="Skill"
+            label="names"
+            track-by="value"
+            :searchable="!isMobile()"
+            :options="getFilteredSkills(i, n - 1)">
+            <template #singlelabel="{ value }">
+              <div class="multiselect-single-label">
+                <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
+              </div>
+            </template>
+            <template #option="{ option }">
+              <span :title="option.names[settingStore.lang]"
+                >{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span
+              >
+            </template>
+          </Multiselect>
+          <label v-if="hasDamageLimitPassive(i, n - 1)" class="damage-checkbox-container">
+            <input
+              type="checkbox"
+              v-model="skillStore.skills[i][n - 1].is1Damage"
+              class="damage-checkbox"
+            />
+            <img src="@/assets/common/1damage.webp" class="damage-icon" />
+          </label>
+        </div>
         <Multiselect
           v-model="skillStore.skills[i][n - 1].target"
           placeholder="Target"
@@ -739,5 +764,33 @@
       width: 60px;
       height: 60px;
     }
+  }
+  .skill-select-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+  }
+  .skill-select-container :deep(.multiselect) {
+    flex: 1;
+    min-width: 0;
+  }
+  .damage-checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .damage-checkbox {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    accent-color: #c12277;
+  }
+  .damage-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
   }
 </style>
