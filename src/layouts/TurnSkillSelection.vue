@@ -443,21 +443,19 @@
             :options="getFilteredSkills(i, n - 1)">
             <template #singlelabel="{ value }">
               <div class="multiselect-single-label">
-                <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}/{{ value.sp }}sp</span>
+                <span :title="value.names[settingStore.lang]">
+                  {{ value.names[settingStore.lang] }}/{{ value.sp }}sp
+                </span>
               </div>
             </template>
             <template #option="{ option }">
-              <span :title="option.names[settingStore.lang]"
-                >{{ option.names[settingStore.lang] }}/{{ option.sp }}sp</span
-              >
+              <span :title="option.names[settingStore.lang]">
+                {{ option.names[settingStore.lang] }}/{{ option.sp }}sp
+              </span>
             </template>
           </Multiselect>
           <label v-if="hasDamageLimitPassive(i, n - 1)" class="damage-checkbox-container">
-            <input
-              type="checkbox"
-              v-model="skillStore.skills[i][n - 1].is1Damage"
-              class="damage-checkbox"
-            />
+            <input v-model="skillStore.skills[i][n - 1].is1Damage" type="checkbox" class="damage-checkbox" />
             <img src="@/assets/common/1damage.webp" class="damage-icon" />
           </label>
         </div>
