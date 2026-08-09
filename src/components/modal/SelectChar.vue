@@ -41,6 +41,7 @@
     { value: '31E', name: '31E', icon: 'team-icon/31E.webp' },
     { value: '31F', name: '31F', icon: 'team-icon/31F.webp' },
     { value: '31X', name: '31X', icon: 'team-icon/31X.webp' },
+    { value: '19A', name: '19A', icon: 'team-icon/19A.webp' },
     { value: '31AB', name: 'Angel Beats!', icon: 'team-icon/Angel Beats.webp' },
     { value: 'P5R', name: 'Persona 5 Royal', icon: 'team-icon/p5r.webp' },
     { value: 'Command', name: '司令部', icon: 'team-icon/Command.webp' },
