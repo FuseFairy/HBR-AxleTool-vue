@@ -26,6 +26,14 @@
     'OD3/Bonus1',
     'OD3/Bonus2',
     'OD3/Bonus3',
+    'OD4',
+    'OD4/Bonus1',
+    'OD4/Bonus2',
+    'OD4/Bonus3',
+    'OD5',
+    'OD5/Bonus1',
+    'OD5/Bonus2',
+    'OD5/Bonus3',
   ]
   const options = Array.from({ length: 80 }, (_, i) => `T${i + 1}`)
   const formattedOptions = options.map((option) => {
@@ -345,6 +353,8 @@
         'od1': turn.od && turn.od.startsWith('OD1'),
         'od2': turn.od && turn.od.startsWith('OD2'),
         'od3': turn.od && turn.od.startsWith('OD3'),
+        'od4': turn.od && turn.od.startsWith('OD4'),
+        'od5': turn.od && turn.od.startsWith('OD5'),
       },
     ]">
     <button v-tooltip="'delete'" class="delete-button" @click="deleteRow(i)">
@@ -521,6 +531,14 @@
   .od3 {
     border-left: 3px solid rgba(255, 246, 161, 0.9);
     border-right: 3px solid rgba(255, 246, 161, 0.9);
+  }
+  .od4 {
+    border-left: 3px solid rgba(91, 163, 239, 0.9);
+    border-right: 3px solid rgba(91, 163, 239, 0.9);
+  }
+  .od5 {
+    border-left: 3px solid rgba(177, 98, 237, 0.9);
+    border-right: 3px solid rgba(177, 98, 237, 0.9);
   }
   .container:hover {
     box-shadow:

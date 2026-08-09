@@ -69,6 +69,8 @@
       OD1: 'rgba(229, 131, 207, 0.25)',
       OD2: 'rgba(189, 247, 211, 0.25)',
       OD3: 'rgba(237, 225, 108, 0.25)',
+      OD4: 'rgba(91, 163, 239, 0.25)',
+      OD5: 'rgba(177, 98, 237, 0.25)',
     }
     if (turnData.od) {
       const odPrefix = turnData.od.slice(0, 3)
