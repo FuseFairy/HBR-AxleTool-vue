@@ -131,6 +131,11 @@
           "value": "明星",
           "names": { "zh-TW": "明星", "jp": "明星", "zh-CN": "明星", "zh-CN-CN": "明曜之星" },
           "sp": 5
+        },
+        "不屈且高潔": {
+          "value": "不屈且高潔",
+          "names": { "zh-TW": "不屈且高潔", "jp": "不屈にして高潔", "zh-CN": "不屈且高洁", "zh-CN-CN": "不屈且高洁" },
+          "sp": 0
         }
       },
       "Infernal Sanctuary": {
