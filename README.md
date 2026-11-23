@@ -24,6 +24,8 @@
       ![角色選擇](/image/select_char.png)
     - 能透過拖曳隨意排序位置。
       ![拖曳](/image/select_char_drag&drop.gif)
+    - 勾選 共鳴（Resonance）可以為該角色設定一名支援角色，依序選擇 隊伍（Team）、角色（Character）、戰型（Style）和 突破數（Rank）。設定後，行動軸表格會多出一列 Resonance 顯示支援角色，可在篩選中隱藏。
+    - 勾選右側的 關鍵（Crucial）後，該支援角色在行動軸表格中會帶有紫紅色光環，表示其對整條軸的重要性。
 
 2.  **行動軸編輯**:
     - 可以編輯 回合（Turn）、OD、技能選擇（Skill） 和 選擇對象（Target）。

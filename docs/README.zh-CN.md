@@ -23,6 +23,8 @@
       ![其他](/image/select_char_others.png)
     - 能通过拖曳随意排序位置。
       ![拖曳](/image/select_char_drag&drop.gif)
+    - 勾选 共鸣（Resonance）可以为该角色设定一名支援角色，依次选择 队伍（Team）、角色（Character）、战型（Style）和 突破数（Rank）。设定后，行动轴表格会多出一行 Resonance 显示支援角色，可在筛选中隐藏。
+    - 勾选右侧的 关键（Crucial）后，该支援角色在行动轴表格中会带有紫红色光环，表示其对整条轴的重要性。
 
 2.  **行动轴编辑**:
     - 可以编辑 回合（Turn）、OD、技能选择（Skill） 和 选择对象（Target）。
