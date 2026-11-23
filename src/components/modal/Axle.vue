@@ -53,6 +53,14 @@
     return reincarnationInShowRow
   }
 
+  const hasResonance = (selectedTab) => {
+    const resonanceInShowRow = uiStore.showTag.includes('resonance')
+    const hasSupportSelection = Object.values(charStore.selections[selectedTab]).some(
+      (selection) => selection?.support?.img,
+    )
+    return resonanceInShowRow && hasSupportSelection
+  }
+
   const hasPassiveSkill = (selectedTab) => {
     const passiveSkillInShowRow = uiStore.showTag.includes('passive skill')
     const hasValidPassiveSkillSelection = Object.values(charStore.selections[selectedTab]).some(
@@ -299,6 +307,24 @@
                           class="earring-icon" />
                       </div>
                     </div>
+                  </div>
+                </div>
+                <!-- Resonance (共鳴) supporting characters -->
+                <div v-if="hasResonance(selectedTab)" class="table-container resonance-row" style="margin-top: 20px">
+                  <div v-for="(i, colIndex) in 7" :key="colIndex" class="table-column">
+                    <div v-if="i === 1" class="label text-wrap resonance-label">Resonance</div>
+                    <div v-else-if="charStore.selections[selectedTab][i - 1].support?.img" class="support-container">
+                      <img
+                        :src="getAssetsFile(charStore.selections[selectedTab][i - 1].support.img)"
+                        :alt="charStore.selections[selectedTab][i - 1].support.style"
+                        :class="['support-image', { 'support-crucial': charStore.selections[selectedTab][i - 1].support.crucial }]" />
+                      <div v-if="hasRank()" class="rank-text support-rank">
+                        {{ charStore.selections[selectedTab][i - 1].support.rank ?? 0 }}
+                      </div>
+                    </div>
+                    <span v-else-if="charStore.selections[selectedTab][i - 1].style !== null" class="support-empty">
+                      —
+                    </span>
                   </div>
                 </div>
                 <div v-if="hasPassiveSkill(selectedTab)" class="table-container" style="margin-top: 20px">
@@ -750,6 +776,41 @@
       drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
       drop-shadow(0 0 3px rgb(226, 120, 234))
       drop-shadow(0 0 7px rgba(160, 200, 255, 0.8));
+  }
+  .resonance-row {
+    background: rgba(70, 110, 120, 0.18);
+    border-radius: 10px;
+    padding: 8px 0;
+  }
+  .resonance-label {
+    font-size: 16px;
+  }
+  .support-container {
+    position: relative;
+    isolation: isolate; /* keeps the portrait above the row's background */
+  }
+  .support-image {
+    display: block;
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+    position: relative;
+    z-index: -2;
+  }
+  .support-crucial {
+    /* purple-red aura: this supporter matters to the timeline */
+    filter:
+      drop-shadow(0 0 3.2px rgba(255, 225, 242, 0.85))
+      drop-shadow(0 0 9.6px rgb(222, 64, 150))
+      drop-shadow(0 0 19.2px rgba(190, 30, 110, 0.85));
+  }
+  .rank-text.support-rank {
+    width: 22px;
+    height: 22px;
+    font-size: 16px;
+  }
+  .support-empty {
+    color: #666;
   }
   .used-skill-bg {
     background: rgba(113, 108, 122, 0.3);

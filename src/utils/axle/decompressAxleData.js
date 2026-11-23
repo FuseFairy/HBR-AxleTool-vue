@@ -5,7 +5,7 @@ import { fetchCommandSkill } from '@/utils/data-fetching/fetchCommandSkill'
 import { fetchStyleOptions } from '@/utils/data-fetching/fetchStyleOptions'
 import { decompressFromBase64 } from 'lz-string'
 import { find } from 'lodash-es'
-import { useCharStore } from '@/store/char'
+import { useCharStore, createEmptySupport } from '@/store/char'
 import { useSkillStore } from '@/store/axle'
 import { useUiStore } from '@/store/ui'
 import { useSettingStore } from '@/store/setting'
@@ -31,6 +31,8 @@ export async function decompressAxleData(customData) {
   for (const teamKey in decodedDataChar) {
     const team = decodedDataChar[teamKey]
     for (const charKey in team) {
+      // Share data made before the Resonance feature has no supporter field
+      if (!team[charKey].support) team[charKey].support = createEmptySupport()
       const { character, team: teamName, style } = team[charKey]
       if (style) {
         if (!lastTabAssigned) {

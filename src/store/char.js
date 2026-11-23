@@ -2,6 +2,17 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
+// Resonance (共鳴) supporting character attached to a team slot
+export const createEmptySupport = () => ({
+  team: null,
+  character: null,
+  style: null,
+  style_id: null,
+  img: null,
+  rank: null,
+  crucial: false, // highlighted in the table as important to the timeline
+})
+
 export const useCharStore = defineStore(
   'characterSelect',
   () => {
@@ -26,7 +37,8 @@ export const useCharStore = defineStore(
                 skill: [],
                 img: null,
                 spiritual: null,
-                reincarnation: null
+                reincarnation: null,
+                support: createEmptySupport(),
               },
             ]),
           ),
@@ -49,7 +61,8 @@ export const useCharStore = defineStore(
           skill: [],
           img: null,
           spiritual: null,
-          reincarnation: null
+          reincarnation: null,
+          support: createEmptySupport(),
         }
       }
       selections.value[selectedTab][buttonKey][type] = value === undefined ? null : value
