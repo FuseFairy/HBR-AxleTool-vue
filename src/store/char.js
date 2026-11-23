@@ -26,6 +26,7 @@ export const useCharStore = defineStore(
                 skill: [],
                 img: null,
                 spiritual: null,
+                reincarnation: null
               },
             ]),
           ),
@@ -48,6 +49,7 @@ export const useCharStore = defineStore(
           skill: [],
           img: null,
           spiritual: null,
+          reincarnation: null
         }
       }
       selections.value[selectedTab][buttonKey][type] = value === undefined ? null : value

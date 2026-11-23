@@ -19,7 +19,7 @@
 1.  **队伍编辑**:
     - 角色选择界面按照顺序依次选择 队伍（Team）、角色（Character）、战型（Style）。
       ![角色选择](/image/select_char.png)
-    - 其他设定（Others）可以设定 突破数（Rank）、耳环（Earring）、被动技能（Passive SKill）和 专武等级（Spiritual Rupture）。
+    - 其他设定（Others）可以设定 突破数（Rank）、耳环（Earring）、被动技能（Passive SKill）、 专武等级（Spiritual Rupture）和人物轉生數（Reincarnation Count）。
       ![其他](/image/select_char_others.png)
     - 能通过拖曳随意排序位置。
       ![拖曳](/image/select_char_drag&drop.gif)

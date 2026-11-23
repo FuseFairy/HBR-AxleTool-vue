@@ -48,6 +48,11 @@
     return spiritualInShowRow
   }
 
+  const hasReincarnation = () => {
+    const reincarnationInShowRow = uiStore.showTag.includes('reincarnation')
+    return reincarnationInShowRow
+  }
+
   const hasPassiveSkill = (selectedTab) => {
     const passiveSkillInShowRow = uiStore.showTag.includes('passive skill')
     const hasValidPassiveSkillSelection = Object.values(charStore.selections[selectedTab]).some(
@@ -279,6 +284,12 @@
                           v-if="hasSpiritual() && charStore.selections[selectedTab][i - 1].spiritual !== null"
                           class="spiritual-text">
                           {{ charStore.selections[selectedTab][i - 1].spiritual }}
+                        </div>
+                        <!-- Reincarnation -->
+                        <div
+                          v-if="hasReincarnation() && charStore.selections[selectedTab][i - 1].reincarnation !== null"
+                          class="reincarnation-text">
+                          {{ charStore.selections[selectedTab][i - 1].reincarnation }}
                         </div>
                         <!-- Earring -->
                         <img
@@ -685,7 +696,7 @@
   .spiritual-text {
     position: absolute;
     bottom: -12px;
-    right: 35px;
+    right: 30px;
     background-color: transparent;
     background-image: url(@/assets/common/soul.webp);
     background-position: center;
@@ -707,6 +718,38 @@
       0 0 8px rgb(0, 0, 0),
       0 0 16px rgb(0, 0, 0);
     filter: drop-shadow(0 0 12px rgb(234, 120, 124));
+  }
+  
+  .reincarnation-text {
+    position: absolute;
+    top: -1px;
+    left: -10px;
+    isolation: isolate;          /* keeps the ::before layer behind the number, not behind the card */
+    font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
+    color: rgb(249, 228, 244);
+    width: 29px;
+    height: 29px;
+    padding: 0;
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow:
+      0 0 4px rgb(0, 0, 0),
+      0 0 8px rgb(0, 0, 0),
+      0 0 16px rgb(0, 0, 0);
+  }
+  .reincarnation-text::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url(@/assets/common/bell.webp) center / contain no-repeat;
+    filter:
+      drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
+      drop-shadow(0 0 3px rgb(226, 120, 234))
+      drop-shadow(0 0 7px rgba(160, 200, 255, 0.8));
   }
   .used-skill-bg {
     background: rgba(113, 108, 122, 0.3);
@@ -737,8 +780,8 @@
   }
   .flower-img {
     position: absolute;
-    bottom: -10px;
-    right: 5px;
+    bottom: 0px;
+    right: -6px;
     height: 30px;
     width: 30px;
     filter: drop-shadow(0 0 12px rgb(255, 190, 218));

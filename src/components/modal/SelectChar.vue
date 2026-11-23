@@ -15,6 +15,8 @@
   import { find } from 'lodash-es'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
+  import VueSlider from 'vue-slider-component'
+  import '@/style/slider/slider.css'
 
   const charStore = useCharStore()
   const uiStore = useUiStore()
@@ -75,6 +77,14 @@
     { value: '4', name: '+4' },
     { value: '5', name: '+5' },
   ]
+  // The slider needs a number; 0 on the slider = null (not set) in the store
+  const reincarnationValue = computed({
+    get: () => charStore.selections[props.selectedTab][props.buttonKey].reincarnation ?? 0,
+    set: (v) => charStore.setSelection(props.buttonKey, 'reincarnation', v === 0 ? null : v, props.selectedTab),
+  })
+  const clearReincarnation = () => {
+    charStore.setSelection(props.buttonKey, 'reincarnation', null, props.selectedTab)
+  }
   const rankOptions = Array.from({ length: 10 }, (_, i) => i + 1)
   const characterOptions = ref([])
   const styleOptions = ref([])
@@ -175,6 +185,7 @@
         charStore.setSelection(props.buttonKey, 'skill', [], props.selectedTab)
         charStore.setSelection(props.buttonKey, 'character_info', {}, props.selectedTab)
         charStore.setSelection(props.buttonKey, 'spiritual', null, props.selectedTab)
+        charStore.setSelection(props.buttonKey, 'reincarnation', null, props.selectedTab)
 
         selectedRank.value = null
         selectedPassiveSkill.value = []
@@ -362,6 +373,30 @@
                 :options="spiritualOptions"
                 label="name"
                 track-by="value" />
+            </div>
+            <div class="section">
+              <div class="slider-label">
+                <label>Reincarnation Count：{{ reincarnationValue || '-' }}</label>
+                <button
+                  type="button"
+                  class="slider-clear"
+                  title="Clear"
+                  :disabled="isOtherDisable || reincarnationValue === 0"
+                  @click="clearReincarnation">
+                  ✕
+                </button>
+              </div>
+              <div class="slider-wrap">
+                <vue-slider
+                  v-model="reincarnationValue"
+                  :disabled="isOtherDisable"
+                  :min="0"
+                  :max="20"
+                  :interval="1"
+                  :contained="true"
+                  :drag-on-click="true"
+                  :marks="{ 0: 'None', 20: '20' }" />
+              </div>
             </div>
           </OverlayScrollbarsComponent>
         </div>
@@ -600,6 +635,29 @@
   }
   :deep(.multiselect-tag) {
     background-color: #663fba;
+  }
+  .slider-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .slider-clear {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 14px;
+    padding: 0 4px;
+    cursor: pointer;
+  }
+  .slider-clear:hover:not(:disabled) {
+    color: #fff;
+  }
+  .slider-clear:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .slider-wrap {
+    padding: 6px 8px 22px; /* room for the "None" / "20" labels */
   }
   @media (max-width: 900px) {
     .container {

@@ -9,7 +9,7 @@ export const useUiStore = defineStore(
     const scrollbarInstance = ref(null)
 
     // From showRow.js
-    const showTag = ref(['rank', 'earring', 'passive skill', 'skill', 'axle', 'spiritual'])
+    const showTag = ref(['rank', 'earring', 'passive skill', 'skill', 'axle', 'spiritual', 'reincarnation'])
     function setShowTag(row_list) {
       showTag.value = row_list
     }
@@ -61,6 +61,12 @@ export const useUiStore = defineStore(
   {
     persist: {
       storage: localStorage,
+      afterHydrate: ({ store }) => {
+        if (!store.showTagVersion) {
+          if (!store.showTag.includes('reincarnation')) store.showTag.push('reincarnation')
+          store.showTagVersion = 1
+        }
+      },
     },
   },
 )
