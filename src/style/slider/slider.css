@@ -33,6 +33,7 @@
 .vue-slider-mark-label {
   font-size: 14px;
   white-space: nowrap;
+  color: #fff;
 }
 /* dot style */
 .vue-slider-dot-handle {

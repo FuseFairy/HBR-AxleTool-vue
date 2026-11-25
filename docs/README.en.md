@@ -24,6 +24,8 @@ Through a visualized interface, players can record the skill casting order of ch
       ![Character Selection](/image/select_char.png)
     - You can freely sort positions by dragging.
       ![Drag and Drop](/image/select_char_drag&drop.gif)
+    - Tick Resonance to give a character a supporting character, then select Team, Character, Style, and Rank in order. A Resonance row then appears in the axle table showing the supporters, and it can be hidden with the filter.
+    - Tick Crucial (on the right) to give that supporter a purple-red aura in the axle table, marking it as important to the timeline.
 
 2.  **Axle Editing**:
     - You can edit Turn, OD, Skill Selection, and Target.

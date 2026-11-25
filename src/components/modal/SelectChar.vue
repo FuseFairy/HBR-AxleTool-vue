@@ -1,7 +1,7 @@
 <script setup>
   import { ref, watch, computed, onMounted } from 'vue'
   import Multiselect from '@vueform/multiselect'
-  import { useCharStore } from '@/store/char'
+  import { useCharStore, createEmptySupport } from '@/store/char'
   import { useSkillStore } from '@/store/axle'
   import { useSettingStore } from '@/store/setting'
   import { useUiStore } from '@/store/ui'
@@ -15,6 +15,8 @@
   import { find } from 'lodash-es'
   import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
   import { scrollbarOptions } from '@/config/scrollbarConfig.js'
+  import VueSlider from 'vue-slider-component'
+  import '@/style/slider/slider.css'
 
   const charStore = useCharStore()
   const uiStore = useUiStore()
@@ -75,6 +77,14 @@
     { value: '4', name: '+4' },
     { value: '5', name: '+5' },
   ]
+  // The slider needs a number; 0 on the slider = null (not set) in the store
+  const reincarnationValue = computed({
+    get: () => charStore.selections[props.selectedTab][props.buttonKey].reincarnation ?? 0,
+    set: (v) => charStore.setSelection(props.buttonKey, 'reincarnation', v === 0 ? null : v, props.selectedTab),
+  })
+  const clearReincarnation = () => {
+    charStore.setSelection(props.buttonKey, 'reincarnation', null, props.selectedTab)
+  }
   const rankOptions = Array.from({ length: 10 }, (_, i) => i + 1)
   const characterOptions = ref([])
   const styleOptions = ref([])
@@ -93,6 +103,30 @@
   const isStyleDisabled = computed(() => !selectedCharacter.value)
   const isOtherDisable = computed(() => !selectedStyle.value)
 
+  // Resonance (共鳴) supporting character: Team → Character → Style → Rank
+  const getSupport = () => {
+    const slot = charStore.selections[props.selectedTab][props.buttonKey]
+    if (!slot.support) slot.support = createEmptySupport() // teams saved before this feature
+    return slot.support
+  }
+  const setSupport = (field, value) => {
+    getSupport()[field] = value ?? null
+  }
+  const savedSupport = charStore.selections[props.selectedTab][props.buttonKey]?.support ?? createEmptySupport()
+  const supportTeam = ref(savedSupport.team)
+  const supportCharacter = ref(savedSupport.character)
+  const supportStyle = ref(savedSupport.style)
+  const supportRank = ref(savedSupport.rank)
+  // The pickers only show when "Resonance" is ticked; ticked by default if a supporter is saved
+  const showSupport = ref(!!savedSupport.team)
+  const supportCrucial = ref(!!savedSupport.crucial)
+  const supportCharacterOptions = ref([])
+  const supportStyleOptions = ref([])
+
+  const isSupportCharDisabled = computed(() => isOtherDisable.value || !supportTeam.value)
+  const isSupportStyleDisabled = computed(() => isSupportCharDisabled.value || !supportCharacter.value)
+  const isSupportRankDisabled = computed(() => isSupportStyleDisabled.value || !supportStyle.value)
+
   const initializeOptions = async () => {
     if (selectedTeam.value) {
       characterOptions.value = await fetchCharacterOptions(selectedTeam.value)
@@ -107,6 +141,12 @@
         selectedStyle.value,
       )
       charStore.setSelection(props.buttonKey, 'passiveSkill_value', passiveSkillOptions.value, props.selectedTab)
+    }
+    if (supportTeam.value) {
+      supportCharacterOptions.value = await fetchCharacterOptions(supportTeam.value)
+    }
+    if (supportCharacter.value) {
+      supportStyleOptions.value = await fetchStyleOptions(supportCharacter.value, supportTeam.value)
     }
   }
 
@@ -175,6 +215,8 @@
         charStore.setSelection(props.buttonKey, 'skill', [], props.selectedTab)
         charStore.setSelection(props.buttonKey, 'character_info', {}, props.selectedTab)
         charStore.setSelection(props.buttonKey, 'spiritual', null, props.selectedTab)
+        charStore.setSelection(props.buttonKey, 'reincarnation', null, props.selectedTab)
+        charStore.setSelection(props.buttonKey, 'support', createEmptySupport(), props.selectedTab)
 
         selectedRank.value = null
         selectedPassiveSkill.value = []
@@ -207,6 +249,43 @@
     },
     { immediate: false },
   )
+
+  watch(supportTeam, async (newTeam) => {
+    setSupport('team', newTeam)
+    supportCharacter.value = null
+    supportStyle.value = null
+    supportCharacterOptions.value = newTeam ? await fetchCharacterOptions(newTeam) : []
+  })
+
+  watch(supportCharacter, async (newChar) => {
+    setSupport('character', newChar)
+    supportStyle.value = null
+    supportStyleOptions.value = newChar ? await fetchStyleOptions(newChar, supportTeam.value) : []
+  })
+
+  watch(supportStyle, (newStyle) => {
+    const option = supportStyleOptions.value.find((o) => o.value === newStyle)
+    setSupport('style', option ? newStyle : null)
+    setSupport('style_id', option?.id)
+    setSupport('img', option?.icon)
+    if (!option) supportRank.value = null
+  })
+
+  watch(supportRank, (newRank) => setSupport('rank', newRank))
+  watch(supportCrucial, (crucial) => setSupport('crucial', crucial))
+
+  // Unticking "Resonance" removes the supporter
+  watch(showSupport, (on) => {
+    if (!on) {
+      supportTeam.value = null
+      supportCrucial.value = false
+    }
+  })
+
+  // The main style was cleared: clear the supporter too
+  watch(isOtherDisable, (disabled) => {
+    if (disabled) showSupport.value = false
+  })
 
   const toggleCheckbox = () => {
     if (!isOtherDisable.value) {
@@ -363,6 +442,113 @@
                 label="name"
                 track-by="value" />
             </div>
+            <div class="section">
+              <div class="slider-label">
+                <label>Reincarnation Count：{{ reincarnationValue || '-' }}</label>
+                <button
+                  type="button"
+                  class="slider-clear"
+                  title="Clear"
+                  :disabled="isOtherDisable || reincarnationValue === 0"
+                  @click="clearReincarnation">
+                  ✕
+                </button>
+              </div>
+              <div class="slider-wrap">
+                <vue-slider
+                  v-model="reincarnationValue"
+                  :disabled="isOtherDisable"
+                  :min="0"
+                  :max="20"
+                  :interval="1"
+                  :contained="true"
+                  :drag-on-click="true"
+                  :marks="{ 0: 'None', 20: '20' }" />
+              </div>
+            </div>
+            <!-- Resonance (共鳴) supporting character -->
+            <div class="resonance-title">
+              <label class="resonance-toggle" :class="{ disabled: isOtherDisable }">
+                <input v-model="showSupport" type="checkbox" :disabled="isOtherDisable" />
+                Resonance
+              </label>
+              <label v-if="showSupport" class="resonance-toggle crucial-toggle">
+                <input v-model="supportCrucial" type="checkbox" />
+                Crucial
+              </label>
+            </div>
+            <template v-if="showSupport">
+              <div class="section">
+                <label>Team</label>
+                <Multiselect
+                  v-model="supportTeam"
+                  placeholder="Select team"
+                  label="name"
+                  :disabled="isOtherDisable"
+                  :options="teamOptions">
+                  <template #singlelabel="{ value }">
+                    <div class="multiselect-single-label">
+                      <img class="label-icon" :src="getAssetsFile(value.icon)" />
+                      <span :title="value.name">{{ value.name }}</span>
+                    </div>
+                  </template>
+                  <template #option="{ option }">
+                    <img class="option-icon" :src="getAssetsFile(option.icon)" />
+                    <span :title="option.name">{{ option.name }}</span>
+                  </template>
+                </Multiselect>
+              </div>
+              <div class="section">
+                <label>Character</label>
+                <Multiselect
+                  v-model="supportCharacter"
+                  placeholder="Select character"
+                  :disabled="isSupportCharDisabled"
+                  :options="supportCharacterOptions"
+                  label="names"
+                  track-by="value">
+                  <template #singlelabel="{ value }">
+                    <div class="multiselect-single-label">
+                      <img class="label-icon" :src="getAssetsFile(value.icon)" />
+                      <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+                    </div>
+                  </template>
+                  <template #option="{ option }">
+                    <img class="option-icon" :src="getAssetsFile(option.icon)" />
+                    <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+                  </template>
+                </Multiselect>
+              </div>
+              <div class="section">
+                <label>Style</label>
+                <Multiselect
+                  v-model="supportStyle"
+                  placeholder="Select style"
+                  :disabled="isSupportStyleDisabled"
+                  :options="supportStyleOptions"
+                  label="names"
+                  track-by="value">
+                  <template #singlelabel="{ value }">
+                    <div class="multiselect-single-label">
+                      <img class="label-icon" :src="getAssetsFile(value.icon)" />
+                      <span :title="value.names[settingStore.lang]">{{ value.names[settingStore.lang] }}</span>
+                    </div>
+                  </template>
+                  <template #option="{ option }">
+                    <img class="option-icon" :src="getAssetsFile(option.icon)" />
+                    <span :title="option.names[settingStore.lang]">{{ option.names[settingStore.lang] }}</span>
+                  </template>
+                </Multiselect>
+              </div>
+              <div class="section resonance-last">
+                <label>Rank</label>
+                <Multiselect
+                  v-model="supportRank"
+                  placeholder="Select Rank"
+                  :disabled="isSupportRankDisabled"
+                  :options="rankOptions" />
+              </div>
+            </template>
           </OverlayScrollbarsComponent>
         </div>
       </div>
@@ -525,6 +711,52 @@
     font-family: var(--font-family-serif);
     color: white;
   }
+  .resonance-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-4);
+    padding-top: var(--spacing-4);
+    border-top: 2px solid rgba(162, 255, 249, 0.35);
+    font-family: var(--font-family-serif);
+    font-size: 20px;
+    color: #a2fff9;
+  }
+  .resonance-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: inherit;
+    cursor: pointer;
+    user-select: none;
+  }
+  .crucial-toggle {
+    color: #f28ac4; /* matches the purple-red Crucial aura in the table */
+    font-size: 17px;
+  }
+  .resonance-toggle.crucial-toggle input {
+    accent-color: #de4096;
+  }
+  .resonance-toggle input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #a2fff9;
+    cursor: inherit;
+  }
+  .resonance-toggle.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .resonance-title:last-child {
+    padding-bottom: var(--spacing-4);
+  }
+  .resonance-title + .section {
+    padding-top: var(--spacing-3);
+  }
+  .resonance-last {
+    padding-bottom: var(--spacing-4);
+  }
   .option-icon,
   .label-icon {
     width: 32px;
@@ -600,6 +832,29 @@
   }
   :deep(.multiselect-tag) {
     background-color: #663fba;
+  }
+  .slider-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .slider-clear {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 14px;
+    padding: 0 4px;
+    cursor: pointer;
+  }
+  .slider-clear:hover:not(:disabled) {
+    color: #fff;
+  }
+  .slider-clear:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .slider-wrap {
+    padding: 6px 8px 22px; /* room for the "None" / "20" labels */
   }
   @media (max-width: 900px) {
     .container {
