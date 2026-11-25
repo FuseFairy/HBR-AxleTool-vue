@@ -9,7 +9,16 @@ export const useUiStore = defineStore(
     const scrollbarInstance = ref(null)
 
     // From showRow.js
-    const showTag = ref(['rank', 'earring', 'passive skill', 'skill', 'axle', 'spiritual', 'reincarnation', 'resonance'])
+    const showTag = ref([
+      'rank',
+      'earring',
+      'passive skill',
+      'skill',
+      'axle',
+      'spiritual',
+      'reincarnation',
+      'resonance',
+    ])
     // Bumped when a new tag is added, so saved settings get the new tag switched on once
     const showTagVersion = ref(0)
     function setShowTag(row_list) {

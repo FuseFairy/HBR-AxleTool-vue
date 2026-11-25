@@ -317,7 +317,10 @@
                       <img
                         :src="getAssetsFile(charStore.selections[selectedTab][i - 1].support.img)"
                         :alt="charStore.selections[selectedTab][i - 1].support.style"
-                        :class="['support-image', { 'support-crucial': charStore.selections[selectedTab][i - 1].support.crucial }]" />
+                        :class="[
+                          'support-image',
+                          { 'support-crucial': charStore.selections[selectedTab][i - 1].support.crucial },
+                        ]" />
                       <div v-if="hasRank()" class="rank-text support-rank">
                         {{ charStore.selections[selectedTab][i - 1].support.rank ?? 0 }}
                       </div>
@@ -745,12 +748,12 @@
       0 0 16px rgb(0, 0, 0);
     filter: drop-shadow(0 0 12px rgb(234, 120, 124));
   }
-  
+
   .reincarnation-text {
     position: absolute;
     top: -1px;
     left: -10px;
-    isolation: isolate;          /* keeps the ::before layer behind the number, not behind the card */
+    isolation: isolate; /* keeps the ::before layer behind the number, not behind the card */
     font-family: 'Xiaolai', 'Noto Sans TC', sans-serif;
     color: rgb(249, 228, 244);
     width: 29px;
@@ -772,9 +775,7 @@
     inset: 0;
     z-index: -1;
     background: url(@/assets/common/bell.webp) center / contain no-repeat;
-    filter:
-      drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
-      drop-shadow(0 0 3px rgb(226, 120, 234))
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 3px rgb(226, 120, 234))
       drop-shadow(0 0 7px rgba(160, 200, 255, 0.8));
   }
   .resonance-row {
@@ -801,9 +802,7 @@
   }
   .support-crucial {
     /* purple-red aura: this supporter matters to the timeline */
-    filter:
-      drop-shadow(0 0 3.2px rgba(255, 225, 242, 0.85))
-      drop-shadow(0 0 9.6px rgb(222, 64, 150))
+    filter: drop-shadow(0 0 3.2px rgba(255, 225, 242, 0.85)) drop-shadow(0 0 9.6px rgb(222, 64, 150))
       drop-shadow(0 0 19.2px rgba(190, 30, 110, 0.85));
   }
   .rank-text.support-rank {

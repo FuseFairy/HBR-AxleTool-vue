@@ -102,7 +102,7 @@ export async function decompressAxleData(customData) {
       row.map((skill) => ({
         is1Damage: false,
         ...skill,
-      }))
+      })),
     )
   }
 

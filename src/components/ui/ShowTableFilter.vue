@@ -19,7 +19,7 @@
     { value: 'skill', name: 'Skill' },
     { value: 'axle', name: 'Axle' },
     { value: 'spiritual', name: 'Spiritual' },
-    { value: 'reincarnation', name: 'Reincarnation'},
+    { value: 'reincarnation', name: 'Reincarnation' },
     { value: 'resonance', name: 'Resonance' },
   ]
   const showTeams = usedTeam.map((teamValue) => ({ value: teamValue, name: `Team ${teamValue}` }))
