@@ -783,7 +783,9 @@
     padding: 8px 0;
   }
   .resonance-label {
-    font-size: 16px;
+    font-size: 14px;
+    padding-left: 10px;
+    white-space: nowrap;
   }
   .support-container {
     position: relative;
